@@ -22,6 +22,210 @@
       margin-top: 32px; margin-bottom: 12px; padding-left: 2px;
     }
     .section-label:first-child { margin-top: 0; }
+
+    /* ============================================================
+       BACKGROUND SWITCHER – Presets (überschreibt nur Custom Properties)
+       ============================================================ */
+
+    /* --- Ocean --- */
+    .glass-bg[data-bg="ocean"] {
+      --gl-bg-aurora-1:       rgba(20, 80, 180, 0.30);
+      --gl-bg-aurora-2:       rgba(40, 140, 220, 0.18);
+      --gl-bg-aurora-3:       rgba(60, 200, 240, 0.20);
+      --gl-bg-light-streak-1: rgba(80, 180, 240, 0.14);
+      --gl-bg-light-streak-2: rgba(100, 200, 255, 0.10);
+      --gl-bg-warm-glow:      rgba(60, 160, 220, 0.10);
+    }
+    [data-theme="dark"] .glass-bg[data-bg="ocean"],
+    :root:not([data-theme="light"]) .glass-bg[data-bg="ocean"] {
+      --gl-color-bg-dark:     #071428;
+      --gl-color-bg-mid:      #0c2a4a;
+      --gl-color-bg-light:    #10345c;
+    }
+    [data-theme="light"] .glass-bg[data-bg="ocean"] {
+      --gl-color-bg-dark:     #d0e4f5;
+      --gl-color-bg-mid:      #dfeef8;
+      --gl-color-bg-light:    #ebf4fc;
+    }
+
+    /* --- Sunset --- */
+    .glass-bg[data-bg="sunset"] {
+      --gl-bg-aurora-1:       rgba(240, 100, 60, 0.28);
+      --gl-bg-aurora-2:       rgba(255, 160, 50, 0.22);
+      --gl-bg-aurora-3:       rgba(220, 60, 120, 0.18);
+      --gl-bg-light-streak-1: rgba(255, 180, 100, 0.16);
+      --gl-bg-light-streak-2: rgba(255, 140, 80, 0.12);
+      --gl-bg-warm-glow:      rgba(255, 120, 60, 0.15);
+    }
+    [data-theme="dark"] .glass-bg[data-bg="sunset"],
+    :root:not([data-theme="light"]) .glass-bg[data-bg="sunset"] {
+      --gl-color-bg-dark:     #1c0e08;
+      --gl-color-bg-mid:      #3a1810;
+      --gl-color-bg-light:    #4a2018;
+    }
+    [data-theme="light"] .glass-bg[data-bg="sunset"] {
+      --gl-color-bg-dark:     #f5e0d0;
+      --gl-color-bg-mid:      #faeadc;
+      --gl-color-bg-light:    #fef2ea;
+    }
+
+    /* --- Forest --- */
+    .glass-bg[data-bg="forest"] {
+      --gl-bg-aurora-1:       rgba(30, 160, 80, 0.28);
+      --gl-bg-aurora-2:       rgba(80, 200, 120, 0.16);
+      --gl-bg-aurora-3:       rgba(20, 180, 140, 0.20);
+      --gl-bg-light-streak-1: rgba(60, 200, 140, 0.14);
+      --gl-bg-light-streak-2: rgba(80, 220, 160, 0.10);
+      --gl-bg-warm-glow:      rgba(120, 200, 80, 0.10);
+    }
+    [data-theme="dark"] .glass-bg[data-bg="forest"],
+    :root:not([data-theme="light"]) .glass-bg[data-bg="forest"] {
+      --gl-color-bg-dark:     #06190e;
+      --gl-color-bg-mid:      #0e3020;
+      --gl-color-bg-light:    #143a28;
+    }
+    [data-theme="light"] .glass-bg[data-bg="forest"] {
+      --gl-color-bg-dark:     #d4edda;
+      --gl-color-bg-mid:      #e2f4e8;
+      --gl-color-bg-light:    #eef8f1;
+    }
+
+    /* --- Rose --- */
+    .glass-bg[data-bg="rose"] {
+      --gl-bg-aurora-1:       rgba(200, 60, 140, 0.25);
+      --gl-bg-aurora-2:       rgba(240, 120, 180, 0.18);
+      --gl-bg-aurora-3:       rgba(160, 80, 200, 0.20);
+      --gl-bg-light-streak-1: rgba(240, 160, 200, 0.14);
+      --gl-bg-light-streak-2: rgba(220, 140, 190, 0.10);
+      --gl-bg-warm-glow:      rgba(240, 100, 160, 0.12);
+    }
+    [data-theme="dark"] .glass-bg[data-bg="rose"],
+    :root:not([data-theme="light"]) .glass-bg[data-bg="rose"] {
+      --gl-color-bg-dark:     #1c0818;
+      --gl-color-bg-mid:      #361430;
+      --gl-color-bg-light:    #421a3a;
+    }
+    [data-theme="light"] .glass-bg[data-bg="rose"] {
+      --gl-color-bg-dark:     #f5dae8;
+      --gl-color-bg-mid:      #fae6f0;
+      --gl-color-bg-light:    #fdf0f6;
+    }
+
+    /* --- Monochrome --- */
+    .glass-bg[data-bg="mono"] {
+      --gl-bg-aurora-1:       rgba(140, 140, 140, 0.12);
+      --gl-bg-aurora-2:       rgba(180, 180, 180, 0.08);
+      --gl-bg-aurora-3:       rgba(120, 120, 120, 0.10);
+      --gl-bg-light-streak-1: rgba(200, 200, 200, 0.10);
+      --gl-bg-light-streak-2: rgba(180, 180, 180, 0.08);
+      --gl-bg-warm-glow:      rgba(160, 160, 160, 0.06);
+    }
+    [data-theme="dark"] .glass-bg[data-bg="mono"],
+    :root:not([data-theme="light"]) .glass-bg[data-bg="mono"] {
+      --gl-color-bg-dark:     #121212;
+      --gl-color-bg-mid:      #1e1e1e;
+      --gl-color-bg-light:    #262626;
+    }
+    [data-theme="light"] .glass-bg[data-bg="mono"] {
+      --gl-color-bg-dark:     #e0e0e0;
+      --gl-color-bg-mid:      #ebebeb;
+      --gl-color-bg-light:    #f5f5f5;
+    }
+
+    /* ============================================================
+       BACKGROUND SWITCHER – UI Styles
+       ============================================================ */
+    .bg-switcher {
+      position: relative;
+      display: inline-flex;
+    }
+
+    .bg-switcher__popover {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.92);
+      background: var(--gl-surface-3);
+      backdrop-filter: blur(var(--gl-blur));
+      -webkit-backdrop-filter: blur(var(--gl-blur));
+      border: 1px solid var(--gl-border-subtle);
+      border-radius: var(--gl-radius-card);
+      padding: 12px 14px;
+      display: flex;
+      gap: 8px;
+      box-shadow: var(--gl-shadow-card);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 100;
+      white-space: nowrap;
+    }
+    .bg-switcher__popover.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) scale(1);
+    }
+
+    .bg-swatch {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--gl-border-subtle);
+      cursor: pointer;
+      transition: var(--gl-transition-fast);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .bg-swatch:hover {
+      transform: scale(1.15);
+      border-color: var(--gl-border-medium);
+    }
+    .bg-swatch.is-active {
+      border-color: var(--gl-color-primary);
+      box-shadow: 0 0 0 2px var(--gl-color-primary);
+    }
+
+    /* Swatch-Farben (Mini-Preview des jeweiligen Hintergrunds) */
+    .bg-swatch--default {
+      background: linear-gradient(135deg, #1b3e50, #1a3d4e, #0e2530);
+    }
+    [data-theme="light"] .bg-swatch--default {
+      background: linear-gradient(135deg, #f5f7fa, #f0f4f8, #e8ecf1);
+    }
+
+    .bg-swatch--ocean {
+      background: linear-gradient(135deg, #10345c, #0c2a4a, #071428);
+    }
+    [data-theme="light"] .bg-swatch--ocean {
+      background: linear-gradient(135deg, #ebf4fc, #dfeef8, #d0e4f5);
+    }
+
+    .bg-swatch--sunset {
+      background: linear-gradient(135deg, #4a2018, #3a1810, #1c0e08);
+    }
+    [data-theme="light"] .bg-swatch--sunset {
+      background: linear-gradient(135deg, #fef2ea, #faeadc, #f5e0d0);
+    }
+
+    .bg-swatch--forest {
+      background: linear-gradient(135deg, #143a28, #0e3020, #06190e);
+    }
+    [data-theme="light"] .bg-swatch--forest {
+      background: linear-gradient(135deg, #eef8f1, #e2f4e8, #d4edda);
+    }
+
+    .bg-swatch--rose {
+      background: linear-gradient(135deg, #421a3a, #361430, #1c0818);
+    }
+    [data-theme="light"] .bg-swatch--rose {
+      background: linear-gradient(135deg, #fdf0f6, #fae6f0, #f5dae8);
+    }
+
+    .bg-swatch--mono {
+      background: linear-gradient(135deg, #262626, #1e1e1e, #121212);
+    }
+    [data-theme="light"] .bg-swatch--mono {
+      background: linear-gradient(135deg, #f5f5f5, #ebebeb, #e0e0e0);
+    }
   </style>
 </head>
 <body>
@@ -30,8 +234,8 @@
   <div class="glass-bg glass-bg--has-tab-bar">
     <div class="screen-content">
 
-      <!-- NAV mit Theme-Toggle -->
-      <p class="section-label">Navigation + Theme</p>
+      <!-- NAV mit Theme-Toggle + Background Switcher -->
+      <p class="section-label">Navigation + Theme + Background</p>
       <nav class="glass-nav gl-mb-md">
         <button class="glass-pill" aria-label="Zurück">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
@@ -51,6 +255,25 @@
           </svg>
         </button>
 
+        <!-- Background Switcher -->
+        <div class="bg-switcher">
+          <button class="glass-pill" aria-label="Hintergrund wechseln" onclick="toggleBgPopover(event)">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="3" ry="3"/>
+              <circle cx="8.5" cy="8.5" r="2"/>
+              <path d="M21 15l-5-5L5 21"/>
+            </svg>
+          </button>
+          <div class="bg-switcher__popover" id="bg-popover">
+            <div class="bg-swatch bg-swatch--default is-active" data-bg="default" onclick="switchBg(this)" title="Default"></div>
+            <div class="bg-swatch bg-swatch--ocean" data-bg="ocean" onclick="switchBg(this)" title="Ocean"></div>
+            <div class="bg-swatch bg-swatch--sunset" data-bg="sunset" onclick="switchBg(this)" title="Sunset"></div>
+            <div class="bg-swatch bg-swatch--forest" data-bg="forest" onclick="switchBg(this)" title="Forest"></div>
+            <div class="bg-swatch bg-swatch--rose" data-bg="rose" onclick="switchBg(this)" title="Rose"></div>
+            <div class="bg-swatch bg-swatch--mono" data-bg="mono" onclick="switchBg(this)" title="Mono"></div>
+          </div>
+        </div>
+
         <button class="glass-pill" aria-label="Menü">
           <svg viewBox="0 0 24 24">
             <circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/>
@@ -60,7 +283,7 @@
         </button>
       </nav>
 
-      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.3</h1>
+      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.3.2</h1>
 
       <!-- CARD -->
       <p class="section-label">Card (Glow)</p>
@@ -411,6 +634,39 @@
     const current = html.getAttribute('data-theme');
     html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
   }
+
+  // Background Switcher
+  function toggleBgPopover(e) {
+    e.stopPropagation();
+    document.getElementById('bg-popover').classList.toggle('is-open');
+  }
+
+  function switchBg(swatch) {
+    const bg = swatch.getAttribute('data-bg');
+    const glassBg = document.querySelector('.glass-bg');
+
+    // Swatch-Highlight aktualisieren
+    document.querySelectorAll('.bg-swatch').forEach(s => s.classList.remove('is-active'));
+    swatch.classList.add('is-active');
+
+    // Hintergrund setzen oder zurücksetzen
+    if (bg === 'default') {
+      glassBg.removeAttribute('data-bg');
+    } else {
+      glassBg.setAttribute('data-bg', bg);
+    }
+
+    // Popover schließen
+    document.getElementById('bg-popover').classList.remove('is-open');
+  }
+
+  // Popover schließen bei Klick außerhalb
+  document.addEventListener('click', function(e) {
+    const popover = document.getElementById('bg-popover');
+    if (!e.target.closest('.bg-switcher')) {
+      popover.classList.remove('is-open');
+    }
+  });
 
   // Toast
   function showToast() {

@@ -7,6 +7,23 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.3.2] – 2026-03-21
+
+### Added
+
+- **Background Switcher** in `showcase.html` – interaktiver Hintergrund-Wechsler mit 6 Farbpresets (Default, Ocean, Sunset, Forest, Rose, Monochrome), um die Glassmorphism-Effekte auf verschiedenen Hintergründen zu testen
+  - Jedes Preset hat eigene Farbwerte für Dark und Light Mode
+  - Reine CSS-Gradienten, keine externen Bilder
+  - Popover-UI mit animierten Farbkreisen (Swatches), konsistent im GlassKit-Stil
+  - Überschreibt ausschließlich Custom Properties via `data-bg`-Attribut – keine Änderungen an `glasskit.css`
+
+### Changed
+
+- Footer in `index.html` aktualisiert: „Gebaut von Jungherz mit 🧊 und viel ❤️ zum Detail.“
+- Versionsangaben in allen Dateien auf 1.3.2 aktualisiert (`package.json`, `glasskit.css`, `README.md`, `index.html`, `showcase.html`)
+
+---
+
 ## [1.3.1] – 2026-03-21
 
 ### Fixed
@@ -163,6 +180,7 @@ erste öffentliche Veröffentlichung als Open-Source-Projekt.
 
 ---
 
+[1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.3.1...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.3.2...HEAD
