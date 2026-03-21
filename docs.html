@@ -8,6 +8,10 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
     background: #0c1a24;
@@ -39,16 +43,28 @@
   }
 
   .docs-sidebar__title {
-    font-size: 14px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1px;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: -0.3px;
     color: var(--gl-color-primary);
-    margin-bottom: 8px;
+    margin-bottom: 2px;
+  }
+
+  .docs-sidebar__subtitle {
+    font-size: 12px;
+    color: var(--gl-color-text-muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.2px;
   }
 
   .docs-sidebar__version {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--gl-color-text-muted);
     margin-bottom: 24px;
+    padding: 4px 10px;
+    background: rgba(245,166,35,0.08);
+    border: 1px solid rgba(245,166,35,0.15);
+    border-radius: 9999px;
+    display: inline-block;
   }
 
   .docs-sidebar__group { margin-bottom: 20px; }
@@ -290,8 +306,9 @@
 
 <!-- SIDEBAR -->
 <aside class="docs-sidebar">
-  <div class="docs-sidebar__title">Glassmorphism UI</div>
-  <div class="docs-sidebar__version">v1.3 – Jungherz GmbH</div>
+  <div class="docs-sidebar__title">GlassKit</div>
+  <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
+  <div class="docs-sidebar__version">v1.3 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
