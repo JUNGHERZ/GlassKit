@@ -48,7 +48,7 @@ GlassKit ist eine vollständige **CSS-Komponentenbibliothek** im Glassmorphism-S
 
 ```html
 <!-- GlassKit CSS -->
-<link rel="stylesheet" href="glassmorphism.css">
+<link rel="stylesheet" href="glasskit.css">
 
 <!-- Optional: eigenes Theme -->
 <link rel="stylesheet" href="theme-override.css">
@@ -262,7 +262,7 @@ Die vollständige Token-Referenz findest du in der [Dokumentation](docs.html).
 
 ```
 glasskit/
-├── glassmorphism.css       # Kern-Library (alle Komponenten + Tokens)
+├── glasskit.css            # Kern-Library (alle Komponenten + Tokens)
 ├── theme-override.css      # Template für eigene Themes
 ├── index.html              # Landingpage mit iPhone-Wireframe
 ├── showcase-v1.3.html      # Interaktiver Showcase aller Komponenten
