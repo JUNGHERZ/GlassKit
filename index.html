@@ -84,17 +84,14 @@
   }
 
   .header__logo {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: var(--idx-btn-bg);
+    width: 40px; height: 40px;
+    border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 10px rgba(245,166,35,0.25);
-  }
-
-  .header__logo svg {
-    width: 20px; height: 20px;
-    fill: none; stroke: white; stroke-width: 2;
-    stroke-linecap: round; stroke-linejoin: round;
+    font-size: 26px;
+    line-height: 1;
+    user-select: none;
+    background: var(--idx-accent-glow);
+    border: 1px solid var(--idx-accent-border);
   }
 
   .header__title {
@@ -552,13 +549,7 @@
      ============================================================ -->
 <header class="header">
   <div class="header__brand">
-    <div class="header__logo">
-      <svg viewBox="0 0 24 24">
-        <rect x="4" y="4" width="16" height="16" rx="3"/>
-        <line x1="9" y1="10" x2="15" y2="10"/>
-        <line x1="9" y1="14" x2="13" y2="14"/>
-      </svg>
-    </div>
+    <div class="header__logo">🧊</div>
     <span class="header__title">GlassKit</span>
     <span class="header__version">v1.3</span>
   </div>
