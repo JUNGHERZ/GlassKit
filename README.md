@@ -444,6 +444,22 @@ The full documentation with **live previews**, **copy-paste code blocks**, and *
 - Theming guide
 - Complete class overview at the end
 
+Live pages:
+- 🌐 Home: https://glasskit.jungherz.com/
+- 📖 Docs: https://glasskit.jungherz.com/docs.html
+- 🧪 Showcase: https://glasskit.jungherz.com/showcase.html
+
+## 🧩 Companion Project: GlassKit Elements
+
+If you want to use GlassKit through **drop-in Web Components** instead of writing the full HTML structure yourself, take a look at **GlassKit Elements**.
+
+GlassKit Elements builds on top of GlassKit CSS and provides a set of vanilla JavaScript custom elements like `glk-button`, `glk-card`, or `glk-input`.
+
+Useful links:
+- GitHub: https://github.com/JUNGHERZ/GlassKit-Elements
+- Live Demo: https://glasskit-elements.jungherz.com/
+- Docs: https://glasskit-elements.jungherz.com/docs.html
+
 ---
 
 ## 🌐 Browser Compatibility
