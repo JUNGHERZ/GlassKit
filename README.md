@@ -11,7 +11,7 @@
 <h1 align="center">🧊 GlassKit</h1>
 
 <p align="center">
-  <img src="intro_screenshot.jpg" alt="GlassKit Preview" width="720">
+  <img src="https://raw.githubusercontent.com/JUNGHERZ/GlassKit/main/intro_screenshot.jpg" alt="GlassKit Preview" width="720">
 </p>
 
 <p align="center">
