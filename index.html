@@ -47,7 +47,7 @@
     --idx-link-hover: #c05a1e;
     --idx-code-bg: rgba(232,133,45,0.08);
     --idx-divider: rgba(0,0,0,0.06);
-    --idx-phone-shadow: rgba(0,0,0,0.15);
+    --idx-phone-shadow: rgba(0,0,0,0.12);
     --idx-btn-bg: linear-gradient(135deg, #e8852d 0%, #c96a1e 100%);
     --idx-btn-shadow: 0 4px 20px rgba(200,100,30,0.2);
     --idx-btn-text: #ffffff;
@@ -370,13 +370,17 @@
     border-radius: 52px;
     overflow: hidden;
     position: relative;
-    background: #000;
+    background: #111;
+    /* Dicker, sichtbarer Rahmen */
     box-shadow:
-      0 0 0 3px #1a1a1a,
-      0 0 0 5px #333,
-      0 20px 60px var(--idx-phone-shadow),
-      0 40px 100px rgba(0,0,0,0.2);
-    /* Erzwingt eigenen Stacking Context für Clip */
+      0 0 0 8px #1c1c1e,
+      0 0 0 10px #3a3a3c,
+      0 0 0 11px #1c1c1e,
+      /* Weicher, tiefer Schatten */
+      0 32px 80px rgba(0, 0, 0, 0.55),
+      0 16px 40px rgba(0, 0, 0, 0.35),
+      0 4px 16px rgba(0, 0, 0, 0.25);
+    /* Overflow-Fix für abgerundete Ecken */
     isolation: isolate;
     -webkit-mask-image: -webkit-radial-gradient(white, black);
     mask-image: radial-gradient(white, black);
@@ -499,6 +503,12 @@
       width: 320px;
       height: 693px;
       border-radius: 44px;
+      box-shadow:
+        0 0 0 8px #1c1c1e,
+        0 0 0 10px #3a3a3c,
+        0 0 0 11px #1c1c1e,
+        0 24px 60px rgba(0, 0, 0, 0.50),
+        0 12px 32px rgba(0, 0, 0, 0.30);
     }
 
     .phone-frame iframe { border-radius: 40px; }
@@ -517,6 +527,12 @@
       width: 280px;
       height: 607px;
       border-radius: 40px;
+      box-shadow:
+        0 0 0 8px #1c1c1e,
+        0 0 0 10px #3a3a3c,
+        0 0 0 11px #1c1c1e,
+        0 20px 50px rgba(0, 0, 0, 0.45),
+        0 10px 28px rgba(0, 0, 0, 0.28);
     }
     .phone-frame iframe { border-radius: 36px; }
     .phone-frame::before { width: 120px; height: 24px; border-radius: 0 0 16px 16px; }
