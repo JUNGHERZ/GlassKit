@@ -3,6 +3,7 @@
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-22-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.3.0-f5a623?style=flat-square" alt="Changelog"></a>
 </p>
 
 <h1 align="center">🧊 GlassKit</h1>
@@ -17,6 +18,7 @@
   <a href="#-komponenten">Komponenten</a> ·
   <a href="#-theming">Theming</a> ·
   <a href="#-dokumentation">Docs</a> ·
+  <a href="CHANGELOG.md">Changelog</a> ·
   <a href="#-lizenz">Lizenz</a>
 </p>
 
@@ -265,7 +267,7 @@ glasskit/
 ├── glasskit.css            # Kern-Library (alle Komponenten + Tokens)
 ├── theme-override.css      # Template für eigene Themes
 ├── index.html              # Landingpage mit iPhone-Wireframe
-├── showcase-v1.3.html      # Interaktiver Showcase aller Komponenten
+├── showcase.html           # Interaktiver Showcase aller Komponenten
 ├── docs.html               # Vollständige Dokumentation
 ├── LICENSE                  # MIT License
 └── README.md               # Diese Datei
@@ -364,6 +366,12 @@ Beiträge sind willkommen! So kannst du helfen:
 GlassKit ist unter der **MIT License** veröffentlicht. Siehe [LICENSE](LICENSE) für Details.
 
 Frei nutzbar für persönliche und kommerzielle Projekte.
+
+---
+
+## 📋 Changelog
+
+Alle Änderungen, Bugfixes und Design Decisions sind im **[CHANGELOG.md](CHANGELOG.md)** dokumentiert.
 
 ---
 
