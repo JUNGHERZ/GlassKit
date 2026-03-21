@@ -24,7 +24,7 @@
 
 ## ✨ Was ist GlassKit?
 
-GlassKit ist eine vollständige **CSS-Komponentenbibliothek** im Glassmorphism-Stil – inspiriert von iOS 18 und visionOS. Sie bietet alles, was moderne mobile Apps und Web-UIs brauchen: von Buttons über Modals bis zur Tab-Bar.
+GlassKit ist eine vollständige **CSS-Komponentenbibliothek** im Glassmorphism-Stil – inspiriert von **iOS 26 Liquid Glass** und visionOS. Apple hat mit iOS 26 das Glasdesign grundlegend neu definiert: tiefere Blur-Effekte, leuchtende Ränder und dynamische Lichtreflexe auf Oberflächen. GlassKit bringt genau diesen Look ins Web – für Apps und UIs, die sich modern und nativ anfühlen.
 
 **Eine CSS-Datei. Keine Build-Tools. Keine Abhängigkeiten.**
 
