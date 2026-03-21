@@ -1,0 +1,127 @@
+/* ============================================================
+   THEME OVERRIDE TEMPLATE
+   
+   Einbindung NACH der glassmorphism.css:
+   <link rel="stylesheet" href="glassmorphism.css">
+   <link rel="stylesheet" href="theme-override.css">
+   
+   Hier nur die Werte überschreiben, die abweichen.
+   Alles andere wird von der Basis-Library geerbt.
+   ============================================================ */
+
+
+/* ============================================================
+   BEISPIEL: Theme "Ocean Blue"
+   ============================================================ */
+
+/*
+:root {
+  --gl-color-primary:        #007AFF;
+  --gl-color-primary-dark:   #0055CC;
+  --gl-color-primary-mid:    #0066E0;
+
+  --gl-border-warm:          rgba(0, 122, 255, 0.35);
+  --gl-border-focus:         rgba(0, 122, 255, 0.60);
+
+  --gl-shadow-btn-primary:   0 6px 24px rgba(0, 100, 220, 0.35),
+                             0 2px 8px rgba(0, 0, 0, 0.15);
+  --gl-shadow-focus:         0 0 0 3px rgba(0, 122, 255, 0.3);
+}
+*/
+
+
+/* ============================================================
+   BEISPIEL: Theme "Emerald Green"
+   ============================================================ */
+
+/*
+:root {
+  --gl-color-primary:        #34c759;
+  --gl-color-primary-dark:   #248a3d;
+  --gl-color-primary-mid:    #30b04e;
+
+  --gl-border-warm:          rgba(52, 199, 89, 0.35);
+  --gl-border-focus:         rgba(52, 199, 89, 0.60);
+
+  --gl-shadow-btn-primary:   0 6px 24px rgba(52, 199, 89, 0.35),
+                             0 2px 8px rgba(0, 0, 0, 0.15);
+  --gl-shadow-focus:         0 0 0 3px rgba(52, 199, 89, 0.3);
+}
+*/
+
+
+/* ============================================================
+   BEISPIEL: Theme "Rose"
+   ============================================================ */
+
+/*
+:root {
+  --gl-color-primary:        #FF2D55;
+  --gl-color-primary-dark:   #CC1A40;
+  --gl-color-primary-mid:    #E0264C;
+
+  --gl-border-warm:          rgba(255, 45, 85, 0.35);
+  --gl-border-focus:         rgba(255, 45, 85, 0.60);
+
+  --gl-shadow-btn-primary:   0 6px 24px rgba(255, 45, 85, 0.35),
+                             0 2px 8px rgba(0, 0, 0, 0.15);
+  --gl-shadow-focus:         0 0 0 3px rgba(255, 45, 85, 0.3);
+}
+*/
+
+
+/* ============================================================
+   BEISPIEL: Dunklerer Hintergrund
+   ============================================================ */
+
+/*
+:root {
+  --gl-color-bg-dark:        #060e14;
+  --gl-color-bg-mid:         #0c1e2a;
+  --gl-color-bg-light:       #102838;
+}
+*/
+
+
+/* ============================================================
+   BEISPIEL: Hellerer / stärkerer Glaseffekt
+   ============================================================ */
+
+/*
+:root {
+  --gl-surface-1:            rgba(255, 255, 255, 0.12);
+  --gl-surface-2:            rgba(255, 255, 255, 0.15);
+  --gl-surface-3:            rgba(255, 255, 255, 0.20);
+  --gl-surface-4:            rgba(255, 255, 255, 0.24);
+  --gl-surface-5:            rgba(255, 255, 255, 0.30);
+  --gl-blur:                 32px;
+  --gl-blur-light:           20px;
+}
+*/
+
+
+/* ============================================================
+   BEISPIEL: Andere Typografie
+   ============================================================ */
+
+/*
+:root {
+  --gl-font-family:          'Inter', -apple-system, sans-serif;
+  --gl-font-size-title:      28px;
+  --gl-radius-card:          28px;
+  --gl-radius-btn:           20px;
+  --gl-radius-input:         16px;
+}
+*/
+
+
+/* ============================================================
+   DEIN CUSTOM THEME
+   Entkommentiere und passe an:
+   ============================================================ */
+
+/*
+:root {
+
+}
+*/

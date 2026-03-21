@@ -1,0 +1,1267 @@
+/* ============================================================
+   GLASSMORPHISM COMPONENT LIBRARY
+   Jungherz GmbH – v1.3
+   
+   Features:
+   - Scoped Reset (box-sizing Fix)
+   - Dark Mode (Standard)
+   - Light Mode via [data-theme="light"]
+   - 22 Komponenten
+   ============================================================ */
+
+
+/* ============================================================
+   0. SCOPED RESET
+   ============================================================ */
+[class*="glass-"],
+[class*="glass-"]::before,
+[class*="glass-"]::after,
+[class*="gl-"] {
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   1. DESIGN TOKENS – DARK MODE (Standard)
+   ============================================================ */
+:root,
+[data-theme="dark"] {
+  /* ---- Farben ---- */
+  --gl-color-primary:        #f5a623;
+  --gl-color-primary-dark:   #d4692a;
+  --gl-color-primary-mid:    #e07a24;
+  --gl-color-bg-dark:        #0e2530;
+  --gl-color-bg-mid:         #1a3d4e;
+  --gl-color-bg-light:       #1b3e50;
+  --gl-color-text:           #ffffff;
+  --gl-color-text-muted:     rgba(255, 255, 255, 0.60);
+  --gl-color-text-on-light:  #1a3a4a;
+  --gl-color-text-heading:   #ffffff;
+  --gl-color-success:        #34c759;
+  --gl-color-error:          #ff3b30;
+  --gl-color-warning:        #ffcc00;
+
+  /* ---- Glas-Oberflächen ---- */
+  --gl-surface-1:            rgba(255, 255, 255, 0.08);
+  --gl-surface-2:            rgba(255, 255, 255, 0.10);
+  --gl-surface-3:            rgba(255, 255, 255, 0.14);
+  --gl-surface-4:            rgba(255, 255, 255, 0.16);
+  --gl-surface-5:            rgba(255, 255, 255, 0.22);
+  --gl-surface-milk:         rgba(255, 255, 255, 0.55);
+  --gl-surface-milk-strong:  rgba(255, 255, 255, 0.75);
+  --gl-surface-overlay:      rgba(0, 0, 0, 0.50);
+
+  /* Card Glow Gradient */
+  --gl-card-glow-top:        rgba(255, 255, 255, 0.32);
+  --gl-card-glow-mid:        rgba(255, 255, 255, 0.22);
+  --gl-card-glow-low:        rgba(255, 255, 255, 0.14);
+  --gl-card-glow-bottom:     rgba(255, 255, 255, 0.08);
+
+  /* Card Text & Icons */
+  --gl-card-icon-color:      rgba(255, 255, 255, 0.8);
+  --gl-card-text-color:      rgba(255, 255, 255, 0.7);
+
+  /* ---- Borders ---- */
+  --gl-border-subtle:        rgba(255, 255, 255, 0.18);
+  --gl-border-medium:        rgba(255, 255, 255, 0.30);
+  --gl-border-strong:        rgba(255, 255, 255, 0.40);
+  --gl-border-milk:          rgba(255, 255, 255, 0.60);
+  --gl-border-warm:          rgba(255, 200, 100, 0.35);
+  --gl-border-focus:         rgba(245, 166, 35, 0.60);
+
+  /* ---- Icon-Farben ---- */
+  --gl-icon-default:         rgba(255, 255, 255, 0.6);
+  --gl-icon-muted:           rgba(255, 255, 255, 0.45);
+  --gl-icon-strong:          rgba(255, 255, 255, 0.8);
+  --gl-icon-on-primary:      #ffffff;
+  --gl-icon-on-secondary:    #1a3a4a;
+  --gl-icon-on-tertiary:     rgba(255, 255, 255, 0.6);
+
+  /* ---- Blur ---- */
+  --gl-blur:                 24px;
+  --gl-blur-light:           16px;
+  --gl-blur-soft:            12px;
+  --gl-blur-heavy:           40px;
+
+  /* ---- Radii ---- */
+  --gl-radius-pill:          50%;
+  --gl-radius-full:          9999px;
+  --gl-radius-card:          24px;
+  --gl-radius-btn:           16px;
+  --gl-radius-input:         14px;
+  --gl-radius-sm:            12px;
+  --gl-radius-xs:            8px;
+
+  /* ---- Shadows ---- */
+  --gl-shadow-card:          0 8px 32px rgba(0, 0, 0, 0.18);
+  --gl-shadow-btn:           0 4px 16px rgba(0, 0, 0, 0.12);
+  --gl-shadow-btn-primary:   0 6px 24px rgba(230, 130, 40, 0.35),
+                             0 2px 8px rgba(0, 0, 0, 0.15);
+  --gl-shadow-glow:          0 2px 12px rgba(255, 255, 255, 0.08),
+                             0 4px 16px rgba(0, 0, 0, 0.15);
+  --gl-shadow-modal:         0 24px 80px rgba(0, 0, 0, 0.4),
+                             0 8px 32px rgba(0, 0, 0, 0.2);
+  --gl-shadow-toast:         0 8px 32px rgba(0, 0, 0, 0.25);
+  --gl-shadow-focus:         0 0 0 3px rgba(245, 166, 35, 0.3);
+
+  /* ---- Inset Highlights ---- */
+  --gl-inset-subtle:         inset 0 1px 1px rgba(255, 255, 255, 0.10);
+  --gl-inset-medium:         inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  --gl-inset-strong:         inset 0 1px 2px rgba(255, 255, 255, 0.25);
+  --gl-inset-milk:           inset 0 1px 2px rgba(255, 255, 255, 0.40);
+
+  /* ---- Hintergrund-Effekte ---- */
+  --gl-bg-aurora-1:          rgba(60, 160, 160, 0.25);
+  --gl-bg-aurora-2:          rgba(200, 140, 60, 0.12);
+  --gl-bg-aurora-3:          rgba(80, 180, 200, 0.18);
+  --gl-bg-light-streak-1:    rgba(90, 210, 200, 0.14);
+  --gl-bg-light-streak-2:    rgba(110, 200, 190, 0.10);
+  --gl-bg-warm-glow:         rgba(220, 160, 70, 0.10);
+
+  /* ---- Spacing ---- */
+  --gl-space-2xs:            4px;
+  --gl-space-xs:             8px;
+  --gl-space-sm:             12px;
+  --gl-space-md:             16px;
+  --gl-space-lg:             20px;
+  --gl-space-xl:             24px;
+  --gl-space-2xl:            32px;
+  --gl-space-3xl:            40px;
+  --gl-space-4xl:            56px;
+
+  /* ---- Typography ---- */
+  --gl-font-family:          -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+                             'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --gl-font-size-xs:         13px;
+  --gl-font-size-sm:         14px;
+  --gl-font-size-base:       15px;
+  --gl-font-size-btn:        16px;
+  --gl-font-size-lg:         18px;
+  --gl-font-size-title:      24px;
+  --gl-font-size-modal:      20px;
+  --gl-font-weight-normal:   400;
+  --gl-font-weight-medium:   500;
+  --gl-font-weight-semibold: 600;
+
+  /* ---- Transitions ---- */
+  --gl-transition:           all 0.25s ease;
+  --gl-transition-fast:      all 0.15s ease;
+  --gl-transition-modal:     all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ---- Tab-Bar ---- */
+  --gl-tab-bar-height:       82px;
+
+  /* ---- Input Placeholder ---- */
+  --gl-placeholder:          rgba(255, 255, 255, 0.35);
+
+  /* ---- Accordion ---- */
+  --gl-accordion-body-color: var(--gl-color-text-muted);
+
+  /* ---- Toggle (inaktiv) ---- */
+  --gl-toggle-thumb-bg:      linear-gradient(to bottom,
+                               rgba(255,255,255,0.9) 0%,
+                               rgba(255,255,255,0.7) 100%);
+
+  /* ---- Range Track ---- */
+  --gl-range-track-bg:       var(--gl-surface-2);
+  --gl-range-track-border:   var(--gl-border-subtle);
+}
+
+
+/* ============================================================
+   1b. DESIGN TOKENS – LIGHT MODE
+   ============================================================ */
+[data-theme="light"] {
+  --gl-color-primary:        #e8852d;
+  --gl-color-primary-dark:   #c96a1e;
+  --gl-color-primary-mid:    #d97826;
+  --gl-color-bg-dark:        #e8ecf1;
+  --gl-color-bg-mid:         #f0f4f8;
+  --gl-color-bg-light:       #f5f7fa;
+  --gl-color-text:           #1a2a36;
+  --gl-color-text-muted:     rgba(26, 42, 54, 0.55);
+  --gl-color-text-on-light:  #1a3a4a;
+  --gl-color-text-heading:   #0f1f2a;
+  --gl-color-success:        #28a745;
+  --gl-color-error:          #dc3545;
+  --gl-color-warning:        #e6a800;
+
+  --gl-surface-1:            rgba(255, 255, 255, 0.50);
+  --gl-surface-2:            rgba(255, 255, 255, 0.60);
+  --gl-surface-3:            rgba(255, 255, 255, 0.70);
+  --gl-surface-4:            rgba(255, 255, 255, 0.75);
+  --gl-surface-5:            rgba(255, 255, 255, 0.85);
+  --gl-surface-milk:         rgba(255, 255, 255, 0.85);
+  --gl-surface-milk-strong:  rgba(255, 255, 255, 0.92);
+  --gl-surface-overlay:      rgba(0, 0, 0, 0.25);
+
+  --gl-card-glow-top:        rgba(255, 255, 255, 0.90);
+  --gl-card-glow-mid:        rgba(255, 255, 255, 0.78);
+  --gl-card-glow-low:        rgba(255, 255, 255, 0.65);
+  --gl-card-glow-bottom:     rgba(255, 255, 255, 0.50);
+
+  --gl-card-icon-color:      rgba(26, 42, 54, 0.5);
+  --gl-card-text-color:      rgba(26, 42, 54, 0.6);
+
+  --gl-border-subtle:        rgba(0, 0, 0, 0.08);
+  --gl-border-medium:        rgba(0, 0, 0, 0.12);
+  --gl-border-strong:        rgba(0, 0, 0, 0.15);
+  --gl-border-milk:          rgba(0, 0, 0, 0.10);
+  --gl-border-warm:          rgba(232, 133, 45, 0.30);
+  --gl-border-focus:         rgba(232, 133, 45, 0.50);
+
+  --gl-icon-default:         rgba(26, 42, 54, 0.50);
+  --gl-icon-muted:           rgba(26, 42, 54, 0.35);
+  --gl-icon-strong:          rgba(26, 42, 54, 0.70);
+  --gl-icon-on-primary:      #ffffff;
+  --gl-icon-on-secondary:    #1a3a4a;
+  --gl-icon-on-tertiary:     rgba(26, 42, 54, 0.50);
+
+  --gl-shadow-card:          0 4px 20px rgba(0, 0, 0, 0.06);
+  --gl-shadow-btn:           0 2px 10px rgba(0, 0, 0, 0.06);
+  --gl-shadow-btn-primary:   0 4px 16px rgba(232, 133, 45, 0.25),
+                             0 2px 6px rgba(0, 0, 0, 0.08);
+  --gl-shadow-glow:          0 2px 8px rgba(0, 0, 0, 0.05),
+                             0 4px 12px rgba(0, 0, 0, 0.04);
+  --gl-shadow-modal:         0 16px 48px rgba(0, 0, 0, 0.12),
+                             0 4px 16px rgba(0, 0, 0, 0.08);
+  --gl-shadow-toast:         0 4px 20px rgba(0, 0, 0, 0.10);
+  --gl-shadow-focus:         0 0 0 3px rgba(232, 133, 45, 0.25);
+
+  --gl-inset-subtle:         inset 0 1px 1px rgba(255, 255, 255, 0.60);
+  --gl-inset-medium:         inset 0 1px 1px rgba(255, 255, 255, 0.70);
+  --gl-inset-strong:         inset 0 1px 2px rgba(255, 255, 255, 0.80);
+  --gl-inset-milk:           inset 0 1px 2px rgba(255, 255, 255, 0.90);
+
+  --gl-bg-aurora-1:          rgba(100, 200, 220, 0.15);
+  --gl-bg-aurora-2:          rgba(240, 180, 100, 0.10);
+  --gl-bg-aurora-3:          rgba(120, 200, 230, 0.12);
+  --gl-bg-light-streak-1:    rgba(140, 230, 220, 0.10);
+  --gl-bg-light-streak-2:    rgba(160, 220, 210, 0.08);
+  --gl-bg-warm-glow:         rgba(240, 180, 100, 0.08);
+
+  --gl-placeholder:          rgba(26, 42, 54, 0.30);
+  --gl-accordion-body-color: var(--gl-color-text-muted);
+  --gl-toggle-thumb-bg:      linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
+  --gl-range-track-bg:       var(--gl-surface-2);
+  --gl-range-track-border:   var(--gl-border-subtle);
+}
+
+
+/* ============================================================
+   2. HINTERGRUND
+   ============================================================ */
+.glass-bg {
+  background:
+    radial-gradient(ellipse at 20% 40%, var(--gl-bg-aurora-1) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 65%, var(--gl-bg-aurora-2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 20%, var(--gl-bg-aurora-3) 0%, transparent 50%),
+    linear-gradient(170deg,
+      var(--gl-color-bg-light) 0%,
+      var(--gl-color-bg-mid) 50%,
+      var(--gl-color-bg-dark) 100%
+    );
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--gl-font-family);
+  color: var(--gl-color-text);
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.4s ease, color 0.3s ease;
+}
+
+.glass-bg::before {
+  content: '';
+  position: absolute;
+  top: 20%; left: -30%;
+  width: 160%; height: 55%;
+  background:
+    radial-gradient(ellipse at 35% 45%, var(--gl-bg-light-streak-1) 0%, transparent 50%),
+    radial-gradient(ellipse at 65% 55%, var(--gl-bg-light-streak-2) 0%, transparent 45%);
+  transform: rotate(-8deg);
+  pointer-events: none; z-index: 0;
+}
+
+.glass-bg::after {
+  content: '';
+  position: absolute;
+  top: 40%; right: -20%;
+  width: 70%; height: 50%;
+  background: radial-gradient(ellipse at center,
+    var(--gl-bg-warm-glow) 0%, transparent 65%
+  );
+  pointer-events: none; z-index: 0;
+}
+
+.glass-bg > * { position: relative; z-index: 1; }
+
+.glass-bg--has-tab-bar {
+  padding-bottom: var(--gl-tab-bar-height);
+}
+
+
+/* ============================================================
+   3. NAVIGATION
+   ============================================================ */
+.glass-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--gl-space-xs);
+}
+
+.glass-pill {
+  width: 46px; height: 46px;
+  border-radius: var(--gl-radius-pill);
+  background: var(--gl-surface-3);
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1.5px solid var(--gl-border-strong);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: var(--gl-transition);
+  color: var(--gl-color-text);
+  box-shadow: var(--gl-shadow-glow), var(--gl-inset-medium);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glass-pill:hover { background: var(--gl-surface-5); transform: scale(1.05); }
+.glass-pill:active { transform: scale(0.95); }
+
+.glass-pill svg {
+  width: 20px; height: 20px;
+  fill: none; stroke: var(--gl-color-text); stroke-width: 2.2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+
+/* ============================================================
+   4. SEITENTITEL
+   ============================================================ */
+.glass-title {
+  text-align: center;
+  color: var(--gl-color-text-heading);
+  font-size: var(--gl-font-size-title);
+  font-weight: var(--gl-font-weight-semibold);
+  line-height: 1.3;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  letter-spacing: -0.3px;
+}
+
+
+/* ============================================================
+   5. GLASS CARD
+   ============================================================ */
+.glass-card {
+  background: var(--gl-surface-2);
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1.5px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-card);
+  padding: var(--gl-space-3xl) var(--gl-space-xl) var(--gl-space-2xl);
+  box-shadow: var(--gl-shadow-card), var(--gl-inset-strong);
+}
+
+.glass-card--glow {
+  position: relative; overflow: hidden;
+  background: linear-gradient(to bottom,
+    var(--gl-card-glow-top) 0%,
+    var(--gl-card-glow-mid) 25%,
+    var(--gl-card-glow-low) 55%,
+    var(--gl-card-glow-bottom) 100%
+  );
+}
+
+.glass-card--glow::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(255,255,255,0.5) 30%,
+    rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.5) 70%, transparent 100%
+  );
+  z-index: 1;
+}
+
+.glass-card__icon {
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto var(--gl-space-lg);
+}
+
+.glass-card__icon svg {
+  width: 64px; height: 64px;
+  stroke: var(--gl-card-icon-color); stroke-width: 1.2; fill: none;
+}
+
+.glass-card__text {
+  color: var(--gl-card-text-color);
+  font-size: var(--gl-font-size-base);
+  font-weight: var(--gl-font-weight-normal);
+  line-height: 1.55; text-align: center;
+}
+
+
+/* ============================================================
+   6. BUTTONS
+   ============================================================ */
+.glass-btn {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; width: 100%; height: 56px;
+  border: none; border-radius: var(--gl-radius-btn);
+  font-family: var(--gl-font-family);
+  font-size: var(--gl-font-size-btn);
+  font-weight: var(--gl-font-weight-semibold);
+  cursor: pointer; transition: var(--gl-transition);
+  outline: none; -webkit-tap-highlight-color: transparent;
+}
+
+.glass-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+/* Primary */
+.glass-btn--primary {
+  background: linear-gradient(135deg,
+    var(--gl-color-primary) 0%, var(--gl-color-primary-mid) 50%,
+    var(--gl-color-primary-dark) 100%
+  );
+  color: white;
+  border: 1px solid var(--gl-border-warm);
+  box-shadow: var(--gl-shadow-btn-primary), var(--gl-inset-strong);
+}
+.glass-btn--primary svg { fill: var(--gl-icon-on-primary); stroke: var(--gl-icon-on-primary); stroke-width: 0; }
+.glass-btn--primary:hover { transform: translateY(-1px); }
+.glass-btn--primary:active { transform: translateY(1px); }
+
+/* Secondary */
+.glass-btn--secondary {
+  background: linear-gradient(to bottom,
+    var(--gl-surface-milk-strong) 0%, var(--gl-surface-milk) 100%
+  );
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1.5px solid var(--gl-border-milk);
+  color: var(--gl-color-text-on-light);
+  box-shadow: var(--gl-shadow-btn), var(--gl-inset-milk);
+}
+.glass-btn--secondary svg {
+  fill: none; stroke: var(--gl-icon-on-secondary);
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.glass-btn--secondary:hover { transform: translateY(-1px); }
+.glass-btn--secondary:active { transform: translateY(1px); }
+
+/* Tertiary */
+.glass-btn--tertiary {
+  background: var(--gl-surface-2);
+  backdrop-filter: blur(var(--gl-blur-light));
+  -webkit-backdrop-filter: blur(var(--gl-blur-light));
+  border: 1px solid var(--gl-border-subtle);
+  color: var(--gl-color-text-muted);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10), var(--gl-inset-subtle);
+}
+.glass-btn--tertiary svg {
+  fill: none; stroke: var(--gl-icon-on-tertiary);
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.glass-btn--tertiary:hover {
+  background: var(--gl-surface-4); color: var(--gl-color-text);
+  transform: translateY(-1px);
+}
+.glass-btn--tertiary:active { transform: translateY(1px); }
+
+/* Größen */
+.glass-btn--sm { height: 44px; font-size: var(--gl-font-size-sm); border-radius: var(--gl-radius-sm); }
+.glass-btn--lg { height: 64px; font-size: var(--gl-font-size-lg); }
+.glass-btn--auto { width: auto; padding: 0 var(--gl-space-xl); }
+
+
+/* ============================================================
+   7. STATUS CARD
+   ============================================================ */
+.glass-status {
+  background: var(--gl-surface-1);
+  backdrop-filter: blur(var(--gl-blur-light));
+  -webkit-backdrop-filter: blur(var(--gl-blur-light));
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-radius-btn);
+  padding: var(--gl-space-md) var(--gl-space-lg);
+  display: flex; align-items: center; gap: var(--gl-space-sm);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08), var(--gl-inset-subtle);
+}
+
+.glass-status svg {
+  width: 20px; height: 20px; flex-shrink: 0;
+  stroke: var(--gl-icon-muted); stroke-width: 2; fill: none;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+.glass-status p {
+  color: var(--gl-color-text-muted);
+  font-size: var(--gl-font-size-sm);
+  font-weight: var(--gl-font-weight-normal);
+  line-height: 1.45;
+}
+
+
+/* ============================================================
+   8. INPUT FIELDS
+   ============================================================ */
+.glass-input-group {
+  display: flex; flex-direction: column; gap: var(--gl-space-xs);
+}
+
+.glass-label {
+  font-size: var(--gl-font-size-sm);
+  font-weight: var(--gl-font-weight-medium);
+  color: var(--gl-icon-strong);
+  padding-left: var(--gl-space-2xs);
+}
+
+.glass-input {
+  width: 100%; height: 52px;
+  padding: 0 var(--gl-space-md);
+  background: var(--gl-surface-2);
+  backdrop-filter: blur(var(--gl-blur-light));
+  -webkit-backdrop-filter: blur(var(--gl-blur-light));
+  border: 1.5px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-input);
+  color: var(--gl-color-text);
+  font-family: var(--gl-font-family);
+  font-size: var(--gl-font-size-base);
+  transition: var(--gl-transition);
+  outline: none;
+  box-shadow: var(--gl-inset-subtle);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glass-input::placeholder { color: var(--gl-placeholder); }
+
+.glass-input:focus {
+  border-color: var(--gl-border-focus);
+  background: var(--gl-surface-3);
+  box-shadow: var(--gl-shadow-focus), var(--gl-inset-medium);
+}
+
+.glass-input:disabled { opacity: 0.4; cursor: not-allowed; }
+.glass-input--error { border-color: var(--gl-color-error); }
+.glass-input--error:focus {
+  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.25), var(--gl-inset-medium);
+}
+
+.glass-hint {
+  font-size: var(--gl-font-size-xs);
+  color: var(--gl-color-text-muted);
+  padding-left: var(--gl-space-2xs);
+}
+.glass-hint--error { color: var(--gl-color-error); }
+
+/* Textarea */
+.glass-textarea {
+  width: 100%; min-height: 120px;
+  padding: var(--gl-space-md);
+  background: var(--gl-surface-2);
+  backdrop-filter: blur(var(--gl-blur-light));
+  -webkit-backdrop-filter: blur(var(--gl-blur-light));
+  border: 1.5px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-input);
+  color: var(--gl-color-text);
+  font-family: var(--gl-font-family);
+  font-size: var(--gl-font-size-base);
+  line-height: 1.5; resize: vertical;
+  transition: var(--gl-transition);
+  outline: none;
+  box-shadow: var(--gl-inset-subtle);
+}
+.glass-textarea::placeholder { color: var(--gl-placeholder); }
+.glass-textarea:focus {
+  border-color: var(--gl-border-focus);
+  background: var(--gl-surface-3);
+  box-shadow: var(--gl-shadow-focus), var(--gl-inset-medium);
+}
+
+
+/* ============================================================
+   9. SELECT
+   ============================================================ */
+.glass-select {
+  width: 100%; height: 52px;
+  padding: 0 var(--gl-space-3xl) 0 var(--gl-space-md);
+  background: var(--gl-surface-2);
+  backdrop-filter: blur(var(--gl-blur-light));
+  -webkit-backdrop-filter: blur(var(--gl-blur-light));
+  border: 1.5px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-input);
+  color: var(--gl-color-text);
+  font-family: var(--gl-font-family);
+  font-size: var(--gl-font-size-base);
+  transition: var(--gl-transition);
+  outline: none;
+  box-shadow: var(--gl-inset-subtle);
+  cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+.glass-select:focus {
+  border-color: var(--gl-border-focus);
+  box-shadow: var(--gl-shadow-focus), var(--gl-inset-medium);
+}
+.glass-select option { background: var(--gl-color-bg-mid); color: var(--gl-color-text); }
+
+
+/* ============================================================
+   10. SEARCH FIELD
+   ============================================================ */
+.glass-search {
+  position: relative; display: flex; align-items: center;
+}
+
+.glass-search__icon {
+  position: absolute; left: var(--gl-space-md);
+  width: 18px; height: 18px;
+  stroke: var(--gl-icon-muted) !important;
+  stroke-width: 2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  fill: none !important;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.glass-search .glass-input {
+  padding-left: 44px;
+  border-radius: var(--gl-radius-full);
+}
+
+
+/* ============================================================
+   11. TOGGLE SWITCH
+   ============================================================ */
+.glass-toggle {
+  display: inline-flex; align-items: center;
+  gap: var(--gl-space-sm); cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glass-toggle__input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+.glass-toggle__track {
+  position: relative; width: 52px; height: 30px;
+  background: var(--gl-surface-2);
+  backdrop-filter: blur(var(--gl-blur-soft));
+  -webkit-backdrop-filter: blur(var(--gl-blur-soft));
+  border: 1.5px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-full);
+  transition: var(--gl-transition);
+  box-shadow: var(--gl-inset-subtle);
+  flex-shrink: 0;
+}
+
+.glass-toggle__thumb {
+  position: absolute; top: 3px; left: 3px;
+  width: 22px; height: 22px;
+  border-radius: var(--gl-radius-pill);
+  background: var(--gl-toggle-thumb-bg);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2), var(--gl-inset-milk);
+  transition: var(--gl-transition);
+}
+
+.glass-toggle__input:checked + .glass-toggle__track {
+  background: linear-gradient(135deg,
+    var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
+  );
+  border-color: var(--gl-border-warm);
+}
+
+.glass-toggle__input:checked + .glass-toggle__track .glass-toggle__thumb {
+  transform: translateX(22px);
+}
+
+.glass-toggle__input:focus-visible + .glass-toggle__track { box-shadow: var(--gl-shadow-focus); }
+
+.glass-toggle__label {
+  font-size: var(--gl-font-size-base);
+  color: var(--gl-color-text);
+  user-select: none;
+}
+
+
+/* ============================================================
+   12. CHECKBOX
+   ============================================================ */
+.glass-checkbox {
+  display: inline-flex; align-items: center;
+  gap: var(--gl-space-sm); cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.glass-checkbox__input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+.glass-checkbox__box {
+  width: 24px; height: 24px;
+  border-radius: var(--gl-radius-xs);
+  background: var(--gl-surface-2);
+  backdrop-filter: blur(var(--gl-blur-soft));
+  -webkit-backdrop-filter: blur(var(--gl-blur-soft));
+  border: 1.5px solid var(--gl-border-medium);
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--gl-transition);
+  box-shadow: var(--gl-inset-subtle);
+  flex-shrink: 0;
+}
+
+.glass-checkbox__box svg {
+  width: 14px; height: 14px;
+  stroke: white; stroke-width: 3; fill: none;
+  stroke-linecap: round; stroke-linejoin: round;
+  opacity: 0; transform: scale(0.5);
+  transition: var(--gl-transition-fast);
+}
+
+.glass-checkbox__input:checked + .glass-checkbox__box {
+  background: linear-gradient(135deg,
+    var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
+  );
+  border-color: var(--gl-border-warm);
+}
+.glass-checkbox__input:checked + .glass-checkbox__box svg { opacity: 1; transform: scale(1); }
+.glass-checkbox__input:focus-visible + .glass-checkbox__box { box-shadow: var(--gl-shadow-focus); }
+
+.glass-checkbox__label {
+  font-size: var(--gl-font-size-base);
+  color: var(--gl-color-text); user-select: none;
+}
+
+
+/* ============================================================
+   13. RADIO BUTTON
+   ============================================================ */
+.glass-radio {
+  display: inline-flex; align-items: center;
+  gap: var(--gl-space-sm); cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.glass-radio__input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+.glass-radio__circle {
+  width: 24px; height: 24px;
+  border-radius: var(--gl-radius-pill);
+  background: var(--gl-surface-2);
+  backdrop-filter: blur(var(--gl-blur-soft));
+  border: 1.5px solid var(--gl-border-medium);
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--gl-transition);
+  box-shadow: var(--gl-inset-subtle);
+  flex-shrink: 0;
+}
+
+.glass-radio__dot {
+  width: 10px; height: 10px;
+  border-radius: var(--gl-radius-pill);
+  background: white;
+  opacity: 0; transform: scale(0);
+  transition: var(--gl-transition-fast);
+}
+
+.glass-radio__input:checked + .glass-radio__circle {
+  background: linear-gradient(135deg,
+    var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
+  );
+  border-color: var(--gl-border-warm);
+}
+.glass-radio__input:checked + .glass-radio__circle .glass-radio__dot { opacity: 1; transform: scale(1); }
+.glass-radio__input:focus-visible + .glass-radio__circle { box-shadow: var(--gl-shadow-focus); }
+
+.glass-radio__label {
+  font-size: var(--gl-font-size-base);
+  color: var(--gl-color-text); user-select: none;
+}
+
+
+/* ============================================================
+   14. RANGE SLIDER
+   ============================================================ */
+.glass-range-group { display: flex; flex-direction: column; gap: var(--gl-space-xs); }
+.glass-range-header { display: flex; justify-content: space-between; align-items: baseline; }
+
+.glass-range-value {
+  font-size: var(--gl-font-size-sm);
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.glass-range {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 6px;
+  border-radius: var(--gl-radius-full);
+  background: var(--gl-range-track-bg);
+  border: 1px solid var(--gl-range-track-border);
+  outline: none; cursor: pointer;
+}
+
+.glass-range::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 26px; height: 26px;
+  border-radius: var(--gl-radius-pill);
+  background: linear-gradient(135deg,
+    var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
+  );
+  border: 2px solid rgba(255,255,255,0.5);
+  box-shadow: 0 2px 8px rgba(230,130,40,0.35), var(--gl-inset-strong);
+  margin-top: -10px; cursor: pointer;
+  transition: var(--gl-transition);
+}
+
+.glass-range::-webkit-slider-thumb:hover { transform: scale(1.1); }
+
+.glass-range::-moz-range-thumb {
+  width: 26px; height: 26px;
+  border-radius: var(--gl-radius-pill);
+  background: linear-gradient(135deg,
+    var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
+  );
+  border: 2px solid rgba(255,255,255,0.5);
+  box-shadow: 0 2px 8px rgba(230,130,40,0.35);
+  cursor: pointer;
+}
+
+.glass-range::-moz-range-track {
+  height: 6px; border-radius: var(--gl-radius-full);
+  background: var(--gl-range-track-bg);
+  border: 1px solid var(--gl-range-track-border);
+}
+
+.glass-range:focus-visible { box-shadow: var(--gl-shadow-focus); }
+
+
+/* ============================================================
+   15. PROGRESS BAR
+   ============================================================ */
+.glass-progress { width: 100%; display: flex; flex-direction: column; gap: var(--gl-space-xs); }
+.glass-progress__header { display: flex; justify-content: space-between; align-items: baseline; }
+
+.glass-progress__label {
+  font-size: var(--gl-font-size-sm);
+  font-weight: var(--gl-font-weight-medium);
+  color: var(--gl-icon-strong);
+}
+
+.glass-progress__value {
+  font-size: var(--gl-font-size-xs);
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.glass-progress__track {
+  width: 100%; height: 8px;
+  border-radius: var(--gl-radius-full);
+  background: var(--gl-surface-2);
+  border: 1px solid var(--gl-border-subtle);
+  overflow: hidden;
+  box-shadow: var(--gl-inset-subtle);
+}
+
+.glass-progress__fill {
+  height: 100%; border-radius: var(--gl-radius-full);
+  background: linear-gradient(90deg,
+    var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
+  );
+  box-shadow: 0 0 8px rgba(245,166,35,0.3), var(--gl-inset-strong);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.glass-progress__fill::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 50%;
+  border-radius: var(--gl-radius-full);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, transparent 100%);
+}
+
+.glass-progress--sm .glass-progress__track { height: 4px; }
+.glass-progress--lg .glass-progress__track { height: 12px; }
+
+.glass-progress--success .glass-progress__fill {
+  background: linear-gradient(90deg, #34c759 0%, #2da44e 100%);
+  box-shadow: 0 0 8px rgba(52,199,89,0.3), var(--gl-inset-strong);
+}
+.glass-progress--error .glass-progress__fill {
+  background: linear-gradient(90deg, #ff3b30 0%, #d63027 100%);
+  box-shadow: 0 0 8px rgba(255,59,48,0.3), var(--gl-inset-strong);
+}
+
+
+/* ============================================================
+   16. MODAL
+   ============================================================ */
+.glass-modal-overlay {
+  position: fixed; inset: 0;
+  background: var(--gl-surface-overlay);
+  backdrop-filter: blur(var(--gl-blur-soft));
+  -webkit-backdrop-filter: blur(var(--gl-blur-soft));
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--gl-space-lg); z-index: 1000;
+  opacity: 0; pointer-events: none;
+  transition: var(--gl-transition-modal);
+  font-family: var(--gl-font-family);
+  -webkit-font-smoothing: antialiased;
+}
+.glass-modal-overlay.is-active { opacity: 1; pointer-events: auto; }
+
+.glass-modal {
+  width: 100%; max-width: 340px;
+  background: linear-gradient(to bottom,
+    var(--gl-card-glow-top) 0%, var(--gl-card-glow-bottom) 100%
+  );
+  backdrop-filter: blur(var(--gl-blur-heavy));
+  -webkit-backdrop-filter: blur(var(--gl-blur-heavy));
+  border: 1.5px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-card);
+  overflow: hidden;
+  box-shadow: var(--gl-shadow-modal);
+  transform: scale(0.9) translateY(20px);
+  transition: var(--gl-transition-modal);
+  position: relative;
+}
+.glass-modal-overlay.is-active .glass-modal { transform: scale(1) translateY(0); }
+
+.glass-modal::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(255,255,255,0.4) 30%,
+    rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.4) 70%, transparent 100%
+  );
+}
+
+.glass-modal__header { padding: var(--gl-space-xl) var(--gl-space-xl) var(--gl-space-sm); text-align: center; }
+.glass-modal__title { font-size: var(--gl-font-size-modal); font-weight: var(--gl-font-weight-semibold); color: var(--gl-color-text); }
+.glass-modal__body { padding: var(--gl-space-sm) var(--gl-space-xl) var(--gl-space-xl); text-align: center; }
+.glass-modal__body p { color: var(--gl-color-text-muted); font-size: var(--gl-font-size-base); line-height: 1.55; }
+.glass-modal__footer { display: flex; border-top: 1px solid var(--gl-border-subtle); }
+
+.glass-modal__action {
+  flex: 1; height: 52px;
+  background: transparent; border: none;
+  font-family: var(--gl-font-family);
+  font-size: var(--gl-font-size-btn);
+  font-weight: var(--gl-font-weight-medium);
+  color: var(--gl-color-text-muted);
+  cursor: pointer; transition: var(--gl-transition-fast); outline: none;
+}
+.glass-modal__action:hover { background: var(--gl-surface-1); }
+.glass-modal__action + .glass-modal__action { border-left: 1px solid var(--gl-border-subtle); }
+.glass-modal__action--primary { color: var(--gl-color-primary); font-weight: var(--gl-font-weight-semibold); }
+.glass-modal__action--danger { color: var(--gl-color-error); font-weight: var(--gl-font-weight-semibold); }
+
+
+/* ============================================================
+   17. TOAST
+   ============================================================ */
+.glass-toast {
+  position: fixed; top: var(--gl-space-4xl); left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  min-width: 280px; max-width: 340px;
+  padding: var(--gl-space-md) var(--gl-space-lg);
+  background: linear-gradient(to bottom,
+    var(--gl-surface-4) 0%, var(--gl-surface-2) 100%
+  );
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-btn);
+  display: flex; align-items: center; gap: var(--gl-space-sm);
+  box-shadow: var(--gl-shadow-toast), var(--gl-inset-medium);
+  z-index: 1100;
+  opacity: 0; pointer-events: none;
+  transition: var(--gl-transition-modal);
+  font-family: var(--gl-font-family);
+  -webkit-font-smoothing: antialiased;
+}
+.glass-toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+.glass-toast__icon {
+  width: 22px; height: 22px; flex-shrink: 0;
+  stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round;
+}
+.glass-toast--success .glass-toast__icon { stroke: var(--gl-color-success); }
+.glass-toast--error   .glass-toast__icon { stroke: var(--gl-color-error); }
+.glass-toast--warning .glass-toast__icon { stroke: var(--gl-color-warning); }
+
+.glass-toast__text {
+  font-size: var(--gl-font-size-sm);
+  font-weight: var(--gl-font-weight-medium);
+  color: var(--gl-color-text); line-height: 1.4;
+}
+
+
+/* ============================================================
+   18. TAB BAR
+   ============================================================ */
+.glass-tab-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: var(--gl-tab-bar-height);
+  background: linear-gradient(to bottom,
+    var(--gl-surface-3) 0%, var(--gl-surface-1) 100%
+  );
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border-top: 1px solid var(--gl-border-subtle);
+  display: flex; justify-content: space-around;
+  align-items: flex-start;
+  padding-top: var(--gl-space-xs);
+  padding-bottom: env(safe-area-inset-bottom, 8px);
+  z-index: 900;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08), var(--gl-inset-subtle);
+}
+
+.glass-tab-bar__item {
+  display: flex; flex-direction: column; align-items: center;
+  gap: var(--gl-space-2xs);
+  padding: var(--gl-space-2xs) var(--gl-space-sm);
+  background: none; border: none; cursor: pointer;
+  transition: var(--gl-transition); outline: none;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 60px;
+}
+
+.glass-tab-bar__icon {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+
+.glass-tab-bar__icon svg {
+  width: 24px; height: 24px; fill: none;
+  stroke: var(--gl-icon-muted); stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round;
+  transition: var(--gl-transition);
+}
+
+.glass-tab-bar__label {
+  font-size: 10px; font-weight: var(--gl-font-weight-medium);
+  color: var(--gl-icon-muted); transition: var(--gl-transition);
+  letter-spacing: 0.2px;
+}
+
+.glass-tab-bar__item.is-active .glass-tab-bar__icon svg {
+  stroke: var(--gl-color-primary);
+  filter: drop-shadow(0 0 6px rgba(245,166,35,0.35));
+}
+.glass-tab-bar__item.is-active .glass-tab-bar__label { color: var(--gl-color-primary); }
+
+.glass-tab-bar__item.is-active .glass-tab-bar__icon::after {
+  content: '';
+  position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 4px;
+  border-radius: var(--gl-radius-pill);
+  background: var(--gl-color-primary);
+  box-shadow: 0 0 6px rgba(245,166,35,0.5);
+}
+
+.glass-tab-bar__item:not(.is-active):hover .glass-tab-bar__icon svg { stroke: var(--gl-icon-default); }
+.glass-tab-bar__item:not(.is-active):hover .glass-tab-bar__label { color: var(--gl-icon-default); }
+
+.glass-tab-bar__badge {
+  position: absolute; top: -4px; right: -8px;
+  min-width: 16px; height: 16px; padding: 0 4px;
+  border-radius: var(--gl-radius-full);
+  background: var(--gl-color-error); color: white;
+  font-size: 10px; font-weight: var(--gl-font-weight-semibold);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 6px rgba(255,59,48,0.4);
+}
+
+
+/* ============================================================
+   19. ACCORDION
+   ============================================================ */
+.glass-accordion { display: flex; flex-direction: column; gap: var(--gl-space-xs); }
+
+.glass-accordion__item {
+  background: var(--gl-surface-2);
+  backdrop-filter: blur(var(--gl-blur-light));
+  -webkit-backdrop-filter: blur(var(--gl-blur-light));
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-radius-btn);
+  overflow: hidden;
+  transition: var(--gl-transition);
+  box-shadow: var(--gl-inset-subtle);
+}
+
+.glass-accordion__item.is-open {
+  background: var(--gl-surface-3);
+  border-color: var(--gl-border-medium);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10), var(--gl-inset-medium);
+}
+
+.glass-accordion__trigger {
+  width: 100%; display: flex; align-items: center;
+  justify-content: space-between; gap: var(--gl-space-sm);
+  padding: var(--gl-space-md) var(--gl-space-lg);
+  background: none; border: none; cursor: pointer;
+  font-family: var(--gl-font-family);
+  font-size: var(--gl-font-size-base);
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text); text-align: left;
+  outline: none; transition: var(--gl-transition);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glass-accordion__trigger:hover { color: var(--gl-color-primary); }
+
+.glass-accordion__trigger-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+.glass-accordion__trigger-icon svg {
+  width: 18px; height: 18px; fill: none;
+  stroke: var(--gl-icon-default); stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-accordion__item.is-open .glass-accordion__trigger-icon svg {
+  transform: rotate(180deg);
+  stroke: var(--gl-color-primary);
+}
+
+.glass-accordion__content {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-accordion__item.is-open .glass-accordion__content { max-height: 500px; }
+
+.glass-accordion__body {
+  padding: 0 var(--gl-space-lg) var(--gl-space-lg);
+  color: var(--gl-accordion-body-color);
+  font-size: var(--gl-font-size-sm); line-height: 1.6;
+}
+
+
+/* ============================================================
+   20. BADGE
+   ============================================================ */
+.glass-badge {
+  display: inline-flex; align-items: center; gap: var(--gl-space-2xs);
+  padding: var(--gl-space-2xs) var(--gl-space-sm);
+  background: var(--gl-surface-3);
+  backdrop-filter: blur(var(--gl-blur-soft));
+  -webkit-backdrop-filter: blur(var(--gl-blur-soft));
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-radius-full);
+  font-size: var(--gl-font-size-xs);
+  font-weight: var(--gl-font-weight-medium);
+  color: var(--gl-color-text);
+  box-shadow: var(--gl-inset-subtle);
+}
+.glass-badge--primary {
+  background: linear-gradient(135deg, rgba(245,166,35,0.25) 0%, rgba(212,105,42,0.20) 100%);
+  border-color: var(--gl-border-warm); color: var(--gl-color-primary);
+}
+.glass-badge--success {
+  background: rgba(52,199,89,0.15); border-color: rgba(52,199,89,0.30); color: var(--gl-color-success);
+}
+.glass-badge--error {
+  background: rgba(255,59,48,0.15); border-color: rgba(255,59,48,0.30); color: var(--gl-color-error);
+}
+
+
+/* ============================================================
+   21. DIVIDER
+   ============================================================ */
+.glass-divider {
+  height: 1px; border: none;
+  background: linear-gradient(90deg,
+    transparent 0%, var(--gl-border-subtle) 20%,
+    var(--gl-border-medium) 50%, var(--gl-border-subtle) 80%, transparent 100%
+  );
+}
+
+
+/* ============================================================
+   22. AVATAR
+   ============================================================ */
+.glass-avatar {
+  width: 44px; height: 44px;
+  border-radius: var(--gl-radius-pill);
+  background: var(--gl-surface-3);
+  backdrop-filter: blur(var(--gl-blur-soft));
+  -webkit-backdrop-filter: blur(var(--gl-blur-soft));
+  border: 1.5px solid var(--gl-border-strong);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  box-shadow: var(--gl-shadow-glow), var(--gl-inset-medium);
+  flex-shrink: 0;
+  font-size: var(--gl-font-size-btn);
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text);
+}
+.glass-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.glass-avatar--sm { width: 32px; height: 32px; font-size: var(--gl-font-size-xs); }
+.glass-avatar--lg { width: 56px; height: 56px; font-size: var(--gl-font-size-lg); }
+
+
+/* ============================================================
+   23. THEME TOGGLE BUTTON
+   ============================================================ */
+.glass-theme-toggle {
+  width: 46px; height: 46px;
+  border-radius: var(--gl-radius-pill);
+  background: var(--gl-surface-3);
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1.5px solid var(--gl-border-strong);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: var(--gl-transition);
+  box-shadow: var(--gl-shadow-glow), var(--gl-inset-medium);
+  outline: none; -webkit-tap-highlight-color: transparent;
+}
+.glass-theme-toggle:hover { background: var(--gl-surface-5); transform: scale(1.05); }
+.glass-theme-toggle:active { transform: scale(0.95); }
+
+.glass-theme-toggle svg {
+  width: 20px; height: 20px;
+  fill: none; stroke: var(--gl-color-text); stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+.glass-theme-toggle .icon-sun  { display: none; }
+.glass-theme-toggle .icon-moon { display: block; }
+[data-theme="light"] .glass-theme-toggle .icon-sun  { display: block; }
+[data-theme="light"] .glass-theme-toggle .icon-moon { display: none; }
+
+
+/* ============================================================
+   24. UTILITIES
+   ============================================================ */
+.gl-stack            { display: flex; flex-direction: column; }
+.gl-row              { display: flex; flex-direction: row; align-items: center; }
+
+.gl-stack--2xs { gap: var(--gl-space-2xs); }
+.gl-stack--xs  { gap: var(--gl-space-xs);  }
+.gl-stack--sm  { gap: var(--gl-space-sm);  }
+.gl-stack--md  { gap: var(--gl-space-md);  }
+.gl-stack--lg  { gap: var(--gl-space-lg);  }
+.gl-stack--xl  { gap: var(--gl-space-xl);  }
+
+.gl-row--xs    { gap: var(--gl-space-xs);  }
+.gl-row--sm    { gap: var(--gl-space-sm);  }
+.gl-row--md    { gap: var(--gl-space-md);  }
+
+.gl-text-center { text-align: center; }
+.gl-text-muted  { color: var(--gl-color-text-muted); }
+.gl-text-sm     { font-size: var(--gl-font-size-sm); }
+
+.gl-mt-sm  { margin-top: var(--gl-space-sm);  }
+.gl-mt-md  { margin-top: var(--gl-space-md);  }
+.gl-mt-lg  { margin-top: var(--gl-space-lg);  }
+.gl-mt-xl  { margin-top: var(--gl-space-xl);  }
+
+.gl-mb-sm  { margin-bottom: var(--gl-space-sm);  }
+.gl-mb-md  { margin-bottom: var(--gl-space-md);  }
+.gl-mb-lg  { margin-bottom: var(--gl-space-lg);  }
+.gl-mb-xl  { margin-bottom: var(--gl-space-xl);  }
+
+.gl-px { padding-left: var(--gl-space-lg); padding-right: var(--gl-space-lg); }
+.gl-w-full { width: 100%; }
+.gl-flex-1 { flex: 1; }

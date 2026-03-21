@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glassmorphism UI Library – Jungherz GmbH</title>
+<style>
+  /* ============================================================
+     RESET & BASE
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --idx-bg: #0c1a24;
+    --idx-bg-card: rgba(255,255,255,0.03);
+    --idx-bg-card-border: rgba(255,255,255,0.06);
+    --idx-text: #e0e8ef;
+    --idx-text-muted: rgba(255,255,255,0.50);
+    --idx-text-heading: #ffffff;
+    --idx-accent: #f5a623;
+    --idx-accent-glow: rgba(245,166,35,0.12);
+    --idx-accent-border: rgba(245,166,35,0.20);
+    --idx-link: #f5a623;
+    --idx-link-hover: #ffc46b;
+    --idx-code-bg: rgba(245,166,35,0.08);
+    --idx-divider: rgba(255,255,255,0.08);
+    --idx-phone-shadow: rgba(0,0,0,0.5);
+    --idx-btn-bg: linear-gradient(135deg, #f5a623 0%, #d4692a 100%);
+    --idx-btn-shadow: 0 4px 20px rgba(230,130,40,0.3);
+    --idx-btn-text: #ffffff;
+    --idx-ghost-bg: rgba(255,255,255,0.06);
+    --idx-ghost-border: rgba(255,255,255,0.12);
+    --idx-ghost-text: rgba(255,255,255,0.7);
+  }
+
+  [data-theme="light"] {
+    --idx-bg: #f0f4f8;
+    --idx-bg-card: rgba(255,255,255,0.7);
+    --idx-bg-card-border: rgba(0,0,0,0.06);
+    --idx-text: #1a2a36;
+    --idx-text-muted: rgba(26,42,54,0.50);
+    --idx-text-heading: #0f1f2a;
+    --idx-accent: #e8852d;
+    --idx-accent-glow: rgba(232,133,45,0.10);
+    --idx-accent-border: rgba(232,133,45,0.20);
+    --idx-link: #d4692a;
+    --idx-link-hover: #c05a1e;
+    --idx-code-bg: rgba(232,133,45,0.08);
+    --idx-divider: rgba(0,0,0,0.06);
+    --idx-phone-shadow: rgba(0,0,0,0.15);
+    --idx-btn-bg: linear-gradient(135deg, #e8852d 0%, #c96a1e 100%);
+    --idx-btn-shadow: 0 4px 20px rgba(200,100,30,0.2);
+    --idx-btn-text: #ffffff;
+    --idx-ghost-bg: rgba(0,0,0,0.03);
+    --idx-ghost-border: rgba(0,0,0,0.08);
+    --idx-ghost-text: rgba(26,42,54,0.6);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+    background: var(--idx-bg);
+    color: var(--idx-text);
+    min-height: 100vh;
+    transition: background 0.4s ease, color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============================================================
+     HEADER
+     ============================================================ */
+  .header {
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .header__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header__logo {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--idx-btn-bg);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 10px rgba(245,166,35,0.25);
+  }
+
+  .header__logo svg {
+    width: 20px; height: 20px;
+    fill: none; stroke: white; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .header__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--idx-text-heading);
+    letter-spacing: -0.3px;
+  }
+
+  .header__version {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--idx-accent);
+    background: var(--idx-accent-glow);
+    border: 1px solid var(--idx-accent-border);
+    padding: 2px 8px;
+    border-radius: 9999px;
+    margin-left: 8px;
+  }
+
+  .header__actions {
+    display: flex; gap: 8px; align-items: center;
+  }
+
+  .theme-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--idx-ghost-bg);
+    border: 1px solid var(--idx-ghost-border);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .theme-btn:hover { background: var(--idx-accent-glow); transform: scale(1.05); }
+  .theme-btn svg {
+    width: 18px; height: 18px;
+    fill: none; stroke: var(--idx-text); stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .theme-btn .icon-sun { display: none; }
+  .theme-btn .icon-moon { display: block; }
+  [data-theme="light"] .theme-btn .icon-sun { display: block; }
+  [data-theme="light"] .theme-btn .icon-moon { display: none; }
+
+  /* ============================================================
+     HERO SECTION
+     ============================================================ */
+  .hero {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+    display: flex;
+    gap: 64px;
+    align-items: flex-start;
+  }
+
+  /* ---- Info Side ---- */
+  .hero__info {
+    flex: 1;
+    min-width: 320px;
+    padding-top: 24px;
+  }
+
+  .hero__badge-row {
+    display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+  }
+
+  .hero__badge {
+    display: inline-flex; align-items: center;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 12px; font-weight: 600;
+    background: var(--idx-accent-glow);
+    color: var(--idx-accent);
+    border: 1px solid var(--idx-accent-border);
+  }
+
+  .hero__headline {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--idx-text-heading);
+    letter-spacing: -0.8px;
+    margin-bottom: 16px;
+  }
+
+  .hero__headline span {
+    background: linear-gradient(135deg, #f5a623, #e07a24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero__description {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--idx-text-muted);
+    margin-bottom: 32px;
+    max-width: 480px;
+  }
+
+  .hero__cta-row {
+    display: flex; gap: 12px; margin-bottom: 48px; flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px;
+    background: var(--idx-btn-bg);
+    color: var(--idx-btn-text);
+    font-size: 15px; font-weight: 600;
+    border: none; border-radius: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: var(--idx-btn-shadow);
+    transition: all 0.25s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+  .btn-primary svg {
+    width: 18px; height: 18px;
+    fill: none; stroke: white; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px;
+    background: var(--idx-ghost-bg);
+    color: var(--idx-ghost-text);
+    font-size: 15px; font-weight: 600;
+    border: 1px solid var(--idx-ghost-border);
+    border-radius: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+  .btn-ghost:hover {
+    background: var(--idx-accent-glow);
+    color: var(--idx-accent);
+    border-color: var(--idx-accent-border);
+    transform: translateY(-2px);
+  }
+  .btn-ghost svg {
+    width: 18px; height: 18px;
+    fill: none; stroke: currentColor; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* ---- Feature List ---- */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .feature-card {
+    padding: 20px;
+    border-radius: 16px;
+    background: var(--idx-bg-card);
+    border: 1px solid var(--idx-bg-card-border);
+    transition: all 0.2s;
+  }
+
+  .feature-card:hover {
+    border-color: var(--idx-accent-border);
+    background: var(--idx-accent-glow);
+  }
+
+  .feature-card__icon {
+    width: 32px; height: 32px;
+    margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .feature-card__icon svg {
+    width: 24px; height: 24px;
+    fill: none; stroke: var(--idx-accent); stroke-width: 1.8;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .feature-card__title {
+    font-size: 14px; font-weight: 600;
+    color: var(--idx-text-heading);
+    margin-bottom: 4px;
+  }
+
+  .feature-card__desc {
+    font-size: 13px;
+    color: var(--idx-text-muted);
+    line-height: 1.5;
+  }
+
+  /* ---- File List ---- */
+  .file-list {
+    margin-top: 8px;
+  }
+
+  .file-list__title {
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--idx-text-muted);
+    margin-bottom: 12px;
+  }
+
+  .file-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: var(--idx-bg-card);
+    border: 1px solid var(--idx-bg-card-border);
+    margin-bottom: 8px;
+    transition: all 0.15s;
+  }
+
+  .file-item:hover {
+    border-color: var(--idx-accent-border);
+  }
+
+  .file-item__icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .file-item__icon--css {
+    background: rgba(66, 153, 225, 0.12);
+  }
+  .file-item__icon--css svg { stroke: #4299e5; }
+
+  .file-item__icon--html {
+    background: rgba(245, 166, 35, 0.12);
+  }
+  .file-item__icon--html svg { stroke: #f5a623; }
+
+  .file-item__icon svg {
+    width: 16px; height: 16px;
+    fill: none; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .file-item__name {
+    font-size: 14px; font-weight: 600;
+    color: var(--idx-text-heading);
+  }
+
+  .file-item__desc {
+    font-size: 12px;
+    color: var(--idx-text-muted);
+  }
+
+  .file-item__size {
+    margin-left: auto;
+    font-size: 12px; font-weight: 500;
+    color: var(--idx-text-muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* ============================================================
+     PHONE FRAME
+     ============================================================ */
+  .hero__phone {
+    flex-shrink: 0;
+    position: sticky;
+    top: 40px;
+  }
+
+  .phone-frame {
+    width: 375px;
+    height: 812px;
+    border-radius: 52px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+    box-shadow:
+      0 0 0 3px #1a1a1a,
+      0 0 0 5px #333,
+      0 20px 60px var(--idx-phone-shadow),
+      0 40px 100px rgba(0,0,0,0.2);
+    /* Erzwingt eigenen Stacking Context für Clip */
+    isolation: isolate;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    mask-image: radial-gradient(white, black);
+    transform: translateZ(0);
+  }
+
+  /* Notch */
+  .phone-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 32px;
+    background: #000;
+    border-radius: 0 0 20px 20px;
+    z-index: 10;
+  }
+
+  /* Home Indicator */
+  .phone-frame::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 134px;
+    height: 5px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 9999px;
+    z-index: 10;
+  }
+
+  .phone-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    background: #0e2530;
+    display: block;
+  }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  .footer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 40px;
+    border-top: 1px solid var(--idx-divider);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer__text {
+    font-size: 13px;
+    color: var(--idx-text-muted);
+  }
+
+  .footer__text a {
+    color: var(--idx-link);
+    text-decoration: none;
+  }
+  .footer__text a:hover { color: var(--idx-link-hover); }
+
+  .footer__links {
+    display: flex; gap: 20px;
+  }
+
+  .footer__links a {
+    font-size: 13px; font-weight: 500;
+    color: var(--idx-text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer__links a:hover { color: var(--idx-accent); }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 960px) {
+    .hero {
+      flex-direction: column-reverse;
+      align-items: center;
+      padding: 24px 20px 60px;
+      gap: 40px;
+    }
+
+    .hero__info {
+      min-width: unset;
+      text-align: center;
+      padding-top: 0;
+    }
+
+    .hero__headline { font-size: 32px; }
+
+    .hero__description {
+      max-width: 100%;
+    }
+
+    .hero__badge-row,
+    .hero__cta-row {
+      justify-content: center;
+    }
+
+    .features {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero__phone {
+      position: static;
+    }
+
+    .phone-frame {
+      width: 320px;
+      height: 693px;
+      border-radius: 44px;
+    }
+
+    .phone-frame iframe { border-radius: 40px; }
+    .phone-frame::before { width: 140px; height: 28px; }
+
+    .header { padding: 20px; }
+    .footer {
+      flex-direction: column;
+      gap: 12px; text-align: center;
+      padding: 24px 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .phone-frame {
+      width: 280px;
+      height: 607px;
+      border-radius: 40px;
+    }
+    .phone-frame iframe { border-radius: 36px; }
+    .phone-frame::before { width: 120px; height: 24px; border-radius: 0 0 16px 16px; }
+    .hero__headline { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="header">
+  <div class="header__brand">
+    <div class="header__logo">
+      <svg viewBox="0 0 24 24">
+        <rect x="4" y="4" width="16" height="16" rx="3"/>
+        <line x1="9" y1="10" x2="15" y2="10"/>
+        <line x1="9" y1="14" x2="13" y2="14"/>
+      </svg>
+    </div>
+    <span class="header__title">Glassmorphism UI</span>
+    <span class="header__version">v1.3</span>
+  </div>
+
+  <div class="header__actions">
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Theme wechseln">
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero">
+
+  <!-- Info Side -->
+  <div class="hero__info">
+
+    <div class="hero__badge-row">
+      <span class="hero__badge">CSS only</span>
+      <span class="hero__badge">22 Komponenten</span>
+      <span class="hero__badge">Dark + Light</span>
+    </div>
+
+    <h1 class="hero__headline">
+      Moderne UI mit<br>
+      <span>Glassmorphism</span>
+    </h1>
+
+    <p class="hero__description">
+      Eine vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. 
+      Keine Abhängigkeiten, volle Kontrolle über Design Tokens, Dark & Light Mode out of the box.
+    </p>
+
+    <div class="hero__cta-row">
+      <a href="docs.html" class="btn-primary">
+        <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Dokumentation
+      </a>
+      <a href="showcase-v1.3.html" class="btn-ghost">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Live Showcase
+      </a>
+    </div>
+
+    <!-- Features -->
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="feature-card__title">Reines CSS</div>
+        <div class="feature-card__desc">Keine Build-Tools, kein JavaScript-Framework nötig. Eine Datei einbinden – fertig.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+        </div>
+        <div class="feature-card__title">Dark & Light</div>
+        <div class="feature-card__desc">Beide Themes komplett über Design Tokens gesteuert. Ein Attribut wechseln genügt.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="feature-card__title">22 Komponenten</div>
+        <div class="feature-card__desc">Von Buttons über Modals bis Tab-Bar – alles, was eine mobile App braucht.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17L17 7"/></svg>
+        </div>
+        <div class="feature-card__title">Themeable</div>
+        <div class="feature-card__desc">Eigene Markenfarben via theme-override.css – keine Kern-Library Änderung nötig.</div>
+      </div>
+    </div>
+
+    <!-- File List -->
+    <div class="file-list">
+      <div class="file-list__title">Projektdateien</div>
+
+      <div class="file-item">
+        <div class="file-item__icon file-item__icon--css">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div>
+          <div class="file-item__name">glassmorphism.css</div>
+          <div class="file-item__desc">Kern-Library mit allen Komponenten & Tokens</div>
+        </div>
+        <span class="file-item__size">44 KB</span>
+      </div>
+
+      <a href="docs.html" style="text-decoration:none; color:inherit;">
+        <div class="file-item">
+          <div class="file-item__icon file-item__icon--html">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div>
+            <div class="file-item__name">docs.html</div>
+            <div class="file-item__desc">Vollständige Dokumentation & Cheat-Sheet</div>
+          </div>
+          <span class="file-item__size">44 KB</span>
+        </div>
+      </a>
+
+      <a href="showcase-v1.3.html" style="text-decoration:none; color:inherit;">
+        <div class="file-item">
+          <div class="file-item__icon file-item__icon--html">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div>
+            <div class="file-item__name">showcase-v1.3.html</div>
+            <div class="file-item__desc">Interaktiver Showcase aller Komponenten</div>
+          </div>
+          <span class="file-item__size">18 KB</span>
+        </div>
+      </a>
+
+      <div class="file-item">
+        <div class="file-item__icon file-item__icon--css">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div>
+          <div class="file-item__name">theme-override.css</div>
+          <div class="file-item__desc">Template für eigene Themes & Markenfarben</div>
+        </div>
+        <span class="file-item__size">3.6 KB</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Phone Frame -->
+  <div class="hero__phone">
+    <div class="phone-frame">
+      <iframe src="showcase-v1.3.html" title="Glassmorphism UI Showcase"></iframe>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="footer__text">
+    Glassmorphism UI Library v1.3 – Erstellt von <a href="https://www.jungherz.com" target="_blank">Jungherz GmbH</a>
+  </div>
+  <div class="footer__links">
+    <a href="docs.html">Dokumentation</a>
+    <a href="showcase-v1.3.html">Showcase</a>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+
+    // Sync iframe theme
+    const iframe = document.querySelector('.phone-frame iframe');
+    if (iframe && iframe.contentDocument) {
+      iframe.contentDocument.documentElement.setAttribute('data-theme', next);
+    }
+  }
+
+  // Sync theme on iframe load
+  document.querySelector('.phone-frame iframe').addEventListener('load', function() {
+    const theme = document.documentElement.getAttribute('data-theme');
+    if (this.contentDocument) {
+      this.contentDocument.documentElement.setAttribute('data-theme', theme);
+    }
+  });
+</script>
+
+</body>
+</html>

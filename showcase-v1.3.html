@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Glassmorphism v1.3 – Jungherz GmbH</title>
+  <link rel="stylesheet" href="glassmorphism.css">
+  <!-- Optional: Theme Override einbinden -->
+  <!-- <link rel="stylesheet" href="theme-override.css"> -->
+  <style>
+    body { margin: 0; display: flex; justify-content: center; background: #dde1e7; }
+    .preview-frame {
+      width: 375px; min-height: 100vh; overflow: hidden;
+      box-shadow: 0 0 60px rgba(0,0,0,0.15);
+    }
+    .preview-frame .glass-bg { min-height: 100vh; }
+    .screen-content { padding: 50px 20px 100px; }
+    .section-label {
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--gl-icon-muted);
+      margin-top: 32px; margin-bottom: 12px; padding-left: 2px;
+    }
+    .section-label:first-child { margin-top: 0; }
+  </style>
+</head>
+<body>
+
+<div class="preview-frame">
+  <div class="glass-bg glass-bg--has-tab-bar">
+    <div class="screen-content">
+
+      <!-- NAV mit Theme-Toggle -->
+      <p class="section-label">Navigation + Theme</p>
+      <nav class="glass-nav gl-mb-md">
+        <button class="glass-pill" aria-label="Zurück">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="glass-theme-toggle" aria-label="Theme wechseln" onclick="toggleTheme()">
+          <svg class="icon-moon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+
+        <button class="glass-pill" aria-label="Menü">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
+        </button>
+      </nav>
+
+      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.3</h1>
+
+      <!-- CARD -->
+      <p class="section-label">Card (Glow)</p>
+      <div class="glass-card glass-card--glow gl-mb-md">
+        <div class="glass-card__icon">
+          <svg viewBox="0 0 64 64">
+            <rect x="12" y="4" width="32" height="42" rx="3" ry="3"/>
+            <polyline points="32 4 32 16 44 16"/>
+            <line x1="20" y1="24" x2="36" y2="24"/>
+            <line x1="20" y1="30" x2="36" y2="30"/>
+            <circle cx="44" cy="44" r="12"/>
+            <line x1="44" y1="38" x2="44" y2="50"/>
+            <line x1="38" y1="44" x2="50" y2="44"/>
+          </svg>
+        </div>
+        <p class="glass-card__text">Vertrag fotografieren, Kanten prüfen und gesammelt hochladen.</p>
+      </div>
+
+      <!-- BUTTONS mit Icons -->
+      <p class="section-label">Buttons</p>
+      <div class="gl-stack gl-stack--sm gl-mb-md">
+        <button class="glass-btn glass-btn--primary">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="5" width="20" height="15" rx="2" fill="currentColor"/>
+            <circle cx="12" cy="13" r="4" fill="none" stroke="#e8852d" stroke-width="2"/>
+            <circle cx="12" cy="13" r="1.5" fill="#e8852d"/>
+            <rect x="14" y="6.5" width="5" height="2.5" rx="0.5" fill="#e8852d"/>
+          </svg>
+          Vertrag aufnehmen
+        </button>
+        <button class="glass-btn glass-btn--secondary">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 16V4"/><polyline points="8 8 12 4 16 8"/>
+            <path d="M20 17v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1"/>
+          </svg>
+          Verträge hochladen
+        </button>
+        <button class="glass-btn glass-btn--tertiary">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <line x1="9" y1="11" x2="15" y2="11"/>
+            <line x1="9" y1="14" x2="13" y2="14"/>
+          </svg>
+          Zur Vertragsübersicht
+        </button>
+      </div>
+
+      <!-- BADGES -->
+      <p class="section-label">Badges</p>
+      <div class="gl-row gl-row--sm gl-mb-md" style="flex-wrap:wrap">
+        <span class="glass-badge">Standard</span>
+        <span class="glass-badge glass-badge--primary">Aktiv</span>
+        <span class="glass-badge glass-badge--success">Fertig</span>
+        <span class="glass-badge glass-badge--error">Fehler</span>
+      </div>
+
+      <hr class="glass-divider gl-mb-md">
+
+      <!-- PROGRESS -->
+      <p class="section-label">Progress Bars</p>
+      <div class="gl-stack gl-stack--lg gl-mb-md">
+        <div class="glass-progress">
+          <div class="glass-progress__header">
+            <span class="glass-progress__label">Upload-Fortschritt</span>
+            <span class="glass-progress__value">68%</span>
+          </div>
+          <div class="glass-progress__track">
+            <div class="glass-progress__fill" style="width: 68%"></div>
+          </div>
+        </div>
+        <div class="glass-progress glass-progress--success">
+          <div class="glass-progress__header">
+            <span class="glass-progress__label">Abgeschlossen</span>
+            <span class="glass-progress__value">100%</span>
+          </div>
+          <div class="glass-progress__track">
+            <div class="glass-progress__fill" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="glass-divider gl-mb-md">
+
+      <!-- RANGE -->
+      <p class="section-label">Range Slider</p>
+      <div class="gl-stack gl-stack--lg gl-mb-md">
+        <div class="glass-range-group">
+          <div class="glass-range-header">
+            <label class="glass-label">Bildqualität</label>
+            <span class="glass-range-value" id="quality-val">75%</span>
+          </div>
+          <input class="glass-range" type="range" min="0" max="100" value="75"
+            oninput="document.getElementById('quality-val').textContent=this.value+'%'">
+        </div>
+      </div>
+
+      <hr class="glass-divider gl-mb-md">
+
+      <!-- INPUTS -->
+      <p class="section-label">Eingabefelder</p>
+      <div class="gl-stack gl-stack--md gl-mb-md">
+        <div class="glass-input-group">
+          <label class="glass-label">Vertragsname</label>
+          <input class="glass-input" type="text" placeholder="z. B. Mietvertrag Wohnung">
+        </div>
+        <div class="glass-input-group">
+          <label class="glass-label">E-Mail</label>
+          <input class="glass-input glass-input--error" type="email" value="ungueltig@">
+          <span class="glass-hint glass-hint--error">Bitte gültige E-Mail angeben</span>
+        </div>
+        <div class="glass-input-group">
+          <label class="glass-label">Kategorie</label>
+          <select class="glass-select">
+            <option>Bitte wählen…</option>
+            <option>Versicherung</option>
+            <option>Mietvertrag</option>
+          </select>
+        </div>
+        <div class="glass-input-group">
+          <label class="glass-label">Notizen</label>
+          <textarea class="glass-textarea" placeholder="Optionale Anmerkungen…"></textarea>
+        </div>
+      </div>
+
+      <!-- SEARCH -->
+      <p class="section-label">Suchfeld</p>
+      <div class="glass-search gl-mb-md">
+        <svg class="glass-search__icon" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input class="glass-input" type="search" placeholder="Verträge durchsuchen…">
+      </div>
+
+      <hr class="glass-divider gl-mb-md">
+
+      <!-- TOGGLES -->
+      <p class="section-label">Toggle Switches</p>
+      <div class="gl-stack gl-stack--md gl-mb-md">
+        <label class="glass-toggle">
+          <input class="glass-toggle__input" type="checkbox" checked>
+          <span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span>
+          <span class="glass-toggle__label">Push-Benachrichtigungen</span>
+        </label>
+        <label class="glass-toggle">
+          <input class="glass-toggle__input" type="checkbox">
+          <span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span>
+          <span class="glass-toggle__label">Automatischer Upload</span>
+        </label>
+      </div>
+
+      <!-- CHECKBOXES -->
+      <p class="section-label">Checkboxen</p>
+      <div class="gl-stack gl-stack--sm gl-mb-md">
+        <label class="glass-checkbox">
+          <input class="glass-checkbox__input" type="checkbox" checked>
+          <span class="glass-checkbox__box">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="glass-checkbox__label">AGB akzeptieren</span>
+        </label>
+        <label class="glass-checkbox">
+          <input class="glass-checkbox__input" type="checkbox">
+          <span class="glass-checkbox__box">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="glass-checkbox__label">Newsletter abonnieren</span>
+        </label>
+      </div>
+
+      <!-- RADIOS -->
+      <p class="section-label">Radio Buttons</p>
+      <div class="gl-stack gl-stack--sm gl-mb-md">
+        <label class="glass-radio">
+          <input class="glass-radio__input" type="radio" name="doctype" checked>
+          <span class="glass-radio__circle"><span class="glass-radio__dot"></span></span>
+          <span class="glass-radio__label">Mietvertrag</span>
+        </label>
+        <label class="glass-radio">
+          <input class="glass-radio__input" type="radio" name="doctype">
+          <span class="glass-radio__circle"><span class="glass-radio__dot"></span></span>
+          <span class="glass-radio__label">Versicherung</span>
+        </label>
+      </div>
+
+      <hr class="glass-divider gl-mb-md">
+
+      <!-- ACCORDION -->
+      <p class="section-label">Accordion</p>
+      <div class="glass-accordion gl-mb-md">
+        <div class="glass-accordion__item is-open">
+          <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>Was ist die Glassmorphism UI?</span>
+            <span class="glass-accordion__trigger-icon">
+              <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="glass-accordion__content">
+            <div class="glass-accordion__body">
+              Die Glassmorphism UI ist eine Komponentenbibliothek der Jungherz GmbH.
+              Modern, barrierefrei und vollständig per Design Tokens anpassbar.
+            </div>
+          </div>
+        </div>
+        <div class="glass-accordion__item">
+          <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>Welche Formate werden unterstützt?</span>
+            <span class="glass-accordion__trigger-icon">
+              <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="glass-accordion__content">
+            <div class="glass-accordion__body">
+              PDF, JPG, PNG und HEIC. Gescannte Dokumente werden automatisch als PDF gespeichert.
+            </div>
+          </div>
+        </div>
+        <div class="glass-accordion__item">
+          <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>Sind meine Daten sicher?</span>
+            <span class="glass-accordion__trigger-icon">
+              <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="glass-accordion__content">
+            <div class="glass-accordion__body">
+              Alle Daten werden Ende-zu-Ende verschlüsselt auf deutschen Servern gespeichert. DSGVO-konform.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AVATARS -->
+      <p class="section-label">Avatare</p>
+      <div class="gl-row gl-row--sm gl-mb-md">
+        <div class="glass-avatar glass-avatar--sm">S</div>
+        <div class="glass-avatar">M</div>
+        <div class="glass-avatar glass-avatar--lg">L</div>
+      </div>
+
+      <!-- STATUS -->
+      <p class="section-label">Status-Hinweis</p>
+      <div class="glass-status gl-mb-md">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12" y2="8"/>
+        </svg>
+        <p>Noch keine aufgenommenen Verträge vorhanden.</p>
+      </div>
+
+      <hr class="glass-divider gl-mb-md">
+
+      <!-- MODAL + TOAST -->
+      <p class="section-label">Dialoge</p>
+      <div class="gl-stack gl-stack--sm">
+        <button class="glass-btn glass-btn--tertiary"
+          onclick="document.getElementById('demo-modal').classList.add('is-active')">
+          Modal öffnen
+        </button>
+        <button class="glass-btn glass-btn--tertiary" onclick="showToast()">
+          Toast anzeigen
+        </button>
+      </div>
+
+    </div>
+
+    <!-- TAB BAR -->
+    <nav class="glass-tab-bar">
+      <button class="glass-tab-bar__item is-active" onclick="activateTab(this)">
+        <span class="glass-tab-bar__icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </span>
+        <span class="glass-tab-bar__label">Start</span>
+      </button>
+      <button class="glass-tab-bar__item" onclick="activateTab(this)">
+        <span class="glass-tab-bar__icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+          <span class="glass-tab-bar__badge">3</span>
+        </span>
+        <span class="glass-tab-bar__label">Verträge</span>
+      </button>
+      <button class="glass-tab-bar__item" onclick="activateTab(this)">
+        <span class="glass-tab-bar__icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 16V4"/><polyline points="8 8 12 4 16 8"/>
+            <path d="M20 17v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1"/>
+          </svg>
+        </span>
+        <span class="glass-tab-bar__label">Upload</span>
+      </button>
+      <button class="glass-tab-bar__item" onclick="activateTab(this)">
+        <span class="glass-tab-bar__icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </span>
+        <span class="glass-tab-bar__label">Einstellungen</span>
+      </button>
+    </nav>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="glass-modal-overlay" id="demo-modal">
+  <div class="glass-modal">
+    <div class="glass-modal__header">
+      <h2 class="glass-modal__title">Vertrag löschen?</h2>
+    </div>
+    <div class="glass-modal__body">
+      <p>Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
+    </div>
+    <div class="glass-modal__footer">
+      <button class="glass-modal__action"
+        onclick="document.getElementById('demo-modal').classList.remove('is-active')">
+        Abbrechen
+      </button>
+      <button class="glass-modal__action glass-modal__action--danger"
+        onclick="document.getElementById('demo-modal').classList.remove('is-active')">
+        Löschen
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="glass-toast glass-toast--success" id="demo-toast">
+  <svg class="glass-toast__icon" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10"/>
+    <polyline points="8 12 11 15 16 9"/>
+  </svg>
+  <span class="glass-toast__text">Vertrag erfolgreich hochgeladen!</span>
+</div>
+
+<script>
+  // Theme Toggle
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  }
+
+  // Toast
+  function showToast() {
+    const toast = document.getElementById('demo-toast');
+    toast.classList.add('is-visible');
+    setTimeout(() => toast.classList.remove('is-visible'), 3000);
+  }
+
+  // Modal Overlay-Klick
+  document.getElementById('demo-modal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('is-active');
+  });
+
+  // Tab-Bar
+  function activateTab(el) {
+    el.parentElement.querySelectorAll('.glass-tab-bar__item').forEach(
+      t => t.classList.remove('is-active')
+    );
+    el.classList.add('is-active');
+  }
+</script>
+
+</body>
+</html>

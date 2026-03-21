@@ -1,0 +1,19 @@
+# GlassKit – Gitignore
+
+# System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# OS
+.Spotlight-V100
+.Trashes
