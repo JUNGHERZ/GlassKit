@@ -364,6 +364,20 @@
     top: 40px;
   }
 
+  /* Phone Wrapper – trägt den Schatten & Rahmen */
+  .phone-wrapper {
+    position: relative;
+    flex-shrink: 0;
+    border-radius: 52px;
+    box-shadow:
+      0 0 0 8px #1c1c1e,
+      0 0 0 10px #3a3a3c,
+      0 0 0 11px #1c1c1e,
+      0 32px 80px rgba(0, 0, 0, 0.55),
+      0 16px 40px rgba(0, 0, 0, 0.35),
+      0 4px 16px rgba(0, 0, 0, 0.25);
+  }
+
   .phone-frame {
     width: 375px;
     height: 812px;
@@ -371,15 +385,6 @@
     overflow: hidden;
     position: relative;
     background: #111;
-    /* Dicker, sichtbarer Rahmen */
-    box-shadow:
-      0 0 0 8px #1c1c1e,
-      0 0 0 10px #3a3a3c,
-      0 0 0 11px #1c1c1e,
-      /* Weicher, tiefer Schatten */
-      0 32px 80px rgba(0, 0, 0, 0.55),
-      0 16px 40px rgba(0, 0, 0, 0.35),
-      0 4px 16px rgba(0, 0, 0, 0.25);
     /* Overflow-Fix für abgerundete Ecken */
     isolation: isolate;
     -webkit-mask-image: -webkit-radial-gradient(white, black);
@@ -693,8 +698,10 @@
 
   <!-- Phone Frame -->
   <div class="hero__phone">
-    <div class="phone-frame">
-      <iframe src="showcase.html" title="GlassKit Showcase"></iframe>
+    <div class="phone-wrapper">
+      <div class="phone-frame">
+        <iframe src="showcase.html" title="GlassKit Showcase"></iframe>
+      </div>
     </div>
   </div>
 
