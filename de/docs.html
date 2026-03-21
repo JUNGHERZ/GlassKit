@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="de" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GlassKit – Documentation v1.3.3 | Jungherz GmbH</title>
-<link rel="stylesheet" href="glasskit.css">
+<title>Glassmorphism UI Library – Dokumentation v1.3.3 | Jungherz GmbH</title>
+<link rel="stylesheet" href="../glasskit.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -323,12 +323,12 @@
 <body>
 
 <!-- Language Switch -->
-<a href="de/docs.html" class="docs-lang-switch" title="Deutsche Version">
-  🇩🇪 DE
+<a href="../docs.html" class="docs-lang-switch" title="English Version">
+  🇬🇧 EN
 </a>
 
 <!-- Theme Toggle -->
-<button class="docs-theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+<button class="docs-theme-btn" onclick="toggleTheme()" aria-label="Theme wechseln">
   <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
   <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
 </button>
@@ -338,15 +338,15 @@
 <!-- SIDEBAR -->
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
-  <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
+  <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
   <div class="docs-sidebar__version">v1.3.3 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
-    <div class="docs-sidebar__group-title">Basics</div>
+    <div class="docs-sidebar__group-title">Grundlagen</div>
     <a class="docs-sidebar__link" href="#installation">Installation</a>
     <a class="docs-sidebar__link" href="#tokens">Design Tokens</a>
     <a class="docs-sidebar__link" href="#theming">Theming (Light/Dark)</a>
-    <a class="docs-sidebar__link" href="#background">Background</a>
+    <a class="docs-sidebar__link" href="#background">Hintergrund</a>
   </div>
 
   <div class="docs-sidebar__group">
@@ -357,28 +357,28 @@
   </div>
 
   <div class="docs-sidebar__group">
-    <div class="docs-sidebar__group-title">Content</div>
-    <a class="docs-sidebar__link" href="#title">Title</a>
+    <div class="docs-sidebar__group-title">Inhalte</div>
+    <a class="docs-sidebar__link" href="#title">Titel</a>
     <a class="docs-sidebar__link" href="#card">Card</a>
     <a class="docs-sidebar__link" href="#badge">Badge</a>
     <a class="docs-sidebar__link" href="#avatar">Avatar</a>
     <a class="docs-sidebar__link" href="#divider">Divider</a>
-    <a class="docs-sidebar__link" href="#status">Status Notice</a>
+    <a class="docs-sidebar__link" href="#status">Status-Hinweis</a>
   </div>
 
   <div class="docs-sidebar__group">
-    <div class="docs-sidebar__group-title">Actions</div>
+    <div class="docs-sidebar__group-title">Aktionen</div>
     <a class="docs-sidebar__link" href="#buttons">Buttons</a>
     <a class="docs-sidebar__link" href="#modal">Modal</a>
     <a class="docs-sidebar__link" href="#toast">Toast</a>
   </div>
 
   <div class="docs-sidebar__group">
-    <div class="docs-sidebar__group-title">Forms</div>
+    <div class="docs-sidebar__group-title">Formulare</div>
     <a class="docs-sidebar__link" href="#input">Input</a>
     <a class="docs-sidebar__link" href="#textarea">Textarea</a>
     <a class="docs-sidebar__link" href="#select">Select</a>
-    <a class="docs-sidebar__link" href="#search">Search</a>
+    <a class="docs-sidebar__link" href="#search">Suchfeld</a>
     <a class="docs-sidebar__link" href="#toggle">Toggle</a>
     <a class="docs-sidebar__link" href="#checkbox">Checkbox</a>
     <a class="docs-sidebar__link" href="#radio">Radio</a>
@@ -390,7 +390,7 @@
     <div class="docs-sidebar__group-title">Layout</div>
     <a class="docs-sidebar__link" href="#accordion">Accordion</a>
     <a class="docs-sidebar__link" href="#utilities">Utilities</a>
-    <a class="docs-sidebar__link" href="#quickref">All Classes</a>
+    <a class="docs-sidebar__link" href="#quickref">Alle Klassen</a>
   </div>
 </aside>
 
@@ -400,27 +400,27 @@
   <!-- HERO -->
   <header class="docs-hero">
     <h1>Glassmorphism UI Library</h1>
-    <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
+    <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
       <span class="docs-hero__badge">v1.3.3</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
-      <span class="docs-hero__badge">22 Components</span>
+      <span class="docs-hero__badge">22 Komponenten</span>
     </div>
   </header>
 
   <!-- INSTALLATION -->
   <section class="docs-section" id="installation">
     <h2>Installation</h2>
-    <p>Include one CSS file – done. Optionally add a theme override for custom brand colors.</p>
+    <p>Eine CSS-Datei einbinden – fertig. Optional ein Theme-Override für andere Markenfarben.</p>
     <div class="docs-code-wrapper">
-      <div class="docs-code"><span class="cmt">&lt;!-- Base Library --&gt;</span>
+      <div class="docs-code"><span class="cmt">&lt;!-- Basis-Library --&gt;</span>
 <span class="tag">&lt;link</span> <span class="attr">rel=</span><span class="val">"stylesheet"</span> <span class="attr">href=</span><span class="val">"glasskit.css"</span><span class="tag">&gt;</span>
 
-<span class="cmt">&lt;!-- Optional: Theme Override --&gt;</span>
+<span class="cmt">&lt;!-- Optional: Theme-Override --&gt;</span>
 <span class="tag">&lt;link</span> <span class="attr">rel=</span><span class="val">"stylesheet"</span> <span class="attr">href=</span><span class="val">"theme-override.css"</span><span class="tag">&gt;</span>
 
-<span class="cmt">&lt;!-- Dark Mode (Default) --&gt;</span>
+<span class="cmt">&lt;!-- Dark Mode (Standard) --&gt;</span>
 <span class="tag">&lt;html</span> <span class="attr">data-theme=</span><span class="val">"dark"</span><span class="tag">&gt;</span>
 
 <span class="cmt">&lt;!-- Light Mode --&gt;</span>
@@ -431,37 +431,37 @@
   <!-- TOKENS -->
   <section class="docs-section" id="tokens">
     <h2>Design Tokens</h2>
-    <p>All visual values are controlled via CSS Custom Properties.</p>
+    <p>Alle visuellen Werte werden über CSS Custom Properties gesteuert.</p>
 
-    <h3>Color Palette</h3>
+    <h3>Farbpalette</h3>
     <table class="docs-table">
-      <thead><tr><th>Token</th><th>Dark Value</th><th>Usage</th></tr></thead>
+      <thead><tr><th>Token</th><th>Dark-Wert</th><th>Verwendung</th></tr></thead>
       <tbody>
-        <tr><td><code>--gl-color-primary</code></td><td>#f5a623</td><td>Primary color, buttons, active elements</td></tr>
-        <tr><td><code>--gl-color-primary-dark</code></td><td>#d4692a</td><td>Gradient end value</td></tr>
-        <tr><td><code>--gl-color-text</code></td><td>#ffffff</td><td>Default text color</td></tr>
-        <tr><td><code>--gl-color-text-muted</code></td><td>rgba(255,255,255,0.60)</td><td>Secondary text</td></tr>
-        <tr><td><code>--gl-color-success</code></td><td>#34c759</td><td>Success status</td></tr>
-        <tr><td><code>--gl-color-error</code></td><td>#ff3b30</td><td>Error status</td></tr>
+        <tr><td><code>--gl-color-primary</code></td><td>#f5a623</td><td>Primärfarbe, Buttons, aktive Elemente</td></tr>
+        <tr><td><code>--gl-color-primary-dark</code></td><td>#d4692a</td><td>Gradient-Endwert</td></tr>
+        <tr><td><code>--gl-color-text</code></td><td>#ffffff</td><td>Standard-Textfarbe</td></tr>
+        <tr><td><code>--gl-color-text-muted</code></td><td>rgba(255,255,255,0.60)</td><td>Sekundärer Text</td></tr>
+        <tr><td><code>--gl-color-success</code></td><td>#34c759</td><td>Erfolg-Status</td></tr>
+        <tr><td><code>--gl-color-error</code></td><td>#ff3b30</td><td>Fehler-Status</td></tr>
       </tbody>
     </table>
 
-    <h3>Glass Surfaces</h3>
+    <h3>Glasflächen</h3>
     <table class="docs-table">
-      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <thead><tr><th>Token</th><th>Wert</th><th>Verwendung</th></tr></thead>
       <tbody>
-        <tr><td><code>--gl-surface-1</code></td><td>rgba(…, 0.08)</td><td>Subtlest surface (status)</td></tr>
-        <tr><td><code>--gl-surface-2</code></td><td>rgba(…, 0.10)</td><td>Default (inputs, cards)</td></tr>
-        <tr><td><code>--gl-surface-3</code></td><td>rgba(…, 0.14)</td><td>Nav pills, badges</td></tr>
-        <tr><td><code>--gl-surface-4</code></td><td>rgba(…, 0.16)</td><td>Hover states</td></tr>
-        <tr><td><code>--gl-surface-5</code></td><td>rgba(…, 0.22)</td><td>Strong hover</td></tr>
-        <tr><td><code>--gl-surface-milk-strong</code></td><td>rgba(…, 0.75)</td><td>Secondary button</td></tr>
+        <tr><td><code>--gl-surface-1</code></td><td>rgba(…, 0.08)</td><td>Subtilste Fläche (Status)</td></tr>
+        <tr><td><code>--gl-surface-2</code></td><td>rgba(…, 0.10)</td><td>Standard (Inputs, Cards)</td></tr>
+        <tr><td><code>--gl-surface-3</code></td><td>rgba(…, 0.14)</td><td>Nav-Pills, Badges</td></tr>
+        <tr><td><code>--gl-surface-4</code></td><td>rgba(…, 0.16)</td><td>Hover-States</td></tr>
+        <tr><td><code>--gl-surface-5</code></td><td>rgba(…, 0.22)</td><td>Starker Hover</td></tr>
+        <tr><td><code>--gl-surface-milk-strong</code></td><td>rgba(…, 0.75)</td><td>Secondary Button</td></tr>
       </tbody>
     </table>
 
     <h3>Spacing & Radii</h3>
     <table class="docs-table">
-      <thead><tr><th>Token</th><th>Value</th><th>Token</th><th>Value</th></tr></thead>
+      <thead><tr><th>Token</th><th>Wert</th><th>Token</th><th>Wert</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-space-2xs</code></td><td>4px</td><td><code>--gl-radius-xs</code></td><td>8px</td></tr>
         <tr><td><code>--gl-space-xs</code></td><td>8px</td><td><code>--gl-radius-sm</code></td><td>12px</td></tr>
@@ -477,7 +477,7 @@
   <!-- THEMING -->
   <section class="docs-section" id="theming">
     <h2>Theming (Light / Dark)</h2>
-    <p>The theme is controlled via <code>data-theme</code> on the <code>&lt;html&gt;</code> element.</p>
+    <p>Das Theme wird über <code>data-theme</code> am <code>&lt;html&gt;</code>-Element gesteuert.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="cmt">// Theme per JavaScript wechseln:</span>
 function <span class="cls">toggleTheme</span>() {
@@ -492,13 +492,13 @@ function <span class="cls">toggleTheme</span>() {
 
   <!-- BACKGROUND -->
   <section class="docs-section" id="background">
-    <h2>Background</h2>
-    <p>The glass effect requires a colored background.</p>
+    <h2>Hintergrund</h2>
+    <p>Der Glaseffekt braucht einen farbigen Hintergrund.</p>
     <table class="docs-table">
-      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
-        <tr><td><code>.glass-bg</code></td><td>Full background with aurora light effects</td></tr>
-        <tr><td><code>.glass-bg--has-tab-bar</code></td><td>Modifier: bottom padding for tab bar</td></tr>
+        <tr><td><code>.glass-bg</code></td><td>Vollständiger Hintergrund mit Aurora-Lichteffekten</td></tr>
+        <tr><td><code>.glass-bg--has-tab-bar</code></td><td>Modifier: Padding unten für Tab-Bar</td></tr>
       </tbody>
     </table>
     <div class="docs-code-wrapper">
@@ -528,17 +528,17 @@ function <span class="cls">toggleTheme</span>() {
   <!-- PILL -->
   <section class="docs-section" id="pill">
     <h2>Pill-Buttons</h2>
-    <p>Round icon buttons for navigation and actions.</p>
+    <p>Runde Icon-Buttons für Navigation und Aktionen.</p>
     <div class="docs-preview docs-preview--row docs-preview--compact">
       <button class="glass-pill"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
       <button class="glass-pill"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg></button>
       <button class="glass-theme-toggle" onclick="toggleTheme()"><svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
     </div>
     <table class="docs-table">
-      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
-        <tr><td><code>.glass-pill</code></td><td>Standard glass circle (46×46px)</td></tr>
-        <tr><td><code>.glass-theme-toggle</code></td><td>Pill with moon/sun icon switch</td></tr>
+        <tr><td><code>.glass-pill</code></td><td>Standard Glas-Kreis (46×46px)</td></tr>
+        <tr><td><code>.glass-theme-toggle</code></td><td>Pill mit Mond/Sonne-Icon-Switch</td></tr>
       </tbody>
     </table>
   </section>
@@ -546,7 +546,7 @@ function <span class="cls">toggleTheme</span>() {
   <!-- TAB BAR -->
   <section class="docs-section" id="tab-bar">
     <h2>Tab-Bar</h2>
-    <p>Fixed bottom navigation with glass background and optional badge.</p>
+    <p>Fixierte Bottom-Navigation mit Glas-Hintergrund und optionalem Badge.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__item is-active"</span><span class="tag">&gt;</span>
@@ -558,7 +558,7 @@ function <span class="cls">toggleTheme</span>() {
       <span class="cmt">&lt;!-- SVG --&gt;</span>
       <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__badge"</span><span class="tag">&gt;</span>3<span class="tag">&lt;/span&gt;</span>
     <span class="tag">&lt;/span&gt;</span>
-    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__label"</span><span class="tag">&gt;</span>Contracts<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__label"</span><span class="tag">&gt;</span>Verträge<span class="tag">&lt;/span&gt;</span>
   <span class="tag">&lt;/button&gt;</span>
 <span class="tag">&lt;/nav&gt;</span></div>
     </div>
@@ -566,9 +566,9 @@ function <span class="cls">toggleTheme</span>() {
 
   <!-- TITLE -->
   <section class="docs-section" id="title">
-    <h2>Title</h2>
+    <h2>Titel</h2>
     <div class="docs-preview docs-preview--constrained">
-      <h1 class="glass-title">Capture Contracts<br>& Upload</h1>
+      <h1 class="glass-title">Verträge aufnehmen<br>& hochladen</h1>
     </div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;h1</span> <span class="attr">class=</span><span class="val">"glass-title"</span><span class="tag">&gt;</span>Seitentitel<span class="tag">&lt;/h1&gt;</span></div>
@@ -581,7 +581,7 @@ function <span class="cls">toggleTheme</span>() {
     <div class="docs-preview docs-preview--constrained">
       <div class="glass-card glass-card--glow">
         <div class="glass-card__icon"><svg viewBox="0 0 64 64"><rect x="12" y="4" width="32" height="42" rx="3" ry="3"/><polyline points="32 4 32 16 44 16"/><line x1="20" y1="24" x2="36" y2="24"/><line x1="20" y1="30" x2="36" y2="30"/></svg></div>
-        <p class="glass-card__text">Photograph your document, verify edges, and upload in batch.</p>
+        <p class="glass-card__text">Vertrag fotografieren, Kanten prüfen und gesammelt hochladen.</p>
       </div>
     </div>
     <div class="docs-code-wrapper">
@@ -591,12 +591,12 @@ function <span class="cls">toggleTheme</span>() {
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
     <table class="docs-table">
-      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
-        <tr><td><code>.glass-card</code></td><td>Base glass surface</td></tr>
-        <tr><td><code>.glass-card--glow</code></td><td>Light → milky gradient + light streak</td></tr>
-        <tr><td><code>.glass-card__icon</code></td><td>Centered icon wrapper</td></tr>
-        <tr><td><code>.glass-card__text</code></td><td>Description text</td></tr>
+        <tr><td><code>.glass-card</code></td><td>Basis-Glasfläche</td></tr>
+        <tr><td><code>.glass-card--glow</code></td><td>Hell → milchig Verlauf + Lichtstreifen</td></tr>
+        <tr><td><code>.glass-card__icon</code></td><td>Zentrierter Icon-Wrapper</td></tr>
+        <tr><td><code>.glass-card__text</code></td><td>Beschreibungstext</td></tr>
       </tbody>
     </table>
   </section>
@@ -612,15 +612,15 @@ function <span class="cls">toggleTheme</span>() {
       </div>
     </div>
     <table class="docs-table">
-      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
-        <tr><td><code>.glass-btn</code></td><td>Base (56px, full width)</td></tr>
-        <tr><td><code>--primary</code></td><td>Colored gradient</td></tr>
-        <tr><td><code>--secondary</code></td><td>Milky white</td></tr>
-        <tr><td><code>--tertiary</code></td><td>Subtle glass</td></tr>
-        <tr><td><code>--sm</code></td><td>44px height</td></tr>
-        <tr><td><code>--lg</code></td><td>64px height</td></tr>
-        <tr><td><code>--auto</code></td><td>Auto width</td></tr>
+        <tr><td><code>.glass-btn</code></td><td>Basis (56px, volle Breite)</td></tr>
+        <tr><td><code>--primary</code></td><td>Farbiger Gradient</td></tr>
+        <tr><td><code>--secondary</code></td><td>Milchig-weiß</td></tr>
+        <tr><td><code>--tertiary</code></td><td>Subtiles Glas</td></tr>
+        <tr><td><code>--sm</code></td><td>44px Höhe</td></tr>
+        <tr><td><code>--lg</code></td><td>64px Höhe</td></tr>
+        <tr><td><code>--auto</code></td><td>Auto-Breite</td></tr>
       </tbody>
     </table>
   </section>
@@ -663,11 +663,11 @@ function <span class="cls">toggleTheme</span>() {
 
   <!-- STATUS -->
   <section class="docs-section" id="status">
-    <h2>Status Notice</h2>
+    <h2>Status-Hinweis</h2>
     <div class="docs-preview docs-preview--constrained">
       <div class="glass-status">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="8"/></svg>
-        <p>No documents captured yet.</p>
+        <p>Noch keine Verträge vorhanden.</p>
       </div>
     </div>
   </section>
@@ -675,18 +675,18 @@ function <span class="cls">toggleTheme</span>() {
   <!-- MODAL -->
   <section class="docs-section" id="modal">
     <h2>Modal</h2>
-    <p>Controlled via <code>.is-active</code> class on the overlay.</p>
+    <p>Steuerung über <code>.is-active</code> Klasse auf dem Overlay.</p>
     <table class="docs-table">
-      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
-        <tr><td><code>.glass-modal-overlay</code></td><td>Fullscreen blur overlay</td></tr>
-        <tr><td><code>.glass-modal-overlay.is-active</code></td><td>Visible + animated</td></tr>
-        <tr><td><code>.glass-modal</code></td><td>Dialog container</td></tr>
-        <tr><td><code>__header / __title</code></td><td>Title area</td></tr>
-        <tr><td><code>__body</code></td><td>Content area</td></tr>
-        <tr><td><code>__footer / __action</code></td><td>Action bar</td></tr>
-        <tr><td><code>__action--primary</code></td><td>Primary action</td></tr>
-        <tr><td><code>__action--danger</code></td><td>Dangerous action</td></tr>
+        <tr><td><code>.glass-modal-overlay</code></td><td>Fullscreen Blur-Overlay</td></tr>
+        <tr><td><code>.glass-modal-overlay.is-active</code></td><td>Sichtbar + animiert</td></tr>
+        <tr><td><code>.glass-modal</code></td><td>Dialog-Container</td></tr>
+        <tr><td><code>__header / __title</code></td><td>Titel-Bereich</td></tr>
+        <tr><td><code>__body</code></td><td>Inhaltsbereich</td></tr>
+        <tr><td><code>__footer / __action</code></td><td>Aktionsleiste</td></tr>
+        <tr><td><code>__action--primary</code></td><td>Primäre Aktion</td></tr>
+        <tr><td><code>__action--danger</code></td><td>Gefährliche Aktion</td></tr>
       </tbody>
     </table>
   </section>
@@ -694,11 +694,11 @@ function <span class="cls">toggleTheme</span>() {
   <!-- TOAST -->
   <section class="docs-section" id="toast">
     <h2>Toast</h2>
-    <p>Visible via <code>.is-visible</code>. Variants: <code>--success</code>, <code>--error</code>, <code>--warning</code>.</p>
+    <p>Sichtbar via <code>.is-visible</code>. Varianten: <code>--success</code>, <code>--error</code>, <code>--warning</code>.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-toast glass-toast--success"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;svg</span> <span class="attr">class=</span><span class="val">"glass-toast__icon"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/svg&gt;</span>
-  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-toast__text"</span><span class="tag">&gt;</span>Success!<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-toast__text"</span><span class="tag">&gt;</span>Erfolgreich!<span class="tag">&lt;/span&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
   </section>
@@ -709,13 +709,13 @@ function <span class="cls">toggleTheme</span>() {
     <div class="docs-preview docs-preview--constrained">
       <div class="gl-stack gl-stack--md">
         <div class="glass-input-group">
-          <label class="glass-label">Contract Name</label>
-          <input class="glass-input" type="text" placeholder="e.g. Rental Agreement">
+          <label class="glass-label">Vertragsname</label>
+          <input class="glass-input" type="text" placeholder="z. B. Mietvertrag">
         </div>
         <div class="glass-input-group">
-          <label class="glass-label">Error State</label>
-          <input class="glass-input glass-input--error" type="email" value="invalid@">
-          <span class="glass-hint glass-hint--error">Please enter a valid email address</span>
+          <label class="glass-label">Fehler-Zustand</label>
+          <input class="glass-input glass-input--error" type="email" value="ungueltig@">
+          <span class="glass-hint glass-hint--error">Bitte gültige E-Mail angeben</span>
         </div>
       </div>
     </div>
@@ -723,7 +723,7 @@ function <span class="cls">toggleTheme</span>() {
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-input-group"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;label</span> <span class="attr">class=</span><span class="val">"glass-label"</span><span class="tag">&gt;</span>Label<span class="tag">&lt;/label&gt;</span>
   <span class="tag">&lt;input</span> <span class="attr">class=</span><span class="val">"glass-input"</span> <span class="attr">type=</span><span class="val">"text"</span><span class="tag">&gt;</span>
-  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-hint"</span><span class="tag">&gt;</span>Help text<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-hint"</span><span class="tag">&gt;</span>Hilfetext<span class="tag">&lt;/span&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
   </section>
@@ -743,22 +743,22 @@ function <span class="cls">toggleTheme</span>() {
   <section class="docs-section" id="select">
     <h2>Select</h2>
     <div class="docs-preview docs-preview--constrained">
-      <select class="glass-select"><option>Please select…</option><option>Insurance</option></select>
+      <select class="glass-select"><option>Bitte wählen…</option><option>Versicherung</option></select>
     </div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;select</span> <span class="attr">class=</span><span class="val">"glass-select"</span><span class="tag">&gt;</span>
-  <span class="tag">&lt;option&gt;</span>Please select…<span class="tag">&lt;/option&gt;</span>
+  <span class="tag">&lt;option&gt;</span>Bitte wählen…<span class="tag">&lt;/option&gt;</span>
 <span class="tag">&lt;/select&gt;</span></div>
     </div>
   </section>
 
   <!-- SEARCH -->
   <section class="docs-section" id="search">
-    <h2>Search</h2>
+    <h2>Suchfeld</h2>
     <div class="docs-preview docs-preview--constrained">
       <div class="glass-search">
         <svg class="glass-search__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input class="glass-input" type="search" placeholder="Search contracts…">
+        <input class="glass-input" type="search" placeholder="Verträge durchsuchen…">
       </div>
     </div>
     <div class="docs-code-wrapper">
@@ -794,8 +794,8 @@ function <span class="cls">toggleTheme</span>() {
     <h2>Checkbox</h2>
     <div class="docs-preview docs-preview--compact">
       <div class="gl-stack gl-stack--sm">
-        <label class="glass-checkbox"><input class="glass-checkbox__input" type="checkbox" checked><span class="glass-checkbox__box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="glass-checkbox__label">Selected</span></label>
-        <label class="glass-checkbox"><input class="glass-checkbox__input" type="checkbox"><span class="glass-checkbox__box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="glass-checkbox__label">Not selected</span></label>
+        <label class="glass-checkbox"><input class="glass-checkbox__input" type="checkbox" checked><span class="glass-checkbox__box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="glass-checkbox__label">Ausgewählt</span></label>
+        <label class="glass-checkbox"><input class="glass-checkbox__input" type="checkbox"><span class="glass-checkbox__box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="glass-checkbox__label">Nicht ausgewählt</span></label>
       </div>
     </div>
   </section>
@@ -817,7 +817,7 @@ function <span class="cls">toggleTheme</span>() {
     <div class="docs-preview docs-preview--constrained">
       <div class="glass-range-group">
         <div class="glass-range-header">
-          <label class="glass-label">Image Quality</label>
+          <label class="glass-label">Bildqualität</label>
           <span class="glass-range-value" id="doc-range-val">75%</span>
         </div>
         <input class="glass-range" type="range" min="0" max="100" value="75" oninput="document.getElementById('doc-range-val').textContent=this.value+'%'">
@@ -835,17 +835,17 @@ function <span class="cls">toggleTheme</span>() {
           <div class="glass-progress__track"><div class="glass-progress__fill" style="width:68%"></div></div>
         </div>
         <div class="glass-progress glass-progress--success">
-          <div class="glass-progress__header"><span class="glass-progress__label">Success</span><span class="glass-progress__value">100%</span></div>
+          <div class="glass-progress__header"><span class="glass-progress__label">Erfolg</span><span class="glass-progress__value">100%</span></div>
           <div class="glass-progress__track"><div class="glass-progress__fill" style="width:100%"></div></div>
         </div>
       </div>
     </div>
     <table class="docs-table">
-      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
-        <tr><td><code>.glass-progress</code></td><td>Base container</td></tr>
-        <tr><td><code>--sm / --lg</code></td><td>Track height: 4px / 12px</td></tr>
-        <tr><td><code>--success / --error</code></td><td>Color variants</td></tr>
+        <tr><td><code>.glass-progress</code></td><td>Basis-Container</td></tr>
+        <tr><td><code>--sm / --lg</code></td><td>Track-Höhe: 4px / 12px</td></tr>
+        <tr><td><code>--success / --error</code></td><td>Farb-Varianten</td></tr>
       </tbody>
     </table>
   </section>
@@ -856,12 +856,12 @@ function <span class="cls">toggleTheme</span>() {
     <div class="docs-preview docs-preview--constrained">
       <div class="glass-accordion">
         <div class="glass-accordion__item is-open">
-          <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')"><span>Question one?</span><span class="glass-accordion__trigger-icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></button>
-          <div class="glass-accordion__content"><div class="glass-accordion__body">The detailed answer to this question.</div></div>
+          <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')"><span>Frage eins?</span><span class="glass-accordion__trigger-icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+          <div class="glass-accordion__content"><div class="glass-accordion__body">Die ausführliche Antwort auf diese Frage.</div></div>
         </div>
         <div class="glass-accordion__item">
-          <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')"><span>Question two?</span><span class="glass-accordion__trigger-icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></button>
-          <div class="glass-accordion__content"><div class="glass-accordion__body">The answer to question two.</div></div>
+          <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')"><span>Frage zwei?</span><span class="glass-accordion__trigger-icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+          <div class="glass-accordion__content"><div class="glass-accordion__body">Die Antwort auf Frage zwei.</div></div>
         </div>
       </div>
     </div>
@@ -918,15 +918,15 @@ function <span class="cls">toggleTheme</span>() {
 
   <!-- QUICK REFERENCE -->
   <section class="docs-section" id="quickref">
-    <h2>📋 All Classes at a Glance</h2>
+    <h2>📋 Alle Klassen auf einen Blick</h2>
     <table class="docs-table">
-      <thead><tr><th>Component</th><th>Classes</th><th>Modifier / States</th></tr></thead>
+      <thead><tr><th>Komponente</th><th>Klassen</th><th>Modifier / States</th></tr></thead>
       <tbody>
-        <tr><td>Background</td><td><code>.glass-bg</code></td><td><code>--has-tab-bar</code></td></tr>
+        <tr><td>Hintergrund</td><td><code>.glass-bg</code></td><td><code>--has-tab-bar</code></td></tr>
         <tr><td>Navigation</td><td><code>.glass-nav</code></td><td>–</td></tr>
         <tr><td>Pill-Button</td><td><code>.glass-pill</code></td><td>–</td></tr>
         <tr><td>Theme-Toggle</td><td><code>.glass-theme-toggle</code></td><td>–</td></tr>
-        <tr><td>Title</td><td><code>.glass-title</code></td><td>–</td></tr>
+        <tr><td>Titel</td><td><code>.glass-title</code></td><td>–</td></tr>
         <tr><td>Card</td><td><code>.glass-card</code></td><td><code>--glow</code></td></tr>
         <tr><td>Button</td><td><code>.glass-btn</code></td><td><code>--primary</code>, <code>--secondary</code>, <code>--tertiary</code>, <code>--sm</code>, <code>--lg</code>, <code>--auto</code></td></tr>
         <tr><td>Badge</td><td><code>.glass-badge</code></td><td><code>--primary</code>, <code>--success</code>, <code>--error</code></td></tr>
@@ -936,7 +936,7 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code></td></tr>
         <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td>–</td></tr>
         <tr><td>Select</td><td><code>.glass-select</code></td><td>–</td></tr>
-        <tr><td>Search</td><td><code>.glass-search</code></td><td>–</td></tr>
+        <tr><td>Suchfeld</td><td><code>.glass-search</code></td><td>–</td></tr>
         <tr><td>Toggle</td><td><code>.glass-toggle</code></td><td><code>:checked</code></td></tr>
         <tr><td>Checkbox</td><td><code>.glass-checkbox</code></td><td><code>:checked</code></td></tr>
         <tr><td>Radio</td><td><code>.glass-radio</code></td><td><code>:checked</code></td></tr>

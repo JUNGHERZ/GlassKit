@@ -1,6 +1,6 @@
 {
   "name": "@jungherz-de/glasskit",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "A modern glassmorphism CSS component library – inspired by iOS 26 Liquid Glass. 22 components, dark & light mode, no dependencies.",
   "main": "glasskit.css",
   "style": "glasskit.css",
@@ -37,7 +37,7 @@
     "type": "git",
     "url": "git+https://github.com/JUNGHERZ/GlassKit.git"
   },
-  "homepage": "https://github.com/JUNGHERZ/GlassKit",
+  "homepage": "https://glasskit.jungherz.com",
   "bugs": {
     "url": "https://github.com/JUNGHERZ/GlassKit/issues"
   },

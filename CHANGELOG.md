@@ -7,20 +7,35 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.3.3] – 2026-03-21
+
+### Added
+
+- **Language switcher** in `index.html` and `docs.html` (and their German counterparts in `de/`) – toggle between English and German versions via a pill button in the header/toolbar
+- **German translations** (`de/` directory) – full German versions of `index.html`, `docs.html`, and `showcase.html` with correct relative asset paths
+
+### Changed
+
+- **Full English translation** of `README.md`, `CHANGELOG.md`, `index.html`, `docs.html`, and `showcase.html` – all user-facing text, labels, placeholders, code comments, and demo content
+- README screenshot now links to [glasskit.jungherz.com](https://glasskit.jungherz.com)
+- Version references updated to 1.3.3 across all files
+
+---
+
 ## [1.3.2] – 2026-03-21
 
 ### Added
 
-- **Background Switcher** in `showcase.html` – interaktiver Hintergrund-Wechsler mit 6 Farbpresets (Default, Ocean, Sunset, Forest, Rose, Monochrome), um die Glassmorphism-Effekte auf verschiedenen Hintergründen zu testen
-  - Jedes Preset hat eigene Farbwerte für Dark und Light Mode
-  - Reine CSS-Gradienten, keine externen Bilder
-  - Popover-UI mit animierten Farbkreisen (Swatches), konsistent im GlassKit-Stil
-  - Überschreibt ausschließlich Custom Properties via `data-bg`-Attribut – keine Änderungen an `glasskit.css`
+- **Background Switcher** in `showcase.html` – interactive background picker with 6 color presets (Default, Ocean, Sunset, Forest, Rose, Monochrome) to test glassmorphism effects on different backgrounds
+  - Each preset has its own color values for Dark and Light Mode
+  - Pure CSS gradients, no external images
+  - Popover UI with animated color swatches, consistent with GlassKit styling
+  - Overrides only Custom Properties via `data-bg` attribute – no changes to `glasskit.css`
 
 ### Changed
 
-- Footer in `index.html` aktualisiert: „Gebaut von Jungherz mit 🧊 und viel ❤️ zum Detail.“
-- Versionsangaben in allen Dateien auf 1.3.2 aktualisiert (`package.json`, `glasskit.css`, `README.md`, `index.html`, `showcase.html`)
+- Footer in `index.html` updated: "Built by Jungherz with 🧊 and lots of ❤️ for detail."
+- Version references updated to 1.3.2 across all files (`package.json`, `glasskit.css`, `README.md`, `index.html`, `showcase.html`)
 
 ---
 
@@ -28,9 +43,9 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
-- Intro-Screenshot: PNG durch optimiertes JPEG ersetzt (1.3 MB → 287 KB)
-- README-Bild: absolute GitHub-URL für korrekte Anzeige auf npmjs.com
-- Release-Pipeline: Tag-Push triggert jetzt automatisch Release + Build + npm Publish (kein manuelles Release mehr nötig)
+- Intro screenshot: PNG replaced with optimized JPEG (1.3 MB → 287 KB)
+- README image: absolute GitHub URL for correct display on npmjs.com
+- Release pipeline: tag push now automatically triggers Release + Build + npm Publish (no manual release needed)
 
 ---
 
@@ -38,43 +53,42 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### 🎉 Initial Public Release
 
-GlassKit entstand aus einem konkreten Kundenprojekt (MeineFinanzCloud /
-Jungherz GmbH) und wurde im Laufe des Projekts zu einer vollständigen,
-wiederverwendbaren Komponentenbibliothek ausgebaut. Version 1.3 ist die
-erste öffentliche Veröffentlichung als Open-Source-Projekt.
+GlassKit originated from a real client project (MeineFinanzCloud /
+Jungherz GmbH) and evolved into a complete, reusable component library
+during development. Version 1.3 is the first public open-source release.
 
 ---
 
 ### Added
 
-#### Kern-Library (`glasskit.css`)
-- **Design Tokens** – vollständiges System aus CSS Custom Properties
+#### Core Library (`glasskit.css`)
+- **Design Tokens** – complete system of CSS Custom Properties
   (`--gl-color-*`, `--gl-surface-*`, `--gl-border-*`, `--gl-blur-*`,
   `--gl-radius-*`, `--gl-shadow-*`, `--gl-space-*`, `--gl-font-*`)
-- **Scoped Reset** – `box-sizing: border-box` für alle `[class*="glass-"]`
-  Elemente, verhindert Layout-Konflikte mit bestehenden Projekten
-- **Dark Mode** (Standard) via `:root` / `[data-theme="dark"]`
-- **Light Mode** via `[data-theme="light"]` – vollständig eigene Token-Werte
+- **Scoped Reset** – `box-sizing: border-box` for all `[class*="glass-"]`
+  elements, prevents layout conflicts with existing projects
+- **Dark Mode** (default) via `:root` / `[data-theme="dark"]`
+- **Light Mode** via `[data-theme="light"]` – fully separate token values
 
-#### Komponenten (22 gesamt)
+#### Components (22 total)
 
-| # | Komponente | Klasse |
+| # | Component | Class |
 |---|---|---|
-| 1 | Hintergrund | `.glass-bg` |
+| 1 | Background | `.glass-bg` |
 | 2 | Navigation Bar | `.glass-nav` |
-| 3 | Pill-Button | `.glass-pill` |
-| 4 | Tab-Bar | `.glass-tab-bar` |
-| 5 | Seitentitel | `.glass-title` |
+| 3 | Pill Button | `.glass-pill` |
+| 4 | Tab Bar | `.glass-tab-bar` |
+| 5 | Page Title | `.glass-title` |
 | 6 | Card | `.glass-card` |
 | 7 | Button | `.glass-btn` |
 | 8 | Badge | `.glass-badge` |
 | 9 | Avatar | `.glass-avatar` |
 | 10 | Divider | `.glass-divider` |
-| 11 | Status-Hinweis | `.glass-status` |
+| 11 | Status Notice | `.glass-status` |
 | 12 | Input | `.glass-input` |
 | 13 | Textarea | `.glass-textarea` |
 | 14 | Select | `.glass-select` |
-| 15 | Suchfeld | `.glass-search` |
+| 15 | Search | `.glass-search` |
 | 16 | Toggle Switch | `.glass-toggle` |
 | 17 | Checkbox | `.glass-checkbox` |
 | 18 | Radio Button | `.glass-radio` |
@@ -83,80 +97,79 @@ erste öffentliche Veröffentlichung als Open-Source-Projekt.
 | 21 | Modal | `.glass-modal` |
 | 22 | Toast | `.glass-toast` |
 
-#### Modifier & States
-- Button-Varianten: `--primary`, `--secondary`, `--tertiary`, `--sm`, `--lg`, `--auto`
-- Card-Variante: `--glow` (Hell→Milchig-Verlauf mit Lichtstreifen)
-- Progress-Varianten: `--sm`, `--lg`, `--success`, `--error`
-- Badge-Varianten: `--primary`, `--success`, `--error`
-- Avatar-Größen: `--sm`, `--lg`
-- Toast-Varianten: `--success`, `--error`, `--warning`
-- Modal-Actions: `--primary`, `--danger`
-- Interaktive States: `.is-active`, `.is-open`, `.is-visible`
+#### Modifiers & States
+- Button variants: `--primary`, `--secondary`, `--tertiary`, `--sm`, `--lg`, `--auto`
+- Card variant: `--glow` (light-to-milky gradient with light streak)
+- Progress variants: `--sm`, `--lg`, `--success`, `--error`
+- Badge variants: `--primary`, `--success`, `--error`
+- Avatar sizes: `--sm`, `--lg`
+- Toast variants: `--success`, `--error`, `--warning`
+- Modal actions: `--primary`, `--danger`
+- Interactive states: `.is-active`, `.is-open`, `.is-visible`
 
-#### Utility-Klassen
-- Layout: `.gl-stack`, `.gl-row` (je mit Gap-Varianten `--xs` bis `--xl`)
+#### Utility Classes
+- Layout: `.gl-stack`, `.gl-row` (each with gap variants `--xs` to `--xl`)
 - Spacing: `.gl-mt-*`, `.gl-mb-*`, `.gl-px`
 - Text: `.gl-text-center`, `.gl-text-muted`, `.gl-text-sm`
-- Sonstige: `.gl-w-full`, `.gl-flex-1`
+- Other: `.gl-w-full`, `.gl-flex-1`
 
-#### Dateien
-- `glasskit.css` – Kern-Library
-- `glasskit.min.css` – Minifizierte Version (auto-generated bei Release)
-- `glasskit-styles.js` – Constructable Stylesheet für Shadow DOM (auto-generated)
-- `theme-override.css` – Template für eigene Themes (4 Beispiel-Themes:
+#### Files
+- `glasskit.css` – Core library
+- `glasskit.min.css` – Minified version (auto-generated on release)
+- `glasskit-styles.js` – Constructable Stylesheet for Shadow DOM (auto-generated)
+- `theme-override.css` – Template for custom themes (4 example themes:
   Ocean Blue, Emerald Green, Rose, Custom)
-- `build-styles-js.mjs` – Build-Script für glasskit-styles.js
-- `package.json` – npm-Paketdefinition
-- `index.html` – Landingpage mit iPhone-Wireframe & eingebettetem Showcase
-- `showcase.html` – Interaktiver Showcase aller 22 Komponenten
-- `docs.html` – Vollständige Dokumentation mit Live-Previews,
-  Code-Blocks und Klassen-Tabellen
-- `README.md` – Projektdokumentation
-- `CHANGELOG.md` – Diese Datei
+- `build-styles-js.mjs` – Build script for glasskit-styles.js
+- `package.json` – npm package definition
+- `index.html` – Landing page with iPhone wireframe & embedded showcase
+- `showcase.html` – Interactive showcase of all 22 components
+- `docs.html` – Full documentation with live previews,
+  code blocks, and class tables
+- `README.md` – Project documentation
+- `CHANGELOG.md` – This file
 - `LICENSE` – MIT License
 
 #### Build & Distribution
-- **GitHub Actions Release Pipeline** – automatische Minifizierung,
-  Constructable Stylesheet Generierung und npm-Veröffentlichung bei
-  jedem GitHub Release
-- **npm-Paket** `@jungherz-de/glasskit` – installierbar via npm, yarn, pnpm
-- **CDN-Verfügbarkeit** – sofort über jsDelivr und unpkg nutzbar
-- **Shadow-DOM-Support** – `glasskit-styles.js` exportiert ein fertiges
-  Constructable Stylesheet für Web Components (Vanilla, Hybrids, Lit etc.)
+- **GitHub Actions Release Pipeline** – automatic minification,
+  Constructable Stylesheet generation, and npm publishing on
+  every GitHub Release
+- **npm package** `@jungherz-de/glasskit` – installable via npm, yarn, pnpm
+- **CDN availability** – immediately available via jsDelivr and unpkg
+- **Shadow DOM support** – `glasskit-styles.js` exports a ready-made
+  Constructable Stylesheet for Web Components (Vanilla, Hybrids, Lit, etc.)
 
 ---
 
 ### Fixed
 
-- `box-sizing: border-box` fehlte bei `.glass-input` und `.glass-textarea`,
-  was bei bestimmten Projekten dazu führte, dass sich Felder über den
-  Bildschirmrand hinaus ausdehnten → durch Scoped Reset global gelöst
-- Suchfeld-Icon (`.glass-search__icon`) war in einigen Browsern nicht
-  sichtbar → `!important` auf `stroke`, `fill`, `stroke-width` gesetzt
-  sowie `z-index: 2` ergänzt
-- Button-Icons fehlten im Showcase → SVGs zurück in alle Buttons eingefügt,
-  Icon-Farben konsistent über `--gl-icon-*` Tokens gesteuert
-- Modal und Toast lagen außerhalb von `.glass-bg` und erbten dadurch keine
-  `font-family` → `font-family: var(--gl-font-family)` direkt auf
-  `.glass-modal-overlay` und `.glass-toast` gesetzt
-- iPhone-Frame: iFrame-Inhalt schien beim Scrollen an den abgerundeten Ecken
-  durch → Fix via `isolation: isolate`, `-webkit-mask-image` und
-  `transform: translateZ(0)` auf `.phone-frame`
+- `box-sizing: border-box` was missing on `.glass-input` and `.glass-textarea`,
+  which caused fields to extend beyond the screen edge in certain projects
+  → resolved globally via Scoped Reset
+- Search icon (`.glass-search__icon`) was not visible in some browsers
+  → added `!important` on `stroke`, `fill`, `stroke-width` and `z-index: 2`
+- Button icons were missing in the showcase → SVGs re-added to all buttons,
+  icon colors consistently controlled via `--gl-icon-*` tokens
+- Modal and Toast were placed outside `.glass-bg` and therefore did not inherit
+  `font-family` → `font-family: var(--gl-font-family)` set directly on
+  `.glass-modal-overlay` and `.glass-toast`
+- iPhone frame: iframe content was showing through rounded corners on scroll
+  → fixed via `isolation: isolate`, `-webkit-mask-image`, and
+  `transform: translateZ(0)` on `.phone-frame`
 
 ---
 
 ### Design Decisions
 
-- **Glassmorphism inspiriert von iOS 26 Liquid Glass** – Apple hat mit iOS 26
-  das Glasdesign grundlegend neu definiert. GlassKit übersetzt diesen Look
-  in reines CSS für Web und App.
-- **Keine JavaScript-Abhängigkeiten** – Alle Animationen und Übergänge
-  laufen rein über CSS Transitions. Nur Modal, Toast und Accordion benötigen
-  minimales `classList.toggle()` ohne Framework.
-- **BEM-artige Namenskonvention** – `glass-*` Prefix verhindert Konflikte
-  mit bestehendem CSS im Zielprojekt.
-- **Token-First** – Jeder visuelle Wert ist ein Token. Theming erfordert
-  keine Änderungen an der Kern-Library.
+- **Glassmorphism inspired by iOS 26 Liquid Glass** – Apple fundamentally
+  redefined glass design with iOS 26. GlassKit translates this look
+  into pure CSS for web and apps.
+- **No JavaScript dependencies** – All animations and transitions
+  run purely via CSS Transitions. Only Modal, Toast, and Accordion require
+  minimal `classList.toggle()` without any framework.
+- **BEM-like naming convention** – `glass-*` prefix prevents conflicts
+  with existing CSS in the target project.
+- **Token-first** – Every visual value is a token. Theming requires
+  no changes to the core library.
 
 ---
 
@@ -165,22 +178,23 @@ erste öffentliche Veröffentlichung als Open-Source-Projekt.
 - Repository: [github.com/JUNGHERZ/GlassKit](https://github.com/JUNGHERZ/GlassKit)
 - npm: [@jungherz-de/glasskit](https://www.npmjs.com/package/@jungherz-de/glasskit)
 - CDN: [cdn.jsdelivr.net/npm/@jungherz-de/glasskit](https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/)
-- Lizenz: MIT
-- Entwickelt von: [Jungherz GmbH](https://www.jungherz.com)
+- License: MIT
+- Developed by: [Jungherz GmbH](https://www.jungherz.com)
 
 ---
 
 ## [Unreleased]
 
-> Geplante Erweiterungen für kommende Versionen:
+> Planned additions for future versions:
 
-- [ ] Weitere Themes (Purple, Midnight, Sand)
-- [ ] Animierte Hintergründe (Aurora-Motion)
-- [ ] Figma-Komponentenset
+- [ ] Additional themes (Purple, Midnight, Sand)
+- [ ] Animated backgrounds (Aurora Motion)
+- [ ] Figma component set
 
 ---
 
+[1.3.3]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.3
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.3.2...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.3.3...HEAD

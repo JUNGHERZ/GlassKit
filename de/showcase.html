@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="de" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>GlassKit – Component Showcase</title>
-  <link rel="stylesheet" href="glasskit.css">
+  <title>GlassKit – Komponenten Showcase</title>
+  <link rel="stylesheet" href="../glasskit.css">
   <!-- Optional: Theme Override einbinden -->
   <!-- <link rel="stylesheet" href="theme-override.css"> -->
   <style>
@@ -24,7 +24,7 @@
     .section-label:first-child { margin-top: 0; }
 
     /* ============================================================
-       BACKGROUND SWITCHER – Presets (overrides Custom Properties only)
+       BACKGROUND SWITCHER – Presets (überschreibt nur Custom Properties)
        ============================================================ */
 
     /* --- Ocean --- */
@@ -234,15 +234,15 @@
   <div class="glass-bg glass-bg--has-tab-bar">
     <div class="screen-content">
 
-      <!-- NAV with Theme Toggle + Background Switcher -->
+      <!-- NAV mit Theme-Toggle + Background Switcher -->
       <p class="section-label">Navigation + Theme + Background</p>
       <nav class="glass-nav gl-mb-md">
-        <button class="glass-pill" aria-label="Back">
+        <button class="glass-pill" aria-label="Zurück">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
 
         <!-- Theme Toggle -->
-        <button class="glass-theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">
+        <button class="glass-theme-toggle" aria-label="Theme wechseln" onclick="toggleTheme()">
           <svg class="icon-moon" viewBox="0 0 24 24">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
@@ -257,7 +257,7 @@
 
         <!-- Background Switcher -->
         <div class="bg-switcher">
-          <button class="glass-pill" aria-label="Switch background" onclick="toggleBgPopover(event)">
+          <button class="glass-pill" aria-label="Hintergrund wechseln" onclick="toggleBgPopover(event)">
             <svg viewBox="0 0 24 24">
               <rect x="2" y="2" width="20" height="20" rx="3" ry="3"/>
               <circle cx="8.5" cy="8.5" r="2"/>
@@ -274,7 +274,7 @@
           </div>
         </div>
 
-        <button class="glass-pill" aria-label="Menu">
+        <button class="glass-pill" aria-label="Menü">
           <svg viewBox="0 0 24 24">
             <circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/>
             <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
@@ -283,7 +283,7 @@
         </button>
       </nav>
 
-      <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.3.3</h1>
+      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.3.3</h1>
 
       <!-- CARD -->
       <p class="section-label">Card (Glow)</p>
@@ -299,10 +299,10 @@
             <line x1="38" y1="44" x2="50" y2="44"/>
           </svg>
         </div>
-        <p class="glass-card__text">Photograph your document, verify edges, and upload in batch.</p>
+        <p class="glass-card__text">Vertrag fotografieren, Kanten prüfen und gesammelt hochladen.</p>
       </div>
 
-      <!-- BUTTONS with Icons -->
+      <!-- BUTTONS mit Icons -->
       <p class="section-label">Buttons</p>
       <div class="gl-stack gl-stack--sm gl-mb-md">
         <button class="glass-btn glass-btn--primary">
@@ -312,14 +312,14 @@
             <circle cx="12" cy="13" r="1.5" fill="#e8852d"/>
             <rect x="14" y="6.5" width="5" height="2.5" rx="0.5" fill="#e8852d"/>
           </svg>
-          Capture document
+          Vertrag aufnehmen
         </button>
         <button class="glass-btn glass-btn--secondary">
           <svg viewBox="0 0 24 24">
             <path d="M12 16V4"/><polyline points="8 8 12 4 16 8"/>
             <path d="M20 17v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1"/>
           </svg>
-          Upload documents
+          Verträge hochladen
         </button>
         <button class="glass-btn glass-btn--tertiary">
           <svg viewBox="0 0 24 24">
@@ -327,17 +327,17 @@
             <line x1="9" y1="11" x2="15" y2="11"/>
             <line x1="9" y1="14" x2="13" y2="14"/>
           </svg>
-          View all documents
+          Zur Vertragsübersicht
         </button>
       </div>
 
       <!-- BADGES -->
       <p class="section-label">Badges</p>
       <div class="gl-row gl-row--sm gl-mb-md" style="flex-wrap:wrap">
-        <span class="glass-badge">Default</span>
-        <span class="glass-badge glass-badge--primary">Active</span>
-        <span class="glass-badge glass-badge--success">Done</span>
-        <span class="glass-badge glass-badge--error">Error</span>
+        <span class="glass-badge">Standard</span>
+        <span class="glass-badge glass-badge--primary">Aktiv</span>
+        <span class="glass-badge glass-badge--success">Fertig</span>
+        <span class="glass-badge glass-badge--error">Fehler</span>
       </div>
 
       <hr class="glass-divider gl-mb-md">
@@ -347,7 +347,7 @@
       <div class="gl-stack gl-stack--lg gl-mb-md">
         <div class="glass-progress">
           <div class="glass-progress__header">
-            <span class="glass-progress__label">Upload progress</span>
+            <span class="glass-progress__label">Upload-Fortschritt</span>
             <span class="glass-progress__value">68%</span>
           </div>
           <div class="glass-progress__track">
@@ -356,7 +356,7 @@
         </div>
         <div class="glass-progress glass-progress--success">
           <div class="glass-progress__header">
-            <span class="glass-progress__label">Completed</span>
+            <span class="glass-progress__label">Abgeschlossen</span>
             <span class="glass-progress__value">100%</span>
           </div>
           <div class="glass-progress__track">
@@ -372,7 +372,7 @@
       <div class="gl-stack gl-stack--lg gl-mb-md">
         <div class="glass-range-group">
           <div class="glass-range-header">
-            <label class="glass-label">Image quality</label>
+            <label class="glass-label">Bildqualität</label>
             <span class="glass-range-value" id="quality-val">75%</span>
           </div>
           <input class="glass-range" type="range" min="0" max="100" value="75"
@@ -383,39 +383,39 @@
       <hr class="glass-divider gl-mb-md">
 
       <!-- INPUTS -->
-      <p class="section-label">Input fields</p>
+      <p class="section-label">Eingabefelder</p>
       <div class="gl-stack gl-stack--md gl-mb-md">
         <div class="glass-input-group">
-          <label class="glass-label">Document name</label>
-          <input class="glass-input" type="text" placeholder="e.g. Rental agreement">
+          <label class="glass-label">Vertragsname</label>
+          <input class="glass-input" type="text" placeholder="z. B. Mietvertrag Wohnung">
         </div>
         <div class="glass-input-group">
           <label class="glass-label">E-Mail</label>
           <input class="glass-input glass-input--error" type="email" value="ungueltig@">
-          <span class="glass-hint glass-hint--error">Please enter a valid email</span>
+          <span class="glass-hint glass-hint--error">Bitte gültige E-Mail angeben</span>
         </div>
         <div class="glass-input-group">
-          <label class="glass-label">Category</label>
+          <label class="glass-label">Kategorie</label>
           <select class="glass-select">
-            <option>Please select…</option>
-            <option>Insurance</option>
-            <option>Rental agreement</option>
+            <option>Bitte wählen…</option>
+            <option>Versicherung</option>
+            <option>Mietvertrag</option>
           </select>
         </div>
         <div class="glass-input-group">
-          <label class="glass-label">Notes</label>
-          <textarea class="glass-textarea" placeholder="Optional remarks…"></textarea>
+          <label class="glass-label">Notizen</label>
+          <textarea class="glass-textarea" placeholder="Optionale Anmerkungen…"></textarea>
         </div>
       </div>
 
       <!-- SEARCH -->
-      <p class="section-label">Search</p>
+      <p class="section-label">Suchfeld</p>
       <div class="glass-search gl-mb-md">
         <svg class="glass-search__icon" viewBox="0 0 24 24">
           <circle cx="11" cy="11" r="8"/>
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
-        <input class="glass-input" type="search" placeholder="Search documents…">
+        <input class="glass-input" type="search" placeholder="Verträge durchsuchen…">
       </div>
 
       <hr class="glass-divider gl-mb-md">
@@ -426,31 +426,31 @@
         <label class="glass-toggle">
           <input class="glass-toggle__input" type="checkbox" checked>
           <span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span>
-          <span class="glass-toggle__label">Push notifications</span>
+          <span class="glass-toggle__label">Push-Benachrichtigungen</span>
         </label>
         <label class="glass-toggle">
           <input class="glass-toggle__input" type="checkbox">
           <span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span>
-          <span class="glass-toggle__label">Auto upload</span>
+          <span class="glass-toggle__label">Automatischer Upload</span>
         </label>
       </div>
 
       <!-- CHECKBOXES -->
-      <p class="section-label">Checkboxes</p>
+      <p class="section-label">Checkboxen</p>
       <div class="gl-stack gl-stack--sm gl-mb-md">
         <label class="glass-checkbox">
           <input class="glass-checkbox__input" type="checkbox" checked>
           <span class="glass-checkbox__box">
             <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
-          <span class="glass-checkbox__label">Accept terms</span>
+          <span class="glass-checkbox__label">AGB akzeptieren</span>
         </label>
         <label class="glass-checkbox">
           <input class="glass-checkbox__input" type="checkbox">
           <span class="glass-checkbox__box">
             <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
-          <span class="glass-checkbox__label">Subscribe to newsletter</span>
+          <span class="glass-checkbox__label">Newsletter abonnieren</span>
         </label>
       </div>
 
@@ -460,12 +460,12 @@
         <label class="glass-radio">
           <input class="glass-radio__input" type="radio" name="doctype" checked>
           <span class="glass-radio__circle"><span class="glass-radio__dot"></span></span>
-          <span class="glass-radio__label">Rental agreement</span>
+          <span class="glass-radio__label">Mietvertrag</span>
         </label>
         <label class="glass-radio">
           <input class="glass-radio__input" type="radio" name="doctype">
           <span class="glass-radio__circle"><span class="glass-radio__dot"></span></span>
-          <span class="glass-radio__label">Insurance</span>
+          <span class="glass-radio__label">Versicherung</span>
         </label>
       </div>
 
@@ -476,48 +476,48 @@
       <div class="glass-accordion gl-mb-md">
         <div class="glass-accordion__item is-open">
           <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')">
-            <span>What is GlassKit?</span>
+            <span>Was ist GlassKit?</span>
             <span class="glass-accordion__trigger-icon">
               <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </span>
           </button>
           <div class="glass-accordion__content">
             <div class="glass-accordion__body">
-              The GlassKit component library by Jungherz GmbH.
-              Modern, accessible, and fully customizable via Design Tokens.
+              Die GlassKit Komponentenbibliothek der Jungherz GmbH.
+              Modern, barrierefrei und vollständig per Design Tokens anpassbar.
             </div>
           </div>
         </div>
         <div class="glass-accordion__item">
           <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')">
-            <span>Which formats are supported?</span>
+            <span>Welche Formate werden unterstützt?</span>
             <span class="glass-accordion__trigger-icon">
               <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </span>
           </button>
           <div class="glass-accordion__content">
             <div class="glass-accordion__body">
-              PDF, JPG, PNG, and HEIC. Scanned documents are automatically saved as PDF.
+              PDF, JPG, PNG und HEIC. Gescannte Dokumente werden automatisch als PDF gespeichert.
             </div>
           </div>
         </div>
         <div class="glass-accordion__item">
           <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')">
-            <span>Is my data secure?</span>
+            <span>Sind meine Daten sicher?</span>
             <span class="glass-accordion__trigger-icon">
               <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </span>
           </button>
           <div class="glass-accordion__content">
             <div class="glass-accordion__body">
-              All data is end-to-end encrypted and stored on European servers. GDPR compliant.
+              Alle Daten werden Ende-zu-Ende verschlüsselt auf deutschen Servern gespeichert. DSGVO-konform.
             </div>
           </div>
         </div>
       </div>
 
       <!-- AVATARS -->
-      <p class="section-label">Avatars</p>
+      <p class="section-label">Avatare</p>
       <div class="gl-row gl-row--sm gl-mb-md">
         <div class="glass-avatar glass-avatar--sm">S</div>
         <div class="glass-avatar">M</div>
@@ -525,27 +525,27 @@
       </div>
 
       <!-- STATUS -->
-      <p class="section-label">Status notice</p>
+      <p class="section-label">Status-Hinweis</p>
       <div class="glass-status gl-mb-md">
         <svg viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10"/>
           <line x1="12" y1="16" x2="12" y2="12"/>
           <line x1="12" y1="8" x2="12" y2="8"/>
         </svg>
-        <p>No documents captured yet.</p>
+        <p>Noch keine aufgenommenen Verträge vorhanden.</p>
       </div>
 
       <hr class="glass-divider gl-mb-md">
 
       <!-- MODAL + TOAST -->
-      <p class="section-label">Dialogs</p>
+      <p class="section-label">Dialoge</p>
       <div class="gl-stack gl-stack--sm">
         <button class="glass-btn glass-btn--tertiary"
           onclick="document.getElementById('demo-modal').classList.add('is-active')">
-          Open modal
+          Modal öffnen
         </button>
         <button class="glass-btn glass-btn--tertiary" onclick="showToast()">
-          Show toast
+          Toast anzeigen
         </button>
       </div>
 
@@ -560,7 +560,7 @@
             <polyline points="9 22 9 12 15 12 15 22"/>
           </svg>
         </span>
-        <span class="glass-tab-bar__label">Home</span>
+        <span class="glass-tab-bar__label">Start</span>
       </button>
       <button class="glass-tab-bar__item" onclick="activateTab(this)">
         <span class="glass-tab-bar__icon">
@@ -571,7 +571,7 @@
           </svg>
           <span class="glass-tab-bar__badge">3</span>
         </span>
-        <span class="glass-tab-bar__label">Documents</span>
+        <span class="glass-tab-bar__label">Verträge</span>
       </button>
       <button class="glass-tab-bar__item" onclick="activateTab(this)">
         <span class="glass-tab-bar__icon">
@@ -589,7 +589,7 @@
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
           </svg>
         </span>
-        <span class="glass-tab-bar__label">Settings</span>
+        <span class="glass-tab-bar__label">Einstellungen</span>
       </button>
     </nav>
 
@@ -600,19 +600,19 @@
 <div class="glass-modal-overlay" id="demo-modal">
   <div class="glass-modal">
     <div class="glass-modal__header">
-      <h2 class="glass-modal__title">Delete document?</h2>
+      <h2 class="glass-modal__title">Vertrag löschen?</h2>
     </div>
     <div class="glass-modal__body">
-      <p>This action cannot be undone.</p>
+      <p>Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
     </div>
     <div class="glass-modal__footer">
       <button class="glass-modal__action"
         onclick="document.getElementById('demo-modal').classList.remove('is-active')">
-        Cancel
+        Abbrechen
       </button>
       <button class="glass-modal__action glass-modal__action--danger"
         onclick="document.getElementById('demo-modal').classList.remove('is-active')">
-        Delete
+        Löschen
       </button>
     </div>
   </div>
@@ -624,7 +624,7 @@
     <circle cx="12" cy="12" r="10"/>
     <polyline points="8 12 11 15 16 9"/>
   </svg>
-  <span class="glass-toast__text">Document uploaded successfully!</span>
+  <span class="glass-toast__text">Vertrag erfolgreich hochgeladen!</span>
 </div>
 
 <script>
@@ -649,18 +649,18 @@
     document.querySelectorAll('.bg-swatch').forEach(s => s.classList.remove('is-active'));
     swatch.classList.add('is-active');
 
-    // Set or reset background
+    // Hintergrund setzen oder zurücksetzen
     if (bg === 'default') {
       glassBg.removeAttribute('data-bg');
     } else {
       glassBg.setAttribute('data-bg', bg);
     }
 
-    // Close popover
+    // Popover schließen
     document.getElementById('bg-popover').classList.remove('is-open');
   }
 
-  // Close popover on outside click
+  // Popover schließen bei Klick außerhalb
   document.addEventListener('click', function(e) {
     const popover = document.getElementById('bg-popover');
     if (!e.target.closest('.bg-switcher')) {
