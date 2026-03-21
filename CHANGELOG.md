@@ -74,8 +74,12 @@ erste öffentliche Veröffentlichung als Open-Source-Projekt.
 
 #### Dateien
 - `glasskit.css` – Kern-Library
+- `glasskit.min.css` – Minifizierte Version (auto-generated bei Release)
+- `glasskit-styles.js` – Constructable Stylesheet für Shadow DOM (auto-generated)
 - `theme-override.css` – Template für eigene Themes (4 Beispiel-Themes:
   Ocean Blue, Emerald Green, Rose, Custom)
+- `build-styles-js.mjs` – Build-Script für glasskit-styles.js
+- `package.json` – npm-Paketdefinition
 - `index.html` – Landingpage mit iPhone-Wireframe & eingebettetem Showcase
 - `showcase.html` – Interaktiver Showcase aller 22 Komponenten
 - `docs.html` – Vollständige Dokumentation mit Live-Previews,
@@ -83,6 +87,15 @@ erste öffentliche Veröffentlichung als Open-Source-Projekt.
 - `README.md` – Projektdokumentation
 - `CHANGELOG.md` – Diese Datei
 - `LICENSE` – MIT License
+
+#### Build & Distribution
+- **GitHub Actions Release Pipeline** – automatische Minifizierung,
+  Constructable Stylesheet Generierung und npm-Veröffentlichung bei
+  jedem GitHub Release
+- **npm-Paket** `@jungherz-de/glasskit` – installierbar via npm, yarn, pnpm
+- **CDN-Verfügbarkeit** – sofort über jsDelivr und unpkg nutzbar
+- **Shadow-DOM-Support** – `glasskit-styles.js` exportiert ein fertiges
+  Constructable Stylesheet für Web Components (Vanilla, Hybrids, Lit etc.)
 
 ---
 
@@ -123,6 +136,8 @@ erste öffentliche Veröffentlichung als Open-Source-Projekt.
 ### Project
 
 - Repository: [github.com/JUNGHERZ/GlassKit](https://github.com/JUNGHERZ/GlassKit)
+- npm: [@jungherz-de/glasskit](https://www.npmjs.com/package/@jungherz-de/glasskit)
+- CDN: [cdn.jsdelivr.net/npm/@jungherz-de/glasskit](https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/)
 - Lizenz: MIT
 - Entwickelt von: [Jungherz GmbH](https://www.jungherz.com)
 
@@ -132,8 +147,6 @@ erste öffentliche Veröffentlichung als Open-Source-Projekt.
 
 > Geplante Erweiterungen für kommende Versionen:
 
-- [ ] `glasskit.min.css` – Minifizierte Version
-- [ ] npm-Paket (`@jungherz/glasskit`)
 - [ ] Weitere Themes (Purple, Midnight, Sand)
 - [ ] Animierte Hintergründe (Aurora-Motion)
 - [ ] Figma-Komponentenset

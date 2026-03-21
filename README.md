@@ -11,6 +11,10 @@
 <h1 align="center">🧊 GlassKit</h1>
 
 <p align="center">
+  <img src="intro_screenshot.png" alt="GlassKit Preview" width="720">
+</p>
+
+<p align="center">
   <strong>A modern glassmorphism CSS component library.</strong><br>
   22 Komponenten · Dark & Light Mode · Keine Abhängigkeiten · Design Tokens
 </p>
@@ -332,7 +336,7 @@ Das Shadow DOM kapselt Styles – externe Stylesheets wie `glasskit.css` werden 
 GlassKit stellt ein ES-Modul bereit, das die minifizierte CSS als [Constructable Stylesheet](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/CSSStyleSheet) exportiert. Das Stylesheet wird **einmal** im Speicher gehalten und kann von beliebig vielen Shadow Roots geteilt werden – ohne doppeltes Parsen.
 
 ```js
-import { glassSheet } from '@jungherz/glasskit/glasskit-styles.js';
+import { glassSheet } from '@jungherz-de/glasskit/glasskit-styles.js';
 
 // In einer Web Component:
 class MyCard extends HTMLElement {
@@ -356,7 +360,7 @@ GlassKit funktioniert hervorragend mit leichtgewichtigen Web-Component-Framework
 
 ```js
 import { define, html } from 'hybrids';
-import { glassSheet } from '@jungherz/glasskit/glasskit-styles.js';
+import { glassSheet } from '@jungherz-de/glasskit/glasskit-styles.js';
 
 define({
   tag: 'my-card',
@@ -374,7 +378,7 @@ define({
 
 ```js
 import { LitElement, html } from 'lit';
-import { glassSheet } from '@jungherz/glasskit/glasskit-styles.js';
+import { glassSheet } from '@jungherz-de/glasskit/glasskit-styles.js';
 
 class MyCard extends LitElement {
   static styles = [glassSheet];
