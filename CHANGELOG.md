@@ -7,6 +7,16 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.3.1] – 2026-03-21
+
+### Fixed
+
+- Intro-Screenshot: PNG durch optimiertes JPEG ersetzt (1.3 MB → 287 KB)
+- README-Bild: absolute GitHub-URL für korrekte Anzeige auf npmjs.com
+- Release-Pipeline: Tag-Push triggert jetzt automatisch Release + Build + npm Publish (kein manuelles Release mehr nötig)
+
+---
+
 ## [1.3.0] – 2026-03-21
 
 ### 🎉 Initial Public Release
@@ -153,5 +163,6 @@ erste öffentliche Veröffentlichung als Open-Source-Projekt.
 
 ---
 
+[1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.3.1...HEAD

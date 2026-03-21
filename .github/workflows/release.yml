@@ -1,27 +1,30 @@
 # ============================================================
 # GlassKit – Release Pipeline
 # 
-# Trigger:  Neues GitHub Release wird veröffentlicht
+# Trigger:  Tag-Push mit v* Pattern (z.B. v1.3.1)
 # Steps:    1. Minifizierte CSS erstellen
 #           2. Constructable Stylesheet JS-Modul generieren
-#           3. Build-Artefakte als Release-Assets anhängen
-#           4. Auf npm veröffentlichen
+#           3. GitHub Release automatisch erstellen
+#           4. Build-Artefakte als Release-Assets anhängen
+#           5. Auf npm veröffentlichen
 #
+# Usage:    git tag v1.3.1 && git push origin v1.3.1
 # Secrets:  NPM_TOKEN – npm Access Token (Repository Settings → Secrets)
 # ============================================================
 
 name: Release & Publish
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 permissions:
   contents: write
 
 jobs:
   build-and-publish:
-    name: Build, Attach Assets & Publish to npm
+    name: Build, Release & Publish to npm
     runs-on: ubuntu-latest
 
     steps:
@@ -56,10 +59,12 @@ jobs:
           echo "📦 Styles JS (Constructable Stylesheet):"
           ls -lh glasskit-styles.js
 
-      # ---- Release-Assets anhängen ----
-      - name: Upload build artifacts as Release Assets
+      # ---- GitHub Release erstellen + Assets anhängen ----
+      - name: Create GitHub Release & upload assets
         uses: softprops/action-gh-release@v2
         with:
+          name: ${{ github.ref_name }} – GlassKit Release
+          generate_release_notes: true
           files: |
             glasskit.min.css
             glasskit.css
