@@ -1,0 +1,72 @@
+# ============================================================
+# GlassKit – Release Pipeline
+# 
+# Trigger:  Neues GitHub Release wird veröffentlicht
+# Steps:    1. Minifizierte CSS erstellen
+#           2. Constructable Stylesheet JS-Modul generieren
+#           3. Build-Artefakte als Release-Assets anhängen
+#           4. Auf npm veröffentlichen
+#
+# Secrets:  NPM_TOKEN – npm Access Token (Repository Settings → Secrets)
+# ============================================================
+
+name: Release & Publish
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    name: Build, Attach Assets & Publish to npm
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---- Checkout ----
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ---- Node.js Setup ----
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      # ---- Dependencies installieren ----
+      - name: Install dependencies
+        run: npm ci
+
+      # ---- Build (Minify + Styles JS) ----
+      - name: Build all artifacts
+        run: npm run build
+
+      # ---- Dateigrößen loggen ----
+      - name: Log file sizes
+        run: |
+          echo "📦 Original:"
+          ls -lh glasskit.css
+          echo ""
+          echo "📦 Minified:"
+          ls -lh glasskit.min.css
+          echo ""
+          echo "📦 Styles JS (Constructable Stylesheet):"
+          ls -lh glasskit-styles.js
+
+      # ---- Release-Assets anhängen ----
+      - name: Upload build artifacts as Release Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            glasskit.min.css
+            glasskit.css
+            glasskit-styles.js
+
+      # ---- npm veröffentlichen ----
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

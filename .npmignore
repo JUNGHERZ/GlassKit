@@ -1,0 +1,29 @@
+# Build Scripts (nicht relevant für npm-Nutzer)
+build-styles-js.mjs
+
+# HTML-Seiten (nicht relevant für npm-Nutzer)
+index.html
+showcase.html
+docs.html
+
+# Git & GitHub
+.git/
+.github/
+.gitignore
+
+# System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Source Maps (optional – entfernen falls gewünscht)
+# glasskit.min.css.map

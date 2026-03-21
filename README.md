@@ -4,6 +4,8 @@
   <img src="https://img.shields.io/badge/components-22-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.3.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
+  <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
 
 <h1 align="center">🧊 GlassKit</h1>
@@ -14,9 +16,11 @@
 </p>
 
 <p align="center">
+  <a href="#-installation">Installation</a> ·
   <a href="#-quick-start">Quick Start</a> ·
   <a href="#-komponenten">Komponenten</a> ·
   <a href="#-theming">Theming</a> ·
+  <a href="#-web-components--shadow-dom">Web Components</a> ·
   <a href="#-dokumentation">Docs</a> ·
   <a href="CHANGELOG.md">Changelog</a> ·
   <a href="#-lizenz">Lizenz</a>
@@ -39,24 +43,77 @@ GlassKit ist eine vollständige **CSS-Komponentenbibliothek** im Glassmorphism-S
 - 🎛️ **Design Tokens** – alle Werte zentral über CSS Custom Properties steuerbar
 - 📱 **Mobile-first** – optimiert für Touch-Geräte und `safe-area-inset`
 - 🔌 **Framework-agnostisch** – funktioniert mit React, Vue, Svelte, plain HTML oder jedem anderen Stack
+- 🧩 **Shadow-DOM-ready** – Constructable Stylesheet für Web Components mitgeliefert
 - 🪶 **Leichtgewichtig** – ~45 KB (unkomprimiert), keine externen Abhängigkeiten
 - 🎯 **BEM-artige Namenskonvention** – `glass-*` Prefix, kein Konflikt mit bestehendem CSS
 
 ---
 
-## 🚀 Quick Start
+## 📥 Installation
 
-### 1. Einbinden
+GlassKit kann auf verschiedenen Wegen eingebunden werden – wähle den, der am besten zu deinem Projekt passt:
+
+### CDN (empfohlen für schnellen Einstieg)
+
+Kein Download, kein Build-Tool – einfach einbinden und loslegen:
 
 ```html
-<!-- GlassKit CSS -->
-<link rel="stylesheet" href="glasskit.css">
+<!-- jsDelivr – Minifiziert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.3.0/glasskit.min.css">
+
+<!-- jsDelivr – Unminifiziert (zum Lesen/Debuggen) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.3.0/glasskit.css">
+
+<!-- unpkg – Alternative -->
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.3.0/glasskit.min.css">
+```
+
+> **Tipp:** Ersetze `@1.3.0` durch `@latest` für immer die neueste Version – oder pinne auf eine feste Version für maximale Stabilität.
+
+### npm / yarn / pnpm
+
+Für Projekte mit Build-Pipeline:
+
+```bash
+# npm
+npm install @jungherz-de/glasskit
+
+# yarn
+yarn add @jungherz-de/glasskit
+
+# pnpm
+pnpm add @jungherz-de/glasskit
+```
+
+Danach im CSS oder Build-Tool importieren:
+
+```css
+/* In deiner CSS-Datei */
+@import '@jungherz-de/glasskit/glasskit.css';
+```
+
+```js
+// Oder in JS (Webpack, Vite, etc.)
+import '@jungherz-de/glasskit/glasskit.css';
+```
+
+### Direkter Download
+
+Lade die Dateien direkt vom [GitHub Release](https://github.com/JUNGHERZ/GlassKit/releases/latest) herunter:
+
+```html
+<!-- Lokal einbinden -->
+<link rel="stylesheet" href="glasskit.min.css">
 
 <!-- Optional: eigenes Theme -->
 <link rel="stylesheet" href="theme-override.css">
 ```
 
-### 2. Theme setzen
+---
+
+## 🚀 Quick Start
+
+### 1. Theme setzen
 
 ```html
 <!-- Dark Mode (Standard) -->
@@ -66,7 +123,7 @@ GlassKit ist eine vollständige **CSS-Komponentenbibliothek** im Glassmorphism-S
 <html data-theme="light">
 ```
 
-### 3. Loslegen
+### 2. Loslegen
 
 ```html
 <div class="glass-bg">
@@ -260,12 +317,109 @@ Die vollständige Token-Referenz findest du in der [Dokumentation](docs.html).
 
 ---
 
+## 🧩 Web Components / Shadow DOM
+
+Das Shadow DOM kapselt Styles – externe Stylesheets wie `glasskit.css` werden nicht automatisch in den Shadow Tree vererbt. GlassKit liefert deshalb ein fertiges **Constructable Stylesheet** mit, das du direkt in Web Components nutzen kannst.
+
+### Das Problem
+
+- CSS-Klassen (`.glass-card`, `.glass-btn` etc.) wirken **nicht** im Shadow DOM
+- Nur **CSS Custom Properties** (`--gl-*`) durchdringen die Shadow-Boundary automatisch
+- Ohne Lösung müsste jede Komponente das CSS selbst laden und parsen
+
+### Die Lösung: `glasskit-styles.js`
+
+GlassKit stellt ein ES-Modul bereit, das die minifizierte CSS als [Constructable Stylesheet](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/CSSStyleSheet) exportiert. Das Stylesheet wird **einmal** im Speicher gehalten und kann von beliebig vielen Shadow Roots geteilt werden – ohne doppeltes Parsen.
+
+```js
+import { glassSheet } from '@jungherz/glasskit/glasskit-styles.js';
+
+// In einer Web Component:
+class MyCard extends HTMLElement {
+  constructor() {
+    super();
+    const shadow = this.attachShadow({ mode: 'open' });
+    shadow.adoptedStyleSheets = [glassSheet];
+    shadow.innerHTML = `
+      <div class="glass-card glass-card--glow">
+        <p class="glass-card__text"><slot></slot></p>
+      </div>
+    `;
+  }
+}
+customElements.define('my-card', MyCard);
+```
+
+### Beispiel: Hybrids.js
+
+GlassKit funktioniert hervorragend mit leichtgewichtigen Web-Component-Frameworks wie [Hybrids](https://hybrids.js.org/):
+
+```js
+import { define, html } from 'hybrids';
+import { glassSheet } from '@jungherz/glasskit/glasskit-styles.js';
+
+define({
+  tag: 'my-card',
+  render: () => html`
+    <div class="glass-card glass-card--glow">
+      <p class="glass-card__text">
+        <slot></slot>
+      </p>
+    </div>
+  `.css(glassSheet),
+});
+```
+
+### Beispiel: Lit
+
+```js
+import { LitElement, html } from 'lit';
+import { glassSheet } from '@jungherz/glasskit/glasskit-styles.js';
+
+class MyCard extends LitElement {
+  static styles = [glassSheet];
+
+  render() {
+    return html`
+      <div class="glass-card glass-card--glow">
+        <p class="glass-card__text"><slot></slot></p>
+      </div>
+    `;
+  }
+}
+customElements.define('my-card', MyCard);
+```
+
+### Exports
+
+| Export | Typ | Beschreibung |
+|---|---|---|
+| `glassSheet` | `CSSStyleSheet` | Fertiges Constructable Stylesheet – direkt für `adoptedStyleSheets` |
+| `css` | `string` | CSS als String – Fallback für Umgebungen ohne Constructable Stylesheet Support |
+
+### Theming im Shadow DOM
+
+Da CSS Custom Properties die Shadow-Boundary durchdringen, funktioniert der **Theme-Wechsel automatisch**. Setze `data-theme` wie gewohnt auf dem `<html>` Element – alle GlassKit-Tokens werden in allen Shadow Roots aktualisiert:
+
+```js
+// Funktioniert global – auch für alle Web Components
+document.documentElement.setAttribute('data-theme', 'light');
+```
+
+> **Tipp:** Für maximale Performance bei vielen Komponenten-Instanzen empfiehlt es sich, `glassSheet` einmal zu importieren und in allen Komponenten zu teilen. Der Browser hält das Stylesheet nur einmal im Speicher.
+
+---
+
 ## 📁 Projektstruktur
 
 ```
 glasskit/
 ├── glasskit.css            # Kern-Library (alle Komponenten + Tokens)
+├── glasskit.min.css        # Minifizierte Version (auto-generated bei Release)
+├── glasskit-styles.js      # Constructable Stylesheet für Shadow DOM (auto-generated)
 ├── theme-override.css      # Template für eigene Themes
+├── build-styles-js.mjs     # Build-Script für glasskit-styles.js
+├── package.json            # npm-Paketdefinition
 ├── index.html              # Landingpage mit iPhone-Wireframe
 ├── showcase.html           # Interaktiver Showcase aller Komponenten
 ├── docs.html               # Vollständige Dokumentation

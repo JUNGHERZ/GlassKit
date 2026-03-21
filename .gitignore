@@ -1,5 +1,12 @@
 # GlassKit – Gitignore
 
+# Build-Artefakte
+glasskit.min.css
+glasskit.min.css.map
+glasskit-styles.js
+node_modules/
+package-lock.json
+
 # System
 .DS_Store
 Thumbs.db
