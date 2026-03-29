@@ -18,6 +18,9 @@ desktop.ini
 *.swp
 *.swo
 
+# Playwright
+.playwright-cli/
+
 # Logs
 *.log
 

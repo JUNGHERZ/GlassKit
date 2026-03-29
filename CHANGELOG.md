@@ -7,6 +7,20 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.3.4] – 2026-03-29
+
+### Added
+
+- **Visual preview for Tab-Bar** in `docs.html` and `de/docs.html` – live rendered tab bar with 4 tabs (Home, Documents with badge, Upload, Settings)
+- **Visual preview for Toast** in `docs.html` and `de/docs.html` – static success toast rendered inline
+- **HTML code example for Status Notice** in `docs.html` and `de/docs.html` – was previously preview-only without code snippet
+
+### Changed
+
+- Version references updated to 1.3.4 across all files
+
+---
+
 ## [1.3.3] – 2026-03-21
 
 ### Added
@@ -193,8 +207,9 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.3.4]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.4
 [1.3.3]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.3
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.3.3...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.3.4...HEAD

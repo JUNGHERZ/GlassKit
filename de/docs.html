@@ -373,7 +373,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.3.3 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.3.4 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -436,7 +436,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.3.3</span>
+      <span class="docs-hero__badge">v1.3.4</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">22 Komponenten</span>
@@ -581,6 +581,35 @@ function <span class="cls">toggleTheme</span>() {
   <section class="docs-section" id="tab-bar">
     <h2>Tab-Bar</h2>
     <p>Fixierte Bottom-Navigation mit Glas-Hintergrund und optionalem Badge.</p>
+    <div class="docs-preview" style="position:relative;height:82px;overflow:hidden;">
+      <nav class="glass-tab-bar" style="position:absolute;bottom:0;left:0;right:0;">
+        <button class="glass-tab-bar__item is-active">
+          <span class="glass-tab-bar__icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </span>
+          <span class="glass-tab-bar__label">Start</span>
+        </button>
+        <button class="glass-tab-bar__item">
+          <span class="glass-tab-bar__icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span class="glass-tab-bar__badge">3</span>
+          </span>
+          <span class="glass-tab-bar__label">Dokumente</span>
+        </button>
+        <button class="glass-tab-bar__item">
+          <span class="glass-tab-bar__icon">
+            <svg viewBox="0 0 24 24"><path d="M12 16V4"/><polyline points="8 8 12 4 16 8"/><path d="M20 17v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1"/></svg>
+          </span>
+          <span class="glass-tab-bar__label">Hochladen</span>
+        </button>
+        <button class="glass-tab-bar__item">
+          <span class="glass-tab-bar__icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </span>
+          <span class="glass-tab-bar__label">Einstellungen</span>
+        </button>
+      </nav>
+    </div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__item is-active"</span><span class="tag">&gt;</span>
@@ -704,6 +733,12 @@ function <span class="cls">toggleTheme</span>() {
         <p>Noch keine Verträge vorhanden.</p>
       </div>
     </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-status"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;svg</span> <span class="attr">viewBox=</span><span class="val">"0 0 24 24"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- Icon --&gt;</span><span class="tag">&lt;/svg&gt;</span>
+  <span class="tag">&lt;p&gt;</span>Noch keine Verträge vorhanden.<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
   </section>
 
   <!-- MODAL -->
@@ -729,6 +764,12 @@ function <span class="cls">toggleTheme</span>() {
   <section class="docs-section" id="toast">
     <h2>Toast</h2>
     <p>Sichtbar via <code>.is-visible</code>. Varianten: <code>--success</code>, <code>--error</code>, <code>--warning</code>.</p>
+    <div class="docs-preview docs-preview--constrained" style="position:relative;min-height:60px;">
+      <div class="glass-toast glass-toast--success" style="position:relative;top:auto;left:auto;transform:none;opacity:1;pointer-events:auto;">
+        <svg class="glass-toast__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>
+        <span class="glass-toast__text">Dokument erfolgreich hochgeladen!</span>
+      </div>
+    </div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-toast glass-toast--success"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;svg</span> <span class="attr">class=</span><span class="val">"glass-toast__icon"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/svg&gt;</span>
