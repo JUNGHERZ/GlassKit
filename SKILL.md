@@ -10,26 +10,26 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.3.5) wit
 
 ---
 
-## 1. Setup & Grundgerüst
+## 1. Setup & Boilerplate
 
-### Einbindung
+### Including the Library
 
 ```html
-<!-- CDN (empfohlen) -->
+<!-- CDN (recommended) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.3/glasskit.min.css">
 
-<!-- Lokal -->
+<!-- Local -->
 <link rel="stylesheet" href="glasskit.css">
 
-<!-- Optional: Custom Theme danach laden -->
+<!-- Optional: Load custom theme after base library -->
 <link rel="stylesheet" href="theme-override.css">
 ```
 
-### Minimal-Template
+### Minimal Template
 
 ```html
 <!DOCTYPE html>
-<html lang="de" data-theme="dark">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,34 +37,34 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.3.5) wit
 </head>
 <body>
   <div class="glass-bg">
-    <!-- Alle Inhalte hier -->
+    <!-- All content goes here -->
   </div>
 </body>
 </html>
 ```
 
-### Namenskonvention
+### Naming Convention
 
-- **Prefix:** Alle Komponenten nutzen `glass-` (z.B. `glass-card`, `glass-btn`)
-- **Utilities:** Nutzen `gl-` (z.B. `gl-stack`, `gl-row`, `gl-mt-md`)
-- **BEM-Logik:** `glass-component__element--modifier`
+- **Prefix:** All components use `glass-` (e.g. `glass-card`, `glass-btn`)
+- **Utilities:** Use `gl-` (e.g. `gl-stack`, `gl-row`, `gl-mt-md`)
+- **BEM logic:** `glass-component__element--modifier`
   - Element: `glass-card__text`, `glass-modal__header`
   - Modifier: `glass-btn--primary`, `glass-avatar--lg`
-- **State-Klassen:** `is-active`, `is-open`, `is-visible` (nicht BEM, sondern eigenständig)
+- **State classes:** `is-active`, `is-open`, `is-visible` (standalone, not BEM)
 
 ### Theming
 
-Das Theme wird über `data-theme` auf `<html>` gesteuert:
+The theme is controlled via `data-theme` on `<html>`:
 
 ```html
-<!-- Dark Mode (Standard) -->
+<!-- Dark Mode (default) -->
 <html data-theme="dark">
 
 <!-- Light Mode -->
 <html data-theme="light">
 ```
 
-Theme-Wechsel per JavaScript:
+Toggle theme via JavaScript:
 
 ```js
 function toggleTheme() {
@@ -78,38 +78,38 @@ function toggleTheme() {
 
 ## 2. Design Tokens
 
-Alle visuellen Werte werden über CSS Custom Properties gesteuert. Für Custom-Theming können diese in einer `theme-override.css` überschrieben werden.
+All visual values are controlled via CSS Custom Properties. For custom theming, override them in a `theme-override.css`.
 
-### Farben
+### Colors
 
-| Token | Dark | Light | Verwendung |
+| Token | Dark | Light | Usage |
 |---|---|---|---|
-| `--gl-color-primary` | `#f5a623` | `#e8852d` | Primärfarbe, Buttons, aktive Elemente |
-| `--gl-color-primary-dark` | `#d4692a` | `#c96a1e` | Gradient-Endwert |
-| `--gl-color-primary-mid` | `#e07a24` | `#d97826` | Gradient-Mitte |
-| `--gl-color-text` | `#ffffff` | `#1a2a36` | Standard-Textfarbe |
-| `--gl-color-text-muted` | `rgba(255,255,255,0.60)` | `rgba(26,42,54,0.55)` | Sekundärer Text |
-| `--gl-color-text-heading` | `#ffffff` | `#0f1f2a` | Überschriften |
-| `--gl-color-success` | `#34c759` | `#28a745` | Erfolg |
-| `--gl-color-error` | `#ff3b30` | `#dc3545` | Fehler |
-| `--gl-color-warning` | `#ffcc00` | `#e6a800` | Warnung |
+| `--gl-color-primary` | `#f5a623` | `#e8852d` | Primary color, buttons, active elements |
+| `--gl-color-primary-dark` | `#d4692a` | `#c96a1e` | Gradient end value |
+| `--gl-color-primary-mid` | `#e07a24` | `#d97826` | Gradient midpoint |
+| `--gl-color-text` | `#ffffff` | `#1a2a36` | Default text color |
+| `--gl-color-text-muted` | `rgba(255,255,255,0.60)` | `rgba(26,42,54,0.55)` | Secondary text |
+| `--gl-color-text-heading` | `#ffffff` | `#0f1f2a` | Headings |
+| `--gl-color-success` | `#34c759` | `#28a745` | Success |
+| `--gl-color-error` | `#ff3b30` | `#dc3545` | Error |
+| `--gl-color-warning` | `#ffcc00` | `#e6a800` | Warning |
 
-### Glas-Oberflächen
+### Glass Surfaces
 
-| Token | Dark | Verwendung |
+| Token | Dark | Usage |
 |---|---|---|
-| `--gl-surface-1` | `rgba(255,255,255, 0.08)` | Subtilste Oberfläche (Status) |
-| `--gl-surface-2` | `rgba(255,255,255, 0.10)` | Standard (Inputs, Cards) |
-| `--gl-surface-3` | `rgba(255,255,255, 0.14)` | Nav Pills, Badges |
-| `--gl-surface-4` | `rgba(255,255,255, 0.16)` | Hover States |
-| `--gl-surface-5` | `rgba(255,255,255, 0.22)` | Starker Hover |
-| `--gl-surface-milk` | `rgba(255,255,255, 0.55)` | Milchig |
-| `--gl-surface-milk-strong` | `rgba(255,255,255, 0.75)` | Secondary Button |
-| `--gl-surface-overlay` | `rgba(0,0,0, 0.50)` | Modal Overlay |
+| `--gl-surface-1` | `rgba(255,255,255, 0.08)` | Subtlest surface (status) |
+| `--gl-surface-2` | `rgba(255,255,255, 0.10)` | Default (inputs, cards) |
+| `--gl-surface-3` | `rgba(255,255,255, 0.14)` | Nav pills, badges |
+| `--gl-surface-4` | `rgba(255,255,255, 0.16)` | Hover states |
+| `--gl-surface-5` | `rgba(255,255,255, 0.22)` | Strong hover |
+| `--gl-surface-milk` | `rgba(255,255,255, 0.55)` | Milky |
+| `--gl-surface-milk-strong` | `rgba(255,255,255, 0.75)` | Secondary button |
+| `--gl-surface-overlay` | `rgba(0,0,0, 0.50)` | Modal overlay |
 
 ### Borders
 
-| Token | Wert |
+| Token | Value |
 |---|---|
 | `--gl-border-subtle` | `rgba(255,255,255, 0.18)` |
 | `--gl-border-medium` | `rgba(255,255,255, 0.30)` |
@@ -120,28 +120,28 @@ Alle visuellen Werte werden über CSS Custom Properties gesteuert. Für Custom-T
 
 ### Blur
 
-| Token | Wert |
+| Token | Value |
 |---|---|
-| `--gl-blur` | `24px` (Standard) |
+| `--gl-blur` | `24px` (default) |
 | `--gl-blur-light` | `16px` |
 | `--gl-blur-soft` | `12px` |
 | `--gl-blur-heavy` | `40px` |
 
 ### Radii
 
-| Token | Wert | Verwendung |
+| Token | Value | Usage |
 |---|---|---|
-| `--gl-radius-xs` | `8px` | Kleine Elemente |
-| `--gl-radius-sm` | `12px` | Badges, kleine Container |
-| `--gl-radius-input` | `14px` | Inputs, Textareas |
+| `--gl-radius-xs` | `8px` | Small elements |
+| `--gl-radius-sm` | `12px` | Badges, small containers |
+| `--gl-radius-input` | `14px` | Inputs, textareas |
 | `--gl-radius-btn` | `16px` | Buttons |
 | `--gl-radius-card` | `24px` | Cards |
-| `--gl-radius-full` | `9999px` | Komplett rund |
-| `--gl-radius-pill` | `50%` | Kreisform |
+| `--gl-radius-full` | `9999px` | Fully rounded |
+| `--gl-radius-pill` | `50%` | Circle shape |
 
 ### Spacing
 
-| Token | Wert |
+| Token | Value |
 |---|---|
 | `--gl-space-2xs` | `4px` |
 | `--gl-space-xs` | `8px` |
@@ -155,19 +155,19 @@ Alle visuellen Werte werden über CSS Custom Properties gesteuert. Für Custom-T
 
 ### Shadows
 
-| Token | Verwendung |
+| Token | Usage |
 |---|---|
 | `--gl-shadow-card` | Cards |
-| `--gl-shadow-btn` | Standard-Buttons |
-| `--gl-shadow-btn-primary` | Primary Button (orange glow) |
-| `--gl-shadow-glow` | Glow-Effekt |
-| `--gl-shadow-modal` | Modal-Dialog |
-| `--gl-shadow-toast` | Toast-Benachrichtigungen |
-| `--gl-shadow-focus` | Focus-Ring |
+| `--gl-shadow-btn` | Default buttons |
+| `--gl-shadow-btn-primary` | Primary button (orange glow) |
+| `--gl-shadow-glow` | Glow effect |
+| `--gl-shadow-modal` | Modal dialog |
+| `--gl-shadow-toast` | Toast notifications |
+| `--gl-shadow-focus` | Focus ring |
 
 ### Typography
 
-| Token | Wert |
+| Token | Value |
 |---|---|
 | `--gl-font-size-xs` | `13px` |
 | `--gl-font-size-sm` | `14px` |
@@ -182,37 +182,37 @@ Alle visuellen Werte werden über CSS Custom Properties gesteuert. Für Custom-T
 
 ---
 
-## 3. Komponenten-Katalog
+## 3. Component Catalog
 
 ### 3.1 Background
 
-Das äußerste Container-Element. Erzeugt den Aurora-Hintergrund mit Lichteffekten. **Muss immer als Wrapper für alle Inhalte verwendet werden.**
+The outermost container element. Creates the aurora background with light effects. **Must always be used as the wrapper for all content.**
 
 ```html
 <div class="glass-bg">
-  <!-- Alle Inhalte hier -->
+  <!-- All content goes here -->
 </div>
 ```
 
-Mit Tab-Bar (fügt unten Padding hinzu):
+With Tab-Bar (adds bottom padding):
 
 ```html
 <div class="glass-bg glass-bg--has-tab-bar">
-  <!-- Inhalte -->
+  <!-- Content -->
   <nav class="glass-tab-bar">...</nav>
 </div>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-bg` | Vollflächiger Hintergrund mit Aurora-Lichteffekten |
-| `.glass-bg--has-tab-bar` | Modifier: Bottom-Padding für Tab-Bar (82px) |
+| `.glass-bg` | Full-screen background with aurora light effects |
+| `.glass-bg--has-tab-bar` | Modifier: bottom padding for tab bar (82px) |
 
 ---
 
 ### 3.2 Navigation Bar
 
-Transparente Navigationsleiste. Enthält typischerweise `glass-pill` Buttons.
+Transparent navigation bar. Typically contains `glass-pill` buttons.
 
 ```html
 <nav class="glass-nav">
@@ -225,15 +225,15 @@ Transparente Navigationsleiste. Enthält typischerweise `glass-pill` Buttons.
 </nav>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-nav` | Flex-Container mit `space-between`, Padding |
+| `.glass-nav` | Flex container with `space-between`, padding |
 
 ---
 
-### 3.3 Pill-Button
+### 3.3 Pill Button
 
-Runde Glas-Icon-Buttons (46×46px). Werden in Nav-Bars und als eigenständige Aktions-Buttons verwendet.
+Round glass icon buttons (46×46px). Used in nav bars and as standalone action buttons.
 
 ```html
 <button class="glass-pill">
@@ -241,12 +241,12 @@ Runde Glas-Icon-Buttons (46×46px). Werden in Nav-Bars und als eigenständige Ak
 </button>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-pill` | Runder Glas-Button (46×46px) |
-| `.glass-theme-toggle` | Spezieller Pill mit automatischem Moon/Sun-Switch |
+| `.glass-pill` | Round glass button (46×46px) |
+| `.glass-theme-toggle` | Specialized pill with automatic moon/sun switch |
 
-Theme-Toggle (spezialisierter Pill):
+Theme Toggle (specialized pill):
 
 ```html
 <button class="glass-theme-toggle" onclick="toggleTheme()">
@@ -269,9 +269,9 @@ Theme-Toggle (spezialisierter Pill):
 
 ---
 
-### 3.4 Tab-Bar
+### 3.4 Tab Bar
 
-Fixierte Bottom-Navigation mit Glas-Hintergrund. Benötigt `glass-bg--has-tab-bar` auf dem Background-Container.
+Fixed bottom navigation with glass background. Requires `glass-bg--has-tab-bar` on the background container.
 
 ```html
 <nav class="glass-tab-bar">
@@ -279,139 +279,139 @@ Fixierte Bottom-Navigation mit Glas-Hintergrund. Benötigt `glass-bg--has-tab-ba
     <span class="glass-tab-bar__icon">
       <svg viewBox="0 0 24 24"><!-- Icon --></svg>
     </span>
-    <span class="glass-tab-bar__label">Start</span>
+    <span class="glass-tab-bar__label">Home</span>
   </button>
   <button class="glass-tab-bar__item">
     <span class="glass-tab-bar__icon">
       <svg viewBox="0 0 24 24"><!-- Icon --></svg>
       <span class="glass-tab-bar__badge">3</span>
     </span>
-    <span class="glass-tab-bar__label">Verträge</span>
+    <span class="glass-tab-bar__label">Contracts</span>
   </button>
   <button class="glass-tab-bar__item">
     <span class="glass-tab-bar__icon">
       <svg viewBox="0 0 24 24"><!-- Icon --></svg>
     </span>
-    <span class="glass-tab-bar__label">Profil</span>
+    <span class="glass-tab-bar__label">Profile</span>
   </button>
 </nav>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-tab-bar` | Container: fixed bottom, Glas-Blur |
-| `.glass-tab-bar__item` | Einzelner Tab |
-| `.glass-tab-bar__item.is-active` | Aktiver Tab (Primary-Farbe) |
-| `.glass-tab-bar__icon` | Icon-Wrapper |
-| `.glass-tab-bar__badge` | Numerisches Badge im Icon |
-| `.glass-tab-bar__label` | Text-Label unter dem Icon |
+| `.glass-tab-bar` | Container: fixed bottom, glass blur |
+| `.glass-tab-bar__item` | Individual tab |
+| `.glass-tab-bar__item.is-active` | Active tab (primary color) |
+| `.glass-tab-bar__icon` | Icon wrapper |
+| `.glass-tab-bar__badge` | Numeric badge inside icon |
+| `.glass-tab-bar__label` | Text label below icon |
 
 ---
 
 ### 3.5 Title
 
-Seitentitel mit Text-Shadow-Effekt.
+Page title with text shadow effect.
 
 ```html
-<h1 class="glass-title">Seitentitel</h1>
+<h1 class="glass-title">Page Title</h1>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-title` | Großer Titel (24px, bold, text-shadow) |
+| `.glass-title` | Large title (24px, bold, text-shadow) |
 
 ---
 
 ### 3.6 Card
 
-Glasmorphismus-Container für Inhalte. Optional mit Glow-Effekt (Milchglas-Gradient + Lichtstreifen).
+Glassmorphism container for content. Optionally with glow effect (frosted glass gradient + light streak).
 
 ```html
 <!-- Standard Card -->
 <div class="glass-card">
-  <p class="glass-card__text">Inhalt</p>
+  <p class="glass-card__text">Content</p>
 </div>
 
-<!-- Glow Card mit Icon -->
+<!-- Glow Card with Icon -->
 <div class="glass-card glass-card--glow">
   <div class="glass-card__icon">
     <svg viewBox="0 0 64 64"><!-- Icon SVG --></svg>
   </div>
-  <p class="glass-card__text">Beschreibungstext</p>
+  <p class="glass-card__text">Description text goes here.</p>
 </div>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-card` | Basis-Glas-Container (border-radius: 24px) |
-| `.glass-card--glow` | Milchglas-Gradient mit Lichtstreifen-Effekt |
-| `.glass-card__icon` | Zentrierter Icon-Wrapper (SVG, 48×48px) |
-| `.glass-card__text` | Beschreibungstext (muted) |
+| `.glass-card` | Base glass container (border-radius: 24px) |
+| `.glass-card--glow` | Frosted glass gradient with light streak effect |
+| `.glass-card__icon` | Centered icon wrapper (SVG, 48×48px) |
+| `.glass-card__text` | Description text (muted) |
 
 ---
 
 ### 3.7 Buttons
 
-Full-Width-Buttons (56px Höhe) mit drei Varianten und Größen-Modifiern.
+Full-width buttons (56px height) with three variants and size modifiers.
 
 ```html
-<!-- Primary: Farbgradient, Hauptaktion -->
+<!-- Primary: Color gradient, main action -->
 <button class="glass-btn glass-btn--primary">
   <svg viewBox="0 0 24 24"><!-- Optional: Icon --></svg>
-  Primäre Aktion
+  Primary Action
 </button>
 
-<!-- Secondary: Milchig-weiß -->
-<button class="glass-btn glass-btn--secondary">Sekundäre Aktion</button>
+<!-- Secondary: Milky white -->
+<button class="glass-btn glass-btn--secondary">Secondary Action</button>
 
-<!-- Tertiary: Subtiles Glas -->
-<button class="glass-btn glass-btn--tertiary">Tertiäre Aktion</button>
+<!-- Tertiary: Subtle glass -->
+<button class="glass-btn glass-btn--tertiary">Tertiary Action</button>
 
-<!-- Größen -->
-<button class="glass-btn glass-btn--primary glass-btn--sm">Klein (44px)</button>
-<button class="glass-btn glass-btn--primary glass-btn--lg">Groß (64px)</button>
+<!-- Sizes -->
+<button class="glass-btn glass-btn--primary glass-btn--sm">Small (44px)</button>
+<button class="glass-btn glass-btn--primary glass-btn--lg">Large (64px)</button>
 
-<!-- Auto-Width (statt full-width) -->
+<!-- Auto-width (instead of full-width) -->
 <button class="glass-btn glass-btn--primary glass-btn--auto">Auto</button>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-btn` | Basis (56px Höhe, width: 100%) |
-| `.glass-btn--primary` | Farbgradient (orange) |
-| `.glass-btn--secondary` | Milchig-weiß, dunkler Text |
-| `.glass-btn--tertiary` | Subtiles Glas, transparenter |
-| `.glass-btn--sm` | 44px Höhe |
-| `.glass-btn--lg` | 64px Höhe |
-| `.glass-btn--auto` | Width: auto statt 100% |
+| `.glass-btn` | Base (56px height, width: 100%) |
+| `.glass-btn--primary` | Color gradient (orange) |
+| `.glass-btn--secondary` | Milky white, dark text |
+| `.glass-btn--tertiary` | Subtle glass, more transparent |
+| `.glass-btn--sm` | 44px height |
+| `.glass-btn--lg` | 64px height |
+| `.glass-btn--auto` | Width: auto instead of 100% |
 
-**Wichtig:** Buttons sind standardmäßig `width: 100%`. Für inline/auto-breite Buttons `--auto` verwenden.
+**Important:** Buttons default to `width: 100%`. Use `--auto` for inline/auto-width buttons.
 
 ---
 
 ### 3.8 Badge
 
-Tags und Labels.
+Tags and labels.
 
 ```html
-<span class="glass-badge">Standard</span>
-<span class="glass-badge glass-badge--primary">Aktiv</span>
-<span class="glass-badge glass-badge--success">Fertig</span>
-<span class="glass-badge glass-badge--error">Fehler</span>
+<span class="glass-badge">Default</span>
+<span class="glass-badge glass-badge--primary">Active</span>
+<span class="glass-badge glass-badge--success">Done</span>
+<span class="glass-badge glass-badge--error">Error</span>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-badge` | Standard (subtiles Glas) |
-| `.glass-badge--primary` | Primary-Farbe |
-| `.glass-badge--success` | Grün |
-| `.glass-badge--error` | Rot |
+| `.glass-badge` | Default (subtle glass) |
+| `.glass-badge--primary` | Primary color |
+| `.glass-badge--success` | Green |
+| `.glass-badge--error` | Red |
 
 ---
 
 ### 3.9 Avatar
 
-Glas-Kreise in drei Größen. Für Initialen, Icons oder Bilder.
+Glass circles in three sizes. For initials, icons, or images.
 
 ```html
 <div class="glass-avatar glass-avatar--sm">S</div>
@@ -419,17 +419,17 @@ Glas-Kreise in drei Größen. Für Initialen, Icons oder Bilder.
 <div class="glass-avatar glass-avatar--lg">L</div>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-avatar` | Standard-Größe (Medium) |
-| `.glass-avatar--sm` | Klein |
-| `.glass-avatar--lg` | Groß |
+| `.glass-avatar` | Default size (medium) |
+| `.glass-avatar--sm` | Small |
+| `.glass-avatar--lg` | Large |
 
 ---
 
 ### 3.10 Divider
 
-Horizontale Trennlinie mit Fade-Effekt.
+Horizontal separator line with fade effect.
 
 ```html
 <hr class="glass-divider">
@@ -439,7 +439,7 @@ Horizontale Trennlinie mit Fade-Effekt.
 
 ### 3.11 Status Notice
 
-Info-/Hinweis-Card mit Icon und Text.
+Info/notice card with icon and text.
 
 ```html
 <div class="glass-status">
@@ -448,64 +448,64 @@ Info-/Hinweis-Card mit Icon und Text.
     <line x1="12" y1="16" x2="12" y2="12"/>
     <line x1="12" y1="8" x2="12" y2="8"/>
   </svg>
-  <p>Noch keine Dokumente erfasst.</p>
+  <p>No documents captured yet.</p>
 </div>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-status` | Container mit subtiler Glas-Oberfläche |
+| `.glass-status` | Container with subtle glass surface |
 
 ---
 
 ### 3.12 Modal
 
-Zentrierter Dialog mit Blur-Overlay. Wird über die State-Klasse `is-active` auf dem Overlay gesteuert.
+Centered dialog with blur overlay. Controlled via the `is-active` state class on the overlay.
 
 ```html
 <div class="glass-modal-overlay is-active">
   <div class="glass-modal">
     <div class="glass-modal__header">
-      <h2 class="glass-modal__title">Vertrag löschen?</h2>
+      <h2 class="glass-modal__title">Delete contract?</h2>
     </div>
     <div class="glass-modal__body">
-      <p>Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
+      <p>This action cannot be undone.</p>
     </div>
     <div class="glass-modal__footer">
-      <button class="glass-modal__action">Abbrechen</button>
-      <button class="glass-modal__action glass-modal__action--primary">Bestätigen</button>
+      <button class="glass-modal__action">Cancel</button>
+      <button class="glass-modal__action glass-modal__action--primary">Confirm</button>
     </div>
   </div>
 </div>
 ```
 
-Danger-Variante:
+Danger variant:
 
 ```html
-<button class="glass-modal__action glass-modal__action--danger">Löschen</button>
+<button class="glass-modal__action glass-modal__action--danger">Delete</button>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-modal-overlay` | Fullscreen-Container mit Blur |
-| `.glass-modal-overlay.is-active` | Sichtbar + animiert |
-| `.glass-modal` | Dialog-Box |
-| `.glass-modal__header` | Kopfbereich |
-| `.glass-modal__title` | Titel (20px, bold) |
-| `.glass-modal__body` | Inhaltsbereich |
-| `.glass-modal__footer` | Aktionsleiste |
-| `.glass-modal__action` | Action-Button im Footer |
-| `.glass-modal__action--primary` | Primäre Aktion (farbig) |
-| `.glass-modal__action--danger` | Gefährliche Aktion (rot) |
+| `.glass-modal-overlay` | Fullscreen container with blur |
+| `.glass-modal-overlay.is-active` | Visible + animated |
+| `.glass-modal` | Dialog box |
+| `.glass-modal__header` | Header area |
+| `.glass-modal__title` | Title (20px, bold) |
+| `.glass-modal__body` | Content area |
+| `.glass-modal__footer` | Action bar |
+| `.glass-modal__action` | Action button in footer |
+| `.glass-modal__action--primary` | Primary action (colored) |
+| `.glass-modal__action--danger` | Dangerous action (red) |
 
-**Wichtig:** `is-active` kommt auf `.glass-modal-overlay`, **nicht** auf `.glass-modal`.
+**Important:** `is-active` goes on `.glass-modal-overlay`, **not** on `.glass-modal`.
 
-JavaScript zum Öffnen/Schließen:
+JavaScript to open/close:
 
 ```js
-// Öffnen
+// Open
 document.querySelector('.glass-modal-overlay').classList.add('is-active');
-// Schließen
+// Close
 document.querySelector('.glass-modal-overlay').classList.remove('is-active');
 ```
 
@@ -513,46 +513,46 @@ document.querySelector('.glass-modal-overlay').classList.remove('is-active');
 
 ### 3.13 Toast
 
-Temporäre Benachrichtigung. Sichtbar über `is-visible`. Drei Varianten.
+Temporary notification. Visible via `is-visible`. Three variants.
 
 ```html
 <div class="glass-toast glass-toast--success is-visible">
   <svg class="glass-toast__icon" viewBox="0 0 24 24"><!-- Icon --></svg>
-  <span class="glass-toast__text">Erfolgreich gespeichert!</span>
+  <span class="glass-toast__text">Saved successfully!</span>
 </div>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-toast` | Basis-Container |
-| `.glass-toast--success` | Grüner Akzent |
-| `.glass-toast--error` | Roter Akzent |
-| `.glass-toast--warning` | Gelber Akzent |
-| `.glass-toast.is-visible` | Sichtbar + eingeblendet |
+| `.glass-toast` | Base container |
+| `.glass-toast--success` | Green accent |
+| `.glass-toast--error` | Red accent |
+| `.glass-toast--warning` | Yellow accent |
+| `.glass-toast.is-visible` | Visible + faded in |
 | `.glass-toast__icon` | Icon (SVG) |
-| `.glass-toast__text` | Nachrichtentext |
+| `.glass-toast__text` | Message text |
 
 ---
 
 ### 3.14 Input
 
-Textfelder mit Glas-Hintergrund. Werden in einer `glass-input-group` mit Label und optionalem Hint gewrappt.
+Text fields with glass background. Wrapped in a `glass-input-group` with label and optional hint.
 
 ```html
 <div class="glass-input-group">
-  <label class="glass-label">Vertragsname</label>
-  <input class="glass-input" type="text" placeholder="z.B. Mietvertrag">
-  <span class="glass-hint">Optionaler Hilfetext</span>
+  <label class="glass-label">Contract Name</label>
+  <input class="glass-input" type="text" placeholder="e.g. Rental Agreement">
+  <span class="glass-hint">Optional help text</span>
 </div>
 ```
 
-Error-State:
+Error state:
 
 ```html
 <div class="glass-input-group">
-  <label class="glass-label">E-Mail</label>
+  <label class="glass-label">Email</label>
   <input class="glass-input glass-input--error" type="email" value="invalid@">
-  <span class="glass-hint glass-hint--error">Bitte gültige E-Mail eingeben</span>
+  <span class="glass-hint glass-hint--error">Please enter a valid email address</span>
 </div>
 ```
 
@@ -562,52 +562,52 @@ Disabled:
 <input class="glass-input" type="text" disabled>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-input-group` | Wrapper für Label + Input + Hint |
-| `.glass-label` | Label (klein, muted, uppercase) |
-| `.glass-input` | Text-Input (Glas-Hintergrund) |
-| `.glass-input--error` | Roter Border für Fehlerzustand |
-| `.glass-hint` | Hilfetext unter dem Input |
-| `.glass-hint--error` | Roter Hilfetext |
+| `.glass-input-group` | Wrapper for label + input + hint |
+| `.glass-label` | Label (small, muted, uppercase) |
+| `.glass-input` | Text input (glass background) |
+| `.glass-input--error` | Red border for error state |
+| `.glass-hint` | Help text below input |
+| `.glass-hint--error` | Red help text |
 
 ---
 
 ### 3.15 Textarea
 
-Mehrzeiliges Textfeld.
+Multi-line text field.
 
 ```html
-<textarea class="glass-textarea" placeholder="Optionale Anmerkungen…"></textarea>
+<textarea class="glass-textarea" placeholder="Optional notes…"></textarea>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-textarea` | Mehrzeiliges Glas-Input |
+| `.glass-textarea` | Multi-line glass input |
 
 ---
 
 ### 3.16 Select
 
-Dropdown mit Glas-Styling und Custom-Chevron.
+Dropdown with glass styling and custom chevron.
 
 ```html
 <select class="glass-select">
-  <option>Bitte wählen…</option>
-  <option>Versicherung</option>
-  <option>Mietvertrag</option>
+  <option>Please select…</option>
+  <option>Insurance</option>
+  <option>Rental Agreement</option>
 </select>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-select` | Styled Dropdown |
+| `.glass-select` | Styled dropdown |
 
 ---
 
 ### 3.17 Search
 
-Suchfeld mit eingebettetem Such-Icon.
+Search field with embedded search icon.
 
 ```html
 <div class="glass-search">
@@ -615,22 +615,22 @@ Suchfeld mit eingebettetem Such-Icon.
     <circle cx="11" cy="11" r="8"/>
     <line x1="21" y1="21" x2="16.65" y2="16.65"/>
   </svg>
-  <input class="glass-input" type="search" placeholder="Verträge durchsuchen…">
+  <input class="glass-input" type="search" placeholder="Search contracts…">
 </div>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
 | `.glass-search` | Wrapper (position: relative) |
-| `.glass-search__icon` | Positioniertes Such-Icon (links) |
+| `.glass-search__icon` | Positioned search icon (left) |
 
-**Wichtig:** Das Input innerhalb von `.glass-search` nutzt die reguläre `.glass-input` Klasse.
+**Important:** The input inside `.glass-search` uses the regular `.glass-input` class.
 
 ---
 
 ### 3.18 Toggle Switch
 
-iOS-artiger Schalter.
+iOS-style switch.
 
 ```html
 <label class="glass-toggle">
@@ -638,25 +638,25 @@ iOS-artiger Schalter.
   <span class="glass-toggle__track">
     <span class="glass-toggle__thumb"></span>
   </span>
-  <span class="glass-toggle__label">Benachrichtigungen</span>
+  <span class="glass-toggle__label">Notifications</span>
 </label>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-toggle` | Äußeres Label (Flex-Container) |
-| `.glass-toggle__input` | Verstecktes Checkbox-Input |
-| `.glass-toggle__track` | Sichtbare Schiene |
-| `.glass-toggle__thumb` | Beweglicher Knopf |
-| `.glass-toggle__label` | Text-Label |
+| `.glass-toggle` | Outer label (flex container) |
+| `.glass-toggle__input` | Hidden checkbox input |
+| `.glass-toggle__track` | Visible track |
+| `.glass-toggle__thumb` | Movable thumb |
+| `.glass-toggle__label` | Text label |
 
-**State:** `:checked` auf dem Input aktiviert den Toggle visuell.
+**State:** `:checked` on the input activates the toggle visually.
 
 ---
 
 ### 3.19 Checkbox
 
-Animierte Checkbox mit Checkmark-SVG.
+Animated checkbox with checkmark SVG.
 
 ```html
 <label class="glass-checkbox">
@@ -664,26 +664,26 @@ Animierte Checkbox mit Checkmark-SVG.
   <span class="glass-checkbox__box">
     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
   </span>
-  <span class="glass-checkbox__label">AGB akzeptieren</span>
+  <span class="glass-checkbox__label">Accept terms of service</span>
 </label>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-checkbox` | Äußeres Label |
-| `.glass-checkbox__input` | Verstecktes Checkbox-Input |
-| `.glass-checkbox__box` | Sichtbare Box mit Checkmark-SVG |
-| `.glass-checkbox__label` | Text-Label |
+| `.glass-checkbox` | Outer label |
+| `.glass-checkbox__input` | Hidden checkbox input |
+| `.glass-checkbox__box` | Visible box with checkmark SVG |
+| `.glass-checkbox__label` | Text label |
 
 ---
 
 ### 3.20 Radio Button
 
-Animierter Radio-Button mit Dot.
+Animated radio button with dot.
 
 ```html
 <label class="glass-radio">
-  <input class="glass-radio__input" type="radio" name="gruppe" checked>
+  <input class="glass-radio__input" type="radio" name="group" checked>
   <span class="glass-radio__circle">
     <span class="glass-radio__dot"></span>
   </span>
@@ -691,7 +691,7 @@ Animierter Radio-Button mit Dot.
 </label>
 
 <label class="glass-radio">
-  <input class="glass-radio__input" type="radio" name="gruppe">
+  <input class="glass-radio__input" type="radio" name="group">
   <span class="glass-radio__circle">
     <span class="glass-radio__dot"></span>
   </span>
@@ -699,26 +699,26 @@ Animierter Radio-Button mit Dot.
 </label>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-radio` | Äußeres Label |
-| `.glass-radio__input` | Verstecktes Radio-Input |
-| `.glass-radio__circle` | Sichtbarer Kreis |
-| `.glass-radio__dot` | Innerer Punkt (sichtbar bei :checked) |
-| `.glass-radio__label` | Text-Label |
+| `.glass-radio` | Outer label |
+| `.glass-radio__input` | Hidden radio input |
+| `.glass-radio__circle` | Visible circle |
+| `.glass-radio__dot` | Inner dot (visible on :checked) |
+| `.glass-radio__label` | Text label |
 
-**Wichtig:** Radio-Buttons der gleichen Gruppe brauchen denselben `name`-Attributwert.
+**Important:** Radio buttons in the same group need the same `name` attribute value.
 
 ---
 
 ### 3.21 Range Slider
 
-Slider mit Gradient-Thumb. Wird in einer Gruppe mit Header und Wertanzeige verwendet.
+Slider with gradient thumb. Used in a group with header and value display.
 
 ```html
 <div class="glass-range-group">
   <div class="glass-range-header">
-    <label class="glass-label">Bildqualität</label>
+    <label class="glass-label">Image Quality</label>
     <span class="glass-range-value" id="range-val">75%</span>
   </div>
   <input class="glass-range" type="range" min="0" max="100" value="75"
@@ -726,18 +726,18 @@ Slider mit Gradient-Thumb. Wird in einer Gruppe mit Header und Wertanzeige verwe
 </div>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
 | `.glass-range-group` | Wrapper |
-| `.glass-range-header` | Flex-Container für Label + Wert |
-| `.glass-range-value` | Wertanzeige (rechts) |
-| `.glass-range` | Der eigentliche Slider |
+| `.glass-range-header` | Flex container for label + value |
+| `.glass-range-value` | Value display (right) |
+| `.glass-range` | The actual slider |
 
 ---
 
 ### 3.22 Progress Bar
 
-Fortschrittsbalken mit optionalem Shimmer-Effekt.
+Progress bar with optional shimmer effect.
 
 ```html
 <div class="glass-progress">
@@ -751,76 +751,76 @@ Fortschrittsbalken mit optionalem Shimmer-Effekt.
 </div>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.glass-progress` | Basis-Container |
-| `.glass-progress--sm` | Schmaler Track (4px) |
-| `.glass-progress--lg` | Breiter Track (12px) |
-| `.glass-progress--success` | Grüner Balken |
-| `.glass-progress--error` | Roter Balken |
-| `.glass-progress__header` | Flex-Container für Label + Wert |
-| `.glass-progress__label` | Bezeichnung (links) |
-| `.glass-progress__value` | Prozentwert (rechts) |
-| `.glass-progress__track` | Hintergrund-Schiene |
-| `.glass-progress__fill` | Gefüllter Bereich (Breite via `style="width: X%"`) |
+| `.glass-progress` | Base container |
+| `.glass-progress--sm` | Narrow track (4px) |
+| `.glass-progress--lg` | Wide track (12px) |
+| `.glass-progress--success` | Green bar |
+| `.glass-progress--error` | Red bar |
+| `.glass-progress__header` | Flex container for label + value |
+| `.glass-progress__label` | Label (left) |
+| `.glass-progress__value` | Percentage value (right) |
+| `.glass-progress__track` | Background track |
+| `.glass-progress__fill` | Filled area (width via `style="width: X%"`) |
 
-**Wichtig:** Die Fortschrittsbreite wird über inline `style="width: X%"` auf `.glass-progress__fill` gesteuert.
+**Important:** Progress width is controlled via inline `style="width: X%"` on `.glass-progress__fill`.
 
 ---
 
 ### 3.23 Accordion
 
-Auf-/zuklappbare Inhaltsbereiche. Gesteuert über `is-open` auf den Items.
+Collapsible content sections. Controlled via `is-open` on items.
 
 ```html
 <div class="glass-accordion">
   <div class="glass-accordion__item is-open">
     <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')">
-      <span>Frage eins?</span>
+      <span>Question one?</span>
       <span class="glass-accordion__trigger-icon">
         <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </span>
     </button>
     <div class="glass-accordion__content">
       <div class="glass-accordion__body">
-        Die Antwort auf Frage eins.
+        The answer to question one.
       </div>
     </div>
   </div>
 
   <div class="glass-accordion__item">
     <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')">
-      <span>Frage zwei?</span>
+      <span>Question two?</span>
       <span class="glass-accordion__trigger-icon">
         <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </span>
     </button>
     <div class="glass-accordion__content">
       <div class="glass-accordion__body">
-        Die Antwort auf Frage zwei.
+        The answer to question two.
       </div>
     </div>
   </div>
 </div>
 ```
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
 | `.glass-accordion` | Container |
-| `.glass-accordion__item` | Einzelnes Item |
-| `.glass-accordion__item.is-open` | Geöffnetes Item |
-| `.glass-accordion__trigger` | Klickbarer Header-Button |
-| `.glass-accordion__trigger-icon` | Chevron-Icon (rotiert bei open) |
-| `.glass-accordion__content` | Wrapper für animierte Höhe |
-| `.glass-accordion__body` | Eigentlicher Inhalt |
+| `.glass-accordion__item` | Individual item |
+| `.glass-accordion__item.is-open` | Expanded item |
+| `.glass-accordion__trigger` | Clickable header button |
+| `.glass-accordion__trigger-icon` | Chevron icon (rotates on open) |
+| `.glass-accordion__content` | Wrapper for animated height |
+| `.glass-accordion__body` | Actual content |
 
 ---
 
-## 4. Utility-Klassen
+## 4. Utility Classes
 
-### Stack (Vertikal)
+### Stack (Vertical)
 
-Flexbox-Column mit Gap.
+Flexbox column with gap.
 
 ```html
 <div class="gl-stack gl-stack--md">
@@ -829,9 +829,9 @@ Flexbox-Column mit Gap.
 </div>
 ```
 
-| Klasse | Gap |
+| Class | Gap |
 |---|---|
-| `.gl-stack` | Standard |
+| `.gl-stack` | Default |
 | `.gl-stack--2xs` | 4px |
 | `.gl-stack--xs` | 8px |
 | `.gl-stack--sm` | 12px |
@@ -841,7 +841,7 @@ Flexbox-Column mit Gap.
 
 ### Row (Horizontal)
 
-Flexbox-Row mit Gap.
+Flexbox row with gap.
 
 ```html
 <div class="gl-row gl-row--sm">
@@ -850,16 +850,16 @@ Flexbox-Row mit Gap.
 </div>
 ```
 
-| Klasse | Gap |
+| Class | Gap |
 |---|---|
-| `.gl-row` | Standard |
+| `.gl-row` | Default |
 | `.gl-row--xs` | 8px |
 | `.gl-row--sm` | 12px |
 | `.gl-row--md` | 16px |
 
 ### Margin
 
-| Klasse | Wert |
+| Class | Value |
 |---|---|
 | `.gl-mt-sm` | margin-top: 12px |
 | `.gl-mt-md` | margin-top: 16px |
@@ -872,38 +872,38 @@ Flexbox-Row mit Gap.
 
 ### Text
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
 | `.gl-text-center` | text-align: center |
-| `.gl-text-muted` | Gedämpfte Textfarbe |
-| `.gl-text-sm` | Kleinere Schrift |
+| `.gl-text-muted` | Muted text color |
+| `.gl-text-sm` | Smaller font size |
 
 ### Layout
 
-| Klasse | Beschreibung |
+| Class | Description |
 |---|---|
-| `.gl-px` | Horizontales Padding |
+| `.gl-px` | Horizontal padding |
 | `.gl-w-full` | width: 100% |
 | `.gl-flex-1` | flex: 1 |
 
 ---
 
-## 5. State-Klassen Übersicht
+## 5. State Classes Overview
 
-| State-Klasse | Verwendet bei | Beschreibung |
+| State Class | Used on | Description |
 |---|---|---|
-| `.is-active` | `.glass-modal-overlay`, `.glass-tab-bar__item` | Element ist aktiv/sichtbar |
-| `.is-open` | `.glass-accordion__item` | Accordion-Item ist ausgeklappt |
-| `.is-visible` | `.glass-toast` | Toast ist sichtbar |
-| `:checked` | Toggle, Checkbox, Radio (auf dem Input) | Nativer checked-State |
-| `:focus` | Input, Textarea, Select, Range | Focus-Ring |
-| `:disabled` | `.glass-input` | Deaktiviertes Input |
+| `.is-active` | `.glass-modal-overlay`, `.glass-tab-bar__item` | Element is active/visible |
+| `.is-open` | `.glass-accordion__item` | Accordion item is expanded |
+| `.is-visible` | `.glass-toast` | Toast is visible |
+| `:checked` | Toggle, Checkbox, Radio (on the input) | Native checked state |
+| `:focus` | Input, Textarea, Select, Range | Focus ring |
+| `:disabled` | `.glass-input` | Disabled input |
 
 ---
 
 ## 6. Composition Patterns
 
-### Login-Screen
+### Login Screen
 
 ```html
 <div class="glass-bg">
@@ -917,27 +917,27 @@ Flexbox-Row mit Gap.
     </button>
   </nav>
 
-  <h1 class="glass-title">Anmelden</h1>
+  <h1 class="glass-title">Sign In</h1>
 
   <div class="gl-stack gl-stack--md">
     <div class="glass-input-group">
-      <label class="glass-label">E-Mail</label>
-      <input class="glass-input" type="email" placeholder="name@beispiel.de">
+      <label class="glass-label">Email</label>
+      <input class="glass-input" type="email" placeholder="name@example.com">
     </div>
     <div class="glass-input-group">
-      <label class="glass-label">Passwort</label>
+      <label class="glass-label">Password</label>
       <input class="glass-input" type="password" placeholder="••••••••">
     </div>
   </div>
 
   <div class="gl-stack gl-stack--sm gl-mt-lg">
-    <button class="glass-btn glass-btn--primary">Einloggen</button>
-    <button class="glass-btn glass-btn--tertiary">Passwort vergessen?</button>
+    <button class="glass-btn glass-btn--primary">Log In</button>
+    <button class="glass-btn glass-btn--tertiary">Forgot password?</button>
   </div>
 </div>
 ```
 
-### Dashboard mit Cards
+### Dashboard with Cards
 
 ```html
 <div class="glass-bg glass-bg--has-tab-bar">
@@ -953,35 +953,35 @@ Flexbox-Row mit Gap.
       <div class="glass-card__icon">
         <svg viewBox="0 0 64 64"><!-- Icon --></svg>
       </div>
-      <p class="glass-card__text">Dokumente erfassen und hochladen.</p>
+      <p class="glass-card__text">Capture and upload documents.</p>
     </div>
 
     <div class="glass-card glass-card--glow">
       <div class="glass-card__icon">
         <svg viewBox="0 0 64 64"><!-- Icon --></svg>
       </div>
-      <p class="glass-card__text">Verträge verwalten und archivieren.</p>
+      <p class="glass-card__text">Manage and archive contracts.</p>
     </div>
   </div>
 
   <nav class="glass-tab-bar">
     <button class="glass-tab-bar__item is-active">
       <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><!-- Home --></svg></span>
-      <span class="glass-tab-bar__label">Start</span>
+      <span class="glass-tab-bar__label">Home</span>
     </button>
     <button class="glass-tab-bar__item">
       <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><!-- Docs --></svg></span>
-      <span class="glass-tab-bar__label">Verträge</span>
+      <span class="glass-tab-bar__label">Contracts</span>
     </button>
     <button class="glass-tab-bar__item">
       <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><!-- Profile --></svg></span>
-      <span class="glass-tab-bar__label">Profil</span>
+      <span class="glass-tab-bar__label">Profile</span>
     </button>
   </nav>
 </div>
 ```
 
-### Formular-Seite
+### Form Page
 
 ```html
 <div class="glass-bg">
@@ -991,63 +991,63 @@ Flexbox-Row mit Gap.
     </button>
   </nav>
 
-  <h1 class="glass-title">Neuer Vertrag</h1>
+  <h1 class="glass-title">New Contract</h1>
 
   <div class="gl-stack gl-stack--md">
     <div class="glass-input-group">
-      <label class="glass-label">Vertragsname</label>
-      <input class="glass-input" type="text" placeholder="z.B. Mietvertrag">
+      <label class="glass-label">Contract Name</label>
+      <input class="glass-input" type="text" placeholder="e.g. Rental Agreement">
     </div>
 
     <div class="glass-input-group">
-      <label class="glass-label">Kategorie</label>
+      <label class="glass-label">Category</label>
       <select class="glass-select">
-        <option>Bitte wählen…</option>
-        <option>Versicherung</option>
-        <option>Mietvertrag</option>
-        <option>Arbeitsvertrag</option>
+        <option>Please select…</option>
+        <option>Insurance</option>
+        <option>Rental Agreement</option>
+        <option>Employment Contract</option>
       </select>
     </div>
 
     <div class="glass-input-group">
-      <label class="glass-label">Anmerkungen</label>
-      <textarea class="glass-textarea" placeholder="Optionale Anmerkungen…"></textarea>
+      <label class="glass-label">Notes</label>
+      <textarea class="glass-textarea" placeholder="Optional notes…"></textarea>
     </div>
 
     <label class="glass-toggle">
       <input class="glass-toggle__input" type="checkbox">
       <span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span>
-      <span class="glass-toggle__label">Erinnerung aktivieren</span>
+      <span class="glass-toggle__label">Enable reminder</span>
     </label>
 
     <hr class="glass-divider">
 
-    <button class="glass-btn glass-btn--primary">Speichern</button>
-    <button class="glass-btn glass-btn--tertiary">Abbrechen</button>
+    <button class="glass-btn glass-btn--primary">Save</button>
+    <button class="glass-btn glass-btn--tertiary">Cancel</button>
   </div>
 </div>
 ```
 
-### Lösch-Bestätigung (Modal)
+### Delete Confirmation (Modal)
 
 ```html
 <div class="glass-modal-overlay is-active">
   <div class="glass-modal">
     <div class="glass-modal__header">
-      <h2 class="glass-modal__title">Vertrag löschen?</h2>
+      <h2 class="glass-modal__title">Delete contract?</h2>
     </div>
     <div class="glass-modal__body">
-      <p>Möchtest du diesen Vertrag endgültig löschen? Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
+      <p>Do you want to permanently delete this contract? This action cannot be undone.</p>
     </div>
     <div class="glass-modal__footer">
-      <button class="glass-modal__action" onclick="closeModal()">Abbrechen</button>
-      <button class="glass-modal__action glass-modal__action--danger" onclick="deleteContract()">Löschen</button>
+      <button class="glass-modal__action" onclick="closeModal()">Cancel</button>
+      <button class="glass-modal__action glass-modal__action--danger" onclick="deleteContract()">Delete</button>
     </div>
   </div>
 </div>
 ```
 
-### Settings-Seite
+### Settings Page
 
 ```html
 <div class="glass-bg">
@@ -1057,13 +1057,13 @@ Flexbox-Row mit Gap.
     </button>
   </nav>
 
-  <h1 class="glass-title">Einstellungen</h1>
+  <h1 class="glass-title">Settings</h1>
 
   <div class="gl-stack gl-stack--md">
     <label class="glass-toggle">
       <input class="glass-toggle__input" type="checkbox" checked>
       <span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span>
-      <span class="glass-toggle__label">Push-Benachrichtigungen</span>
+      <span class="glass-toggle__label">Push Notifications</span>
     </label>
 
     <hr class="glass-divider">
@@ -1071,14 +1071,14 @@ Flexbox-Row mit Gap.
     <label class="glass-toggle">
       <input class="glass-toggle__input" type="checkbox">
       <span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span>
-      <span class="glass-toggle__label">Dunkelmodus</span>
+      <span class="glass-toggle__label">Dark Mode</span>
     </label>
 
     <hr class="glass-divider">
 
     <div class="glass-range-group">
       <div class="glass-range-header">
-        <label class="glass-label">Schriftgröße</label>
+        <label class="glass-label">Font Size</label>
         <span class="glass-range-value">100%</span>
       </div>
       <input class="glass-range" type="range" min="80" max="150" value="100">
@@ -1089,14 +1089,14 @@ Flexbox-Row mit Gap.
     <div class="glass-accordion">
       <div class="glass-accordion__item">
         <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')">
-          <span>Erweiterte Einstellungen</span>
+          <span>Advanced Settings</span>
           <span class="glass-accordion__trigger-icon">
             <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
           </span>
         </button>
         <div class="glass-accordion__content">
           <div class="glass-accordion__body">
-            Erweiterte Optionen hier…
+            Advanced options go here…
           </div>
         </div>
       </div>
@@ -1105,7 +1105,7 @@ Flexbox-Row mit Gap.
 </div>
 ```
 
-### Fortschritt + Toast
+### Progress + Toast
 
 ```html
 <!-- Progress -->
@@ -1119,55 +1119,55 @@ Flexbox-Row mit Gap.
   </div>
 </div>
 
-<!-- Toast (wird per JS eingeblendet) -->
+<!-- Toast (shown via JS) -->
 <div class="glass-toast glass-toast--success is-visible">
   <svg class="glass-toast__icon" viewBox="0 0 24 24">
     <polyline points="20 6 9 17 4 12"/>
   </svg>
-  <span class="glass-toast__text">Upload erfolgreich!</span>
+  <span class="glass-toast__text">Upload successful!</span>
 </div>
 ```
 
 ---
 
-## 7. Regeln & häufige Fehler
+## 7. Rules & Common Mistakes
 
-### ✅ Immer beachten
+### ✅ Always follow
 
-1. **`glass-bg` als äußerster Container** – Ohne den Background-Wrapper fehlt der Aurora-Hintergrund, und Glaseffekte sehen nicht korrekt aus.
-2. **`glass-bg--has-tab-bar`** – Wenn eine Tab-Bar vorhanden ist, muss dieser Modifier auf `glass-bg` gesetzt werden, sonst verdeckt die Tab-Bar den unteren Inhalt.
-3. **Buttons sind full-width** – `glass-btn` hat `width: 100%`. Für inline-Buttons immer `glass-btn--auto` ergänzen.
-4. **Inputs in `glass-input-group` wrappen** – Für korrektes Label/Hint-Spacing.
-5. **State-Klassen richtig platzieren:**
-   - `is-active` → auf `.glass-modal-overlay` (nicht auf `.glass-modal`)
-   - `is-active` → auf `.glass-tab-bar__item`
-   - `is-open` → auf `.glass-accordion__item`
-   - `is-visible` → auf `.glass-toast`
-6. **SVG-Icons** – GlassKit nutzt inline SVGs (stroke-based, nicht fill). Typische Attribute: `viewBox="0 0 24 24"`, stroke via `currentColor`.
-7. **`data-theme`** – Immer auf `<html>` setzen, nie auf `<body>` oder tiefere Elemente.
+1. **`glass-bg` as outermost container** – Without the background wrapper, the aurora background is missing and glass effects won't render correctly.
+2. **`glass-bg--has-tab-bar`** – When a tab bar is present, this modifier must be set on `glass-bg`, otherwise the tab bar covers the bottom content.
+3. **Buttons are full-width** – `glass-btn` has `width: 100%`. Always add `glass-btn--auto` for inline buttons.
+4. **Wrap inputs in `glass-input-group`** – For correct label/hint spacing.
+5. **Place state classes correctly:**
+   - `is-active` → on `.glass-modal-overlay` (not on `.glass-modal`)
+   - `is-active` → on `.glass-tab-bar__item`
+   - `is-open` → on `.glass-accordion__item`
+   - `is-visible` → on `.glass-toast`
+6. **SVG icons** – GlassKit uses inline SVGs (stroke-based, not fill). Typical attributes: `viewBox="0 0 24 24"`, stroke via `currentColor`.
+7. **`data-theme`** – Always set on `<html>`, never on `<body>` or deeper elements.
 
-### ❌ Häufige Fehler
+### ❌ Common Mistakes
 
-| Fehler | Korrektur |
+| Mistake | Correction |
 |---|---|
-| `is-active` auf `.glass-modal` statt `.glass-modal-overlay` | `is-active` auf den Overlay setzen |
-| `glass-btn` ohne Variante (`--primary` etc.) | Immer eine Variante angeben |
-| Inputs ohne `glass-input-group` Wrapper | In `glass-input-group` einbetten |
-| `glass-tab-bar` ohne `glass-bg--has-tab-bar` | Modifier auf den Background-Container |
-| `data-theme` auf `<body>` | Auf `<html>` setzen |
-| Progress-Breite per Klasse statt inline-Style | `style="width: X%"` auf `.glass-progress__fill` |
-| Toggle ohne `__track > __thumb` Verschachtelung | Korrekte BEM-Hierarchie beachten |
+| `is-active` on `.glass-modal` instead of `.glass-modal-overlay` | Set `is-active` on the overlay |
+| `glass-btn` without variant (`--primary` etc.) | Always specify a variant |
+| Inputs without `glass-input-group` wrapper | Wrap in `glass-input-group` |
+| `glass-tab-bar` without `glass-bg--has-tab-bar` | Add modifier to the background container |
+| `data-theme` on `<body>` | Set on `<html>` |
+| Progress width via class instead of inline style | Use `style="width: X%"` on `.glass-progress__fill` |
+| Toggle without `__track > __thumb` nesting | Follow correct BEM hierarchy |
 
 ---
 
-## 8. Klassen-Schnellreferenz
+## 8. Quick Class Reference
 
-| Komponente | Basis-Klasse | Modifier / States |
+| Component | Base Class | Modifiers / States |
 |---|---|---|
 | Background | `.glass-bg` | `--has-tab-bar` |
 | Navigation | `.glass-nav` | – |
-| Pill-Button | `.glass-pill` | – |
-| Theme-Toggle | `.glass-theme-toggle` | – |
+| Pill Button | `.glass-pill` | – |
+| Theme Toggle | `.glass-theme-toggle` | – |
 | Title | `.glass-title` | – |
 | Card | `.glass-card` | `--glow` |
 | Button | `.glass-btn` | `--primary`, `--secondary`, `--tertiary`, `--sm`, `--lg`, `--auto` |
@@ -1189,14 +1189,14 @@ Flexbox-Row mit Gap.
 | Progress | `.glass-progress` | `--sm`, `--lg`, `--success`, `--error` |
 | Modal | `.glass-modal-overlay` | `.is-active` |
 | Toast | `.glass-toast` | `--success`, `--error`, `--warning`, `.is-visible` |
-| Tab-Bar | `.glass-tab-bar` | `.is-active` auf Items |
-| Accordion | `.glass-accordion` | `.is-open` auf Items |
+| Tab Bar | `.glass-tab-bar` | `.is-active` on items |
+| Accordion | `.glass-accordion` | `.is-open` on items |
 
 ---
 
 ## 9. Web Components / Shadow DOM
 
-GlassKit liefert ein Constructable Stylesheet für Shadow DOM-Nutzung:
+GlassKit ships a Constructable Stylesheet for Shadow DOM usage:
 
 ```js
 import { glassSheet } from '@jungherz-de/glasskit/glasskit-styles.js';
@@ -1216,18 +1216,18 @@ class MyCard extends HTMLElement {
 customElements.define('my-card', MyCard);
 ```
 
-| Export | Typ | Beschreibung |
+| Export | Type | Description |
 |---|---|---|
-| `glassSheet` | `CSSStyleSheet` | Constructable Stylesheet für `adoptedStyleSheets` |
-| `css` | `string` | CSS als String (Fallback) |
+| `glassSheet` | `CSSStyleSheet` | Constructable Stylesheet for `adoptedStyleSheets` |
+| `css` | `string` | CSS as string (fallback) |
 
-**Hinweis:** CSS Custom Properties (`--gl-*`) durchdringen die Shadow-Boundary automatisch. Theme-Switching funktioniert global.
+**Note:** CSS Custom Properties (`--gl-*`) penetrate the shadow boundary automatically. Theme switching works globally.
 
 ---
 
 ## 10. Custom Theming
 
-Eigene Markenfarben über `theme-override.css` nach der Basis-Library laden:
+Load custom brand colors via `theme-override.css` after the base library:
 
 ```css
 :root {
@@ -1244,8 +1244,8 @@ Eigene Markenfarben über `theme-override.css` nach der Basis-Library laden:
 }
 ```
 
-Mitgelieferte Theme-Vorlagen in `theme-override.css`:
+Included theme templates in `theme-override.css`:
 - 🔵 Ocean Blue
 - 🟢 Emerald Green
 - 🌹 Rose
-- 🎨 Custom (leer, zum Befüllen)
+- 🎨 Custom (empty, ready to fill)
