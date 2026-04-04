@@ -50,6 +50,7 @@ GlassKit is a complete **CSS component library** with glassmorphism aesthetics �
 - 🧩 **Shadow DOM ready** – Constructable Stylesheet for Web Components included
 - 🪶 **Lightweight** – ~45 KB (uncompressed), no external dependencies
 - 🎯 **BEM-like naming convention** – `glass-*` prefix, no conflicts with existing CSS
+- 🤖 **AI-ready** – ships with [`SKILL.md`](SKILL.md), a structured reference for LLMs & AI copilots
 
 ---
 
@@ -428,6 +429,7 @@ glasskit/
 ├── showcase.html           # Interactive showcase of all components
 ├── docs.html               # Full documentation
 ├── de/                     # German translations (index, docs, showcase)
+├── SKILL.md                 # AI-optimized component reference (for LLMs & copilots)
 ├── LICENSE                  # MIT License
 └── README.md               # This file
 ```
@@ -459,6 +461,27 @@ Useful links:
 - GitHub: https://github.com/JUNGHERZ/GlassKit-Elements
 - Live Demo: https://glasskit-elements.jungherz.com/
 - Docs: https://glasskit-elements.jungherz.com/docs.html
+
+---
+
+## 🤖 AI / LLM Reference (`SKILL.md`)
+
+GlassKit ships with an **AI-optimized component reference** in [`SKILL.md`](SKILL.md). This file is designed for LLMs, AI copilots, and code-generation tools to produce correct GlassKit markup without parsing `docs.html`.
+
+### What it provides
+
+- **Copy-paste-ready HTML** for all 22 components with exact nesting rules
+- **Complete design token tables** (colors, surfaces, blur, radii, spacing, shadows, typography)
+- **State class reference** – which class goes where (`is-active`, `is-open`, `is-visible`, `:checked`)
+- **6 composition patterns** – full page layouts (Login, Dashboard, Form, Modal, Settings, Progress)
+- **Common mistakes & corrections** – prevents the most frequent AI-generated errors
+- **Quick reference table** – all components with their modifiers at a glance
+
+### Usage with AI assistants
+
+Attach or reference `SKILL.md` when asking an AI to generate GlassKit HTML. It provides the structured context needed for production-ready output – correct BEM hierarchy, proper modifier usage, and idiomatic component composition.
+
+> **Tip:** While `docs.html` is built for humans browsing with live previews, `SKILL.md` is built for machines generating code. Both are kept in sync.
 
 ---
 

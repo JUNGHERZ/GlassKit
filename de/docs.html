@@ -425,6 +425,7 @@
     <a class="docs-sidebar__link" href="#accordion">Accordion</a>
     <a class="docs-sidebar__link" href="#utilities">Utilities</a>
     <a class="docs-sidebar__link" href="#quickref">Alle Klassen</a>
+    <a class="docs-sidebar__link" href="#ai-reference">KI-Referenz</a>
   </div>
 </aside>
 
@@ -1023,6 +1024,31 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td>Accordion</td><td><code>.glass-accordion</code></td><td><code>.is-open</code> auf Items</td></tr>
       </tbody>
     </table>
+  </section>
+
+  <!-- AI REFERENCE -->
+  <section class="docs-section" id="ai-reference">
+    <h2>🤖 KI / LLM-Referenz</h2>
+    <p>GlassKit liefert eine <code>SKILL.md</code> mit – eine strukturierte, maschinenlesbare Komponenten-Referenz für KI-Assistenten, LLMs und Code-Generierungs-Tools.</p>
+    <table class="docs-table">
+      <thead><tr><th>Feature</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Copy-Paste HTML</td><td>Alle 22 Komponenten mit exakter Verschachtelung und BEM-Hierarchie</td></tr>
+        <tr><td>Design-Token-Tabellen</td><td>Farben, Surfaces, Blur, Radii, Spacing, Shadows, Typography</td></tr>
+        <tr><td>State-Klassen-Mapping</td><td><code>is-active</code>, <code>is-open</code>, <code>is-visible</code>, <code>:checked</code> – wo was hingehört</td></tr>
+        <tr><td>Composition Patterns</td><td>6 fertige Seiten-Layouts: Login, Dashboard, Formular, Modal, Einstellungen, Fortschritt</td></tr>
+        <tr><td>Häufige Fehler</td><td>Typische Fehler und deren Korrekturen</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px;">Anhängen oder referenzieren Sie <code>SKILL.md</code>, wenn Sie eine KI bitten, GlassKit-HTML zu generieren – für produktionsreife Ergebnisse.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cmt"># Dateipfad</span>
+glasskit/SKILL.md
+
+<span class="cmt"># Auch im npm-Paket enthalten</span>
+npm install @jungherz-de/glasskit
+node_modules/@jungherz-de/glasskit/SKILL.md</div>
+    </div>
   </section>
 
 </main>

@@ -11,7 +11,8 @@
     "theme-override.css",
     "LICENSE",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "SKILL.md"
   ],
   "scripts": {
     "minify": "cleancss -O2 --source-map -o glasskit.min.css glasskit.css",

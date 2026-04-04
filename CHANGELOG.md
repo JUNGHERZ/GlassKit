@@ -7,16 +7,30 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [1.3.4] – 2026-03-29
+## [1.3.4] – 2026-04-04
 
 ### Added
 
+- **`SKILL.md` – AI-optimized component reference** – a structured, machine-readable reference document designed for LLMs, AI copilots, and code-generation tools
+  - Copy-paste-ready HTML for all 22 components with exact nesting and BEM hierarchy
+  - Complete design token tables (colors, surfaces, borders, blur, radii, spacing, shadows, typography)
+  - State class reference – clear mapping of `is-active`, `is-open`, `is-visible`, `:checked`, `:focus`, `:disabled` to their components
+  - 6 composition patterns – full page layouts: Login, Dashboard, Form, Modal confirmation, Settings, Progress + Toast
+  - Common mistakes & corrections table – prevents frequent AI-generated errors
+  - Quick reference table – all components with modifiers at a glance
+  - Utility class reference with exact gap/margin values
+  - Web Components / Shadow DOM usage guide
+  - Custom theming instructions
 - **Visual preview for Tab-Bar** in `docs.html` and `de/docs.html` – live rendered tab bar with 4 tabs (Home, Documents with badge, Upload, Settings)
 - **Visual preview for Toast** in `docs.html` and `de/docs.html` – static success toast rendered inline
 - **HTML code example for Status Notice** in `docs.html` and `de/docs.html` – was previously preview-only without code snippet
 
 ### Changed
 
+- **README.md** – new “AI / LLM Reference” section documenting `SKILL.md` purpose and usage, “AI-ready” added to “Why GlassKit?”
+- **Project structure** in README updated to include `SKILL.md`
+- **docs.html & de/docs.html** – new “AI Reference” / “KI-Referenz” section with sidebar link
+- **index.html & de/index.html** – SKILL.md added to project file list
 - Version references updated to 1.3.4 across all files
 
 ---

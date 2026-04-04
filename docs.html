@@ -425,6 +425,7 @@
     <a class="docs-sidebar__link" href="#accordion">Accordion</a>
     <a class="docs-sidebar__link" href="#utilities">Utilities</a>
     <a class="docs-sidebar__link" href="#quickref">All Classes</a>
+    <a class="docs-sidebar__link" href="#ai-reference">AI Reference</a>
   </div>
 </aside>
 
@@ -1023,6 +1024,31 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td>Accordion</td><td><code>.glass-accordion</code></td><td><code>.is-open</code> auf Items</td></tr>
       </tbody>
     </table>
+  </section>
+
+  <!-- AI REFERENCE -->
+  <section class="docs-section" id="ai-reference">
+    <h2>🤖 AI / LLM Reference</h2>
+    <p>GlassKit ships with <code>SKILL.md</code> – a structured, machine-readable component reference designed for AI assistants, LLMs, and code-generation tools.</p>
+    <table class="docs-table">
+      <thead><tr><th>Feature</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Copy-paste HTML</td><td>All 22 components with exact nesting and BEM hierarchy</td></tr>
+        <tr><td>Design token tables</td><td>Colors, surfaces, blur, radii, spacing, shadows, typography</td></tr>
+        <tr><td>State class mapping</td><td><code>is-active</code>, <code>is-open</code>, <code>is-visible</code>, <code>:checked</code> – where each belongs</td></tr>
+        <tr><td>Composition patterns</td><td>6 full page layouts: Login, Dashboard, Form, Modal, Settings, Progress</td></tr>
+        <tr><td>Common mistakes</td><td>Frequent errors and their corrections</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px;">Attach or reference <code>SKILL.md</code> when asking an AI to generate GlassKit HTML for production-ready output.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cmt"># File location</span>
+glasskit/SKILL.md
+
+<span class="cmt"># Also included in the npm package</span>
+npm install @jungherz-de/glasskit
+node_modules/@jungherz-de/glasskit/SKILL.md</div>
+    </div>
   </section>
 
 </main>
