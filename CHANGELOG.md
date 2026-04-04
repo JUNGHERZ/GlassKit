@@ -7,7 +7,7 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [1.3.4] – 2026-04-04
+## [1.3.5] – 2026-04-04
 
 ### Added
 
@@ -31,7 +31,7 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Project structure** in README updated to include `SKILL.md`
 - **docs.html & de/docs.html** – new “AI Reference” / “KI-Referenz” section with sidebar link
 - **index.html & de/index.html** – SKILL.md added to project file list
-- Version references updated to 1.3.4 across all files
+- Version references updated to 1.3.5 across all files
 
 ---
 
@@ -221,9 +221,10 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.3.5]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.5
 [1.3.4]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.4
 [1.3.3]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.3
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.3.4...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.3.5...HEAD
