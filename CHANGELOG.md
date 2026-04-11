@@ -7,6 +7,55 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.4.0] – 2026-04-11
+
+### Added
+
+- **Two new components – `List` and `Popover`** – inspired by iOS 26 settings screens
+  - **`.glass-list`** – grouped settings-style container, visually based on `.glass-status` (`--gl-surface-1`, `--gl-blur-light`, `--gl-radius-btn`, subtle shadow)
+  - **`.glass-list__item`** – flexible row layout that scales from a single centered text (with ellipsis truncation) to a full settings row with leading icon, title + subtitle, and trailing element
+  - **List sub-elements**: `__leading` (28×28 icon slot), `__content` (flexible middle), `__title`, `__subtitle`, `__trailing` (chevron / value / button / badge)
+  - **List modifiers**: `--flush` (edge-to-edge variant), `--bare` (strips own glass surface for embedding inside `glass-popover` / `glass-card`), `__item--interactive` (hover / focus / active states), `__item--center` (centered single-text fallback)
+  - **Auto-rendered dividers** between list items via `::after` &mdash; no extra HTML markup required, last item automatically has no divider, and items without a leading icon get a standard horizontal padding inset (handled via `:has(.glass-list__leading)`)
+  - **`.glass-popover`** – anchored dropdown / menu container with fade + scale animation on `.is-open`
+  - **`.glass-popover-anchor`** – positioning context that wraps trigger + popover
+  - **Popover placement modifiers**: `--top` (opens upward), `--start` (left-aligned), `--end` (right-aligned); default placement is centered below the trigger
+- **Modal preview section** in `docs.html` and `de/docs.html` – previously the Modal section only had a class reference table; now it includes a live inline preview, full HTML code snippet with JS toggle functions, and an explicit note about putting `.is-active` on the overlay (not on `.glass-modal`)
+- **SKILL.md (AI reference) extensions**:
+  - New section **3.24 List** with copy-paste examples for both settings-style and compact-menu variants, full sub-element table, and SVG icon convention notes
+  - New section **3.25 Popover** with HTML + toggle JS, placement modifier reference, and explicit warning about the native API name collision
+  - New composition pattern **"iOS-style Settings Screen (List + Popover)"** – full example reproducing iOS settings layout with two grouped lists and an inline action menu
+  - State Classes Overview extended (`.is-open` now also for `.glass-popover`)
+  - Common Mistakes table extended with 4 new entries (manual divider markup, missing `--bare`, `togglePopover` naming clash, `.is-open` on the wrong element)
+  - "Always follow" rules extended with list-divider and popover-naming guidance
+  - Quick Class Reference table extended with List and Popover rows
+- **File size details** in `index.html` and `de/index.html` – the project file list now shows raw + gzipped sizes for `glasskit.css`, plus a dedicated row for `glasskit.min.css` (production build) with its own raw + gzipped sizes
+- **README.md "Lightweight" bullet** – now reports precise sizes (49 KB raw / 37 KB minified / 6.2 KB gzipped) instead of an approximate single number
+
+### Changed
+
+- **`bg-switcher` migration** in `showcase.html` and `de/showcase.html` – the ad-hoc popover originally embedded as inline CSS in the showcase has been removed and replaced with the new `.glass-popover` framework component, proving the new API works for the existing use case
+- **Component count** updated from **22 → 24** across all user-facing files: `index.html`, `docs.html`, `de/index.html`, `de/docs.html`, `package.json`, `README.md`, `SKILL.md`, and the `glasskit.css` header
+- **Sidebar navigation** in `docs.html` and `de/docs.html` extended with the new "List" link (under Content) and "Popover" link (under Actions)
+- **CDN version pinning** in `README.md` and `SKILL.md` updated from `@1.3` to `@1.4` for jsDelivr (minified + unminified) and unpkg
+- **English consistency in `glasskit.css`** – the remaining German comments in the source file have been translated to English (`Farben`, `Glas-Oberflächen`, `Icon-Farben`, `Hintergrund-Effekte`, `Toggle (inaktiv)`, `Größen`, `22 Komponenten`, plus the multi-line comments in the new List section)
+- **Showcase title** in `showcase.html` and `de/showcase.html` bumped to `v1.4.0`
+- **Version stamps** updated to `1.4.0` in `package.json`, README badges, `glasskit.css` header, sidebar versions, and hero badges (English + German)
+
+### Fixed
+
+- **List divider inset for icon-less items** – when a `.glass-list__item` has no leading icon, the auto-divider now uses the standard horizontal padding (`var(--gl-space-lg)` left + right) instead of blindly inheriting the icon-aligned 60px inset. Detected via `:has(.glass-list__leading)`.
+- **List divider right-edge alignment** – the divider used to extend all the way to the right edge of the item (`right: 0`), past where the trailing element ends. It now stops at `var(--gl-space-lg)` so it lines up flush with the trailing slot.
+- **`togglePopover` naming clash** – discovered during showcase migration: a custom JS function named `togglePopover` collides with the native `HTMLElement.togglePopover()` method (HTML Popover API) and inline `onclick` handlers throw `NotSupportedError`. The showcase / docs JS toggles were renamed to `gkTogglePopover` / `docsTogglePopover`, and the gotcha is documented in `SKILL.md`, the docs Popover section, and this changelog.
+
+### Notes
+
+- **No breaking changes.** All additions are additive; existing markup continues to work unchanged.
+- **`glass-divider` is unchanged.** The new list dividers are scoped to `.glass-list__item::after` and do not affect or replace the global `.glass-divider` element (which keeps its gradient-fade visual style).
+- **`:has()` selector requirement** – the icon-aware divider rule uses CSS `:has()`, which is supported in all modern evergreen browsers (Chrome 105+, Safari 15.4+, Firefox 121+, ~95% global as of 2026). Lists with mixed-icon items will fall back gracefully (icon-less items get the icon-aligned inset, which is visually fine, just slightly more right-shifted than ideal).
+
+---
+
 ## [1.3.5] – 2026-04-04
 
 ### Added
@@ -221,10 +270,11 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.4.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.4.0
 [1.3.5]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.5
 [1.3.4]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.4
 [1.3.3]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.3
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.3.5...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.4.0...HEAD

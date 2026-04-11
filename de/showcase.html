@@ -166,39 +166,9 @@
     }
 
     /* ============================================================
-       BACKGROUND SWITCHER – UI Styles
+       BACKGROUND SWITCHER – Swatch Styles
+       (Popover-Container nutzt jetzt .glass-popover aus glasskit.css)
        ============================================================ */
-    .bg-switcher {
-      position: relative;
-      display: inline-flex;
-    }
-
-    .bg-switcher__popover {
-      position: absolute;
-      top: calc(100% + 10px);
-      left: 50%;
-      transform: translateX(-50%) scale(0.92);
-      background: var(--gl-surface-3);
-      backdrop-filter: blur(var(--gl-blur));
-      -webkit-backdrop-filter: blur(var(--gl-blur));
-      border: 1px solid var(--gl-border-subtle);
-      border-radius: var(--gl-radius-card);
-      padding: 12px 14px;
-      display: flex;
-      gap: 8px;
-      box-shadow: var(--gl-shadow-card);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      z-index: 100;
-      white-space: nowrap;
-    }
-    .bg-switcher__popover.is-open {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(-50%) scale(1);
-    }
-
     .bg-swatch {
       width: 32px; height: 32px;
       border-radius: 50%;
@@ -288,8 +258,8 @@
           </svg>
         </button>
 
-        <!-- Background Switcher -->
-        <div class="bg-switcher">
+        <!-- Background Switcher (uses glass-popover) -->
+        <div class="glass-popover-anchor">
           <button class="glass-pill" aria-label="Hintergrund wechseln" onclick="toggleBgPopover(event)">
             <svg viewBox="0 0 24 24">
               <rect x="2" y="2" width="20" height="20" rx="3" ry="3"/>
@@ -297,13 +267,15 @@
               <path d="M21 15l-5-5L5 21"/>
             </svg>
           </button>
-          <div class="bg-switcher__popover" id="bg-popover">
-            <div class="bg-swatch bg-swatch--default is-active" data-bg="default" onclick="switchBg(this)" title="Default"></div>
-            <div class="bg-swatch bg-swatch--ocean" data-bg="ocean" onclick="switchBg(this)" title="Ocean"></div>
-            <div class="bg-swatch bg-swatch--sunset" data-bg="sunset" onclick="switchBg(this)" title="Sunset"></div>
-            <div class="bg-swatch bg-swatch--forest" data-bg="forest" onclick="switchBg(this)" title="Forest"></div>
-            <div class="bg-swatch bg-swatch--rose" data-bg="rose" onclick="switchBg(this)" title="Rose"></div>
-            <div class="bg-swatch bg-swatch--mono" data-bg="mono" onclick="switchBg(this)" title="Mono"></div>
+          <div class="glass-popover" id="bg-popover">
+            <div class="gl-row gl-row--xs">
+              <div class="bg-swatch bg-swatch--default is-active" data-bg="default" onclick="switchBg(this)" title="Default"></div>
+              <div class="bg-swatch bg-swatch--ocean" data-bg="ocean" onclick="switchBg(this)" title="Ocean"></div>
+              <div class="bg-swatch bg-swatch--sunset" data-bg="sunset" onclick="switchBg(this)" title="Sunset"></div>
+              <div class="bg-swatch bg-swatch--forest" data-bg="forest" onclick="switchBg(this)" title="Forest"></div>
+              <div class="bg-swatch bg-swatch--rose" data-bg="rose" onclick="switchBg(this)" title="Rose"></div>
+              <div class="bg-swatch bg-swatch--mono" data-bg="mono" onclick="switchBg(this)" title="Mono"></div>
+            </div>
           </div>
         </div>
 
@@ -316,7 +288,7 @@
         </button>
       </nav>
 
-      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.3.5</h1>
+      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.4.0</h1>
 
       <!-- CARD -->
       <p class="section-label">Card (Glow)</p>
@@ -568,6 +540,97 @@
         <p>Noch keine aufgenommenen Verträge vorhanden.</p>
       </div>
 
+      <!-- LIST – iOS-Stil Einstellungen (Icon + Titel + Untertitel + Trailing) -->
+      <p class="section-label">Liste (Settings-Stil)</p>
+      <ul class="glass-list gl-mb-md">
+        <li class="glass-list__item glass-list__item--interactive">
+          <span class="glass-list__leading">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </span>
+          <div class="glass-list__content">
+            <div class="glass-list__title">iOS 26.4 Update</div>
+            <div class="glass-list__subtitle">2,1 GB · Jetzt verfügbar</div>
+          </div>
+          <div class="glass-list__trailing">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </li>
+        <li class="glass-list__item glass-list__item--interactive">
+          <span class="glass-list__leading">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="5" width="20" height="14" rx="2"/>
+              <line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
+          </span>
+          <div class="glass-list__content">
+            <div class="glass-list__title">Apple One</div>
+            <div class="glass-list__subtitle">Familie — verlängert sich am 28. Apr.</div>
+          </div>
+          <div class="glass-list__trailing">22,95 €</div>
+        </li>
+        <li class="glass-list__item glass-list__item--interactive">
+          <span class="glass-list__leading">
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+          </span>
+          <div class="glass-list__content">
+            <div class="glass-list__title">Mitteilungen</div>
+          </div>
+          <div class="glass-list__trailing">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </li>
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive">
+          Alle Abos anzeigen
+        </li>
+      </ul>
+
+      <!-- LIST – Zentrierter Text -->
+      <p class="section-label">Liste (kompaktes Menü)</p>
+      <ul class="glass-list gl-mb-md">
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Vertrag teilen</li>
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Duplizieren</li>
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Löschen</li>
+      </ul>
+
+      <!-- POPOVER – Standalone Demo mit Liste innen -->
+      <p class="section-label">Popover</p>
+      <div class="gl-mb-md" style="display:flex;justify-content:center">
+        <div class="glass-popover-anchor">
+          <button class="glass-btn glass-btn--secondary glass-btn--auto" onclick="gkTogglePopover(this, event)">
+            Menü öffnen
+          </button>
+          <div class="glass-popover">
+            <ul class="glass-list glass-list--bare">
+              <li class="glass-list__item glass-list__item--interactive">
+                <span class="glass-list__leading">
+                  <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                </span>
+                <div class="glass-list__content"><div class="glass-list__title">Teilen</div></div>
+              </li>
+              <li class="glass-list__item glass-list__item--interactive">
+                <span class="glass-list__leading">
+                  <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </span>
+                <div class="glass-list__content"><div class="glass-list__title">Duplizieren</div></div>
+              </li>
+              <li class="glass-list__item glass-list__item--interactive">
+                <span class="glass-list__leading">
+                  <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                </span>
+                <div class="glass-list__content"><div class="glass-list__title">Löschen</div></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       <hr class="glass-divider gl-mb-md">
 
       <!-- MODAL + TOAST -->
@@ -696,10 +759,24 @@
   // Popover schließen bei Klick außerhalb
   document.addEventListener('click', function(e) {
     const popover = document.getElementById('bg-popover');
-    if (!e.target.closest('.bg-switcher')) {
+    if (!e.target.closest('.glass-popover-anchor')) {
       popover.classList.remove('is-open');
     }
+    document.querySelectorAll('.glass-popover.is-open').forEach(p => {
+      if (!e.target.closest('.glass-popover-anchor')) p.classList.remove('is-open');
+    });
   });
+
+  // Generischer Popover-Toggle (für Demo-Tile)
+  // Hinweis: darf NICHT togglePopover heißen — kollidiert mit der nativen
+  // HTMLElement.togglePopover()-Methode aus der HTML Popover API.
+  function gkTogglePopover(btn, e) {
+    const popover = btn.nextElementSibling;
+    const wasOpen = popover.classList.contains('is-open');
+    document.querySelectorAll('.glass-popover.is-open').forEach(p => p.classList.remove('is-open'));
+    if (!wasOpen) popover.classList.add('is-open');
+    if (e) e.stopPropagation();
+  }
 
   // Toast
   function showToast() {

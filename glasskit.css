@@ -1,12 +1,12 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.3.5
-   
+   Jungherz GmbH – v1.4.0
+
    Features:
-   - Scoped Reset (box-sizing Fix)
-   - Dark Mode (Standard)
+   - Scoped Reset (box-sizing fix)
+   - Dark Mode (default)
    - Light Mode via [data-theme="light"]
-   - 22 Komponenten
+   - 24 components
    ============================================================ */
 
 
@@ -26,7 +26,7 @@
    ============================================================ */
 :root,
 [data-theme="dark"] {
-  /* ---- Farben ---- */
+  /* ---- Colors ---- */
   --gl-color-primary:        #f5a623;
   --gl-color-primary-dark:   #d4692a;
   --gl-color-primary-mid:    #e07a24;
@@ -41,7 +41,7 @@
   --gl-color-error:          #ff3b30;
   --gl-color-warning:        #ffcc00;
 
-  /* ---- Glas-Oberflächen ---- */
+  /* ---- Glass Surfaces ---- */
   --gl-surface-1:            rgba(255, 255, 255, 0.08);
   --gl-surface-2:            rgba(255, 255, 255, 0.10);
   --gl-surface-3:            rgba(255, 255, 255, 0.14);
@@ -69,7 +69,7 @@
   --gl-border-warm:          rgba(255, 200, 100, 0.35);
   --gl-border-focus:         rgba(245, 166, 35, 0.60);
 
-  /* ---- Icon-Farben ---- */
+  /* ---- Icon Colors ---- */
   --gl-icon-default:         rgba(255, 255, 255, 0.6);
   --gl-icon-muted:           rgba(255, 255, 255, 0.45);
   --gl-icon-strong:          rgba(255, 255, 255, 0.8);
@@ -110,7 +110,7 @@
   --gl-inset-strong:         inset 0 1px 2px rgba(255, 255, 255, 0.25);
   --gl-inset-milk:           inset 0 1px 2px rgba(255, 255, 255, 0.40);
 
-  /* ---- Hintergrund-Effekte ---- */
+  /* ---- Background Effects ---- */
   --gl-bg-aurora-1:          rgba(60, 160, 160, 0.25);
   --gl-bg-aurora-2:          rgba(200, 140, 60, 0.12);
   --gl-bg-aurora-3:          rgba(80, 180, 200, 0.18);
@@ -157,7 +157,7 @@
   /* ---- Accordion ---- */
   --gl-accordion-body-color: var(--gl-color-text-muted);
 
-  /* ---- Toggle (inaktiv) ---- */
+  /* ---- Toggle (inactive) ---- */
   --gl-toggle-thumb-bg:      linear-gradient(to bottom,
                                rgba(255,255,255,0.9) 0%,
                                rgba(255,255,255,0.7) 100%);
@@ -468,7 +468,7 @@
 }
 .glass-btn--tertiary:active { transform: translateY(1px); }
 
-/* Größen */
+/* Sizes */
 .glass-btn--sm { height: 44px; font-size: var(--gl-font-size-sm); border-radius: var(--gl-radius-sm); }
 .glass-btn--lg { height: 64px; font-size: var(--gl-font-size-lg); }
 .glass-btn--auto { width: auto; padding: 0 var(--gl-space-xl); }
@@ -1232,7 +1232,231 @@
 
 
 /* ============================================================
-   24. UTILITIES
+   24. POPOVER
+   ============================================================ */
+.glass-popover-anchor {
+  position: relative;
+  display: inline-block;
+}
+
+.glass-popover {
+  position: absolute;
+  top: calc(100% + var(--gl-space-xs));
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px) scale(0.96);
+  transform-origin: top center;
+  min-width: 220px;
+  padding: var(--gl-space-sm);
+  background: var(--gl-surface-3);
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-card);
+  box-shadow: var(--gl-shadow-card), var(--gl-inset-strong);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity .18s ease,
+    transform .18s cubic-bezier(.2,.8,.2,1),
+    visibility 0s linear .18s;
+  z-index: 50;
+}
+.glass-popover.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0) scale(1);
+  transition:
+    opacity .18s ease,
+    transform .22s cubic-bezier(.2,.8,.2,1),
+    visibility 0s linear 0s;
+}
+
+.glass-popover--top {
+  top: auto;
+  bottom: calc(100% + var(--gl-space-xs));
+  transform-origin: bottom center;
+}
+.glass-popover--start {
+  left: 0;
+  transform: translateY(-4px) scale(0.96);
+  transform-origin: top left;
+}
+.glass-popover--start.is-open { transform: translateY(0) scale(1); }
+
+.glass-popover--end {
+  left: auto;
+  right: 0;
+  transform: translateY(-4px) scale(0.96);
+  transform-origin: top right;
+}
+.glass-popover--end.is-open { transform: translateY(0) scale(1); }
+
+
+/* ============================================================
+   25. LIST
+   ============================================================ */
+.glass-list {
+  background: var(--gl-surface-1);
+  backdrop-filter: blur(var(--gl-blur-light));
+  -webkit-backdrop-filter: blur(var(--gl-blur-light));
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-radius-btn);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08), var(--gl-inset-subtle);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.glass-list--flush {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  margin-left: calc(var(--gl-space-lg) * -1);
+  margin-right: calc(var(--gl-space-lg) * -1);
+}
+
+/* Bare: no own glass surface — for lists that live inside a container
+   which already provides background, border and shadow (e.g. inside a
+   glass-popover or glass-card). */
+.glass-list--bare {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.glass-list__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--gl-space-sm);
+  padding: var(--gl-space-md) var(--gl-space-lg);
+  min-height: 56px;
+  color: var(--gl-color-text);
+  font-size: var(--gl-font-size-base);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  list-style: none;
+}
+
+.glass-list__item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--gl-space-lg) + 28px + var(--gl-space-sm));
+  right: var(--gl-space-lg);
+  bottom: 0;
+  height: 1px;
+  background: var(--gl-border-subtle);
+  pointer-events: none;
+}
+/* Items without a leading icon: divider follows the standard horizontal
+   padding instead of the (non-existent) icon slot. */
+.glass-list__item:not(:has(.glass-list__leading)):not(:last-child)::after {
+  left: var(--gl-space-lg);
+}
+
+.glass-list__item--center {
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.glass-list__item--center > .glass-list__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.glass-list__item--interactive {
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.glass-list__item--interactive:hover,
+.glass-list__item--interactive:focus-visible {
+  background: var(--gl-surface-2);
+  outline: none;
+}
+.glass-list__item--interactive:active {
+  background: var(--gl-surface-3);
+}
+
+.glass-list__leading {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gl-icon-strong);
+}
+.glass-list__leading svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.glass-list__content {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+.glass-list__title {
+  font-size: var(--gl-font-size-base);
+  font-weight: var(--gl-font-weight-medium);
+  color: var(--gl-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.glass-list__subtitle {
+  font-size: var(--gl-font-size-sm);
+  color: var(--gl-color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.glass-list__trailing {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--gl-space-xs);
+  color: var(--gl-color-text-muted);
+  font-size: var(--gl-font-size-sm);
+}
+.glass-list__trailing svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--gl-icon-muted);
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* ============================================================
+   26. UTILITIES
    ============================================================ */
 .gl-stack            { display: flex; flex-direction: column; }
 .gl-row              { display: flex; flex-direction: row; align-items: center; }

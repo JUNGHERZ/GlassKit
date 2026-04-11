@@ -373,7 +373,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.3.5 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.4.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -398,6 +398,7 @@
     <a class="docs-sidebar__link" href="#avatar">Avatar</a>
     <a class="docs-sidebar__link" href="#divider">Divider</a>
     <a class="docs-sidebar__link" href="#status">Status Notice</a>
+    <a class="docs-sidebar__link" href="#list">List</a>
   </div>
 
   <div class="docs-sidebar__group">
@@ -405,6 +406,7 @@
     <a class="docs-sidebar__link" href="#buttons">Buttons</a>
     <a class="docs-sidebar__link" href="#modal">Modal</a>
     <a class="docs-sidebar__link" href="#toast">Toast</a>
+    <a class="docs-sidebar__link" href="#popover">Popover</a>
   </div>
 
   <div class="docs-sidebar__group">
@@ -437,10 +439,10 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.3.5</span>
+      <span class="docs-hero__badge">v1.4.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
-      <span class="docs-hero__badge">22 Components</span>
+      <span class="docs-hero__badge">24 Components</span>
     </div>
   </header>
 
@@ -742,16 +744,141 @@ function <span class="cls">toggleTheme</span>() {
     </div>
   </section>
 
+  <!-- LIST -->
+  <section class="docs-section" id="list">
+    <h2>List</h2>
+    <p>Grouped settings-style container for stacked rows. Items support a leading icon, title + optional subtitle, and a trailing element (chevron, value, button). Dividers between items are drawn automatically &mdash; no extra markup needed.</p>
+
+    <h3>Settings style (icon + title + subtitle + trailing)</h3>
+    <div class="docs-preview docs-preview--constrained">
+      <ul class="glass-list">
+        <li class="glass-list__item glass-list__item--interactive">
+          <span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+          <div class="glass-list__content">
+            <div class="glass-list__title">iOS 26.4 Update</div>
+            <div class="glass-list__subtitle">2.1 GB &middot; Available now</div>
+          </div>
+          <div class="glass-list__trailing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </li>
+        <li class="glass-list__item glass-list__item--interactive">
+          <span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span>
+          <div class="glass-list__content">
+            <div class="glass-list__title">Apple One</div>
+            <div class="glass-list__subtitle">Family &mdash; renews Apr 28</div>
+          </div>
+          <div class="glass-list__trailing">$22.95</div>
+        </li>
+        <li class="glass-list__item glass-list__item--interactive">
+          <span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+          <div class="glass-list__content">
+            <div class="glass-list__title">Notifications</div>
+          </div>
+          <div class="glass-list__trailing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </li>
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive">View all subscriptions</li>
+      </ul>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;ul</span> <span class="attr">class=</span><span class="val">"glass-list"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--interactive"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-list__leading"</span><span class="tag">&gt;&lt;svg&gt;</span>...<span class="tag">&lt;/svg&gt;&lt;/span&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-list__content"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-list__title"</span><span class="tag">&gt;</span>iOS 26.4 Update<span class="tag">&lt;/div&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-list__subtitle"</span><span class="tag">&gt;</span>2.1 GB &middot; Available now<span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-list__trailing"</span><span class="tag">&gt;&lt;svg&gt;</span>...<span class="tag">&lt;/svg&gt;&lt;/div&gt;</span>
+  <span class="tag">&lt;/li&gt;</span>
+  <span class="cmt">&lt;!-- More items… dividers appear automatically --&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--center"</span><span class="tag">&gt;</span>View all<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></div>
+    </div>
+
+    <h3>Compact menu (centered text, no icons)</h3>
+    <div class="docs-preview docs-preview--constrained">
+      <ul class="glass-list">
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Share document</li>
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Duplicate</li>
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Delete</li>
+      </ul>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;ul</span> <span class="attr">class=</span><span class="val">"glass-list"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--center glass-list__item--interactive"</span><span class="tag">&gt;</span>Share document<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--center glass-list__item--interactive"</span><span class="tag">&gt;</span>Duplicate<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--center glass-list__item--interactive"</span><span class="tag">&gt;</span>Delete<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></div>
+    </div>
+
+    <h3>Class reference</h3>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-list</code></td><td>Grouped surface container</td></tr>
+        <tr><td><code>.glass-list--flush</code></td><td>Edge-to-edge variant (no side margin / radius). Assumes parent has <code>--gl-space-lg</code> horizontal padding.</td></tr>
+        <tr><td><code>.glass-list--bare</code></td><td>Strips background, border &amp; shadow &mdash; for embedding inside <code>.glass-popover</code> or <code>.glass-card</code>.</td></tr>
+        <tr><td><code>.glass-list__item</code></td><td>List row (use <code>&lt;li&gt;</code>, <code>&lt;a&gt;</code>, or <code>&lt;button&gt;</code>)</td></tr>
+        <tr><td><code>.glass-list__item--interactive</code></td><td>Adds hover / focus / active states</td></tr>
+        <tr><td><code>.glass-list__item--center</code></td><td>Centered single-text variant with ellipsis truncation</td></tr>
+        <tr><td><code>.glass-list__leading</code></td><td>Leading slot (28&times;28, holds an icon SVG)</td></tr>
+        <tr><td><code>.glass-list__content</code></td><td>Flexible middle slot &mdash; takes remaining width, enables truncation</td></tr>
+        <tr><td><code>.glass-list__title</code></td><td>Primary text (medium weight, ellipsis)</td></tr>
+        <tr><td><code>.glass-list__subtitle</code></td><td>Secondary text (small, muted, ellipsis)</td></tr>
+        <tr><td><code>.glass-list__trailing</code></td><td>Trailing slot &mdash; chevron, value, button, badge</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px;"><strong>Dividers</strong> between rows are rendered automatically via <code>::after</code>. Items <em>with</em> a leading icon get an icon-aligned inset; items <em>without</em> get a standard left/right padding inset. The last item never has a divider. SVG icon convention: <code>24px</code> for leading, <code>18px</code> for trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
+  </section>
+
   <!-- MODAL -->
   <section class="docs-section" id="modal">
     <h2>Modal</h2>
-    <p>Controlled via <code>.is-active</code> class on the overlay.</p>
+    <p>Centered dialog with blur overlay. Visibility is controlled via the <code>.is-active</code> class on the overlay element &mdash; toggling it requires a tiny bit of JavaScript.</p>
+
+    <div class="docs-preview docs-preview--constrained" style="display:flex;justify-content:center;padding:24px 0;">
+      <div class="glass-modal" style="transform:none;">
+        <div class="glass-modal__header">
+          <h2 class="glass-modal__title">Delete document?</h2>
+        </div>
+        <div class="glass-modal__body">
+          <p>This action cannot be undone.</p>
+        </div>
+        <div class="glass-modal__footer">
+          <button class="glass-modal__action">Cancel</button>
+          <button class="glass-modal__action glass-modal__action--danger">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-modal-overlay"</span> <span class="attr">id=</span><span class="val">"my-modal"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-modal"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-modal__header"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;h2</span> <span class="attr">class=</span><span class="val">"glass-modal__title"</span><span class="tag">&gt;</span>Delete document?<span class="tag">&lt;/h2&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-modal__body"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;p&gt;</span>This action cannot be undone.<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-modal__footer"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-modal__action"</span> <span class="attr">onclick=</span><span class="val">"closeModal()"</span><span class="tag">&gt;</span>Cancel<span class="tag">&lt;/button&gt;</span>
+      <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-modal__action glass-modal__action--danger"</span><span class="tag">&gt;</span>Delete<span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="tag">&lt;script&gt;</span>
+  <span class="cmt">// Open / close by toggling .is-active on the overlay (NOT on .glass-modal)</span>
+  <span class="attr">function</span> openModal()  { document.getElementById(<span class="val">'my-modal'</span>).classList.add(<span class="val">'is-active'</span>); }
+  <span class="attr">function</span> closeModal() { document.getElementById(<span class="val">'my-modal'</span>).classList.remove(<span class="val">'is-active'</span>); }
+<span class="tag">&lt;/script&gt;</span></div>
+    </div>
+
+    <h3>Class reference</h3>
     <table class="docs-table">
       <thead><tr><th>Class</th><th>Description</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-modal-overlay</code></td><td>Fullscreen blur overlay</td></tr>
         <tr><td><code>.glass-modal-overlay.is-active</code></td><td>Visible + animated</td></tr>
-        <tr><td><code>.glass-modal</code></td><td>Dialog container</td></tr>
+        <tr><td><code>.glass-modal</code></td><td>Dialog container (max-width 340px)</td></tr>
         <tr><td><code>__header / __title</code></td><td>Title area</td></tr>
         <tr><td><code>__body</code></td><td>Content area</td></tr>
         <tr><td><code>__footer / __action</code></td><td>Action bar</td></tr>
@@ -759,6 +886,7 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td><code>__action--danger</code></td><td>Dangerous action</td></tr>
       </tbody>
     </table>
+    <p style="margin-top:12px;"><strong>Note:</strong> the <code>.is-active</code> class belongs on the <code>.glass-modal-overlay</code>, not on <code>.glass-modal</code> itself. The overlay handles the fullscreen backdrop, and its <code>:is-active</code> state triggers both the backdrop fade-in and the inner dialog's scale-up animation.</p>
   </section>
 
   <!-- TOAST -->
@@ -777,6 +905,68 @@ function <span class="cls">toggleTheme</span>() {
   <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-toast__text"</span><span class="tag">&gt;</span>Success!<span class="tag">&lt;/span&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
+  </section>
+
+  <!-- POPOVER -->
+  <section class="docs-section" id="popover">
+    <h2>Popover</h2>
+    <p>Anchored dropdown / menu container. Wrap a trigger and a <code>.glass-popover</code> in a <code>.glass-popover-anchor</code>. Visibility is controlled via the <code>.is-open</code> class &mdash; toggling it requires a tiny bit of JavaScript.</p>
+
+    <div class="docs-preview docs-preview--constrained" style="min-height:220px;display:flex;justify-content:center;align-items:flex-start;padding-top:24px;">
+      <div class="glass-popover-anchor">
+        <button class="glass-btn glass-btn--secondary glass-btn--auto" onclick="docsTogglePopover(this, event)">Open menu</button>
+        <div class="glass-popover">
+          <ul class="glass-list glass-list--bare">
+            <li class="glass-list__item glass-list__item--interactive">
+              <span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span>
+              <div class="glass-list__content"><div class="glass-list__title">Share</div></div>
+            </li>
+            <li class="glass-list__item glass-list__item--interactive">
+              <span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+              <div class="glass-list__content"><div class="glass-list__title">Duplicate</div></div>
+            </li>
+            <li class="glass-list__item glass-list__item--interactive">
+              <span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></span>
+              <div class="glass-list__content"><div class="glass-list__title">Delete</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-popover-anchor"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-btn glass-btn--secondary"</span> <span class="attr">onclick=</span><span class="val">"togglePop(this)"</span><span class="tag">&gt;</span>Open menu<span class="tag">&lt;/button&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-popover"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;ul</span> <span class="attr">class=</span><span class="val">"glass-list glass-list--bare"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--interactive"</span><span class="tag">&gt;</span>Share<span class="tag">&lt;/li&gt;</span>
+      <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--interactive"</span><span class="tag">&gt;</span>Delete<span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;/ul&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="tag">&lt;script&gt;</span>
+  <span class="cmt">// Note: do NOT name the function `togglePopover` &mdash; collides</span>
+  <span class="cmt">// with the native HTMLElement.togglePopover() API method.</span>
+  <span class="attr">function</span> togglePop(btn) {
+    btn.nextElementSibling.classList.toggle(<span class="val">'is-open'</span>);
+  }
+<span class="tag">&lt;/script&gt;</span></div>
+    </div>
+
+    <h3>Class reference</h3>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-popover-anchor</code></td><td>Positioning context for the popover (wraps trigger + popover)</td></tr>
+        <tr><td><code>.glass-popover</code></td><td>Floating glass surface, hidden until <code>.is-open</code></td></tr>
+        <tr><td><code>.glass-popover.is-open</code></td><td>Visible state &mdash; fade + scale animation</td></tr>
+        <tr><td><code>.glass-popover--top</code></td><td>Opens upward (above the trigger)</td></tr>
+        <tr><td><code>.glass-popover--start</code></td><td>Aligns left edge with trigger</td></tr>
+        <tr><td><code>.glass-popover--end</code></td><td>Aligns right edge with trigger</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px;"><strong>Note:</strong> name your toggle function anything except <code>togglePopover</code> &mdash; that name collides with the native <code>HTMLElement.togglePopover()</code> method from the HTML Popover API and inline <code>onclick</code> handlers will throw a <code>NotSupportedError</code>.</p>
   </section>
 
   <!-- INPUT -->
@@ -1009,6 +1199,8 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td>Avatar</td><td><code>.glass-avatar</code></td><td><code>--sm</code>, <code>--lg</code></td></tr>
         <tr><td>Divider</td><td><code>.glass-divider</code></td><td>–</td></tr>
         <tr><td>Status</td><td><code>.glass-status</code></td><td>–</td></tr>
+        <tr><td>List</td><td><code>.glass-list</code></td><td><code>--flush</code>, <code>--bare</code>, <code>__item--interactive</code>, <code>__item--center</code></td></tr>
+        <tr><td>Popover</td><td><code>.glass-popover</code></td><td><code>--top</code>, <code>--start</code>, <code>--end</code>, <code>.is-open</code></td></tr>
         <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code></td></tr>
         <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td>–</td></tr>
         <tr><td>Select</td><td><code>.glass-select</code></td><td>–</td></tr>
@@ -1033,7 +1225,7 @@ function <span class="cls">toggleTheme</span>() {
     <table class="docs-table">
       <thead><tr><th>Feature</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td>Copy-paste HTML</td><td>All 22 components with exact nesting and BEM hierarchy</td></tr>
+        <tr><td>Copy-paste HTML</td><td>All 24 components with exact nesting and BEM hierarchy</td></tr>
         <tr><td>Design token tables</td><td>Colors, surfaces, blur, radii, spacing, shadows, typography</td></tr>
         <tr><td>State class mapping</td><td><code>is-active</code>, <code>is-open</code>, <code>is-visible</code>, <code>:checked</code> – where each belongs</td></tr>
         <tr><td>Composition patterns</td><td>6 full page layouts: Login, Dashboard, Form, Modal, Settings, Progress</td></tr>
@@ -1060,6 +1252,20 @@ node_modules/@jungherz-de/glasskit/SKILL.md</div>
     const current = html.getAttribute('data-theme');
     html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
   }
+
+  // Popover demo toggle (named to avoid clash with native HTMLElement.togglePopover)
+  function docsTogglePopover(btn, e) {
+    const popover = btn.nextElementSibling;
+    const wasOpen = popover.classList.contains('is-open');
+    document.querySelectorAll('.glass-popover.is-open').forEach(p => p.classList.remove('is-open'));
+    if (!wasOpen) popover.classList.add('is-open');
+    if (e) e.stopPropagation();
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.glass-popover-anchor')) {
+      document.querySelectorAll('.glass-popover.is-open').forEach(p => p.classList.remove('is-open'));
+    }
+  });
 </script>
 
 </body>

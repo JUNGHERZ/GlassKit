@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.3.5-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.4.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
-  <img src="https://img.shields.io/badge/components-22-green?style=flat-square" alt="Components">
+  <img src="https://img.shields.io/badge/components-24-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.3.5-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.4.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -16,7 +16,7 @@
 
 <p align="center">
   <strong>A modern glassmorphism CSS component library.</strong><br>
-  22 Components · Dark & Light Mode · No Dependencies · Design Tokens
+  24 Components · Dark & Light Mode · No Dependencies · Design Tokens
 </p>
 
 <p align="center">
@@ -48,7 +48,7 @@ GlassKit is a complete **CSS component library** with glassmorphism aesthetics �
 - 📱 **Mobile-first** – optimized for touch devices and `safe-area-inset`
 - 🔌 **Framework-agnostic** – works with React, Vue, Svelte, plain HTML, or any other stack
 - 🧩 **Shadow DOM ready** – Constructable Stylesheet for Web Components included
-- 🪶 **Lightweight** – ~45 KB (uncompressed), no external dependencies
+- 🪶 **Lightweight** – 49 KB raw / 37 KB minified / 6.2 KB gzipped, no external dependencies
 - 🎯 **BEM-like naming convention** – `glass-*` prefix, no conflicts with existing CSS
 - 🤖 **AI-ready** – ships with [`SKILL.md`](SKILL.md), a structured reference for LLMs & AI copilots
 
@@ -64,16 +64,16 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.3/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.4/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.3/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.4/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.3/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.4/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.3` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.4` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 ### npm / yarn / pnpm
 
@@ -177,6 +177,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Badge** | `.glass-badge` | Tags & labels |
 | **Avatar** | `.glass-avatar` | Glass circle (sm/md/lg) |
 | **Status** | `.glass-status` | Notice card with icon |
+| **List** | `.glass-list` | iOS-style grouped settings list with auto dividers |
 
 ### Actions & Feedback
 
@@ -187,6 +188,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Button (Tertiary)** | `.glass-btn--tertiary` | Subtle glass – tertiary action |
 | **Modal** | `.glass-modal` | Centered dialog with blur overlay |
 | **Toast** | `.glass-toast` | Temporary notification |
+| **Popover** | `.glass-popover` | Anchored dropdown / menu with fade & scale animation |
 
 ### Form Elements
 
@@ -440,7 +442,7 @@ glasskit/
 
 The full documentation with **live previews**, **copy-paste code blocks**, and **class reference tables** is available in `docs.html`:
 
-- Sidebar navigation to all 22 components
+- Sidebar navigation to all 24 components
 - Live previews on a real glassmorphism background
 - Design token reference
 - Theming guide
@@ -470,7 +472,7 @@ GlassKit ships with an **AI-optimized component reference** in [`SKILL.md`](SKIL
 
 ### What it provides
 
-- **Copy-paste-ready HTML** for all 22 components with exact nesting rules
+- **Copy-paste-ready HTML** for all 24 components with exact nesting rules
 - **Complete design token tables** (colors, surfaces, blur, radii, spacing, shadows, typography)
 - **State class reference** – which class goes where (`is-active`, `is-open`, `is-visible`, `:checked`)
 - **6 composition patterns** – full page layouts (Login, Dashboard, Form, Modal, Settings, Progress)
@@ -505,7 +507,7 @@ GlassKit uses `backdrop-filter` for glass effects. Support:
 ```
 Interactive States:
   .is-active          → Tab Bar item, Modal Overlay
-  .is-open            → Accordion item
+  .is-open            → Accordion item, Popover
   .is-visible         → Toast
   :checked            → Toggle, Checkbox, Radio
   :focus              → Input, Textarea, Select, Range
@@ -533,6 +535,13 @@ Toast Modifiers:
 
 Modal Action Modifiers:
   .glass-modal__action--primary / --danger
+
+List Modifiers:
+  .glass-list--flush / --bare
+  .glass-list__item--interactive / --center
+
+Popover Modifiers:
+  .glass-popover--top / --start / --end
 
 Background Modifiers:
   .glass-bg--has-tab-bar

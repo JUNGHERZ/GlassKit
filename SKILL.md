@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.3.5) with 22 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.4.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -16,7 +16,7 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.3.5) wit
 
 ```html
 <!-- CDN (recommended) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.3/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.4/glasskit.min.css">
 
 <!-- Local -->
 <link rel="stylesheet" href="glasskit.css">
@@ -33,7 +33,7 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.3.5) wit
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.3/glasskit.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.4/glasskit.min.css">
 </head>
 <body>
   <div class="glass-bg">
@@ -816,6 +816,148 @@ Collapsible content sections. Controlled via `is-open` on items.
 
 ---
 
+### 3.24 List
+
+iOS-style grouped settings list. Items can carry a leading icon, a title with optional subtitle, and a trailing element (chevron, value, button). Dividers between items are drawn automatically via `::after` &mdash; **never add divider markup manually**.
+
+```html
+<!-- Settings-style list with icons + subtitles + trailing -->
+<ul class="glass-list">
+  <li class="glass-list__item glass-list__item--interactive">
+    <span class="glass-list__leading">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+    </span>
+    <div class="glass-list__content">
+      <div class="glass-list__title">iOS 26.4 Update</div>
+      <div class="glass-list__subtitle">2.1 GB · Available now</div>
+    </div>
+    <div class="glass-list__trailing">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </div>
+  </li>
+
+  <li class="glass-list__item glass-list__item--interactive">
+    <span class="glass-list__leading">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="5" width="20" height="14" rx="2"/>
+        <line x1="2" y1="10" x2="22" y2="10"/>
+      </svg>
+    </span>
+    <div class="glass-list__content">
+      <div class="glass-list__title">Apple One</div>
+      <div class="glass-list__subtitle">Family — renews Apr 28</div>
+    </div>
+    <div class="glass-list__trailing">$22.95</div>
+  </li>
+
+  <li class="glass-list__item glass-list__item--center glass-list__item--interactive">
+    View all subscriptions
+  </li>
+</ul>
+```
+
+```html
+<!-- Compact menu (centered text only, no icons) -->
+<ul class="glass-list">
+  <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Share</li>
+  <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Duplicate</li>
+  <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Delete</li>
+</ul>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-list` | Grouped surface container |
+| `.glass-list--flush` | Edge-to-edge variant (no side margin / radius). Assumes parent has `--gl-space-lg` horizontal padding. |
+| `.glass-list--bare` | Strips background, border & shadow &mdash; for embedding inside `.glass-popover` or `.glass-card`. |
+| `.glass-list__item` | List row (use `<li>`, `<a>`, or `<button>`) |
+| `.glass-list__item--interactive` | Adds hover / focus / active states |
+| `.glass-list__item--center` | Centered single-text variant with ellipsis truncation |
+| `.glass-list__leading` | Leading slot (28×28, holds an icon SVG) |
+| `.glass-list__content` | Flexible middle slot — takes remaining width, enables truncation |
+| `.glass-list__title` | Primary text (medium weight, ellipsis) |
+| `.glass-list__subtitle` | Secondary text (small, muted, ellipsis) |
+| `.glass-list__trailing` | Trailing slot — chevron, value, button, badge |
+
+**Notes:**
+- Dividers are auto-rendered via `::after`. The last item never has a divider.
+- Items **with** a `__leading` slot get an icon-aligned divider inset; items **without** a leading slot get a standard left/right padding inset (handled via `:has()`).
+- SVG icon convention: `24px` for leading, `18px` for trailing, `stroke: currentColor`, `stroke-width: 2`.
+- Use `<ul>` + `<li>` for semantic lists. For interactive rows wrap in `<a>` or `<button>` instead of `<li>` if a single-row list is needed.
+
+---
+
+### 3.25 Popover
+
+Anchored dropdown / menu container. Wrap a trigger button and a `.glass-popover` inside a `.glass-popover-anchor`. Visibility is controlled via `.is-open` &mdash; toggling requires a tiny bit of JavaScript.
+
+```html
+<div class="glass-popover-anchor">
+  <button class="glass-btn glass-btn--secondary glass-btn--auto"
+          onclick="gkTogglePopover(this, event)">
+    Open menu
+  </button>
+  <div class="glass-popover">
+    <ul class="glass-list glass-list--bare">
+      <li class="glass-list__item glass-list__item--interactive">
+        <span class="glass-list__leading">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+            <polyline points="16 6 12 2 8 6"/>
+            <line x1="12" y1="2" x2="12" y2="15"/>
+          </svg>
+        </span>
+        <div class="glass-list__content"><div class="glass-list__title">Share</div></div>
+      </li>
+      <li class="glass-list__item glass-list__item--interactive">
+        <div class="glass-list__content"><div class="glass-list__title">Duplicate</div></div>
+      </li>
+      <li class="glass-list__item glass-list__item--interactive">
+        <div class="glass-list__content"><div class="glass-list__title">Delete</div></div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  // ⚠️ Do NOT name this function `togglePopover` — it collides with the
+  // native HTMLElement.togglePopover() method from the HTML Popover API.
+  function gkTogglePopover(btn, e) {
+    const popover = btn.nextElementSibling;
+    const wasOpen = popover.classList.contains('is-open');
+    document.querySelectorAll('.glass-popover.is-open')
+      .forEach(p => p.classList.remove('is-open'));
+    if (!wasOpen) popover.classList.add('is-open');
+    if (e) e.stopPropagation();
+  }
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.glass-popover-anchor')) {
+      document.querySelectorAll('.glass-popover.is-open')
+        .forEach(p => p.classList.remove('is-open'));
+    }
+  });
+</script>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-popover-anchor` | Positioning context — wraps trigger + popover |
+| `.glass-popover` | Floating glass surface, hidden until `.is-open` |
+| `.glass-popover.is-open` | Visible state — fade + scale animation |
+| `.glass-popover--top` | Opens upward (above the trigger) |
+| `.glass-popover--start` | Aligns left edge with trigger |
+| `.glass-popover--end` | Aligns right edge with trigger |
+
+**Note:** name your toggle function anything except `togglePopover` &mdash; that name collides with the native `HTMLElement.togglePopover()` method (HTML Popover API) and inline `onclick` handlers will throw `NotSupportedError`. Use a prefix like `gkTogglePopover` or `myToggle`.
+
+---
+
 ## 4. Utility Classes
 
 ### Stack (Vertical)
@@ -893,7 +1035,7 @@ Flexbox row with gap.
 | State Class | Used on | Description |
 |---|---|---|
 | `.is-active` | `.glass-modal-overlay`, `.glass-tab-bar__item` | Element is active/visible |
-| `.is-open` | `.glass-accordion__item` | Accordion item is expanded |
+| `.is-open` | `.glass-accordion__item`, `.glass-popover` | Accordion item expanded / popover visible |
 | `.is-visible` | `.glass-toast` | Toast is visible |
 | `:checked` | Toggle, Checkbox, Radio (on the input) | Native checked state |
 | `:focus` | Input, Textarea, Select, Range | Focus ring |
@@ -1105,6 +1247,122 @@ Flexbox row with gap.
 </div>
 ```
 
+### iOS-style Settings Screen (List + Popover)
+
+A grouped settings screen using `glass-list` for the rows and `glass-popover` for an inline action menu. Reproduces the layout of native iOS Settings screens.
+
+```html
+<div class="glass-bg">
+  <nav class="glass-nav">
+    <button class="glass-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <h1 class="glass-title">Settings</h1>
+
+    <!-- Inline action menu (popover) -->
+    <div class="glass-popover-anchor">
+      <button class="glass-pill" onclick="gkTogglePopover(this, event)" aria-label="More">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="5" r="1.5" fill="currentColor"/>
+          <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+          <circle cx="12" cy="19" r="1.5" fill="currentColor"/>
+        </svg>
+      </button>
+      <div class="glass-popover glass-popover--end">
+        <ul class="glass-list glass-list--bare">
+          <li class="glass-list__item glass-list__item--interactive">
+            <div class="glass-list__content"><div class="glass-list__title">Edit profile</div></div>
+          </li>
+          <li class="glass-list__item glass-list__item--interactive">
+            <div class="glass-list__content"><div class="glass-list__title">Sign out</div></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Account section -->
+  <p class="gl-text-muted gl-text-sm gl-mb-sm">ACCOUNT</p>
+  <ul class="glass-list gl-mb-lg">
+    <li class="glass-list__item glass-list__item--interactive">
+      <span class="glass-list__leading">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </span>
+      <div class="glass-list__content">
+        <div class="glass-list__title">Marcel Jungherz</div>
+        <div class="glass-list__subtitle">marcel@jungherz.com</div>
+      </div>
+      <div class="glass-list__trailing">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+    </li>
+    <li class="glass-list__item glass-list__item--interactive">
+      <span class="glass-list__leading">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="5" width="20" height="14" rx="2"/>
+          <line x1="2" y1="10" x2="22" y2="10"/>
+        </svg>
+      </span>
+      <div class="glass-list__content">
+        <div class="glass-list__title">Subscriptions</div>
+      </div>
+      <div class="glass-list__trailing">
+        $34.94
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Notifications section -->
+  <p class="gl-text-muted gl-text-sm gl-mb-sm">NOTIFICATIONS</p>
+  <ul class="glass-list gl-mb-lg">
+    <li class="glass-list__item glass-list__item--interactive">
+      <span class="glass-list__leading">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+      </span>
+      <div class="glass-list__content"><div class="glass-list__title">Push notifications</div></div>
+      <div class="glass-list__trailing">On</div>
+    </li>
+    <li class="glass-list__item glass-list__item--interactive">
+      <span class="glass-list__leading">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22 6 12 13 2 6"/>
+        </svg>
+      </span>
+      <div class="glass-list__content"><div class="glass-list__title">Email digest</div></div>
+      <div class="glass-list__trailing">Weekly</div>
+    </li>
+    <li class="glass-list__item glass-list__item--center glass-list__item--interactive">
+      Reset to defaults
+    </li>
+  </ul>
+</div>
+```
+
+Key points in this composition:
+
+- **Two grouped sections** — labeled by small uppercase muted text above each list, matching iOS settings.
+- **Auto-dividers** — no `<hr>` between rows; the `::after` pseudo-element handles them.
+- **Mixed trailing types** — chevron, value text, value + chevron, all in the same list.
+- **Centered destructive action** — last item uses `--center` for a "Reset to defaults" style row, gets a full-width divider above (no leading icon → standard padding inset).
+- **Popover in nav** — `glass-popover--end` aligns the menu to the right edge of the trigger so it doesn't overflow the viewport.
+- **Bare list inside popover** — `glass-list--bare` strips the inner glass surface so the popover stays the only glass layer.
+
+---
+
 ### Progress + Toast
 
 ```html
@@ -1142,9 +1400,12 @@ Flexbox row with gap.
    - `is-active` → on `.glass-modal-overlay` (not on `.glass-modal`)
    - `is-active` → on `.glass-tab-bar__item`
    - `is-open` → on `.glass-accordion__item`
+   - `is-open` → on `.glass-popover` (not on the trigger or anchor)
    - `is-visible` → on `.glass-toast`
 6. **SVG icons** – GlassKit uses inline SVGs (stroke-based, not fill). Typical attributes: `viewBox="0 0 24 24"`, stroke via `currentColor`.
 7. **`data-theme`** – Always set on `<html>`, never on `<body>` or deeper elements.
+8. **List dividers are automatic** – Never add a `<hr>` or divider element between `.glass-list__item`s. The divider is rendered via `::after` and respects `:has(.glass-list__leading)` for the inset.
+9. **Popover toggle naming** – Never name your popover toggle JS function `togglePopover`. It collides with the native `HTMLElement.togglePopover()` method. Use a prefix like `gkTogglePopover`.
 
 ### ❌ Common Mistakes
 
@@ -1157,6 +1418,10 @@ Flexbox row with gap.
 | `data-theme` on `<body>` | Set on `<html>` |
 | Progress width via class instead of inline style | Use `style="width: X%"` on `.glass-progress__fill` |
 | Toggle without `__track > __thumb` nesting | Follow correct BEM hierarchy |
+| Manually adding `<hr>` or divider element between `.glass-list__item`s | Remove it — dividers are automatic via `::after` |
+| Putting `glass-list` inside `glass-popover` without `--bare` | Add `.glass-list--bare` to strip the double glass surface |
+| JS function named `togglePopover()` | Rename to `gkTogglePopover()` or similar to avoid native API clash |
+| Putting `.is-open` on the trigger button instead of `.glass-popover` | The state class belongs on the popover element |
 
 ---
 
@@ -1191,6 +1456,8 @@ Flexbox row with gap.
 | Toast | `.glass-toast` | `--success`, `--error`, `--warning`, `.is-visible` |
 | Tab Bar | `.glass-tab-bar` | `.is-active` on items |
 | Accordion | `.glass-accordion` | `.is-open` on items |
+| List | `.glass-list` | `--flush`, `--bare`, `__item--interactive`, `__item--center` |
+| Popover | `.glass-popover` | `--top`, `--start`, `--end`, `.is-open` |
 
 ---
 
