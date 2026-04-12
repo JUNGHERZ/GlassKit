@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.4.0
+   Jungherz GmbH – v1.5.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -801,6 +801,7 @@
 
 .glass-range::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
+  box-sizing: border-box;
   width: 26px; height: 26px;
   border-radius: var(--gl-radius-pill);
   background: linear-gradient(135deg,
@@ -808,7 +809,7 @@
   );
   border: 2px solid rgba(255,255,255,0.5);
   box-shadow: 0 2px 8px rgba(230,130,40,0.35), var(--gl-inset-strong);
-  margin-top: -10px; cursor: pointer;
+  margin-top: -2px; cursor: pointer;
   transition: var(--gl-transition);
 }
 
@@ -1333,6 +1334,15 @@
   box-shadow: none;
 }
 
+.glass-list__section-header {
+  padding: var(--gl-space-xs) var(--gl-space-lg) var(--gl-space-2xs);
+  font-size: var(--gl-font-size-xs);
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
 .glass-list__item {
   position: relative;
   display: flex;
@@ -1366,6 +1376,9 @@
 .glass-list__item:not(:has(.glass-list__leading)):not(:last-child)::after {
   left: var(--gl-space-lg);
 }
+.glass-list__item:has(.glass-list__leading--lg):not(:last-child)::after {
+  left: calc(var(--gl-space-lg) + 40px + var(--gl-space-sm));
+}
 
 .glass-list__item--center {
   justify-content: center;
@@ -1393,6 +1406,14 @@
   background: var(--gl-surface-3);
 }
 
+.glass-list__item--danger { color: var(--gl-color-error); }
+.glass-list__item--danger .glass-list__title,
+.glass-list__item--danger .glass-list__leading { color: inherit; }
+
+.glass-list__item--accent { color: var(--gl-color-primary); }
+.glass-list__item--accent .glass-list__title,
+.glass-list__item--accent .glass-list__leading { color: inherit; }
+
 .glass-list__leading {
   flex-shrink: 0;
   width: 28px;
@@ -1410,6 +1431,22 @@
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+.glass-list__leading--lg {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--gl-radius-xs);
+  overflow: hidden;
+}
+.glass-list__leading--lg svg {
+  width: 32px;
+  height: 32px;
+}
+.glass-list__leading--lg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .glass-list__content {
@@ -1435,6 +1472,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.glass-list__subtitle--wrap {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 .glass-list__trailing {
   flex-shrink: 0;
@@ -1452,6 +1496,11 @@
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+.glass-list__value {
+  color: var(--gl-color-text-muted);
+  font-size: var(--gl-font-size-sm);
+  white-space: nowrap;
 }
 
 

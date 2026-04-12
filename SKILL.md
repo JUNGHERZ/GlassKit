@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.4.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.5.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -16,7 +16,7 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.4.0) wit
 
 ```html
 <!-- CDN (recommended) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.4/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.5/glasskit.min.css">
 
 <!-- Local -->
 <link rel="stylesheet" href="glasskit.css">
@@ -33,7 +33,7 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.4.0) wit
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.4/glasskit.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.5/glasskit.min.css">
 </head>
 <body>
   <div class="glass-bg">
@@ -863,11 +863,32 @@ iOS-style grouped settings list. Items can carry a leading icon, a title with op
 ```
 
 ```html
-<!-- Compact menu (centered text only, no icons) -->
+<!-- Compact menu with danger action -->
 <ul class="glass-list">
   <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Share</li>
   <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Duplicate</li>
-  <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Delete</li>
+  <li class="glass-list__item glass-list__item--center glass-list__item--interactive glass-list__item--danger">Delete</li>
+</ul>
+```
+
+```html
+<!-- Grouped sections with large icons, multi-line subtitle, trailing value -->
+<div class="glass-list__section-header">Recommendations</div>
+<ul class="glass-list">
+  <li class="glass-list__item glass-list__item--interactive">
+    <span class="glass-list__leading glass-list__leading--lg">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><!-- icon --></svg>
+    </span>
+    <div class="glass-list__content">
+      <div class="glass-list__title">Review downloaded media</div>
+      <div class="glass-list__subtitle glass-list__subtitle--wrap">Save up to 1.38 GB. Review all videos and audio files on your device and remove them as needed.</div>
+    </div>
+    <div class="glass-list__trailing">
+      <span class="glass-list__value">24 MB</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+  </li>
+  <li class="glass-list__item glass-list__item--center glass-list__item--interactive glass-list__item--accent">View all downloads</li>
 </ul>
 ```
 
@@ -876,20 +897,28 @@ iOS-style grouped settings list. Items can carry a leading icon, a title with op
 | `.glass-list` | Grouped surface container |
 | `.glass-list--flush` | Edge-to-edge variant (no side margin / radius). Assumes parent has `--gl-space-lg` horizontal padding. |
 | `.glass-list--bare` | Strips background, border & shadow &mdash; for embedding inside `.glass-popover` or `.glass-card`. |
+| `.glass-list__section-header` | Section label above a `.glass-list` — uppercase, small, muted |
 | `.glass-list__item` | List row (use `<li>`, `<a>`, or `<button>`) |
 | `.glass-list__item--interactive` | Adds hover / focus / active states |
 | `.glass-list__item--center` | Centered single-text variant with ellipsis truncation |
+| `.glass-list__item--danger` | Red text for destructive actions |
+| `.glass-list__item--accent` | Primary-colored text for accent actions |
 | `.glass-list__leading` | Leading slot (28×28, holds an icon SVG) |
+| `.glass-list__leading--lg` | Large leading slot (40×40, rounded square, supports `<img>`) |
 | `.glass-list__content` | Flexible middle slot — takes remaining width, enables truncation |
 | `.glass-list__title` | Primary text (medium weight, ellipsis) |
 | `.glass-list__subtitle` | Secondary text (small, muted, ellipsis) |
+| `.glass-list__subtitle--wrap` | Multi-line subtitle (up to 3 lines, clamped with ellipsis) |
 | `.glass-list__trailing` | Trailing slot — chevron, value, button, badge |
+| `.glass-list__value` | Muted text inside `.glass-list__trailing` (e.g. file size) |
 
 **Notes:**
 - Dividers are auto-rendered via `::after`. The last item never has a divider.
-- Items **with** a `__leading` slot get an icon-aligned divider inset; items **without** a leading slot get a standard left/right padding inset (handled via `:has()`).
-- SVG icon convention: `24px` for leading, `18px` for trailing, `stroke: currentColor`, `stroke-width: 2`.
+- Items **with** a `__leading` slot get an icon-aligned divider inset; items **without** a leading slot get a standard left/right padding inset (handled via `:has()`). Large leading (`--lg`) adjusts the divider inset automatically.
+- SVG icon convention: `24px` for leading (32px for `--lg`), `18px` for trailing, `stroke: currentColor`, `stroke-width: 2`.
 - Use `<ul>` + `<li>` for semantic lists. For interactive rows wrap in `<a>` or `<button>` instead of `<li>` if a single-row list is needed.
+- `.glass-list__section-header` sits **outside** the `.glass-list` container, directly above it.
+- `--danger` and `--accent` affect the title and leading icon color; the subtitle stays muted.
 
 ---
 
@@ -1284,7 +1313,7 @@ A grouped settings screen using `glass-list` for the rows and `glass-popover` fo
   </nav>
 
   <!-- Account section -->
-  <p class="gl-text-muted gl-text-sm gl-mb-sm">ACCOUNT</p>
+  <div class="glass-list__section-header">Account</div>
   <ul class="glass-list gl-mb-lg">
     <li class="glass-list__item glass-list__item--interactive">
       <span class="glass-list__leading">
@@ -1323,7 +1352,7 @@ A grouped settings screen using `glass-list` for the rows and `glass-popover` fo
   </ul>
 
   <!-- Notifications section -->
-  <p class="gl-text-muted gl-text-sm gl-mb-sm">NOTIFICATIONS</p>
+  <div class="glass-list__section-header">Notifications</div>
   <ul class="glass-list gl-mb-lg">
     <li class="glass-list__item glass-list__item--interactive">
       <span class="glass-list__leading">
@@ -1354,7 +1383,7 @@ A grouped settings screen using `glass-list` for the rows and `glass-popover` fo
 
 Key points in this composition:
 
-- **Two grouped sections** — labeled by small uppercase muted text above each list, matching iOS settings.
+- **Two grouped sections** — labeled by `.glass-list__section-header` above each list, matching iOS settings.
 - **Auto-dividers** — no `<hr>` between rows; the `::after` pseudo-element handles them.
 - **Mixed trailing types** — chevron, value text, value + chevron, all in the same list.
 - **Centered destructive action** — last item uses `--center` for a "Reset to defaults" style row, gets a full-width divider above (no leading icon → standard padding inset).
@@ -1456,7 +1485,7 @@ Key points in this composition:
 | Toast | `.glass-toast` | `--success`, `--error`, `--warning`, `.is-visible` |
 | Tab Bar | `.glass-tab-bar` | `.is-active` on items |
 | Accordion | `.glass-accordion` | `.is-open` on items |
-| List | `.glass-list` | `--flush`, `--bare`, `__item--interactive`, `__item--center` |
+| List | `.glass-list` | `--flush`, `--bare`, `__item--interactive`, `__item--center`, `__item--danger`, `__item--accent`, `__leading--lg`, `__subtitle--wrap`, `__value`, `__section-header` |
 | Popover | `.glass-popover` | `--top`, `--start`, `--end`, `.is-open` |
 
 ---

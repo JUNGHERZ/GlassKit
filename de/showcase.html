@@ -288,7 +288,7 @@
         </button>
       </nav>
 
-      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.4.0</h1>
+      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.5.0</h1>
 
       <!-- CARD -->
       <p class="section-label">Card (Glow)</p>
@@ -591,12 +591,49 @@
         </li>
       </ul>
 
-      <!-- LIST – Zentrierter Text -->
+      <!-- LIST – Zentrierter Text mit Danger -->
       <p class="section-label">Liste (kompaktes Menü)</p>
       <ul class="glass-list gl-mb-md">
         <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Vertrag teilen</li>
         <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Duplizieren</li>
-        <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Löschen</li>
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive glass-list__item--danger">Löschen</li>
+      </ul>
+
+      <!-- LIST – Gruppierte Sektionen mit großen Icons -->
+      <p class="section-label">Liste (gruppierte Sektionen)</p>
+      <div class="glass-list__section-header">Empfehlungen</div>
+      <ul class="glass-list gl-mb-md">
+        <li class="glass-list__item glass-list__item--interactive">
+          <span class="glass-list__leading glass-list__leading--lg">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+              <line x1="9" y1="9" x2="9.01" y2="9"/>
+              <line x1="15" y1="9" x2="15.01" y2="9"/>
+            </svg>
+          </span>
+          <div class="glass-list__content">
+            <div class="glass-list__title">Geladene Medien prüfen</div>
+            <div class="glass-list__subtitle glass-list__subtitle--wrap">Spare bis zu 1,38 GB ein. Prüfe alle auf deinem Gerät geladenen Videos und Audiodateien und entferne sie bei Bedarf.</div>
+          </div>
+          <div class="glass-list__trailing">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </li>
+        <li class="glass-list__item glass-list__item--interactive">
+          <span class="glass-list__leading glass-list__leading--lg">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+            </svg>
+          </span>
+          <div class="glass-list__content">
+            <div class="glass-list__title">Der Geist aus der Maschine</div>
+            <div class="glass-list__subtitle">Teilweise angesehen</div>
+          </div>
+          <div class="glass-list__trailing"><span class="glass-list__value">237,1 MB</span></div>
+        </li>
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive glass-list__item--accent">Alle Downloads anzeigen</li>
       </ul>
 
       <!-- POPOVER – Standalone Demo mit Liste innen -->

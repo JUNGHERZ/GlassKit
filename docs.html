@@ -373,7 +373,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.4.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.5.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -439,7 +439,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.4.0</span>
+      <span class="docs-hero__badge">v1.5.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">24 Components</span>
@@ -798,14 +798,70 @@ function <span class="cls">toggleTheme</span>() {
       <ul class="glass-list">
         <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Share document</li>
         <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Duplicate</li>
-        <li class="glass-list__item glass-list__item--center glass-list__item--interactive">Delete</li>
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive glass-list__item--danger">Delete</li>
       </ul>
     </div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;ul</span> <span class="attr">class=</span><span class="val">"glass-list"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--center glass-list__item--interactive"</span><span class="tag">&gt;</span>Share document<span class="tag">&lt;/li&gt;</span>
   <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--center glass-list__item--interactive"</span><span class="tag">&gt;</span>Duplicate<span class="tag">&lt;/li&gt;</span>
-  <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--center glass-list__item--interactive"</span><span class="tag">&gt;</span>Delete<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--center glass-list__item--interactive glass-list__item--danger"</span><span class="tag">&gt;</span>Delete<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></div>
+    </div>
+
+    <h3>Grouped sections with large icons</h3>
+    <div class="docs-preview docs-preview--constrained">
+      <div class="glass-list__section-header">Recommendations</div>
+      <ul class="glass-list">
+        <li class="glass-list__item glass-list__item--interactive">
+          <span class="glass-list__leading glass-list__leading--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
+          <div class="glass-list__content">
+            <div class="glass-list__title">Review downloaded media</div>
+            <div class="glass-list__subtitle glass-list__subtitle--wrap">Save up to 1.38 GB. Review all videos and audio files downloaded on your device and remove them as needed.</div>
+          </div>
+          <div class="glass-list__trailing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </li>
+        <li class="glass-list__item glass-list__item--interactive">
+          <span class="glass-list__leading glass-list__leading--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+          <div class="glass-list__content">
+            <div class="glass-list__title">AusweisApp Bund</div>
+            <div class="glass-list__subtitle">Version 2.5.1</div>
+          </div>
+          <div class="glass-list__trailing">
+            <span class="glass-list__value">24 MB</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </li>
+      </ul>
+
+      <div class="glass-list__section-header" style="margin-top:16px;">Audiobooks</div>
+      <ul class="glass-list">
+        <li class="glass-list__item glass-list__item--interactive">
+          <span class="glass-list__leading glass-list__leading--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+          <div class="glass-list__content">
+            <div class="glass-list__title">Ghost in the Machine</div>
+            <div class="glass-list__subtitle">Partially watched</div>
+          </div>
+          <div class="glass-list__trailing"><span class="glass-list__value">237.1 MB</span></div>
+        </li>
+        <li class="glass-list__item glass-list__item--center glass-list__item--interactive glass-list__item--accent">View all downloads</li>
+      </ul>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-list__section-header"</span><span class="tag">&gt;</span>Recommendations<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;ul</span> <span class="attr">class=</span><span class="val">"glass-list"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--interactive"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-list__leading glass-list__leading--lg"</span><span class="tag">&gt;&lt;svg&gt;</span>...<span class="tag">&lt;/svg&gt;&lt;/span&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-list__content"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-list__title"</span><span class="tag">&gt;</span>Review downloaded media<span class="tag">&lt;/div&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-list__subtitle glass-list__subtitle--wrap"</span><span class="tag">&gt;</span>Multi-line description...<span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-list__trailing"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-list__value"</span><span class="tag">&gt;</span>24 MB<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;svg&gt;</span>...<span class="tag">&lt;/svg&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--accent glass-list__item--center"</span><span class="tag">&gt;</span>View all<span class="tag">&lt;/li&gt;</span>
 <span class="tag">&lt;/ul&gt;</span></div>
     </div>
 
@@ -817,13 +873,19 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td><code>.glass-list--flush</code></td><td>Edge-to-edge variant (no side margin / radius). Assumes parent has <code>--gl-space-lg</code> horizontal padding.</td></tr>
         <tr><td><code>.glass-list--bare</code></td><td>Strips background, border &amp; shadow &mdash; for embedding inside <code>.glass-popover</code> or <code>.glass-card</code>.</td></tr>
         <tr><td><code>.glass-list__item</code></td><td>List row (use <code>&lt;li&gt;</code>, <code>&lt;a&gt;</code>, or <code>&lt;button&gt;</code>)</td></tr>
+        <tr><td><code>.glass-list__section-header</code></td><td>Section label above a <code>.glass-list</code> &mdash; uppercase, small, muted</td></tr>
         <tr><td><code>.glass-list__item--interactive</code></td><td>Adds hover / focus / active states</td></tr>
         <tr><td><code>.glass-list__item--center</code></td><td>Centered single-text variant with ellipsis truncation</td></tr>
+        <tr><td><code>.glass-list__item--danger</code></td><td>Red text for destructive actions</td></tr>
+        <tr><td><code>.glass-list__item--accent</code></td><td>Primary-colored text for accent actions</td></tr>
         <tr><td><code>.glass-list__leading</code></td><td>Leading slot (28&times;28, holds an icon SVG)</td></tr>
+        <tr><td><code>.glass-list__leading--lg</code></td><td>Large leading slot (40&times;40, rounded square, supports <code>&lt;img&gt;</code>)</td></tr>
         <tr><td><code>.glass-list__content</code></td><td>Flexible middle slot &mdash; takes remaining width, enables truncation</td></tr>
         <tr><td><code>.glass-list__title</code></td><td>Primary text (medium weight, ellipsis)</td></tr>
         <tr><td><code>.glass-list__subtitle</code></td><td>Secondary text (small, muted, ellipsis)</td></tr>
+        <tr><td><code>.glass-list__subtitle--wrap</code></td><td>Multi-line subtitle (up to 3 lines, clamped with ellipsis)</td></tr>
         <tr><td><code>.glass-list__trailing</code></td><td>Trailing slot &mdash; chevron, value, button, badge</td></tr>
+        <tr><td><code>.glass-list__value</code></td><td>Muted text inside <code>.glass-list__trailing</code> (e.g. file size)</td></tr>
       </tbody>
     </table>
     <p style="margin-top:12px;"><strong>Dividers</strong> between rows are rendered automatically via <code>::after</code>. Items <em>with</em> a leading icon get an icon-aligned inset; items <em>without</em> get a standard left/right padding inset. The last item never has a divider. SVG icon convention: <code>24px</code> for leading, <code>18px</code> for trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
@@ -1199,7 +1261,7 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td>Avatar</td><td><code>.glass-avatar</code></td><td><code>--sm</code>, <code>--lg</code></td></tr>
         <tr><td>Divider</td><td><code>.glass-divider</code></td><td>–</td></tr>
         <tr><td>Status</td><td><code>.glass-status</code></td><td>–</td></tr>
-        <tr><td>List</td><td><code>.glass-list</code></td><td><code>--flush</code>, <code>--bare</code>, <code>__item--interactive</code>, <code>__item--center</code></td></tr>
+        <tr><td>List</td><td><code>.glass-list</code></td><td><code>--flush</code>, <code>--bare</code>, <code>__item--interactive</code>, <code>__item--center</code>, <code>__item--danger</code>, <code>__item--accent</code>, <code>__leading--lg</code>, <code>__subtitle--wrap</code>, <code>__value</code>, <code>__section-header</code></td></tr>
         <tr><td>Popover</td><td><code>.glass-popover</code></td><td><code>--top</code>, <code>--start</code>, <code>--end</code>, <code>.is-open</code></td></tr>
         <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code></td></tr>
         <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td>–</td></tr>

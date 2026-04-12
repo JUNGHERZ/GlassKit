@@ -7,6 +7,30 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.5.0] – 2026-04-12
+
+### Added
+
+- **Six new List sub-classes** extending the `.glass-list` component for iOS 26 grouped-section patterns:
+  - **`.glass-list__section-header`** – uppercase section label placed above a `.glass-list`, matching iOS grouped-list section headers (e.g. "Recommendations", "Audiobooks")
+  - **`.glass-list__leading--lg`** – large 40×40 leading slot with rounded-square corners and `<img>` support for app icons
+  - **`.glass-list__subtitle--wrap`** – multi-line subtitle (up to 3 lines with `-webkit-line-clamp`)
+  - **`.glass-list__value`** – muted trailing text for values like file sizes alongside a chevron
+  - **`.glass-list__item--danger`** – red text for destructive actions (title + leading icon inherit color)
+  - **`.glass-list__item--accent`** – primary-colored text for accent actions like "View all"
+- Auto-divider inset adjusts automatically for `--lg` leading via `:has()` selector
+
+### Fixed
+
+- **Range Slider thumb off-center on Chrome / Safari** – added explicit `box-sizing: border-box` to `::-webkit-slider-thumb` (normalizes Chrome vs Safari UA defaults) and corrected `margin-top` to `-2px`. Firefox was never affected (`::-moz-range-thumb` auto-centers).
+
+### Changed
+
+- SKILL.md iOS Settings Screen composition now uses `.glass-list__section-header` instead of manual utility-class labels
+- Docs and showcase updated with live demos for all new list variants
+
+---
+
 ## [1.4.0] – 2026-04-11
 
 ### Added
@@ -270,6 +294,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.5.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.5.0
 [1.4.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.4.0
 [1.3.5]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.5
 [1.3.4]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.4
@@ -277,4 +302,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.5.0...HEAD
