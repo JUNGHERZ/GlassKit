@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.5.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.6.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -305,6 +305,34 @@ Fixed bottom navigation with glass background. Requires `glass-bg--has-tab-bar` 
 | `.glass-tab-bar__icon` | Icon wrapper |
 | `.glass-tab-bar__badge` | Numeric badge inside icon |
 | `.glass-tab-bar__label` | Text label below icon |
+
+#### Floating variant + Accessory
+
+Pill-shaped, centered, floating bar (iOS 26 Liquid Glass style). Wrap it in `.glass-tab-bar-dock` together with an optional `.glass-tab-bar__accessory` capsule (e.g. search, compose). Use `.glass-bg--has-tab-bar-floating` on the background container instead of `--has-tab-bar`. The active item gets a soft radial Spotlight halo.
+
+```html
+<div class="glass-tab-bar-dock">
+  <nav class="glass-tab-bar glass-tab-bar--floating">
+    <button class="glass-tab-bar__item is-active">
+      <span class="glass-tab-bar__icon"><svg><!-- Icon --></svg></span>
+      <span class="glass-tab-bar__label">Home</span>
+    </button>
+    <!-- more items -->
+  </nav>
+  <button class="glass-tab-bar__accessory glass-tab-bar__accessory--accent" aria-label="Compose">
+    <svg><!-- Icon --></svg>
+  </button>
+</div>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-tab-bar-dock` | Wrapper: fixed bottom-center, holds bar + accessory |
+| `.glass-tab-bar-dock--accessory-left` | Modifier: accessory on the left |
+| `.glass-tab-bar--floating` | Pill shape, max-content width, spotlight active state |
+| `.glass-tab-bar__accessory` | Standalone glass capsule next to the bar |
+| `.glass-tab-bar__accessory--accent` / `--success` / `--error` | Filled colored accessory (white icon) |
+| `.glass-bg--has-tab-bar-floating` | Background padding for the floating variant |
 
 ---
 

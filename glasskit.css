@@ -1,12 +1,12 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.5.0
+   Jungherz GmbH – v1.6.0
 
    Features:
    - Scoped Reset (box-sizing fix)
    - Dark Mode (default)
    - Light Mode via [data-theme="light"]
-   - 24 components
+   - 24 components (incl. floating Tab-Bar variant + Accessory)
    ============================================================ */
 
 
@@ -150,6 +150,14 @@
 
   /* ---- Tab-Bar ---- */
   --gl-tab-bar-height:       82px;
+
+  /* ---- Tab-Bar Floating ---- */
+  --gl-tab-bar-floating-bottom:    16px;
+  --gl-tab-bar-floating-gap:       var(--gl-space-sm);
+  --gl-tab-bar-floating-padding:   6px 10px;
+  --gl-tab-bar-floating-radius:    var(--gl-radius-full);
+  --gl-tab-bar-accessory-size:     56px;
+  --gl-tab-bar-spotlight-color:    var(--gl-color-primary);
 
   /* ---- Input Placeholder ---- */
   --gl-placeholder:          rgba(255, 255, 255, 0.35);
@@ -297,6 +305,12 @@
 
 .glass-bg--has-tab-bar {
   padding-bottom: var(--gl-tab-bar-height);
+}
+
+.glass-bg--has-tab-bar-floating {
+  padding-bottom: calc(var(--gl-tab-bar-accessory-size)
+                       + var(--gl-tab-bar-floating-bottom)
+                       + var(--gl-space-md));
 }
 
 
@@ -1073,6 +1087,144 @@
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 2px 6px rgba(255,59,48,0.4);
 }
+
+
+/* ============================================================
+   18b. TAB BAR – FLOATING (Liquid Glass)
+   ============================================================ */
+.glass-tab-bar-dock {
+  position: fixed; left: 50%;
+  bottom: calc(var(--gl-tab-bar-floating-bottom) + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: flex; align-items: center;
+  gap: var(--gl-tab-bar-floating-gap);
+  z-index: 900;
+  max-width: calc(100vw - 2 * var(--gl-space-md));
+}
+
+.glass-tab-bar-dock--accessory-left { flex-direction: row-reverse; }
+
+.glass-tab-bar.glass-tab-bar--floating {
+  position: static;
+  left: auto; right: auto; bottom: auto;
+  height: auto; width: max-content;
+  padding: var(--gl-tab-bar-floating-padding);
+  border-radius: var(--gl-tab-bar-floating-radius);
+  border: 1px solid var(--gl-border-subtle);
+  background: linear-gradient(to bottom,
+    var(--gl-surface-3) 0%, var(--gl-surface-1) 100%
+  );
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.18),
+    0 2px 8px rgba(0,0,0,0.08),
+    var(--gl-inset-subtle);
+  display: flex; justify-content: flex-start; align-items: center;
+  gap: var(--gl-space-2xs);
+}
+
+.glass-tab-bar--floating .glass-tab-bar__item {
+  position: relative;
+  border-radius: var(--gl-radius-full);
+  padding: var(--gl-space-2xs) var(--gl-space-sm);
+  min-width: auto;
+  align-items: center;
+}
+
+.glass-tab-bar--floating .glass-tab-bar__item > * {
+  position: relative; z-index: 1;
+}
+
+.glass-tab-bar--floating .glass-tab-bar__item.is-active::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at center,
+    color-mix(in srgb, var(--gl-tab-bar-spotlight-color) 28%, transparent) 0%,
+    color-mix(in srgb, var(--gl-tab-bar-spotlight-color) 10%, transparent) 55%,
+    transparent 100%
+  );
+  pointer-events: none; z-index: 0;
+}
+
+.glass-tab-bar--floating .glass-tab-bar__item.is-active .glass-tab-bar__icon::after {
+  display: none;
+}
+
+.glass-tab-bar__accessory {
+  width: var(--gl-tab-bar-accessory-size);
+  height: var(--gl-tab-bar-accessory-size);
+  border-radius: var(--gl-radius-pill);
+  background: linear-gradient(to bottom,
+    var(--gl-surface-3) 0%, var(--gl-surface-1) 100%
+  );
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1px solid var(--gl-border-subtle);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.18),
+    0 2px 8px rgba(0,0,0,0.08),
+    var(--gl-inset-subtle);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: var(--gl-transition);
+  outline: none; padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+
+.glass-tab-bar__accessory svg {
+  width: 22px; height: 22px; fill: none;
+  stroke: var(--gl-icon-default); stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round;
+  transition: var(--gl-transition);
+}
+
+.glass-tab-bar__accessory:hover { transform: translateY(-1px); }
+.glass-tab-bar__accessory:hover svg { stroke: var(--gl-icon-strong); }
+
+.glass-tab-bar__accessory:focus-visible {
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.18),
+    var(--gl-shadow-focus),
+    var(--gl-inset-subtle);
+}
+
+/* Accent variants – use existing color tokens */
+.glass-tab-bar__accessory--accent {
+  background: linear-gradient(135deg,
+    var(--gl-color-primary) 0%,
+    color-mix(in srgb, var(--gl-color-primary) 70%, transparent) 100%
+  );
+  border-color: color-mix(in srgb, var(--gl-color-primary) 50%, transparent);
+  box-shadow:
+    0 8px 32px color-mix(in srgb, var(--gl-color-primary) 35%, transparent),
+    var(--gl-inset-medium);
+}
+.glass-tab-bar__accessory--accent svg { stroke: #ffffff; }
+.glass-tab-bar__accessory--accent:hover svg { stroke: #ffffff; }
+
+.glass-tab-bar__accessory--success {
+  background: linear-gradient(135deg,
+    var(--gl-color-success) 0%,
+    color-mix(in srgb, var(--gl-color-success) 70%, transparent) 100%
+  );
+  border-color: color-mix(in srgb, var(--gl-color-success) 50%, transparent);
+  box-shadow:
+    0 8px 32px color-mix(in srgb, var(--gl-color-success) 35%, transparent),
+    var(--gl-inset-medium);
+}
+.glass-tab-bar__accessory--success svg { stroke: #ffffff; }
+
+.glass-tab-bar__accessory--error {
+  background: linear-gradient(135deg,
+    var(--gl-color-error) 0%,
+    color-mix(in srgb, var(--gl-color-error) 70%, transparent) 100%
+  );
+  border-color: color-mix(in srgb, var(--gl-color-error) 50%, transparent);
+  box-shadow:
+    0 8px 32px color-mix(in srgb, var(--gl-color-error) 35%, transparent),
+    var(--gl-inset-medium);
+}
+.glass-tab-bar__accessory--error svg { stroke: #ffffff; }
 
 
 /* ============================================================

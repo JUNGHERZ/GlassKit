@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.5.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.6.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-24-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.5.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.6.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -164,6 +164,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Nav Bar** | `.glass-nav` | Transparent navigation |
 | **Pill Button** | `.glass-pill` | Round glass icon button (46×46) |
 | **Tab Bar** | `.glass-tab-bar` | Fixed bottom navigation |
+| **Tab Bar – Floating** | `.glass-tab-bar--floating` + `.glass-tab-bar-dock` | Pill-shaped Liquid-Glass tab bar with optional `.glass-tab-bar__accessory` capsule |
 | **Accordion** | `.glass-accordion` | Collapsible content sections |
 | **Divider** | `.glass-divider` | Fading separator line |
 
@@ -545,6 +546,13 @@ Popover Modifiers:
 
 Background Modifiers:
   .glass-bg--has-tab-bar
+  .glass-bg--has-tab-bar-floating
+
+Tab Bar – Floating:
+  .glass-tab-bar-dock
+  .glass-tab-bar--floating
+  .glass-tab-bar__accessory
+  .glass-tab-bar__accessory--accent / --success / --error
 ```
 
 ---

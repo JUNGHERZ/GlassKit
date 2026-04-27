@@ -234,7 +234,7 @@
 <body>
 
 <div class="preview-frame">
-  <div class="glass-bg glass-bg--has-tab-bar">
+  <div class="glass-bg glass-bg--has-tab-bar-floating">
     <div class="screen-content">
 
       <!-- NAV with Theme Toggle + Background Switcher -->
@@ -288,7 +288,7 @@
         </button>
       </nav>
 
-      <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.5.0</h1>
+      <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.6.0</h1>
 
       <!-- CARD -->
       <p class="section-label">Card (Glow)</p>
@@ -684,47 +684,46 @@
 
     </div>
 
-    <!-- TAB BAR -->
-    <nav class="glass-tab-bar">
-      <button class="glass-tab-bar__item is-active" onclick="activateTab(this)">
-        <span class="glass-tab-bar__icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-            <polyline points="9 22 9 12 15 12 15 22"/>
-          </svg>
-        </span>
-        <span class="glass-tab-bar__label">Home</span>
+    <!-- TAB BAR – FLOATING + ACCENT ACCESSORY -->
+    <div class="glass-tab-bar-dock">
+      <nav class="glass-tab-bar glass-tab-bar--floating">
+        <button class="glass-tab-bar__item is-active" onclick="activateTab(this)">
+          <span class="glass-tab-bar__icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </span>
+          <span class="glass-tab-bar__label">Home</span>
+        </button>
+        <button class="glass-tab-bar__item" onclick="activateTab(this)">
+          <span class="glass-tab-bar__icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            <span class="glass-tab-bar__badge">3</span>
+          </span>
+          <span class="glass-tab-bar__label">Docs</span>
+        </button>
+        <button class="glass-tab-bar__item" onclick="activateTab(this)">
+          <span class="glass-tab-bar__icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 16V4"/><polyline points="8 8 12 4 16 8"/>
+              <path d="M20 17v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1"/>
+            </svg>
+          </span>
+          <span class="glass-tab-bar__label">Upload</span>
+        </button>
+      </nav>
+      <button class="glass-tab-bar__accessory glass-tab-bar__accessory--accent" aria-label="Compose">
+        <svg viewBox="0 0 24 24">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
       </button>
-      <button class="glass-tab-bar__item" onclick="activateTab(this)">
-        <span class="glass-tab-bar__icon">
-          <svg viewBox="0 0 24 24">
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-            <line x1="8" y1="21" x2="16" y2="21"/>
-            <line x1="12" y1="17" x2="12" y2="21"/>
-          </svg>
-          <span class="glass-tab-bar__badge">3</span>
-        </span>
-        <span class="glass-tab-bar__label">Documents</span>
-      </button>
-      <button class="glass-tab-bar__item" onclick="activateTab(this)">
-        <span class="glass-tab-bar__icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 16V4"/><polyline points="8 8 12 4 16 8"/>
-            <path d="M20 17v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1"/>
-          </svg>
-        </span>
-        <span class="glass-tab-bar__label">Upload</span>
-      </button>
-      <button class="glass-tab-bar__item" onclick="activateTab(this)">
-        <span class="glass-tab-bar__icon">
-          <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-          </svg>
-        </span>
-        <span class="glass-tab-bar__label">Settings</span>
-      </button>
-    </nav>
+    </div>
 
   </div>
 </div>

@@ -373,7 +373,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.5.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.6.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -388,6 +388,7 @@
     <a class="docs-sidebar__link" href="#nav">Nav-Bar</a>
     <a class="docs-sidebar__link" href="#pill">Pill-Buttons</a>
     <a class="docs-sidebar__link" href="#tab-bar">Tab-Bar</a>
+    <a class="docs-sidebar__link" href="#tab-bar-floating">Tab-Bar – Floating</a>
   </div>
 
   <div class="docs-sidebar__group">
@@ -439,7 +440,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.5.0</span>
+      <span class="docs-hero__badge">v1.6.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">24 Components</span>
@@ -536,6 +537,7 @@ function <span class="cls">toggleTheme</span>() {
       <tbody>
         <tr><td><code>.glass-bg</code></td><td>Full background with aurora light effects</td></tr>
         <tr><td><code>.glass-bg--has-tab-bar</code></td><td>Modifier: bottom padding for tab bar</td></tr>
+        <tr><td><code>.glass-bg--has-tab-bar-floating</code></td><td>Modifier: bottom padding for floating tab bar + accessory</td></tr>
       </tbody>
     </table>
     <div class="docs-code-wrapper">
@@ -628,6 +630,87 @@ function <span class="cls">toggleTheme</span>() {
   <span class="tag">&lt;/button&gt;</span>
 <span class="tag">&lt;/nav&gt;</span></div>
     </div>
+  </section>
+
+  <!-- TAB BAR – FLOATING -->
+  <section class="docs-section" id="tab-bar-floating">
+    <h2>Tab-Bar – Floating</h2>
+    <p>Pill-shaped, centered, floating variant inspired by iOS 26 Liquid Glass. Pair with an optional <code>.glass-tab-bar__accessory</code> capsule (e.g. search, compose) — sits next to the bar with its own glass material. The active tab gets a soft radial Spotlight halo instead of the underline dot.</p>
+    <div class="docs-preview" style="position:relative;height:120px;overflow:hidden;">
+      <div class="glass-tab-bar-dock" style="position:absolute;">
+        <nav class="glass-tab-bar glass-tab-bar--floating">
+          <button class="glass-tab-bar__item is-active">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <span class="glass-tab-bar__label">Home</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
+            <span class="glass-tab-bar__label">View</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49M7.76 16.24a6 6 0 0 1 0-8.49"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 19.07a10 10 0 0 1 0-14.14"/></svg></span>
+            <span class="glass-tab-bar__label">Radio</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+            <span class="glass-tab-bar__label">Library</span>
+          </button>
+        </nav>
+        <button class="glass-tab-bar__accessory" aria-label="Search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tab-bar-dock"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar glass-tab-bar--floating"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__item is-active"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__icon"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__label"</span><span class="tag">&gt;</span>Home<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/button&gt;</span>
+    <span class="cmt">&lt;!-- more items --&gt;</span>
+  <span class="tag">&lt;/nav&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__accessory"</span> <span class="attr">aria-label=</span><span class="val">"Search"</span><span class="tag">&gt;</span>
+    <span class="cmt">&lt;!-- SVG --&gt;</span>
+  <span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+    <h3 style="margin-top:var(--gl-space-lg);">Accessory accent variants</h3>
+    <p>Add <code>--accent</code>, <code>--success</code>, or <code>--error</code> to highlight the accessory with a colored capsule (filled background, white icon).</p>
+    <div class="docs-preview" style="position:relative;height:120px;overflow:hidden;">
+      <div class="glass-tab-bar-dock" style="position:absolute;">
+        <nav class="glass-tab-bar glass-tab-bar--floating">
+          <button class="glass-tab-bar__item is-active">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <span class="glass-tab-bar__label">Home</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+            <span class="glass-tab-bar__label">Recent</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            <span class="glass-tab-bar__label">Saved</span>
+          </button>
+        </nav>
+        <button class="glass-tab-bar__accessory glass-tab-bar__accessory--accent" aria-label="Compose">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-tab-bar-dock</code></td><td>Wrapper: fixed bottom-center, holds bar + accessory</td></tr>
+        <tr><td><code>.glass-tab-bar-dock--accessory-left</code></td><td>Modifier: place accessory on the left</td></tr>
+        <tr><td><code>.glass-tab-bar--floating</code></td><td>Modifier on <code>.glass-tab-bar</code>: pill shape, max-content width</td></tr>
+        <tr><td><code>.glass-tab-bar__accessory</code></td><td>Standalone glass capsule next to the bar</td></tr>
+        <tr><td><code>.glass-tab-bar__accessory--accent</code></td><td>Filled with primary color</td></tr>
+        <tr><td><code>.glass-tab-bar__accessory--success</code></td><td>Filled with success color</td></tr>
+        <tr><td><code>.glass-tab-bar__accessory--error</code></td><td>Filled with error color</td></tr>
+        <tr><td><code>.glass-bg--has-tab-bar-floating</code></td><td>Background padding helper for the floating variant</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <!-- TITLE -->
@@ -1275,6 +1358,7 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td>Modal</td><td><code>.glass-modal-overlay</code></td><td><code>.is-active</code></td></tr>
         <tr><td>Toast</td><td><code>.glass-toast</code></td><td><code>--success</code>, <code>--error</code>, <code>--warning</code>, <code>.is-visible</code></td></tr>
         <tr><td>Tab-Bar</td><td><code>.glass-tab-bar</code></td><td><code>.is-active</code> auf Items</td></tr>
+        <tr><td>Tab-Bar Floating</td><td><code>.glass-tab-bar-dock</code> + <code>.glass-tab-bar--floating</code></td><td><code>__accessory</code>, <code>__accessory--accent</code>/<code>--success</code>/<code>--error</code>, <code>--accessory-left</code></td></tr>
         <tr><td>Accordion</td><td><code>.glass-accordion</code></td><td><code>.is-open</code> auf Items</td></tr>
       </tbody>
     </table>

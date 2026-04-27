@@ -7,6 +7,26 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.6.0] – 2026-04-27
+
+### Added
+
+- **Tab-Bar – Floating variant** – iOS 26 Liquid Glass-style pill bar that sits next to an optional standalone accessory capsule (e.g. search, compose). Additive — does not change the existing `.glass-tab-bar` API.
+  - **`.glass-tab-bar-dock`** – fixed bottom-center wrapper that holds the bar and the accessory side-by-side
+  - **`.glass-tab-bar-dock--accessory-left`** – modifier to flip the accessory to the left side
+  - **`.glass-tab-bar--floating`** – modifier on `.glass-tab-bar`; switches to a centered, pill-shaped, max-content layout
+  - **`.glass-tab-bar__accessory`** – standalone glass capsule (default 56×56) with its own backdrop-blur and shadow
+  - **`.glass-tab-bar__accessory--accent` / `--success` / `--error`** – filled colored variants (white icon) using `color-mix()` for tinted shadows
+  - **Spotlight active state** – the active item in the floating variant shows a soft radial halo (using `--gl-tab-bar-spotlight-color`) instead of the underline dot
+  - **`.glass-bg--has-tab-bar-floating`** – background padding helper for the floating variant
+- New design tokens: `--gl-tab-bar-floating-bottom`, `--gl-tab-bar-floating-gap`, `--gl-tab-bar-floating-padding`, `--gl-tab-bar-floating-radius`, `--gl-tab-bar-accessory-size`, `--gl-tab-bar-spotlight-color`
+
+### Changed
+
+- Showcase and docs (EN + DE) now include live demos and a dedicated `#tab-bar-floating` section with class reference and accent-variant preview
+
+---
+
 ## [1.5.0] – 2026-04-12
 
 ### Added
@@ -294,6 +314,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.6.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.0
 [1.5.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.5.0
 [1.4.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.4.0
 [1.3.5]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.5
@@ -302,4 +323,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.6.0...HEAD
