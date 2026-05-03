@@ -7,6 +7,15 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.6.1] – 2026-05-03
+
+### Added
+
+- **`robots.txt`** – allows all crawlers and points to the sitemap
+- **`sitemap.xml`** – lists all 6 URLs (EN + DE) with `lastmod`, `priority`, and per-entry `xhtml:link` `hreflang` annotations for proper bilingual indexing
+
+---
+
 ## [1.6.0] – 2026-04-27
 
 ### Added
