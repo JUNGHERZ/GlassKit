@@ -30,11 +30,11 @@ jobs:
     steps:
       # ---- Checkout ----
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # ---- Node.js Setup ----
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
@@ -61,7 +61,7 @@ jobs:
 
       # ---- GitHub Release erstellen + Assets anhängen ----
       - name: Create GitHub Release & upload assets
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: ${{ github.ref_name }} – GlassKit Release
           generate_release_notes: true
