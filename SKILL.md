@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.6.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.6.2) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -16,7 +16,7 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.6.0) wit
 
 ```html
 <!-- CDN (recommended) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.5/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@latest/glasskit.min.css">
 
 <!-- Local -->
 <link rel="stylesheet" href="glasskit.css">
@@ -33,7 +33,7 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.6.0) wit
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.5/glasskit.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@latest/glasskit.min.css">
 </head>
 <body>
   <div class="glass-bg">
@@ -412,8 +412,11 @@ Full-width buttons (56px height) with three variants and size modifiers.
 | `.glass-btn--sm` | 44px height |
 | `.glass-btn--lg` | 64px height |
 | `.glass-btn--auto` | Width: auto instead of 100% |
+| `.glass-icon--fill` | On the `<svg>`: deliberately filled icon (e.g. brand logos) |
 
 **Important:** Buttons default to `width: 100%`. Use `--auto` for inline/auto-width buttons.
+
+**Icons:** Button SVGs need **no inline `fill`/`stroke` attributes** – GlassKit styles them automatically: outline style (`fill: none; stroke: currentColor; stroke-width: 2`, round caps/joins) as the default, `--secondary`/`--tertiary` use their icon tokens, `--primary` renders icons filled. For deliberately filled icons (e.g. brand logos like the GitHub mark) add `glass-icon--fill` to the `<svg>`.
 
 ---
 

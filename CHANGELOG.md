@@ -7,6 +7,24 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.6.2] – 2026-07-08
+
+### Fixed
+
+- **Default icon styling for `.glass-btn`** – the base rule now sets outline defaults (`fill: none; stroke: currentColor; stroke-width: 2`, round caps/joins). Previously, SVGs in a `.glass-btn` **without** a variant modifier rendered with the browser default (black fill, no stroke). The variant rules (`--primary` filled, `--secondary`/`--tertiary` outline via icon tokens) are unchanged and still take precedence — existing buttons look exactly the same.
+- Version labels on all pages (EN + DE), the README badge, and the `glasskit.css` header were stuck at v1.6.0
+
+### Added
+
+- **`.glass-icon--fill`** – escape hatch on the `<svg>` for deliberately filled icons (e.g. brand logos) inside components with outline icon defaults
+
+### Changed
+
+- SKILL.md CDN embeds now use `@latest` instead of a pinned version, so generated markup always loads the newest release
+- README CDN examples updated from `@1.5` to `@1.6`
+
+---
+
 ## [1.6.1] – 2026-05-03
 
 ### Added
@@ -323,6 +341,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.6.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.2
 [1.6.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.0
 [1.5.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.5.0
 [1.4.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.4.0
@@ -332,4 +351,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.6.2...HEAD
