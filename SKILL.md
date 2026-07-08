@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.6.2) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.6.3) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -417,6 +417,8 @@ Full-width buttons (56px height) with three variants and size modifiers.
 **Important:** Buttons default to `width: 100%`. Use `--auto` for inline/auto-width buttons.
 
 **Icons:** Button SVGs need **no inline `fill`/`stroke` attributes** – GlassKit styles them automatically: outline style (`fill: none; stroke: currentColor; stroke-width: 2`, round caps/joins) as the default, `--secondary`/`--tertiary` use their icon tokens, `--primary` renders icons filled. For deliberately filled icons (e.g. brand logos like the GitHub mark) add `glass-icon--fill` to the `<svg>`.
+
+**Links as buttons:** `.glass-btn` also works on `<a>` elements – anchors render as `inline-flex` with `text-decoration: none`, so `--auto` shrink-wraps exactly like on a real `<button>`.
 
 ---
 

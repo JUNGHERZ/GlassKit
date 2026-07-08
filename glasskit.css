@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.6.2
+   Jungherz GmbH – v1.6.3
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -428,6 +428,10 @@
   cursor: pointer; transition: var(--gl-transition);
   outline: none; -webkit-tap-highlight-color: transparent;
 }
+
+/* Anchors as buttons: shrink-to-fit like real <button> elements
+   (block-level flex would fill the line despite --auto) */
+a.glass-btn { display: inline-flex; text-decoration: none; }
 
 .glass-btn svg {
   width: 20px; height: 20px; flex-shrink: 0;

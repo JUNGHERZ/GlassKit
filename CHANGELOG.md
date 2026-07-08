@@ -7,6 +7,14 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.6.3] – 2026-07-08
+
+### Fixed
+
+- **`.glass-btn` on `<a>` elements** – anchors now render as `inline-flex` with `text-decoration: none`. Previously, an anchor styled as a button filled the full line even with `--auto` (block-level flex has no shrink-to-fit) and kept the link underline. The full-width default (`width: 100%`) is unchanged.
+
+---
+
 ## [1.6.2] – 2026-07-08
 
 ### Fixed
@@ -341,6 +349,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.6.3]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.3
 [1.6.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.2
 [1.6.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.0
 [1.5.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.5.0
@@ -351,4 +360,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.6.2...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.6.3...HEAD
