@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.6.3
+   Jungherz GmbH – v1.6.4
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -665,7 +665,13 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   -webkit-tap-highlight-color: transparent;
 }
 
-.glass-toggle__input { position: absolute; opacity: 0; width: 0; height: 0; }
+/* Visually hidden but keeps the control's area: zero-size inputs make the
+   browser suppress the native validation bubble on required fields
+   (silent submit block). pointer-events: none — the label handles clicks. */
+.glass-toggle__input {
+  position: absolute; opacity: 0; margin: 0;
+  width: 52px; height: 30px; pointer-events: none;
+}
 
 .glass-toggle__track {
   position: relative; width: 52px; height: 30px;
@@ -716,7 +722,11 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   gap: var(--gl-space-sm); cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.glass-checkbox__input { position: absolute; opacity: 0; width: 0; height: 0; }
+/* See .glass-toggle__input: keep area so native validation bubbles anchor */
+.glass-checkbox__input {
+  position: absolute; opacity: 0; margin: 0;
+  width: 24px; height: 24px; pointer-events: none;
+}
 
 .glass-checkbox__box {
   width: 24px; height: 24px;
@@ -762,7 +772,11 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   gap: var(--gl-space-sm); cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.glass-radio__input { position: absolute; opacity: 0; width: 0; height: 0; }
+/* See .glass-toggle__input: keep area so native validation bubbles anchor */
+.glass-radio__input {
+  position: absolute; opacity: 0; margin: 0;
+  width: 24px; height: 24px; pointer-events: none;
+}
 
 .glass-radio__circle {
   width: 24px; height: 24px;

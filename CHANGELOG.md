@@ -7,6 +7,14 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.6.4] – 2026-07-10
+
+### Fixed
+
+- **Silent native form validation on `required` controls** – the visually hidden inputs of Checkbox, Radio, and Toggle were sized `0×0`, which made Chrome suppress the native validation bubble: submitting a form with an unchecked `required` control was blocked without any feedback. The inputs now keep their control's area (24×24, toggle 52×30) while staying invisible (`opacity: 0`, plus `pointer-events: none` and `margin: 0`), so the bubble appears anchored to the visible control. Interaction, keyboard focus, and visuals are unchanged.
+
+---
+
 ## [1.6.3] – 2026-07-08
 
 ### Fixed
@@ -349,6 +357,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.6.4]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.4
 [1.6.3]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.3
 [1.6.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.2
 [1.6.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.0
@@ -360,4 +369,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.6.3...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.6.4...HEAD
