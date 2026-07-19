@@ -7,6 +7,22 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.6.5] – 2026-07-19
+
+### Added
+
+- **GlassKit family cross-linking** – GlassKit Web (https://glasskit-web.jungherz.com), the official Astro website template, joins GlassKit and GlassKit Elements as the third member of the family. Modeled on the family section of glasskit-web.jungherz.com:
+  - **Landing page (EN + DE)** – new "The GlassKit family" section ("Three layers, one design language") with three cards – GlassKit marked as "you are here", GlassKit Elements (app layer), and GlassKit Web (website layer) – plus footer links to both sister products
+  - **docs.html (EN + DE)** – new "The GlassKit Family" section with sidebar link; points to GlassKit Web as the intended path for building complete websites and to GlassKit Elements for app UIs
+
+### Changed
+
+- **README** – sister links in the header, a layering sentence in the intro, and the companion section expanded to "The GlassKit Family" now covering GlassKit Web
+
+_No changes to `glasskit.css` – this is a documentation/website-only release._
+
+---
+
 ## [1.6.4] – 2026-07-10
 
 ### Fixed
@@ -357,6 +373,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.6.5]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.5
 [1.6.4]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.4
 [1.6.3]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.3
 [1.6.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.2
@@ -369,4 +386,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.6.4...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.6.5...HEAD

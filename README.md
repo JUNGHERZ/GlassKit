@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.6.4-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.6.5-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-24-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
@@ -30,6 +30,12 @@
   <a href="#-license">License</a>
 </p>
 
+<p align="center">
+  <sub>Part of the GlassKit family:
+  <a href="https://glasskit-elements.jungherz.com">GlassKit Elements</a> (web components for app UIs) ·
+  <a href="https://glasskit-web.jungherz.com">GlassKit Web</a> (Astro website template)</sub>
+</p>
+
 ---
 
 ## ✨ What is GlassKit?
@@ -37,6 +43,8 @@
 GlassKit is a complete **CSS component library** with glassmorphism aesthetics – inspired by **iOS 26 Liquid Glass** and visionOS. Apple fundamentally redefined glass design with iOS 26: deeper blur effects, luminous borders, and dynamic light reflections on surfaces. GlassKit brings exactly this look to the web – for apps and UIs that feel modern and native.
 
 **One CSS file. No build tools. No dependencies.**
+
+GlassKit is the **CSS foundation** of a three-layer family: [GlassKit Elements](https://glasskit-elements.jungherz.com) builds web components for application UIs on top of it, and [GlassKit Web](https://glasskit-web.jungherz.com) is the official Astro template for complete websites – three layers, one design language.
 
 <br>
 
@@ -454,7 +462,11 @@ Live pages:
 - 📖 Docs: https://glasskit.jungherz.com/docs.html
 - 🧪 Showcase: https://glasskit.jungherz.com/showcase.html
 
-## 🧩 Companion Project: GlassKit Elements
+## 🧩 The GlassKit Family
+
+GlassKit is the CSS foundation of a three-layer family – three layers, one design language.
+
+### GlassKit Elements – the app layer
 
 If you want to use GlassKit through **drop-in Web Components** instead of writing the full HTML structure yourself, take a look at **GlassKit Elements**.
 
@@ -464,6 +476,14 @@ Useful links:
 - GitHub: https://github.com/JUNGHERZ/GlassKit-Elements
 - Live Demo: https://glasskit-elements.jungherz.com/
 - Docs: https://glasskit-elements.jungherz.com/docs.html
+
+### GlassKit Web – the website layer
+
+If you want to build a **complete website** rather than assemble components yourself, **GlassKit Web** is the intended path: the official Astro template with sections, i18n, SEO, and tests on top of the GlassKit foundation.
+
+Useful links:
+- GitHub: https://github.com/JUNGHERZ/GlassKit-Web
+- Website: https://glasskit-web.jungherz.com/
 
 ---
 

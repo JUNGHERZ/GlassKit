@@ -184,6 +184,13 @@
     margin-top: 32px; margin-bottom: 12px;
   }
 
+  .docs-family-link {
+    color: var(--gl-color-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .docs-family-link:hover { text-decoration: underline; }
+
   /* Preview */
   .docs-preview {
     padding: 32px 24px; border-radius: 16px;
@@ -373,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.6.4 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.6.5 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -429,6 +436,7 @@
     <a class="docs-sidebar__link" href="#utilities">Utilities</a>
     <a class="docs-sidebar__link" href="#quickref">Alle Klassen</a>
     <a class="docs-sidebar__link" href="#ai-reference">KI-Referenz</a>
+    <a class="docs-sidebar__link" href="#family">GlassKit-Familie</a>
   </div>
 </aside>
 
@@ -440,7 +448,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.6.4</span>
+      <span class="docs-hero__badge">v1.6.5</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">24 Komponenten</span>
@@ -1388,6 +1396,20 @@ glasskit/SKILL.md
 npm install @jungherz-de/glasskit
 node_modules/@jungherz-de/glasskit/SKILL.md</div>
     </div>
+  </section>
+
+  <!-- GLASSKIT FAMILY -->
+  <section class="docs-section" id="family">
+    <h2>🧩 Die GlassKit-Familie</h2>
+    <p>GlassKit ist das CSS-Fundament einer dreischichtigen Familie – drei Schichten, eine Designsprache. Für alles jenseits einzelner Komponenten sind die Schwesterprojekte der vorgesehene Weg.</p>
+    <table class="docs-table">
+      <thead><tr><th>Schicht</th><th>Projekt</th><th>Einsatz</th></tr></thead>
+      <tbody>
+        <tr><td>CSS-Fundament</td><td>🧊 GlassKit <em>(Sie sind hier)</em></td><td>Die Designsprache: Pure-CSS-Komponenten, Design Tokens, Dark & Light.</td></tr>
+        <tr><td>App-Schicht</td><td><a class="docs-family-link" href="https://glasskit-elements.jungherz.com" target="_blank" rel="noopener">GlassKit Elements</a></td><td>Drop-in Web Components (<code>glk-button</code>, <code>glk-card</code>, …) für App-UIs.</td></tr>
+        <tr><td>Website-Schicht</td><td><a class="docs-family-link" href="https://glasskit-web.jungherz.com" target="_blank" rel="noopener">GlassKit Web</a></td><td>Eine komplette Website bauen – das offizielle Astro-Template mit Sections, i18n und SEO auf dem GlassKit-Fundament.</td></tr>
+      </tbody>
+    </table>
   </section>
 
 </main>
