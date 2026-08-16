@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.6.5
+   Jungherz GmbH – v1.7.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -40,6 +40,33 @@
   --gl-color-success:        #34c759;
   --gl-color-error:          #ff3b30;
   --gl-color-warning:        #ffcc00;
+  --gl-color-success-dark:   #2da44e;
+  --gl-color-error-dark:     #d63027;
+
+  /* ---- Role Colors: ink on FILLED surfaces ----
+     White by design – the primary button, the checkbox tick and the filled
+     accessory capsules keep the look they have always had. On the light
+     orange fill that is below WCAG AA (2.03:1 on the lightest gradient stop);
+     the deliberate escape hatch is a dark ink, e.g.
+       :root { --gl-color-on-primary: color-mix(in srgb, var(--gl-color-primary) 17%, #000); }
+     which reaches 4.62:1. Set it to #ffffff if you re-brand to a dark primary. */
+  --gl-color-on-primary:            #ffffff;
+  --gl-color-on-success:            #ffffff;
+  --gl-color-on-error:              #ffffff;
+  --gl-color-primary-on-surface:    color-mix(in srgb, var(--gl-color-primary) 50%, #ffffff);
+  --gl-color-success-on-surface:    color-mix(in srgb, var(--gl-color-success) 62%, #ffffff);
+  --gl-color-error-on-surface:      color-mix(in srgb, var(--gl-color-error)   50%, #ffffff);
+
+  /* ---- State Surfaces & Borders (badge, chip) ----
+     The scrim sits *behind* the colored tint and makes the chip
+     readable regardless of what shows through the glass. */
+  --gl-state-scrim:            rgba(0, 0, 0, 0.30);
+  --gl-color-primary-surface:  color-mix(in srgb, var(--gl-color-primary) 25%, transparent);
+  --gl-color-primary-border:   var(--gl-border-warm);
+  --gl-color-success-surface:  color-mix(in srgb, var(--gl-color-success) 15%, transparent);
+  --gl-color-success-border:   color-mix(in srgb, var(--gl-color-success) 30%, transparent);
+  --gl-color-error-surface:    color-mix(in srgb, var(--gl-color-error)   15%, transparent);
+  --gl-color-error-border:     color-mix(in srgb, var(--gl-color-error)   30%, transparent);
 
   /* ---- Glass Surfaces ---- */
   --gl-surface-1:            rgba(255, 255, 255, 0.08);
@@ -73,7 +100,7 @@
   --gl-icon-default:         rgba(255, 255, 255, 0.6);
   --gl-icon-muted:           rgba(255, 255, 255, 0.45);
   --gl-icon-strong:          rgba(255, 255, 255, 0.8);
-  --gl-icon-on-primary:      #ffffff;
+  --gl-icon-on-primary:      var(--gl-color-on-primary, #ffffff);
   --gl-icon-on-secondary:    #1a3a4a;
   --gl-icon-on-tertiary:     rgba(255, 255, 255, 0.6);
 
@@ -193,6 +220,23 @@
   --gl-color-success:        #28a745;
   --gl-color-error:          #dc3545;
   --gl-color-warning:        #e6a800;
+  --gl-color-success-dark:   #1e7e34;
+  --gl-color-error-dark:     #b02a37;
+
+  --gl-color-on-primary:            #ffffff;
+  --gl-color-on-success:            #ffffff;
+  --gl-color-on-error:              #ffffff;
+  --gl-color-primary-on-surface:    color-mix(in srgb, var(--gl-color-primary) 60%, #000000);
+  --gl-color-success-on-surface:    color-mix(in srgb, var(--gl-color-success) 68%, #000000);
+  --gl-color-error-on-surface:      color-mix(in srgb, var(--gl-color-error)   82%, #000000);
+
+  --gl-state-scrim:            rgba(255, 255, 255, 0.30);
+  --gl-color-primary-surface:  color-mix(in srgb, var(--gl-color-primary) 25%, transparent);
+  --gl-color-primary-border:   var(--gl-border-warm);
+  --gl-color-success-surface:  color-mix(in srgb, var(--gl-color-success) 15%, transparent);
+  --gl-color-success-border:   color-mix(in srgb, var(--gl-color-success) 30%, transparent);
+  --gl-color-error-surface:    color-mix(in srgb, var(--gl-color-error)   15%, transparent);
+  --gl-color-error-border:     color-mix(in srgb, var(--gl-color-error)   30%, transparent);
 
   --gl-surface-1:            rgba(255, 255, 255, 0.50);
   --gl-surface-2:            rgba(255, 255, 255, 0.60);
@@ -221,7 +265,7 @@
   --gl-icon-default:         rgba(26, 42, 54, 0.50);
   --gl-icon-muted:           rgba(26, 42, 54, 0.35);
   --gl-icon-strong:          rgba(26, 42, 54, 0.70);
-  --gl-icon-on-primary:      #ffffff;
+  --gl-icon-on-primary:      var(--gl-color-on-primary, #ffffff);
   --gl-icon-on-secondary:    #1a3a4a;
   --gl-icon-on-tertiary:     rgba(26, 42, 54, 0.50);
 
@@ -445,7 +489,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
     var(--gl-color-primary) 0%, var(--gl-color-primary-mid) 50%,
     var(--gl-color-primary-dark) 100%
   );
-  color: white;
+  color: var(--gl-color-on-primary, #ffffff);
   border: 1px solid var(--gl-border-warm);
   box-shadow: var(--gl-shadow-btn-primary), var(--gl-inset-strong);
 }
@@ -566,7 +610,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-input:disabled { opacity: 0.4; cursor: not-allowed; }
 .glass-input--error { border-color: var(--gl-color-error); }
 .glass-input--error:focus {
-  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.25), var(--gl-inset-medium);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gl-color-error) 25%, transparent), var(--gl-inset-medium);
 }
 
 .glass-hint {
@@ -743,7 +787,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 
 .glass-checkbox__box svg {
   width: 14px; height: 14px;
-  stroke: white; stroke-width: 3; fill: none;
+  stroke: var(--gl-color-on-primary, #ffffff); stroke-width: 3; fill: none;
   stroke-linecap: round; stroke-linejoin: round;
   opacity: 0; transform: scale(0.5);
   transition: var(--gl-transition-fast);
@@ -904,7 +948,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   background: linear-gradient(90deg,
     var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
   );
-  box-shadow: 0 0 8px rgba(245,166,35,0.3), var(--gl-inset-strong);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--gl-color-primary) 30%, transparent), var(--gl-inset-strong);
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
@@ -920,12 +964,16 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-progress--lg .glass-progress__track { height: 12px; }
 
 .glass-progress--success .glass-progress__fill {
-  background: linear-gradient(90deg, #34c759 0%, #2da44e 100%);
-  box-shadow: 0 0 8px rgba(52,199,89,0.3), var(--gl-inset-strong);
+  background: linear-gradient(90deg,
+    var(--gl-color-success) 0%, var(--gl-color-success-dark, #2da44e) 100%
+  );
+  box-shadow: 0 0 8px color-mix(in srgb, var(--gl-color-success) 30%, transparent), var(--gl-inset-strong);
 }
 .glass-progress--error .glass-progress__fill {
-  background: linear-gradient(90deg, #ff3b30 0%, #d63027 100%);
-  box-shadow: 0 0 8px rgba(255,59,48,0.3), var(--gl-inset-strong);
+  background: linear-gradient(90deg,
+    var(--gl-color-error) 0%, var(--gl-color-error-dark, #d63027) 100%
+  );
+  box-shadow: 0 0 8px color-mix(in srgb, var(--gl-color-error) 30%, transparent), var(--gl-inset-strong);
 }
 
 
@@ -1084,7 +1132,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 
 .glass-tab-bar__item.is-active .glass-tab-bar__icon svg {
   stroke: var(--gl-color-primary);
-  filter: drop-shadow(0 0 6px rgba(245,166,35,0.35));
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--gl-color-primary) 35%, transparent));
 }
 .glass-tab-bar__item.is-active .glass-tab-bar__label { color: var(--gl-color-primary); }
 
@@ -1094,7 +1142,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   width: 4px; height: 4px;
   border-radius: var(--gl-radius-pill);
   background: var(--gl-color-primary);
-  box-shadow: 0 0 6px rgba(245,166,35,0.5);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--gl-color-primary) 50%, transparent);
 }
 
 .glass-tab-bar__item:not(.is-active):hover .glass-tab-bar__icon svg { stroke: var(--gl-icon-default); }
@@ -1104,10 +1152,12 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   position: absolute; top: -4px; right: -8px;
   min-width: 16px; height: 16px; padding: 0 4px;
   border-radius: var(--gl-radius-full);
-  background: var(--gl-color-error); color: white;
+  /* 10px text needs 4.5:1 – white on the plain error red only reaches 3.55:1
+     in dark mode, so the pill uses the darker state color as its fill. */
+  background: var(--gl-color-error-dark, #d63027); color: #ffffff;
   font-size: 10px; font-weight: var(--gl-font-weight-semibold);
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 6px rgba(255,59,48,0.4);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--gl-color-error) 40%, transparent);
 }
 
 
@@ -1221,8 +1271,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
     0 8px 32px color-mix(in srgb, var(--gl-color-primary) 35%, transparent),
     var(--gl-inset-medium);
 }
-.glass-tab-bar__accessory--accent svg { stroke: #ffffff; }
-.glass-tab-bar__accessory--accent:hover svg { stroke: #ffffff; }
+.glass-tab-bar__accessory--accent svg { stroke: var(--gl-color-on-primary, #ffffff); }
+.glass-tab-bar__accessory--accent:hover svg { stroke: var(--gl-color-on-primary, #ffffff); }
 
 .glass-tab-bar__accessory--success {
   background: linear-gradient(135deg,
@@ -1234,7 +1284,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
     0 8px 32px color-mix(in srgb, var(--gl-color-success) 35%, transparent),
     var(--gl-inset-medium);
 }
-.glass-tab-bar__accessory--success svg { stroke: #ffffff; }
+.glass-tab-bar__accessory--success svg { stroke: var(--gl-color-on-success, #ffffff); }
 
 .glass-tab-bar__accessory--error {
   background: linear-gradient(135deg,
@@ -1246,7 +1296,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
     0 8px 32px color-mix(in srgb, var(--gl-color-error) 35%, transparent),
     var(--gl-inset-medium);
 }
-.glass-tab-bar__accessory--error svg { stroke: #ffffff; }
+.glass-tab-bar__accessory--error svg { stroke: var(--gl-color-on-error, #ffffff); }
 
 
 /* ============================================================
@@ -1329,15 +1379,34 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   color: var(--gl-color-text);
   box-shadow: var(--gl-inset-subtle);
 }
+/* Variant surfaces are token-derived, so re-branding a state color moves the
+   fill, the border and the text together. The --gl-state-scrim layer sits
+   behind the tint and keeps the label readable over any backdrop. */
 .glass-badge--primary {
-  background: linear-gradient(135deg, rgba(245,166,35,0.25) 0%, rgba(212,105,42,0.20) 100%);
-  border-color: var(--gl-border-warm); color: var(--gl-color-primary);
+  background:
+    linear-gradient(135deg,
+      var(--gl-color-primary-surface, rgba(245,166,35,0.25)) 0%,
+      color-mix(in srgb, var(--gl-color-primary-dark) 20%, transparent) 100%
+    ),
+    var(--gl-state-scrim, transparent);
+  border-color: var(--gl-color-primary-border, var(--gl-border-warm));
+  color: var(--gl-color-primary-on-surface, var(--gl-color-primary));
 }
 .glass-badge--success {
-  background: rgba(52,199,89,0.15); border-color: rgba(52,199,89,0.30); color: var(--gl-color-success);
+  background:
+    linear-gradient(var(--gl-color-success-surface, rgba(52,199,89,0.15)) 0%,
+                    var(--gl-color-success-surface, rgba(52,199,89,0.15)) 100%),
+    var(--gl-state-scrim, transparent);
+  border-color: var(--gl-color-success-border, rgba(52,199,89,0.30));
+  color: var(--gl-color-success-on-surface, var(--gl-color-success));
 }
 .glass-badge--error {
-  background: rgba(255,59,48,0.15); border-color: rgba(255,59,48,0.30); color: var(--gl-color-error);
+  background:
+    linear-gradient(var(--gl-color-error-surface, rgba(255,59,48,0.15)) 0%,
+                    var(--gl-color-error-surface, rgba(255,59,48,0.15)) 100%),
+    var(--gl-state-scrim, transparent);
+  border-color: var(--gl-color-error-border, rgba(255,59,48,0.30));
+  color: var(--gl-color-error-on-surface, var(--gl-color-error));
 }
 
 

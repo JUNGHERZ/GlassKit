@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.6.5) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.7.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -93,6 +93,51 @@ All visual values are controlled via CSS Custom Properties. For custom theming, 
 | `--gl-color-success` | `#34c759` | `#28a745` | Success |
 | `--gl-color-error` | `#ff3b30` | `#dc3545` | Error |
 | `--gl-color-warning` | `#ffcc00` | `#e6a800` | Warning |
+| `--gl-color-success-dark` | `#2da44e` | `#1e7e34` | Gradient end / stronger fill |
+| `--gl-color-error-dark` | `#d63027` | `#b02a37` | Gradient end / stronger fill |
+
+#### Role Colors (since 1.7.0)
+
+A state color is used for two different jobs: as a **fill** (button, progress bar) and
+as **text on a tinted surface** (badge). One value cannot satisfy both — a fill wants
+saturation, ink on glass wants contrast. These roles therefore have their own tokens.
+All are derived from the state color via `color-mix()`, so overriding
+`--gl-color-success` moves its ink and surface with it.
+
+| Token | Role | Default |
+|---|---|---|
+| `--gl-color-on-primary` | Ink/icons **on** the primary fill | `#ffffff` |
+| `--gl-color-on-success` | Ink/icons on a filled success surface | `#ffffff` |
+| `--gl-color-on-error` | Ink/icons on a filled error surface | `#ffffff` |
+| `--gl-color-primary-on-surface` | Badge text on the primary tint | lightened (dark) / darkened (light) primary |
+| `--gl-color-success-on-surface` | Badge text on the success tint | lightened / darkened success |
+| `--gl-color-error-on-surface` | Badge text on the error tint | lightened / darkened error |
+| `--gl-color-primary-surface` / `-border` | Badge fill / border | `color-mix(… primary 25% / 30%, transparent)` |
+| `--gl-color-success-surface` / `-border` | Badge fill / border | `color-mix(… success 15% / 30%, transparent)` |
+| `--gl-color-error-surface` / `-border` | Badge fill / border | `color-mix(… error 15% / 30%, transparent)` |
+| `--gl-state-scrim` | Layer behind a badge tint | `rgba(0,0,0,0.30)` dark, `rgba(255,255,255,0.30)` light |
+
+The scrim keeps a translucent chip readable over an unpredictable backdrop. `0.30` is
+tuned as the point where the chip is still visibly see-through *and* the label keeps
+enough of its state color to tell success from error. Raising it allows a more saturated
+label, lowering it keeps more glass but washes the label out — both still reach 4.5:1,
+because the `-on-surface` inks are matched to the scrim. Set it to `transparent` for the
+fully-translucent pre-1.7.0 chip.
+
+> **White ink on filled surfaces is deliberate, and below AA.** The primary button, the
+> checkbox tick and the filled accessory capsules keep `#ffffff` — 2,03:1 on the light
+> orange in dark mode. That is GlassKit's look and the default. If a project needs AA on
+> filled surfaces, switch the ink instead of the brand color:
+>
+> ```css
+> :root { --gl-color-on-primary: color-mix(in srgb, var(--gl-color-primary) 17%, #000); }
+> ```
+>
+> That reaches 4,62:1. Badges are unaffected — they already pass by default.
+
+> **Do not put text in `--gl-color-success` / `--error` / `--primary` on a tinted
+> surface.** Those values are fills. Use the matching `-on-surface` token, which is what
+> `.glass-badge--*` does.
 
 ### Glass Surfaces
 
@@ -439,6 +484,12 @@ Tags and labels.
 | `.glass-badge--primary` | Primary color |
 | `.glass-badge--success` | Green |
 | `.glass-badge--error` | Red |
+
+Since 1.7.0 each variant is built from tokens rather than fixed `rgba()` literals —
+`--gl-color-{state}-surface` for the fill, `-border` for the border,
+`-on-surface` for the text, plus `--gl-state-scrim` behind the tint. Re-coloring
+`--gl-color-success` therefore moves the whole chip, not just its text. All three
+variants clear 4.5:1 in both themes.
 
 ---
 
@@ -1570,8 +1621,16 @@ Load custom brand colors via `theme-override.css` after the base library:
   --gl-shadow-btn-primary:  0 6px 24px rgba(0, 100, 220, 0.35),
                             0 2px 8px rgba(0, 0, 0, 0.15);
   --gl-shadow-focus:        0 0 0 3px rgba(0, 122, 255, 0.3);
+
+  /* Ink on the primary fill – defaults to #ffffff. Set a dark ink here if your
+     brand color is light and you need WCAG AA on filled surfaces. */
+  --gl-color-on-primary:    #ffffff;
 }
 ```
+
+Overriding `--gl-color-success` / `--gl-color-error` is enough on its own: fill, border,
+text and glow of every state component are derived from those tokens. Only if you want
+a different ink than the derived one do you need to touch `--gl-color-{state}-on-surface`.
 
 Included theme templates in `theme-override.css`:
 - 🔵 Ocean Blue

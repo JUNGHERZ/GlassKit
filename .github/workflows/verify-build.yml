@@ -1,0 +1,52 @@
+# ============================================================
+# GlassKit – Build Smoke Test
+#
+# Trigger:  Push/PR auf main
+# Zweck:    glasskit.min.css und glasskit-styles.js sind .gitignore'd und
+#           werden erst im Release-Workflow erzeugt. Ein Syntaxfehler in
+#           glasskit.css fiele damit erst beim Tag-Push auf. Dieser Job
+#           baut bei jedem Push und prüft, dass beide Artefakte entstehen
+#           und die Versionsangabe zu package.json passt.
+#
+# Lokal:    npm run build
+# ============================================================
+
+name: Verify Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    name: Build artifacts from source
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Artifacts exist and carry the package version
+        run: |
+          set -e
+          test -s glasskit.min.css      || { echo "::error::glasskit.min.css missing or empty"; exit 1; }
+          test -s glasskit-styles.js    || { echo "::error::glasskit-styles.js missing or empty"; exit 1; }
+          VERSION=$(node -p "require('./package.json').version")
+          grep -q "GlassKit v${VERSION}" glasskit-styles.js \
+            || { echo "::error::glasskit-styles.js header does not say v${VERSION}"; exit 1; }
+          grep -q "v${VERSION}" glasskit.css \
+            || { echo "::error::glasskit.css header does not say v${VERSION}"; exit 1; }
+          echo "OK – artifacts built for v${VERSION}"

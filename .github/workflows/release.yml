@@ -9,7 +9,11 @@
 #           5. Auf npm veröffentlichen
 #
 # Usage:    git tag v1.3.1 && git push origin v1.3.1
-# Secrets:  NPM_TOKEN – npm Access Token (Repository Settings → Secrets)
+# Auth:     npm Trusted Publishing (OIDC) – kein NPM_TOKEN mehr nötig.
+#           Auf npmjs.com ist unter Settings → Trusted Publisher hinterlegt:
+#           JUNGHERZ/GlassKit · Workflow: release.yml
+#           Der Dateiname dieses Workflows muss deshalb release.yml bleiben.
+#           Provenance wird dabei automatisch erzeugt.
 # ============================================================
 
 name: Release & Publish
@@ -21,6 +25,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write   # OIDC-Token für npm Trusted Publishing
 
 jobs:
   build-and-publish:
@@ -38,6 +43,12 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
+
+      # ---- npm CLI: Trusted Publishing braucht >= 11.5.1 ----
+      - name: Ensure npm supports trusted publishing
+        run: |
+          npm install -g npm@latest
+          npm --version
 
       # ---- Dependencies installieren ----
       - name: Install dependencies
@@ -70,8 +81,6 @@ jobs:
             glasskit.css
             glasskit-styles.js
 
-      # ---- npm veröffentlichen ----
+      # ---- npm veröffentlichen (OIDC, kein Token) ----
       - name: Publish to npm
         run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
