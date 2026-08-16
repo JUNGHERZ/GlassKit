@@ -7,6 +7,47 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.7.1] – 2026-08-16
+
+### Fixed
+
+- **`color-scheme` is now declared, so browser-drawn controls follow the theme.**
+  `data-theme` told GlassKit which palette to use but never told the *browser*. Parts of
+  a form are painted by the browser itself and follow no CSS of the design system: the
+  calendar glyph in `<input type="date">` and `datetime-local`, the clock in `type="time"`,
+  the spinners in `type="number"`, the `<select>` popup, scrollbars, and the autofill
+  background. All of them rendered in the light default, so in dark mode the calendar
+  icon sat near-black on dark glass.
+
+  ```css
+  :root, [data-theme="dark"] { color-scheme: dark; }
+  [data-theme="light"]       { color-scheme: light; }
+  ```
+
+  Measured on the date field in dark mode: the glyph goes from dark-on-dark to white.
+  No GlassKit token or rule changed value.
+
+  This also reaches **GlassKit Elements**: the selector `[data-theme="dark"]` matches the
+  `.glk-wrapper` inside every component's shadow root, so `<glk-input type="date">` picks
+  the dark scheme up without any change on that side.
+
+  `.glass-checkbox`, `.glass-radio` and `.glass-toggle` are unaffected — they hide the
+  native input and draw their own control.
+
+### Note for pages without `.glass-bg`
+
+`color-scheme` also governs the browser's default canvas. A page that loads
+`glasskit.css` but does **not** wrap its content in `.glass-bg` changes from a white
+canvas with black default text to `#121212` with white text. Such a page was already
+inconsistent — the dark theme's `--gl-color-text` is `#ffffff`, so its own text was white
+on white — but the change is visible, so it is recorded here. To keep the old canvas:
+
+```css
+:root { color-scheme: normal; }
+```
+
+---
+
 ## [1.7.0] – 2026-08-16
 
 Accessibility release for **tinted state surfaces**. Badges now meet **WCAG 2.1 AA

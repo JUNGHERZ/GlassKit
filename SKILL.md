@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.7.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.7.1) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -63,6 +63,12 @@ The theme is controlled via `data-theme` on `<html>`:
 <!-- Light Mode -->
 <html data-theme="light">
 ```
+
+Both theme blocks also set `color-scheme` (`dark` / `light`), which is how the *browser*
+is told which scheme to paint its own widgets in — date and time pickers, number
+spinners, `<select>` popups, scrollbars, autofill. Without it those render light and, in
+dark mode, a calendar glyph ends up near-black on dark glass. Setting
+`:root { color-scheme: normal; }` opts out.
 
 Toggle theme via JavaScript:
 

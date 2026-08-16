@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.7.0
+   Jungherz GmbH – v1.7.1
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -26,6 +26,11 @@
    ============================================================ */
 :root,
 [data-theme="dark"] {
+  /* Tells the browser which scheme its own widgets should use: date and time
+     pickers, number spinners, select popups, scrollbars, autofill. Without it
+     they render light and the calendar glyph sits black on dark glass. */
+  color-scheme: dark;
+
   /* ---- Colors ---- */
   --gl-color-primary:        #f5a623;
   --gl-color-primary-dark:   #d4692a;
@@ -207,6 +212,8 @@
    1b. DESIGN TOKENS – LIGHT MODE
    ============================================================ */
 [data-theme="light"] {
+  color-scheme: light;
+
   --gl-color-primary:        #e8852d;
   --gl-color-primary-dark:   #c96a1e;
   --gl-color-primary-mid:    #d97826;
