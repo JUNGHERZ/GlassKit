@@ -7,6 +7,54 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.9.0] – 2026-08-17
+
+Version numbers of GlassKit and GlassKit Elements are realigned with this release;
+1.8.0 is deliberately skipped on this side.
+
+### Added
+
+- **`glasskit-styles.js` now also exports the stylesheet split in two**, so a consumer
+  can adopt the component rules without dragging the token declarations along:
+
+  | Export | Contents |
+  |---|---|
+  | `tokensCss` / `tokensSheet` | the two `[data-theme]` blocks that declare every `--gl-*` |
+  | `componentsCss` / `componentsSheet` | everything else |
+  | `css` / `glassSheet` | unchanged — the full sheet |
+
+  **Why this exists.** A shadow root that adopts the *full* sheet also adopts
+  `:root, [data-theme="dark"] { … }`. Inside that shadow root the selector matches the
+  consumer's own theme wrapper, so every token is re-declared locally — and a matching
+  rule always beats an inherited value. A project's `:root { --gl-color-primary: … }`
+  then never arrives. That is exactly what happened in GlassKit Elements ≤1.8.0, where
+  `--gl-*` overrides had no effect inside any `<glk-*>` element.
+
+  The fix belongs on the consuming side (adopt `componentsSheet`, put `tokensCss` on the
+  document), but the split has to be produced here, where the CSS is built.
+
+  `css` and `glassSheet` are byte-identical to before — the build asserts
+  `componentsHead + tokensCss + componentsTail === css` and fails otherwise. Nothing
+  changes for anyone importing them.
+
+### Changed
+
+- **`build-styles-js.mjs`** locates the two token blocks by brace matching and verifies
+  the split before writing: tokens must carry `--gl-color-primary` and `--gl-state-scrim`,
+  components must carry `.glass-btn--primary` and `.glass-theme-toggle` and must *not*
+  declare tokens, and the two halves must account for every byte. A silently wrong split
+  would ship unstyled components or unbrandable tokens, so it fails the build instead.
+
+  The module embeds the CSS only once and re-joins the parts at load time, so
+  `glasskit-styles.js` grows by about 0.5 KB rather than doubling.
+
+### Note
+
+No CSS rule and no token value changed in this release. `glasskit.css` and
+`glasskit.min.css` differ from 1.7.1 only in the version comment.
+
+---
+
 ## [1.7.1] – 2026-08-16
 
 ### Fixed

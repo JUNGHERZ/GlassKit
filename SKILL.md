@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.7.1) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.9.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -1604,10 +1604,36 @@ customElements.define('my-card', MyCard);
 
 | Export | Type | Description |
 |---|---|---|
-| `glassSheet` | `CSSStyleSheet` | Constructable Stylesheet for `adoptedStyleSheets` |
-| `css` | `string` | CSS as string (fallback) |
+| `glassSheet` | `CSSStyleSheet` | Full sheet — rules **and** token declarations |
+| `css` | `string` | The same, as a string |
+| `componentsSheet` | `CSSStyleSheet` | Component rules only, no token declarations (since 1.9.0) |
+| `componentsCss` | `string` | The same, as a string |
+| `tokensSheet` | `CSSStyleSheet` | Only the two `[data-theme]` blocks that declare `--gl-*` (since 1.9.0) |
+| `tokensCss` | `string` | The same, as a string |
 
-**Note:** CSS Custom Properties (`--gl-*`) penetrate the shadow boundary automatically. Theme switching works globally.
+CSS Custom Properties (`--gl-*`) cross the shadow boundary by inheritance, so the example
+above picks up whatever the document defines and theme switching works globally.
+
+> **Pitfall: do not put `data-theme` inside the shadow root while adopting `glassSheet`.**
+> The full sheet contains `:root, [data-theme="dark"] { … }`. If your shadow root holds an
+> element carrying `data-theme`, that selector matches it and re-declares every token
+> locally — and a matching rule always beats an inherited value. A project's
+> `:root { --gl-color-primary: … }` then silently stops arriving inside your component.
+>
+> If you need a themed element inside the shadow root, adopt `componentsSheet` instead
+> and make sure the tokens are present on the document:
+>
+> ```js
+> shadow.adoptedStyleSheets = [componentsSheet];
+>
+> // once per page, if the document does not already link glasskit.css:
+> const defaults = new CSSStyleSheet();
+> defaults.replaceSync(`@layer glasskit-defaults { ${tokensCss} }`);
+> document.adoptedStyleSheets = [...document.adoptedStyleSheets, defaults];
+> ```
+>
+> The cascade layer keeps an ordinary brand stylesheet winning over the defaults. This is
+> what GlassKit Elements does since 1.9.0.
 
 ---
 
