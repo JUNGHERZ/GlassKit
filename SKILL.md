@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.10.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.11.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -92,7 +92,7 @@ All visual values are controlled via CSS Custom Properties. For custom theming, 
 |---|---|---|---|
 | `--gl-color-primary` | `#f5a623` | `#e8852d` | Primary color, buttons, active elements |
 | `--gl-color-primary-dark` | `#d4692a` | `#c96a1e` | Gradient end value |
-| `--gl-color-primary-mid` | `#e07a24` | `#d97826` | Gradient midpoint |
+| `--gl-color-primary-mid` | derived → `#e07a24` | derived → `#d97826` | Gradient midpoint, mixed from primary + primary-dark |
 | `--gl-color-text` | `#ffffff` | `#1a2a36` | Default text color |
 | `--gl-color-text-muted` | `rgba(255,255,255,0.60)` | `rgba(26,42,54,0.55)` | Secondary text |
 | `--gl-color-text-heading` | `#ffffff` | `#0f1f2a` | Headings |
@@ -166,8 +166,8 @@ fully-translucent pre-1.7.0 chip.
 | `--gl-border-medium` | `rgba(255,255,255, 0.30)` |
 | `--gl-border-strong` | `rgba(255,255,255, 0.40)` |
 | `--gl-border-milk` | `rgba(255,255,255, 0.60)` |
-| `--gl-border-warm` | `rgba(255,200,100, 0.35)` |
-| `--gl-border-focus` | `rgba(245,166,35, 0.60)` |
+| `--gl-border-warm` | derived from primary → `rgba(255,200,100, 0.35)` |
+| `--gl-border-focus` | derived from primary → `rgba(245,166,35, 0.60)` |
 
 ### Blur
 
@@ -764,6 +764,11 @@ Animated checkbox with checkmark SVG.
 | `.glass-checkbox__input` | Hidden checkbox input |
 | `.glass-checkbox__box` | Visible box with checkmark SVG |
 | `.glass-checkbox__label` | Text label |
+
+> **Multi-line labels (since 1.11.0).** The box lines up with the **first line** of the
+> label, not with the middle of the text block — a consent label runs over several lines
+> and a centred box points at nothing. Same for `.glass-radio` and `.glass-toggle`.
+> Single-line labels are unaffected. Nothing to set; it is the default.
 
 ---
 
@@ -1657,19 +1662,33 @@ Load custom brand colors via `theme-override.css` after the base library:
 ```css
 :root {
   --gl-color-primary:      #007AFF;
-  --gl-color-primary-dark:  #0055CC;
-  --gl-color-primary-mid:   #0066E0;
+  --gl-color-primary-dark: #0055CC;
+}
+```
 
-  --gl-border-warm:         rgba(0, 122, 255, 0.35);
-  --gl-border-focus:        rgba(0, 122, 255, 0.60);
+Since 1.11.0 those two declarations are the whole job. The gradient midpoint, the warm
+rim (`--gl-border-warm`), the focus ring (`--gl-border-focus`, `--gl-shadow-focus`), the
+glow under the primary button and the range slider thumb are all mixed from them. Before
+1.11.0 they held fixed amber values, so a re-branded button came with an orange halo and
+an amber focus ring.
 
-  --gl-shadow-btn-primary:  0 6px 24px rgba(0, 100, 220, 0.35),
-                            0 2px 8px rgba(0, 0, 0, 0.15);
-  --gl-shadow-focus:        0 0 0 3px rgba(0, 122, 255, 0.3);
+Two things worth knowing:
+
+- **Declare the brand on `:root`.** A custom property is substituted where it is
+  *declared*, so the derived tokens read the primary of the element they sit on. Setting
+  `--gl-color-primary` on a subtree re-colors what that subtree paints directly, but does
+  not re-derive the tokens inherited from `:root`.
+- **Override any derived token individually** if you want to bend one — the derivations
+  are plain defaults and lose to a later declaration.
+
+```css
+:root {
+  /* only if you want a different midpoint than the mix */
+  --gl-color-primary-mid:  #0066E0;
 
   /* Ink on the primary fill – defaults to #ffffff. Set a dark ink here if your
      brand color is light and you need WCAG AA on filled surfaces. */
-  --gl-color-on-primary:    #ffffff;
+  --gl-color-on-primary:   #ffffff;
 }
 ```
 

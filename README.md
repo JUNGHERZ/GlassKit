@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.10.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.11.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-24-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
@@ -72,13 +72,13 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.10/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.11/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.10/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.11/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.10/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.11/glasskit.min.css">
 ```
 
 > **Tip:** Replace `@1.6` with `@latest` for the newest version – or pin to a specific version for maximum stability.
@@ -252,17 +252,17 @@ Create a `theme-override.css` and load it **after** the base library:
 /* theme-override.css */
 :root {
   --gl-color-primary:      #007AFF;
-  --gl-color-primary-dark:  #0055CC;
-  --gl-color-primary-mid:   #0066E0;
-
-  --gl-border-warm:         rgba(0, 122, 255, 0.35);
-  --gl-border-focus:        rgba(0, 122, 255, 0.60);
-
-  --gl-shadow-btn-primary:  0 6px 24px rgba(0, 100, 220, 0.35),
-                            0 2px 8px rgba(0, 0, 0, 0.15);
-  --gl-shadow-focus:        0 0 0 3px rgba(0, 122, 255, 0.3);
+  --gl-color-primary-dark: #0055CC;
 }
 ```
+
+Since **1.11.0** that is the whole job. The gradient midpoint, the warm rim, the focus
+ring, the glow under the primary button and the range slider thumb are all mixed from
+those two — before 1.11.0 they were fixed amber, so a re-branded button came with an
+orange halo and an amber focus ring. Declare the brand on `:root`: a custom property is
+substituted where it is *declared*, so a brand set on a subtree does not re-derive the
+tokens inherited from `:root`. Every derived token is still a plain default and loses to
+a later declaration if you want to bend one.
 
 The `theme-override.css` template comes with **4 example themes**:
 - 🔵 Ocean Blue

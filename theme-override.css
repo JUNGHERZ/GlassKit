@@ -11,61 +11,54 @@
 
 
 /* ============================================================
-   BEISPIEL: Theme "Ocean Blue"
+   MARKENFARBE — seit 1.11.0 genügen zwei Zeilen
+
+   Gradient-Mitte, warmer Rand, Fokusring, das Leuchten unter dem
+   Primärknopf und der Reglerknopf werden daraus gemischt. Vor 1.11.0
+   standen dort feste Bernsteinwerte; ein umgefärbter Knopf bekam
+   deshalb einen orangen Halo und einen bernsteinfarbenen Fokusring.
+
+   Wichtig: auf :root deklarieren. Eine Custom Property wird dort
+   ersetzt, wo sie deklariert ist — auf einem Teilbaum gesetzt, erreicht
+   die Marke die von :root geerbten Tokens nicht.
    ============================================================ */
 
+/* Ocean Blue */
 /*
 :root {
   --gl-color-primary:        #007AFF;
   --gl-color-primary-dark:   #0055CC;
-  --gl-color-primary-mid:    #0066E0;
-
-  --gl-border-warm:          rgba(0, 122, 255, 0.35);
-  --gl-border-focus:         rgba(0, 122, 255, 0.60);
-
-  --gl-shadow-btn-primary:   0 6px 24px rgba(0, 100, 220, 0.35),
-                             0 2px 8px rgba(0, 0, 0, 0.15);
-  --gl-shadow-focus:         0 0 0 3px rgba(0, 122, 255, 0.3);
 }
 */
 
-
-/* ============================================================
-   BEISPIEL: Theme "Emerald Green"
-   ============================================================ */
-
+/* Emerald Green */
 /*
 :root {
   --gl-color-primary:        #34c759;
   --gl-color-primary-dark:   #248a3d;
-  --gl-color-primary-mid:    #30b04e;
+}
+*/
 
-  --gl-border-warm:          rgba(52, 199, 89, 0.35);
-  --gl-border-focus:         rgba(52, 199, 89, 0.60);
-
-  --gl-shadow-btn-primary:   0 6px 24px rgba(52, 199, 89, 0.35),
-                             0 2px 8px rgba(0, 0, 0, 0.15);
-  --gl-shadow-focus:         0 0 0 3px rgba(52, 199, 89, 0.3);
+/* Rose */
+/*
+:root {
+  --gl-color-primary:        #FF2D55;
+  --gl-color-primary-dark:   #CC1A40;
 }
 */
 
 
 /* ============================================================
-   BEISPIEL: Theme "Rose"
+   BEISPIEL: Einzelne abgeleitete Werte biegen
+
+   Die Ableitungen sind gewöhnliche Vorgaben und verlieren gegen eine
+   spätere Deklaration. Nur setzen, was wirklich abweichen soll.
    ============================================================ */
 
 /*
 :root {
-  --gl-color-primary:        #FF2D55;
-  --gl-color-primary-dark:   #CC1A40;
-  --gl-color-primary-mid:    #E0264C;
-
-  --gl-border-warm:          rgba(255, 45, 85, 0.35);
-  --gl-border-focus:         rgba(255, 45, 85, 0.60);
-
-  --gl-shadow-btn-primary:   0 6px 24px rgba(255, 45, 85, 0.35),
-                             0 2px 8px rgba(0, 0, 0, 0.15);
-  --gl-shadow-focus:         0 0 0 3px rgba(255, 45, 85, 0.3);
+  --gl-color-primary-mid:    #0066E0;
+  --gl-shadow-focus:         0 0 0 3px rgba(0, 122, 255, 0.4);
 }
 */
 

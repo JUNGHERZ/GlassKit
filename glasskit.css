@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.10.0
+   Jungherz GmbH – v1.11.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -53,10 +53,14 @@
      they render light and the calendar glyph sits black on dark glass. */
   color-scheme: dark;
 
-  /* ---- Colors ---- */
+  /* ---- Colors ----
+     Re-branding needs exactly two declarations: --gl-color-primary and
+     --gl-color-primary-dark. Everything warm below is mixed from them, so a
+     teal primary gets a teal gradient, a teal glow and a teal focus ring.
+     Set --gl-color-primary-mid explicitly only to bend the gradient's middle. */
   --gl-color-primary:        #f5a623;
   --gl-color-primary-dark:   #d4692a;
-  --gl-color-primary-mid:    #e07a24;
+  --gl-color-primary-mid:    color-mix(in srgb, var(--gl-color-primary) 32%, var(--gl-color-primary-dark));
   --gl-color-bg-dark:        #0e2530;
   --gl-color-bg-mid:         #1a3d4e;
   --gl-color-bg-light:       #1b3e50;
@@ -120,8 +124,11 @@
   --gl-border-medium:        rgba(255, 255, 255, 0.30);
   --gl-border-strong:        rgba(255, 255, 255, 0.40);
   --gl-border-milk:          rgba(255, 255, 255, 0.60);
-  --gl-border-warm:          rgba(255, 200, 100, 0.35);
-  --gl-border-focus:         rgba(245, 166, 35, 0.60);
+  /* Warm = the rim of a primary-filled control; focus = the keyboard ring.
+     Both are roles, so both follow --gl-color-primary. Kept as-is by name for
+     compatibility; pre-1.11.0 they were rgba(255,200,100,.35) / rgba(245,166,35,.6). */
+  --gl-border-warm:          color-mix(in srgb, color-mix(in srgb, var(--gl-color-primary) 68%, #ffffff) 35%, transparent);
+  --gl-border-focus:         color-mix(in srgb, var(--gl-color-primary) 60%, transparent);
 
   /* ---- Icon Colors ---- */
   --gl-icon-default:         rgba(255, 255, 255, 0.6);
@@ -149,14 +156,14 @@
   /* ---- Shadows ---- */
   --gl-shadow-card:          0 8px 32px rgba(0, 0, 0, 0.18);
   --gl-shadow-btn:           0 4px 16px rgba(0, 0, 0, 0.12);
-  --gl-shadow-btn-primary:   0 6px 24px rgba(230, 130, 40, 0.35),
+  --gl-shadow-btn-primary:   0 6px 24px color-mix(in srgb, var(--gl-color-primary-mid) 35%, transparent),
                              0 2px 8px rgba(0, 0, 0, 0.15);
   --gl-shadow-glow:          0 2px 12px rgba(255, 255, 255, 0.08),
                              0 4px 16px rgba(0, 0, 0, 0.15);
   --gl-shadow-modal:         0 24px 80px rgba(0, 0, 0, 0.4),
                              0 8px 32px rgba(0, 0, 0, 0.2);
   --gl-shadow-toast:         0 8px 32px rgba(0, 0, 0, 0.25);
-  --gl-shadow-focus:         0 0 0 3px rgba(245, 166, 35, 0.3);
+  --gl-shadow-focus:         0 0 0 3px color-mix(in srgb, var(--gl-color-primary) 30%, transparent);
 
   /* ---- Inset Highlights ---- */
   --gl-inset-subtle:         inset 0 1px 1px rgba(255, 255, 255, 0.10);
@@ -164,7 +171,10 @@
   --gl-inset-strong:         inset 0 1px 2px rgba(255, 255, 255, 0.25);
   --gl-inset-milk:           inset 0 1px 2px rgba(255, 255, 255, 0.40);
 
-  /* ---- Background Effects ---- */
+  /* ---- Background Effects ----
+     Deliberately *not* derived from --gl-color-primary: the aurora is the scene
+     behind the glass, a fixed cool/warm mix, not the action color. Deriving it
+     would repaint every page on a re-brand. Override directly to change it. */
   --gl-bg-aurora-1:          rgba(60, 160, 160, 0.25);
   --gl-bg-aurora-2:          rgba(200, 140, 60, 0.12);
   --gl-bg-aurora-3:          rgba(80, 180, 200, 0.18);
@@ -238,7 +248,7 @@
 
   --gl-color-primary:        #e8852d;
   --gl-color-primary-dark:   #c96a1e;
-  --gl-color-primary-mid:    #d97826;
+  --gl-color-primary-mid:    color-mix(in srgb, var(--gl-color-primary) 52%, var(--gl-color-primary-dark));
   --gl-color-bg-dark:        #e8ecf1;
   --gl-color-bg-mid:         #f0f4f8;
   --gl-color-bg-light:       #f5f7fa;
@@ -288,8 +298,8 @@
   --gl-border-medium:        rgba(0, 0, 0, 0.12);
   --gl-border-strong:        rgba(0, 0, 0, 0.15);
   --gl-border-milk:          rgba(0, 0, 0, 0.10);
-  --gl-border-warm:          rgba(232, 133, 45, 0.30);
-  --gl-border-focus:         rgba(232, 133, 45, 0.50);
+  --gl-border-warm:          color-mix(in srgb, var(--gl-color-primary) 30%, transparent);
+  --gl-border-focus:         color-mix(in srgb, var(--gl-color-primary) 50%, transparent);
 
   --gl-icon-default:         rgba(26, 42, 54, 0.50);
   --gl-icon-muted:           rgba(26, 42, 54, 0.35);
@@ -300,14 +310,14 @@
 
   --gl-shadow-card:          0 4px 20px rgba(0, 0, 0, 0.06);
   --gl-shadow-btn:           0 2px 10px rgba(0, 0, 0, 0.06);
-  --gl-shadow-btn-primary:   0 4px 16px rgba(232, 133, 45, 0.25),
+  --gl-shadow-btn-primary:   0 4px 16px color-mix(in srgb, var(--gl-color-primary) 25%, transparent),
                              0 2px 6px rgba(0, 0, 0, 0.08);
   --gl-shadow-glow:          0 2px 8px rgba(0, 0, 0, 0.05),
                              0 4px 12px rgba(0, 0, 0, 0.04);
   --gl-shadow-modal:         0 16px 48px rgba(0, 0, 0, 0.12),
                              0 4px 16px rgba(0, 0, 0, 0.08);
   --gl-shadow-toast:         0 4px 20px rgba(0, 0, 0, 0.10);
-  --gl-shadow-focus:         0 0 0 3px rgba(232, 133, 45, 0.25);
+  --gl-shadow-focus:         0 0 0 3px color-mix(in srgb, var(--gl-color-primary) 25%, transparent);
 
   --gl-inset-subtle:         inset 0 1px 1px rgba(255, 255, 255, 0.60);
   --gl-inset-medium:         inset 0 1px 1px rgba(255, 255, 255, 0.70);
@@ -738,8 +748,9 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 /* ============================================================
    11. TOGGLE SWITCH
    ============================================================ */
+/* First-line alignment — see the note on .glass-checkbox below. Track is 30px. */
 .glass-toggle {
-  display: inline-flex; align-items: center;
+  display: inline-flex; align-items: flex-start;
   gap: var(--gl-space-sm); cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -762,6 +773,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   transition: var(--gl-transition);
   box-shadow: var(--gl-inset-subtle);
   flex-shrink: 0;
+  margin-top: max(0px, calc((1lh - 30px) / 2));
 }
 
 .glass-toggle__thumb {
@@ -790,14 +802,22 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   font-size: var(--gl-font-size-base);
   color: var(--gl-color-text);
   user-select: none;
+  margin-top: max(0px, calc((30px - 1lh) / 2));
 }
 
 
 /* ============================================================
    12. CHECKBOX
    ============================================================ */
+/* Control and label are aligned on the *first line*, not on the middle of the
+   text block — a consent label runs over several lines and a centred box then
+   points at nothing. The two margins below centre the 24px box on that first
+   line; whichever is the shorter of the two gets the offset, so exactly one is
+   ever non-zero. For a single-line label this is pixel-identical to the
+   `align-items: center` of pre-1.11.0. Repeated on .glass-radio (24px) and
+   .glass-toggle (30px) — keep the three in step. */
 .glass-checkbox {
-  display: inline-flex; align-items: center;
+  display: inline-flex; align-items: flex-start;
   gap: var(--gl-space-sm); cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -818,6 +838,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   transition: var(--gl-transition);
   box-shadow: var(--gl-inset-subtle);
   flex-shrink: 0;
+  margin-top: max(0px, calc((1lh - 24px) / 2));
 }
 
 .glass-checkbox__box svg {
@@ -840,14 +861,16 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-checkbox__label {
   font-size: var(--gl-font-size-base);
   color: var(--gl-color-text); user-select: none;
+  margin-top: max(0px, calc((24px - 1lh) / 2));
 }
 
 
 /* ============================================================
    13. RADIO BUTTON
    ============================================================ */
+/* First-line alignment — see the note on .glass-checkbox. */
 .glass-radio {
-  display: inline-flex; align-items: center;
+  display: inline-flex; align-items: flex-start;
   gap: var(--gl-space-sm); cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -867,6 +890,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   transition: var(--gl-transition);
   box-shadow: var(--gl-inset-subtle);
   flex-shrink: 0;
+  margin-top: max(0px, calc((1lh - 24px) / 2));
 }
 
 .glass-radio__dot {
@@ -889,6 +913,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-radio__label {
   font-size: var(--gl-font-size-base);
   color: var(--gl-color-text); user-select: none;
+  margin-top: max(0px, calc((24px - 1lh) / 2));
 }
 
 
@@ -923,7 +948,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
     var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
   );
   border: 2px solid rgba(255,255,255,0.5);
-  box-shadow: 0 2px 8px rgba(230,130,40,0.35), var(--gl-inset-strong);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--gl-color-primary-mid) 35%, transparent), var(--gl-inset-strong);
   margin-top: -2px; cursor: pointer;
   transition: var(--gl-transition);
 }
@@ -937,7 +962,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
     var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
   );
   border: 2px solid rgba(255,255,255,0.5);
-  box-shadow: 0 2px 8px rgba(230,130,40,0.35);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--gl-color-primary-mid) 35%, transparent);
   cursor: pointer;
 }
 

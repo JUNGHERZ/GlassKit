@@ -7,6 +7,84 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.11.0] – 2026-08-17
+
+### Fixed
+
+- **Re-branding left the warm glow, the warm rim and the focus ring amber.** Four
+  tokens named a *role* — the halo under the primary button, the rim of a filled
+  control, the keyboard focus ring — but held a fixed amber value. Setting
+  `--gl-color-primary: #0f9b8e` produced a teal button with an orange halo and an
+  amber focus ring in an otherwise teal interface. The focus ring is not a cosmetic
+  detail: it is the only feedback keyboard users get, and it has to belong to the
+  action colour.
+
+  All four are now mixed from `--gl-color-primary`, the way
+  `--gl-color-primary-surface` already was:
+
+  | Token | pre-1.11.0 (dark) | now |
+  |---|---|---|
+  | `--gl-border-warm` | `rgba(255, 200, 100, .35)` | `color-mix(… primary 68%, #fff … 35%, transparent)` |
+  | `--gl-border-focus` | `rgba(245, 166, 35, .60)` | `color-mix(… primary 60%, transparent)` |
+  | `--gl-shadow-btn-primary` | `0 6px 24px rgba(230, 130, 40, .35)` | `… color-mix(… primary-mid 35%, transparent)` |
+  | `--gl-shadow-focus` | `0 0 0 3px rgba(245, 166, 35, .3)` | `0 0 0 3px color-mix(… primary 30%, transparent)` |
+
+  Light mode used `rgba(232, 133, 45, …)` for all four; those were already the light
+  primary at 30 / 50 / 25 / 25 % alpha, so the light values are reproduced **exactly**.
+
+- **Two more places the report did not name.** `--gl-color-primary-mid` was a fixed
+  `#e07a24`, so a re-branded primary button rendered as a teal→**orange**→teal
+  gradient. It is now mixed from `--gl-color-primary` and `--gl-color-primary-dark`.
+  The range slider thumb carried `rgba(230,130,40,0.35)` inline in
+  `::-webkit-slider-thumb` and `::-moz-range-thumb` — not even as a token, so no
+  project could override it at all. Both now follow the primary.
+
+  Re-branding is therefore down to **two declarations**:
+
+  ```css
+  :root { --gl-color-primary: #0f9b8e; --gl-color-primary-dark: #0a7d72; }
+  ```
+
+  Note the derivation happens where the token is *declared*, on `:root`. Brand
+  tokens set on a subtree do not reach it — that was true before and is unchanged.
+
+- **Checkbox, radio and toggle centred their control on multi-line labels.** All
+  three used `align-items: center`. With a single-line label that is right; with a
+  consent label over four lines the box drifted to the middle of the text block.
+  Measured at 390 px width, four lines: the box centre sat **27 px** below the
+  centre of the first line — level with the third line, reading as a box that
+  belongs to nothing.
+
+  They now align on the **first line**. Control and label each carry a
+  `max(0px, calc((1lh - 24px) / 2))`-style offset, so whichever of the two is
+  shorter gets nudged and exactly one is ever non-zero. Measured after: **0 px**
+  deviation for checkbox, radio and toggle across `line-height` `normal`, `1.5`,
+  `1.6`, `10px` and `40px`.
+
+  For a **single-line** label this is pixel-identical to before — same 24 px (30 px
+  for the toggle) row height, same box position, same text position. Nothing to
+  migrate.
+
+### Why no `--gl-checkbox-align` token and no `--multiline` modifier
+
+Both were proposed. Neither is carried: the fix leaves single-line labels
+untouched, so there is nothing to opt out of, and a token would only let a project
+re-introduce the misalignment. It would also have to come in pairs — the alignment
+and the offset would have to be switched together, or the label picks up a stray
+3 px. One correct default beats two tokens that must agree.
+
+### Compatibility
+
+No class was renamed or removed, no token changed meaning, and the delivery stays
+build-free. With the default palette the derived values reproduce the old ones
+**exactly** in light mode, and in dark mode within 4/255 on the worst channel after
+compositing (`--gl-color-primary-mid` 4, `--gl-border-warm` 2, both focus tokens 0) —
+the shift exists on paper, not on screen. `lh` needs Chrome 109 / Safari 16.4 / Firefox 120;
+where it is missing the whole declaration is dropped and the control sits at the top
+of the label, still far closer than the old 27 px.
+
+---
+
 ## [1.10.0] – 2026-08-17
 
 ### Fixed
