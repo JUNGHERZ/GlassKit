@@ -7,6 +7,75 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.10.0] – 2026-08-17
+
+### Fixed
+
+- **Icon rules never reached icons passed into a web component.** Rules like
+  `.glass-btn svg { width: 20px; … }` are descendant selectors. When this sheet is
+  adopted into a shadow root — as GlassKit Elements does — an icon handed in from the
+  outside stays in the light DOM and is no descendant of anything in the shadow tree.
+  The rule cannot match it. Only `::slotted()` can.
+
+  Nothing errors and nothing warns; the component just renders without a usable icon.
+  Measured before the fix, icons passed to the elements:
+
+  | | before | after |
+  |---|---|---|
+  | `glk-button` | **1210×1210** | 20×20 |
+  | `glk-tab-accessory` | 54×54 | 22×22 |
+  | `glk-list-item` leading | 28×28 | 24×24 |
+  | `glk-list-item` leading, `leading-lg` | 28×28 | 32×32 |
+  | `glk-list-item` trailing | 0×0 | 18×18 |
+  | `glk-status` | 0×0 | 20×20 |
+  | `glk-pill` | 32×32 | 20×20 |
+
+  Seventeen rules gained a `::slotted()` twin, listed next to the original so the two
+  stay in sync:
+
+  ```css
+  .glass-btn svg,
+  .glass-btn ::slotted(svg) { … }
+  ```
+
+  In the document `::slotted()` matches nothing, so plain `.glass-*` markup is
+  unaffected — verified: a light-DOM `.glass-btn` icon still measures 20×20.
+
+  Components that build their icon inside the shadow tree are untouched, because their
+  icons were always real descendants: the checkbox tick, the accordion chevron, and
+  `glk-tab-item`, which clones the SVG into its shadow root.
+
+### Why the reported fix could not be applied as proposed
+
+The finding suggested adding `::slotted()` rules to the *element* stylesheets, and
+described that as sufficient. Two things stood in the way:
+
+1. **`::slotted()` only ever matches the assigned node itself, never inside it.** An icon
+   wrapped in a container — `<span slot="leading"><svg …></span>` — cannot be styled from
+   the shadow root at all; the assigned node is the `<span>`. This is a limit of the
+   platform, not of GlassKit. Measured: wrapped icons stay 0×0 even after the fix.
+   Passing the `<svg>` directly, as the documentation shows, works.
+2. **The rules belong here, not in the elements.** `.glass-btn--primary`, `--secondary`
+   and `--tertiary` each carry their own icon rule, as do the four accessory variants.
+   Restating them in a second project would duplicate GlassKit's cascade and let the two
+   drift apart. Written as a twin selector next to the original, they cannot.
+
+The proposed rule was also missing `stroke: currentColor`. With `fill: none` and no
+stroke, an icon that does not carry its own presentation attributes renders invisible.
+The twins inherit the full declaration block instead, so this cannot happen.
+
+### Compatibility
+
+A project that already sizes these icons itself keeps winning: for slotted content, the
+outer tree's rules take precedence over `::slotted()` from the shadow tree. Verified —
+with a project rule in place, `stroke-width` resolves to the project's `7px` rather than
+GlassKit's `2px`.
+
+Note that `.glass-list__leading` is a fixed 28×28 flex container. Enlarging only the icon
+shrinks it back on the main axis; size the container too.
+
+---
+
 ## [1.9.0] – 2026-08-17
 
 Version numbers of GlassKit and GlassKit Elements are realigned with this release;

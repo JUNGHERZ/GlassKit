@@ -1,12 +1,34 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.9.0
+   Jungherz GmbH – v1.10.0
 
    Features:
    - Scoped Reset (box-sizing fix)
    - Dark Mode (default)
    - Light Mode via [data-theme="light"]
    - 24 components (incl. floating Tab-Bar variant + Accessory)
+   ============================================================ */
+
+
+/* ============================================================
+   A NOTE ON THE ::slotted() PAIRS
+
+   Several icon rules are written twice, e.g.
+
+     .glass-btn svg,
+     .glass-btn ::slotted(svg) { … }
+
+   They are not redundant. When this sheet is adopted into a shadow root —
+   as GlassKit Elements does — an icon passed in from the outside stays in
+   the light DOM and is therefore no descendant of anything in the shadow
+   tree. `.glass-btn svg` cannot reach it; only `::slotted()` can.
+
+   Do not "simplify" these away. In the document they match nothing, so
+   they cost nothing there.
+
+   Note that ::slotted() only ever matches the assigned node itself. An icon
+   wrapped in a container — <span slot="leading"><svg …></span> — cannot be
+   styled from inside the shadow root at all. Pass icons directly.
    ============================================================ */
 
 
@@ -394,7 +416,8 @@
 .glass-pill:hover { background: var(--gl-surface-5); transform: scale(1.05); }
 .glass-pill:active { transform: scale(0.95); }
 
-.glass-pill svg {
+.glass-pill svg,
+.glass-pill ::slotted(svg) {
   width: 20px; height: 20px;
   fill: none; stroke: var(--gl-color-text); stroke-width: 2.2;
   stroke-linecap: round; stroke-linejoin: round;
@@ -484,7 +507,8 @@
    (block-level flex would fill the line despite --auto) */
 a.glass-btn { display: inline-flex; text-decoration: none; }
 
-.glass-btn svg {
+.glass-btn svg,
+.glass-btn ::slotted(svg) {
   width: 20px; height: 20px; flex-shrink: 0;
   fill: none; stroke: currentColor;
   stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
@@ -500,7 +524,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   border: 1px solid var(--gl-border-warm);
   box-shadow: var(--gl-shadow-btn-primary), var(--gl-inset-strong);
 }
-.glass-btn--primary svg { fill: var(--gl-icon-on-primary); stroke: var(--gl-icon-on-primary); stroke-width: 0; }
+.glass-btn--primary svg,
+.glass-btn--primary ::slotted(svg) { fill: var(--gl-icon-on-primary); stroke: var(--gl-icon-on-primary); stroke-width: 0; }
 .glass-btn--primary:hover { transform: translateY(-1px); }
 .glass-btn--primary:active { transform: translateY(1px); }
 
@@ -515,7 +540,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   color: var(--gl-color-text-on-light);
   box-shadow: var(--gl-shadow-btn), var(--gl-inset-milk);
 }
-.glass-btn--secondary svg {
+.glass-btn--secondary svg,
+.glass-btn--secondary ::slotted(svg) {
   fill: none; stroke: var(--gl-icon-on-secondary);
   stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
 }
@@ -531,7 +557,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   color: var(--gl-color-text-muted);
   box-shadow: 0 4px 12px rgba(0,0,0,0.10), var(--gl-inset-subtle);
 }
-.glass-btn--tertiary svg {
+.glass-btn--tertiary svg,
+.glass-btn--tertiary ::slotted(svg) {
   fill: none; stroke: var(--gl-icon-on-tertiary);
   stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
 }
@@ -561,7 +588,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   box-shadow: 0 4px 12px rgba(0,0,0,0.08), var(--gl-inset-subtle);
 }
 
-.glass-status svg {
+.glass-status svg,
+.glass-status ::slotted(svg) {
   width: 20px; height: 20px; flex-shrink: 0;
   stroke: var(--gl-icon-muted); stroke-width: 2; fill: none;
   stroke-linecap: round; stroke-linejoin: round;
@@ -1250,7 +1278,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   flex-shrink: 0;
 }
 
-.glass-tab-bar__accessory svg {
+.glass-tab-bar__accessory svg,
+.glass-tab-bar__accessory ::slotted(svg) {
   width: 22px; height: 22px; fill: none;
   stroke: var(--gl-icon-default); stroke-width: 1.8;
   stroke-linecap: round; stroke-linejoin: round;
@@ -1258,7 +1287,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 .glass-tab-bar__accessory:hover { transform: translateY(-1px); }
-.glass-tab-bar__accessory:hover svg { stroke: var(--gl-icon-strong); }
+.glass-tab-bar__accessory:hover svg,
+.glass-tab-bar__accessory:hover ::slotted(svg) { stroke: var(--gl-icon-strong); }
 
 .glass-tab-bar__accessory:focus-visible {
   box-shadow:
@@ -1278,8 +1308,10 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
     0 8px 32px color-mix(in srgb, var(--gl-color-primary) 35%, transparent),
     var(--gl-inset-medium);
 }
-.glass-tab-bar__accessory--accent svg { stroke: var(--gl-color-on-primary, #ffffff); }
-.glass-tab-bar__accessory--accent:hover svg { stroke: var(--gl-color-on-primary, #ffffff); }
+.glass-tab-bar__accessory--accent svg,
+.glass-tab-bar__accessory--accent ::slotted(svg) { stroke: var(--gl-color-on-primary, #ffffff); }
+.glass-tab-bar__accessory--accent:hover svg,
+.glass-tab-bar__accessory--accent:hover ::slotted(svg) { stroke: var(--gl-color-on-primary, #ffffff); }
 
 .glass-tab-bar__accessory--success {
   background: linear-gradient(135deg,
@@ -1291,7 +1323,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
     0 8px 32px color-mix(in srgb, var(--gl-color-success) 35%, transparent),
     var(--gl-inset-medium);
 }
-.glass-tab-bar__accessory--success svg { stroke: var(--gl-color-on-success, #ffffff); }
+.glass-tab-bar__accessory--success svg,
+.glass-tab-bar__accessory--success ::slotted(svg) { stroke: var(--gl-color-on-success, #ffffff); }
 
 .glass-tab-bar__accessory--error {
   background: linear-gradient(135deg,
@@ -1303,7 +1336,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
     0 8px 32px color-mix(in srgb, var(--gl-color-error) 35%, transparent),
     var(--gl-inset-medium);
 }
-.glass-tab-bar__accessory--error svg { stroke: var(--gl-color-on-error, #ffffff); }
+.glass-tab-bar__accessory--error svg,
+.glass-tab-bar__accessory--error ::slotted(svg) { stroke: var(--gl-color-on-error, #ffffff); }
 
 
 /* ============================================================
@@ -1447,7 +1481,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   font-weight: var(--gl-font-weight-semibold);
   color: var(--gl-color-text);
 }
-.glass-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.glass-avatar img,
+.glass-avatar ::slotted(img) { width: 100%; height: 100%; object-fit: cover; }
 .glass-avatar--sm { width: 32px; height: 32px; font-size: var(--gl-font-size-xs); }
 .glass-avatar--lg { width: 56px; height: 56px; font-size: var(--gl-font-size-lg); }
 
@@ -1673,7 +1708,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   justify-content: center;
   color: var(--gl-icon-strong);
 }
-.glass-list__leading svg {
+.glass-list__leading svg,
+.glass-list__leading ::slotted(svg) {
   width: 24px;
   height: 24px;
   stroke: currentColor;
@@ -1688,11 +1724,13 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   border-radius: var(--gl-radius-xs);
   overflow: hidden;
 }
-.glass-list__leading--lg svg {
+.glass-list__leading--lg svg,
+.glass-list__leading--lg ::slotted(svg) {
   width: 32px;
   height: 32px;
 }
-.glass-list__leading--lg img {
+.glass-list__leading--lg img,
+.glass-list__leading--lg ::slotted(img) {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1738,7 +1776,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   color: var(--gl-color-text-muted);
   font-size: var(--gl-font-size-sm);
 }
-.glass-list__trailing svg {
+.glass-list__trailing svg,
+.glass-list__trailing ::slotted(svg) {
   width: 18px;
   height: 18px;
   stroke: var(--gl-icon-muted);

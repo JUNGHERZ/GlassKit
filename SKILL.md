@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.9.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.10.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -1634,6 +1634,19 @@ above picks up whatever the document defines and theme switching works globally.
 >
 > The cascade layer keeps an ordinary brand stylesheet winning over the defaults. This is
 > what GlassKit Elements does since 1.9.0.
+
+> **Pitfall: a descendant selector cannot reach a slotted icon.** `.glass-btn svg` only
+> matches real descendants. An icon passed in from outside stays in the light DOM, so the
+> rule never applies to it. Since 1.10.0 every icon rule that sits above a slot has a
+> `::slotted()` twin, so passing an icon in works:
+>
+> ```html
+> <glk-button><svg viewBox="0 0 24 24">…</svg>Save</glk-button>
+> ```
+>
+> `::slotted()` matches only the assigned node, never inside it — an icon wrapped in a
+> container (`<span slot="leading"><svg …></span>`) stays unstyled and has to be sized by
+> the project. Pass the `<svg>` directly.
 
 ---
 
