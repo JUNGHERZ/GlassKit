@@ -18,6 +18,7 @@
     "minify": "cleancss -O2 --source-map -o glasskit.min.css glasskit.css",
     "build:styles-js": "node build-styles-js.mjs",
     "build": "npm run minify && npm run build:styles-js",
+    "check:versions": "node check-versions.mjs",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

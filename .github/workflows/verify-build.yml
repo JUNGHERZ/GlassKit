@@ -8,7 +8,12 @@
 #           baut bei jedem Push und prüft, dass beide Artefakte entstehen
 #           und die Versionsangabe zu package.json passt.
 #
-# Lokal:    npm run build
+#           Zusätzlich läuft der Versionsabgleich: README-Badges, die drei
+#           HTML-Seiten, die CDN-Pins und der oberste CHANGELOG-Eintrag müssen
+#           dieselbe Version nennen wie package.json. Das ist mehrfach
+#           auseinandergelaufen, ohne dass irgendetwas falsch gerendert hätte.
+#
+# Lokal:    npm run build && npm run check:versions
 # ============================================================
 
 name: Verify Build
@@ -50,3 +55,6 @@ jobs:
           grep -q "v${VERSION}" glasskit.css \
             || { echo "::error::glasskit.css header does not say v${VERSION}"; exit 1; }
           echo "OK – artifacts built for v${VERSION}"
+
+      - name: Documented versions match package.json
+        run: npm run check:versions

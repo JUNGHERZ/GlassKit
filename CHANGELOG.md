@@ -794,6 +794,11 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.11.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.11.0
+[1.10.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.10.0
+[1.9.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.9.0
+[1.7.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.7.1
+[1.7.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.7.0
 [1.6.5]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.5
 [1.6.4]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.4
 [1.6.3]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.6.3
@@ -807,4 +812,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.6.5...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.11.0...HEAD
