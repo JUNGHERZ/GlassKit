@@ -7,6 +7,33 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.12.0] – 2026-09-20
+
+### Added
+
+- **Badges can be chips now: `--interactive` and `--selected`.** A badge was already being used as a filter chip — a status row where one entry is picked — but the library offered nothing for it. Projects reached for `variant="primary"` to mark the chosen chip and bolted `cursor: pointer` on from outside, which left the row without a focus ring and without any way to say *which* chip was on.
+
+  `--interactive` carries the affordance: pointer cursor, a hover tint, a focus ring and press feedback. `--selected` says which chip is on.
+
+  ```html
+  <button class="glass-badge glass-badge--interactive glass-badge--selected"
+          aria-pressed="true">Active</button>
+  <button class="glass-badge glass-badge--interactive"
+          aria-pressed="false">Applied</button>
+  ```
+
+  The classes only paint the chip. Use a real `<button>` and carry the state in `aria-pressed`, so the row is operable by keyboard and announced as a toggle.
+
+- **`--selected` deepens the badge's own colour instead of overruling it.** Each variant points a new `--gl-badge-accent` at its own colour, so `glass-badge--success glass-badge--selected` stays green and a plain badge borrows the primary — which is what a neutral filter row wants. Set `--gl-badge-accent` on a single badge to give one chip a colour of its own.
+
+  Both states paint through a full-bleed inset shadow rather than `background`. The variants put a gradient there, and a hover rule that touched `background` would wipe it along with the `--gl-state-scrim` layer that keeps the label readable over any backdrop.
+
+### Fixed
+
+- **The German pages said v1.10.0.** `de/index.html`, `de/docs.html` and `de/showcase.html` were never re-labelled for 1.11.0 — their content had kept up, the version badge had not. `check-versions.mjs` only walks the English pages, which is why nothing caught it.
+
+---
+
 ## [1.11.0] – 2026-08-17
 
 ### Fixed
@@ -794,6 +821,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.12.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.12.0
 [1.11.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.11.0
 [1.10.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.10.0
 [1.9.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.9.0

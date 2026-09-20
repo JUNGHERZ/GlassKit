@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.10.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.12.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -448,7 +448,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.10.0</span>
+      <span class="docs-hero__badge">v1.12.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">24 Komponenten</span>
@@ -795,6 +795,33 @@ function <span class="cls">toggleTheme</span>() {
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-badge glass-badge--primary"</span><span class="tag">&gt;</span>Aktiv<span class="tag">&lt;/span&gt;</span></div>
     </div>
+
+    <h3>Chips</h3>
+    <p>Ein Badge dient auch als Filter-Chip. <code>--interactive</code> macht ihn anfassbar &mdash; Zeiger, Hover-T&ouml;nung, Fokusring &mdash; und <code>--selected</code> zeigt, welcher Chip aktiv ist. Nimm einen echten <code>&lt;button&gt;</code> und leg den Zustand in <code>aria-pressed</code>, damit die Zeile per Tastatur bedienbar ist und als Umschalter angesagt wird.</p>
+    <div class="docs-preview docs-preview--row docs-preview--compact">
+      <button class="glass-badge glass-badge--interactive glass-badge--selected" aria-pressed="true">aktiv</button>
+      <button class="glass-badge glass-badge--interactive" aria-pressed="false">beworben</button>
+      <button class="glass-badge glass-badge--interactive" aria-pressed="false">pausiert</button>
+    </div>
+    <p><code>--selected</code> vertieft die Farbe, die der Badge schon hat, statt sie zu &uuml;bergehen &mdash; ein Status-Chip bleibt beim Ausw&auml;hlen also in seiner eigenen Farbe.</p>
+    <div class="docs-preview docs-preview--row docs-preview--compact">
+      <button class="glass-badge glass-badge--success glass-badge--interactive glass-badge--selected" aria-pressed="true">erledigt</button>
+      <button class="glass-badge glass-badge--error glass-badge--interactive" aria-pressed="false">fehlgeschlagen</button>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-badge glass-badge--interactive glass-badge--selected"</span>
+        <span class="attr">aria-pressed=</span><span class="val">"true"</span><span class="tag">&gt;</span>aktiv<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-badge glass-badge--interactive"</span>
+        <span class="attr">aria-pressed=</span><span class="val">"false"</span><span class="tag">&gt;</span>beworben<span class="tag">&lt;/button&gt;</span></div>
+    </div>
+    <table class="docs-table">
+      <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><code>--interactive</code></td><td>Anklickbar: Zeiger, Hover-T&ouml;nung, Fokusring, Druck-R&uuml;ckmeldung</td></tr>
+        <tr><td><code>--selected</code></td><td>Der aktive Chip &mdash; vertieft die eigene Farbe des Badges</td></tr>
+        <tr><td><code>--gl-badge-accent</code></td><td>Die Farbe, die beide Zust&auml;nde vertiefen. Pro Badge setzbar, wenn ein Chip eine eigene Farbe bekommen soll.</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <!-- AVATAR -->
@@ -1349,7 +1376,7 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td>Titel</td><td><code>.glass-title</code></td><td>–</td></tr>
         <tr><td>Card</td><td><code>.glass-card</code></td><td><code>--glow</code></td></tr>
         <tr><td>Button</td><td><code>.glass-btn</code></td><td><code>--primary</code>, <code>--secondary</code>, <code>--tertiary</code>, <code>--sm</code>, <code>--lg</code>, <code>--auto</code></td></tr>
-        <tr><td>Badge</td><td><code>.glass-badge</code></td><td><code>--primary</code>, <code>--success</code>, <code>--error</code></td></tr>
+        <tr><td>Badge</td><td><code>.glass-badge</code></td><td><code>--primary</code>, <code>--success</code>, <code>--error</code>, <code>--interactive</code>, <code>--selected</code></td></tr>
         <tr><td>Avatar</td><td><code>.glass-avatar</code></td><td><code>--sm</code>, <code>--lg</code></td></tr>
         <tr><td>Divider</td><td><code>.glass-divider</code></td><td>–</td></tr>
         <tr><td>Status</td><td><code>.glass-status</code></td><td>–</td></tr>

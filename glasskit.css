@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.11.0
+   Jungherz GmbH – v1.12.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -1433,6 +1433,13 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
    20. BADGE
    ============================================================ */
 .glass-badge {
+  /* The accent a chip deepens when it is hovered or selected. Each variant
+     below re-points it, so a selected success chip stays green instead of
+     turning primary. A plain badge has no colour of its own, so it borrows
+     the primary one — which is what a filter row wants. */
+  --gl-badge-accent: var(--gl-color-primary);
+  --gl-badge-accent-text: var(--gl-color-primary-on-surface, var(--gl-color-primary));
+
   display: inline-flex; align-items: center; gap: var(--gl-space-2xs);
   padding: var(--gl-space-2xs) var(--gl-space-sm);
   background: var(--gl-surface-3);
@@ -1449,6 +1456,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
    fill, the border and the text together. The --gl-state-scrim layer sits
    behind the tint and keeps the label readable over any backdrop. */
 .glass-badge--primary {
+  --gl-badge-accent: var(--gl-color-primary);
+  --gl-badge-accent-text: var(--gl-color-primary-on-surface, var(--gl-color-primary));
   background:
     linear-gradient(135deg,
       var(--gl-color-primary-surface, rgba(245,166,35,0.25)) 0%,
@@ -1459,6 +1468,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   color: var(--gl-color-primary-on-surface, var(--gl-color-primary));
 }
 .glass-badge--success {
+  --gl-badge-accent: var(--gl-color-success);
+  --gl-badge-accent-text: var(--gl-color-success-on-surface, var(--gl-color-success));
   background:
     linear-gradient(var(--gl-color-success-surface, rgba(52,199,89,0.15)) 0%,
                     var(--gl-color-success-surface, rgba(52,199,89,0.15)) 100%),
@@ -1467,12 +1478,65 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   color: var(--gl-color-success-on-surface, var(--gl-color-success));
 }
 .glass-badge--error {
+  --gl-badge-accent: var(--gl-color-error);
+  --gl-badge-accent-text: var(--gl-color-error-on-surface, var(--gl-color-error));
   background:
     linear-gradient(var(--gl-color-error-surface, rgba(255,59,48,0.15)) 0%,
                     var(--gl-color-error-surface, rgba(255,59,48,0.15)) 100%),
     var(--gl-state-scrim, transparent);
   border-color: var(--gl-color-error-border, rgba(255,59,48,0.30));
   color: var(--gl-color-error-on-surface, var(--gl-color-error));
+}
+
+
+/* ---- Badges as chips ----
+   A badge doubles as a filter chip. `--interactive` carries the affordance,
+   `--selected` says which chip is on; both combine with the variants above.
+
+   Both paint through a full-bleed inset shadow instead of `background`,
+   because the variants put a gradient there — a hover rule that touched
+   `background` would wipe it, and with it the --gl-state-scrim layer that
+   keeps the label readable over any backdrop.
+
+   In GlassKit Elements an interactive badge renders as a real <button>, so
+   the rule below also undoes the one thing a button does not inherit. In the
+   document that declaration costs nothing.
+
+   Mark the pressed state for assistive tech as well as for the eye:
+   <button class="glass-badge glass-badge--interactive glass-badge--selected"
+           aria-pressed="true">Active</button> */
+.glass-badge--interactive {
+  font-family: inherit;
+  -webkit-appearance: none; appearance: none;
+  cursor: pointer;
+  transition: var(--gl-transition-fast);
+  outline: none; -webkit-tap-highlight-color: transparent;
+}
+.glass-badge--interactive:hover {
+  border-color: color-mix(in srgb, var(--gl-badge-accent) 45%, var(--gl-border-subtle));
+  box-shadow: var(--gl-inset-subtle),
+              inset 0 0 0 100px color-mix(in srgb, var(--gl-badge-accent) 12%, transparent);
+}
+.glass-badge--interactive:active { transform: scale(0.96); }
+.glass-badge--interactive:focus-visible {
+  box-shadow: var(--gl-shadow-focus), var(--gl-inset-subtle);
+}
+
+.glass-badge--selected {
+  border-color: color-mix(in srgb, var(--gl-badge-accent) 55%, transparent);
+  color: var(--gl-badge-accent-text);
+  box-shadow: var(--gl-inset-subtle),
+              inset 0 0 0 100px color-mix(in srgb, var(--gl-badge-accent) 22%, transparent);
+}
+/* A bare :hover / :focus-visible rule outweighs `--selected` on its own, so
+   the selected chip states are spelled out rather than left to source order. */
+.glass-badge--interactive.glass-badge--selected:hover {
+  box-shadow: var(--gl-inset-subtle),
+              inset 0 0 0 100px color-mix(in srgb, var(--gl-badge-accent) 30%, transparent);
+}
+.glass-badge--interactive.glass-badge--selected:focus-visible {
+  box-shadow: var(--gl-shadow-focus), var(--gl-inset-subtle),
+              inset 0 0 0 100px color-mix(in srgb, var(--gl-badge-accent) 22%, transparent);
 }
 
 

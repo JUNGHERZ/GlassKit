@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.11.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.12.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-24-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.11.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.12.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -72,16 +72,16 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.11/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.12/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.11/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.12/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.11/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.12/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.11` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.12` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 ### npm / yarn / pnpm
 
@@ -183,7 +183,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Title** | `.glass-title` | Page title with text shadow |
 | **Card** | `.glass-card` | Glass container for content |
 | **Card (Glow)** | `.glass-card--glow` | Card with light-to-milky gradient |
-| **Badge** | `.glass-badge` | Tags & labels |
+| **Badge** | `.glass-badge` | Tags, labels & filter chips |
 | **Avatar** | `.glass-avatar` | Glass circle (sm/md/lg) |
 | **Status** | `.glass-status` | Notice card with icon |
 | **List** | `.glass-list` | iOS-style grouped settings list with auto dividers |
@@ -547,6 +547,7 @@ Progress Modifiers:
 
 Badge Modifiers:
   .glass-badge--primary / --success / --error
+  .glass-badge--interactive / --selected   (chips)
 
 Avatar Modifiers:
   .glass-avatar--sm / --lg

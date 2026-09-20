@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.11.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.12.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -490,6 +490,19 @@ Tags and labels.
 | `.glass-badge--primary` | Primary color |
 | `.glass-badge--success` | Green |
 | `.glass-badge--error` | Red |
+| `.glass-badge--interactive` | Pressable chip — cursor, hover tint, focus ring, press feedback |
+| `.glass-badge--selected` | The chip that is on |
+
+**Chips (since 1.12.0).** A badge doubles as a filter chip. Use a real `<button>` and carry the state in `aria-pressed`, so the row is operable by keyboard and announced as a toggle — the classes only paint it.
+
+```html
+<button class="glass-badge glass-badge--interactive glass-badge--selected"
+        aria-pressed="true">Active</button>
+<button class="glass-badge glass-badge--interactive"
+        aria-pressed="false">Applied</button>
+```
+
+`--selected` deepens the color the badge already carries rather than overruling it, so `glass-badge--success glass-badge--selected` stays green. Each variant points `--gl-badge-accent` at its own color; set that variable on a single badge to give one chip a color of its own. Both states paint through a full-bleed inset shadow instead of `background`, so they layer over a variant's gradient without wiping it.
 
 Since 1.7.0 each variant is built from tokens rather than fixed `rgba()` literals —
 `--gl-color-{state}-surface` for the fill, `-border` for the border,
@@ -1560,7 +1573,7 @@ Key points in this composition:
 | Title | `.glass-title` | – |
 | Card | `.glass-card` | `--glow` |
 | Button | `.glass-btn` | `--primary`, `--secondary`, `--tertiary`, `--sm`, `--lg`, `--auto` |
-| Badge | `.glass-badge` | `--primary`, `--success`, `--error` |
+| Badge | `.glass-badge` | `--primary`, `--success`, `--error`, `--interactive`, `--selected` |
 | Avatar | `.glass-avatar` | `--sm`, `--lg` |
 | Divider | `.glass-divider` | – |
 | Status | `.glass-status` | – |
