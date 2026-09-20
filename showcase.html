@@ -288,7 +288,7 @@
         </button>
       </nav>
 
-      <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.12.0</h1>
+      <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.14.0</h1>
 
       <!-- CARD -->
       <p class="section-label">Card (Glow)</p>
@@ -548,6 +548,38 @@
         </svg>
         <p>No documents captured yet.</p>
       </div>
+
+      <!-- SKELETON -->
+      <p class="section-label">Skeleton</p>
+      <div class="glass-skeleton gl-mb-md" aria-busy="true" aria-label="Loading">
+        <div class="glass-skeleton__line glass-skeleton__line--title" style="width:55%"></div>
+        <div class="glass-skeleton__line"></div>
+        <div class="glass-skeleton__line" style="width:80%"></div>
+      </div>
+
+      <!-- TABLE -->
+      <p class="section-label">Table</p>
+      <div class="glass-table-wrap gl-mb-md">
+        <table class="glass-table">
+          <thead><tr><th>Date</th><th>Item</th><th class="glass-table__num">Amount</th></tr></thead>
+          <tbody>
+            <tr><td>2026-09-18</td><td>Invoice #1042</td><td class="glass-table__num">1,240.00</td></tr>
+            <tr><td>2026-09-19</td><td>Refund</td><td class="glass-table__num">&minus;80.00</td></tr>
+            <tr><td class="glass-table__muted">2026-09-20</td><td class="glass-table__muted">Pending</td><td class="glass-table__num glass-table__muted">–</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PROSE -->
+      <p class="section-label">Prose</p>
+      <div class="glass-prose gl-mb-md">
+        <h3>Getting started</h3>
+        <p>Include <code>glasskit.css</code>, set <code>data-theme</code>, done. Everything else is <strong>optional</strong> &mdash; see the <a href="docs.html#tokens">design tokens</a>.</p>
+        <ul><li>Dark mode is the default</li><li>Light mode via <code>data-theme="light"</code></li></ul>
+        <blockquote>The glass effect needs a coloured background to show.</blockquote>
+      </div>
+
+      <hr class="glass-divider gl-mb-md">
 
       <!-- LIST – iOS-Style Settings (Icon + Title + Subtitle + Trailing) -->
       <p class="section-label">List (settings style)</p>

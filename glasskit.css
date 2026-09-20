@@ -1,12 +1,12 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.12.0
+   Jungherz GmbH – v1.14.0
 
    Features:
    - Scoped Reset (box-sizing fix)
    - Dark Mode (default)
    - Light Mode via [data-theme="light"]
-   - 24 components (incl. floating Tab-Bar variant + Accessory)
+   - 27 components (incl. floating Tab-Bar variant + Accessory)
    ============================================================ */
 
 
@@ -1883,7 +1883,110 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 
 
 /* ============================================================
-   26. UTILITIES
+   26. SKELETON
+   ============================================================ */
+/* Loading placeholder: shimmer lines standing in for text that has not
+   arrived. The caller sets each line's width; the shimmer runs over the
+   surface tokens, so it follows the theme. Holds still when the user asked
+   for reduced motion. */
+.glass-skeleton { display: flex; flex-direction: column; gap: 10px; }
+.glass-skeleton__line {
+  height: 12px; border-radius: 6px;
+  background: linear-gradient(90deg,
+    var(--gl-surface-1) 0%, var(--gl-surface-4) 50%, var(--gl-surface-1) 100%);
+  background-size: 200% 100%;
+  animation: glass-skeleton 1.4s ease-in-out infinite;
+}
+.glass-skeleton__line--title { height: 18px; }
+@keyframes glass-skeleton {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-skeleton__line { animation: none; }
+}
+
+
+/* ============================================================
+   27. TABLE
+   ============================================================ */
+/* A plain <table> on glass: hairline rows, a muted header, numbers
+   right-aligned in tabular figures, and a wrapper that scrolls sideways
+   where the columns do not fit. Document-level by design — from a shadow
+   root, ::slotted() cannot reach a slotted table's cells, so there is no
+   element for this; put the class on the <table> itself. */
+.glass-table-wrap { overflow-x: auto; border-radius: var(--gl-radius-sm); }
+.glass-table {
+  width: 100%; border-collapse: collapse;
+  font-size: var(--gl-font-size-sm); color: var(--gl-color-text);
+}
+.glass-table th {
+  text-align: left; padding: 8px 10px; white-space: nowrap;
+  font-weight: var(--gl-font-weight-medium); color: var(--gl-color-text-muted);
+  border-bottom: 1px solid var(--gl-border-medium);
+}
+.glass-table td {
+  padding: 9px 10px; vertical-align: top;
+  border-bottom: 1px solid var(--gl-border-subtle);
+}
+.glass-table tbody tr:last-child td { border-bottom: 0; }
+.glass-table tbody tr:hover td { background: var(--gl-surface-1); }
+.glass-table__num { text-align: right; font-variant-numeric: tabular-nums; }
+.glass-table__muted { color: var(--gl-color-text-muted); }
+
+
+/* ============================================================
+   28. PROSE
+   ============================================================ */
+/* Running text the app did not write by hand — rendered Markdown, help and
+   info pages. One class on the container gives headings, lists, links,
+   code, quotes, images and tables the GlassKit voice without a class on
+   every tag. Document-level by design: the content is light DOM, and
+   ::slotted() stops at the first level. */
+.glass-prose {
+  font-size: var(--gl-font-size-base); line-height: 1.6;
+  color: var(--gl-color-text);
+}
+.glass-prose > :first-child { margin-top: 0; }
+.glass-prose > :last-child { margin-bottom: 0; }
+.glass-prose h1, .glass-prose h2, .glass-prose h3 {
+  color: var(--gl-color-text-heading); line-height: 1.25; margin: 1.2em 0 0.4em;
+}
+.glass-prose h1 { font-size: var(--gl-font-size-title); }
+.glass-prose h2 { font-size: var(--gl-font-size-modal); }
+.glass-prose h3 { font-size: var(--gl-font-size-lg); }
+.glass-prose p, .glass-prose ul, .glass-prose ol, .glass-prose pre,
+.glass-prose blockquote, .glass-prose table { margin: 0 0 0.9em; }
+.glass-prose ul, .glass-prose ol { padding-left: 1.3em; }
+.glass-prose strong { color: var(--gl-color-text-heading); }
+/* Links in running text are underlined: colour alone does not mark them. */
+.glass-prose a { color: var(--gl-color-primary); text-decoration: underline; text-underline-offset: 2px; }
+.glass-prose code {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.9em;
+  background: var(--gl-surface-2); padding: 1px 5px; border-radius: 4px;
+}
+.glass-prose pre {
+  padding: 12px 14px; overflow-x: auto;
+  background: var(--gl-surface-1); border-radius: var(--gl-radius-sm);
+}
+.glass-prose pre code { background: none; padding: 0; }
+.glass-prose blockquote {
+  padding: 8px 14px;
+  border-left: 3px solid var(--gl-color-primary);
+  background: var(--gl-surface-1);
+  border-radius: 0 var(--gl-radius-xs) var(--gl-radius-xs) 0;
+}
+.glass-prose img { max-width: 100%; height: auto; border-radius: var(--gl-radius-sm); }
+.glass-prose hr { height: 1px; border: 0; margin: 1.2em 0; background: var(--gl-border-subtle); }
+.glass-prose table { width: 100%; border-collapse: collapse; }
+.glass-prose th, .glass-prose td {
+  padding: 6px 8px; text-align: left;
+  border-bottom: 1px solid var(--gl-border-subtle);
+}
+
+
+/* ============================================================
+   29. UTILITIES
    ============================================================ */
 .gl-stack            { display: flex; flex-direction: column; }
 .gl-row              { display: flex; flex-direction: row; align-items: center; }

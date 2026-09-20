@@ -7,6 +7,24 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.14.0] – 2026-09-20
+
+Version numbers realign with GlassKit Elements at 1.14.0 — there is no GlassKit 1.13.0.
+
+### Added
+
+- **Three blocks that came back from a project: `.glass-skeleton`, `.glass-table`, `.glass-prose`.** All three were built in EhrenPfoten in GlassKit style — BEM, tokens only, checked in both themes — and had no counterpart here. Every token they reference is one this sheet declares, so they arrive as copies, not rewrites.
+
+  `.glass-skeleton` stacks shimmer lines standing in for text that has not arrived; the caller sets each line's width, `--title` makes one taller, and the shimmer holds still under `prefers-reduced-motion`.
+
+  `.glass-table` styles a plain `<table>`: hairline rows, a muted header, `__num` for right-aligned tabular figures, `__muted` for secondary cells, and `.glass-table-wrap` to scroll sideways where the columns do not fit. Compared with the project block, the row rules are scoped to `tbody` and the table sets its own text colour, so it reads the same wherever it lands.
+
+  `.glass-prose` gives rendered Markdown the GlassKit voice with one class on the container: `h1`–`h3`, `p`, lists, links, `code`, `blockquote`, tables — plus, beyond the project block, `pre`, `img` and `hr`, `strong` in heading colour, underlined links (colour alone does not mark a link in running text), and no outer margin on the first and last child so the block sits flush inside a card.
+
+  Table and prose are document-level by design. From a shadow root, `::slotted()` matches only the slotted node itself and never its descendants — a wrapper element could not style a table's cells or a Markdown paragraph. So there is no `<glk-table>` or `<glk-prose>`; put the class on the element in the light DOM.
+
+---
+
 ## [1.12.0] – 2026-09-20
 
 ### Added
@@ -821,6 +839,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.14.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.14.0
 [1.12.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.12.0
 [1.11.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.11.0
 [1.10.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.10.0

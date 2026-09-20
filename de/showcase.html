@@ -288,7 +288,7 @@
         </button>
       </nav>
 
-      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.12.0</h1>
+      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.14.0</h1>
 
       <!-- CARD -->
       <p class="section-label">Card (Glow)</p>
@@ -548,6 +548,38 @@
         </svg>
         <p>Noch keine aufgenommenen Verträge vorhanden.</p>
       </div>
+
+      <!-- SKELETON -->
+      <p class="section-label">Skeleton</p>
+      <div class="glass-skeleton gl-mb-md" aria-busy="true" aria-label="L&auml;dt">
+        <div class="glass-skeleton__line glass-skeleton__line--title" style="width:55%"></div>
+        <div class="glass-skeleton__line"></div>
+        <div class="glass-skeleton__line" style="width:80%"></div>
+      </div>
+
+      <!-- TABLE -->
+      <p class="section-label">Tabelle</p>
+      <div class="glass-table-wrap gl-mb-md">
+        <table class="glass-table">
+          <thead><tr><th>Datum</th><th>Posten</th><th class="glass-table__num">Betrag</th></tr></thead>
+          <tbody>
+            <tr><td>2026-09-18</td><td>Rechnung 1042</td><td class="glass-table__num">1.240,00</td></tr>
+            <tr><td>2026-09-19</td><td>Erstattung</td><td class="glass-table__num">&minus;80,00</td></tr>
+            <tr><td class="glass-table__muted">2026-09-20</td><td class="glass-table__muted">Offen</td><td class="glass-table__num glass-table__muted">–</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PROSE -->
+      <p class="section-label">Flie&szlig;text</p>
+      <div class="glass-prose gl-mb-md">
+        <h3>Erste Schritte</h3>
+        <p><code>glasskit.css</code> einbinden, <code>data-theme</code> setzen, fertig. Alles Weitere ist <strong>optional</strong> &mdash; siehe die <a href="docs.html#tokens">Design-Tokens</a>.</p>
+        <ul><li>Dark Mode ist der Standard</li><li>Light Mode &uuml;ber <code>data-theme="light"</code></li></ul>
+        <blockquote>Der Glaseffekt braucht einen farbigen Hintergrund, um sichtbar zu sein.</blockquote>
+      </div>
+
+      <hr class="glass-divider gl-mb-md">
 
       <!-- LIST – iOS-Stil Einstellungen (Icon + Titel + Untertitel + Trailing) -->
       <p class="section-label">Liste (Settings-Stil)</p>

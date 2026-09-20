@@ -178,7 +178,7 @@
     margin-bottom: 24px; max-width: 600px;
   }
 
-  .docs-section h3 {
+  .docs-section > h3 {
     font-size: 17px; font-weight: 600;
     color: var(--gl-color-text);
     margin-top: 32px; margin-bottom: 12px;
@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.12.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.14.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -407,6 +407,9 @@
     <a class="docs-sidebar__link" href="#divider">Divider</a>
     <a class="docs-sidebar__link" href="#status">Status Notice</a>
     <a class="docs-sidebar__link" href="#list">List</a>
+    <a class="docs-sidebar__link" href="#skeleton">Skeleton</a>
+    <a class="docs-sidebar__link" href="#table">Table</a>
+    <a class="docs-sidebar__link" href="#prose">Prose</a>
   </div>
 
   <div class="docs-sidebar__group">
@@ -448,10 +451,10 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.12.0</span>
+      <span class="docs-hero__badge">v1.14.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
-      <span class="docs-hero__badge">24 Components</span>
+      <span class="docs-hero__badge">27 Components</span>
     </div>
   </header>
 
@@ -1314,6 +1317,91 @@ function <span class="cls">toggleTheme</span>() {
     </div>
   </section>
 
+  <!-- SKELETON -->
+  <section class="docs-section" id="skeleton">
+    <h2>Skeleton</h2>
+    <p>Loading placeholder: shimmer lines standing in for text that has not arrived. Set each line's width; the shimmer follows the theme and holds still under <code>prefers-reduced-motion</code>. Mark the region <code>aria-busy="true"</code> so assistive tech knows it is loading.</p>
+    <div class="docs-preview">
+      <div class="glass-skeleton" aria-busy="true" aria-label="Loading">
+        <div class="glass-skeleton__line glass-skeleton__line--title" style="width:55%"></div>
+        <div class="glass-skeleton__line"></div>
+        <div class="glass-skeleton__line" style="width:80%"></div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-skeleton"</span> <span class="attr">aria-busy=</span><span class="val">"true"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-skeleton__line glass-skeleton__line--title"</span> <span class="attr">style=</span><span class="val">"width:55%"</span><span class="tag">&gt;&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-skeleton__line"</span><span class="tag">&gt;&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-skeleton__line"</span> <span class="attr">style=</span><span class="val">"width:80%"</span><span class="tag">&gt;&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-skeleton</code></td><td>Stack of lines, 10px apart</td></tr>
+        <tr><td><code>.glass-skeleton__line</code></td><td>One shimmer line (12px); width via inline style</td></tr>
+        <tr><td><code>.glass-skeleton__line--title</code></td><td>Taller line (18px) standing in for a heading</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- TABLE -->
+  <section class="docs-section" id="table">
+    <h2>Table</h2>
+    <p>A plain <code>&lt;table&gt;</code> on glass: hairline rows, a muted header, numbers right-aligned in tabular figures. The <code>.glass-table-wrap</code> wrapper scrolls sideways where the columns do not fit. Put the class on the table itself &mdash; from a shadow root, <code>::slotted()</code> cannot reach the cells, so this is document-level CSS by design.</p>
+    <div class="docs-preview">
+      <div class="glass-table-wrap">
+        <table class="glass-table">
+          <thead><tr><th>Date</th><th>Item</th><th class="glass-table__num">Amount</th></tr></thead>
+          <tbody>
+            <tr><td>2026-09-18</td><td>Invoice #1042</td><td class="glass-table__num">1,240.00</td></tr>
+            <tr><td>2026-09-19</td><td>Refund</td><td class="glass-table__num">&minus;80.00</td></tr>
+            <tr><td class="glass-table__muted">2026-09-20</td><td class="glass-table__muted">Pending</td><td class="glass-table__num glass-table__muted">–</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-table-wrap"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;table</span> <span class="attr">class=</span><span class="val">"glass-table"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;thead&gt;&lt;tr&gt;&lt;th&gt;</span>Date<span class="tag">&lt;/th&gt;&lt;th</span> <span class="attr">class=</span><span class="val">"glass-table__num"</span><span class="tag">&gt;</span>Amount<span class="tag">&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span>
+    <span class="tag">&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;</span>2026-09-18<span class="tag">&lt;/td&gt;&lt;td</span> <span class="attr">class=</span><span class="val">"glass-table__num"</span><span class="tag">&gt;</span>1,240.00<span class="tag">&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;</span>
+  <span class="tag">&lt;/table&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-table-wrap</code></td><td>Optional horizontal scroll container</td></tr>
+        <tr><td><code>.glass-table</code></td><td>The table: hairline rows, hover highlight</td></tr>
+        <tr><td><code>.glass-table__num</code></td><td>Right-aligned, tabular figures &mdash; on <code>th</code> and <code>td</code></td></tr>
+        <tr><td><code>.glass-table__muted</code></td><td>Secondary text colour on a cell</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- PROSE -->
+  <section class="docs-section" id="prose">
+    <h2>Prose</h2>
+    <p>Running text the app did not write by hand &mdash; rendered Markdown, help and info pages. One class on the container styles headings, paragraphs, lists, links, code, quotes, images and tables. Document-level by design: the content is light DOM, and <code>::slotted()</code> stops at the first level.</p>
+    <div class="docs-preview">
+      <div class="glass-prose">
+        <h3>Getting started</h3>
+        <p>Include <code>glasskit.css</code>, set <code>data-theme</code> on <code>&lt;html&gt;</code>, done. Everything else is <strong>optional</strong> &mdash; see the <a href="#tokens">design tokens</a>.</p>
+        <ul>
+          <li>Dark mode is the default</li>
+          <li>Light mode via <code>data-theme="light"</code></li>
+        </ul>
+        <blockquote>The glass effect needs a coloured background to show.</blockquote>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;article</span> <span class="attr">class=</span><span class="val">"glass-prose"</span><span class="tag">&gt;</span>
+  <span class="cmt">&lt;!-- rendered Markdown: h1–h3, p, ul/ol, a, code, pre, blockquote, img, hr, table --&gt;</span>
+<span class="tag">&lt;/article&gt;</span></div>
+    </div>
+  </section>
+
   <!-- UTILITIES -->
   <section class="docs-section" id="utilities">
     <h2>Utilities</h2>
@@ -1381,6 +1469,9 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td>Divider</td><td><code>.glass-divider</code></td><td>–</td></tr>
         <tr><td>Status</td><td><code>.glass-status</code></td><td>–</td></tr>
         <tr><td>List</td><td><code>.glass-list</code></td><td><code>--flush</code>, <code>--bare</code>, <code>__item--interactive</code>, <code>__item--center</code>, <code>__item--danger</code>, <code>__item--accent</code>, <code>__leading--lg</code>, <code>__subtitle--wrap</code>, <code>__value</code>, <code>__section-header</code></td></tr>
+        <tr><td>Skeleton</td><td><code>.glass-skeleton</code></td><td><code>__line</code>, <code>__line--title</code></td></tr>
+        <tr><td>Table</td><td><code>.glass-table</code></td><td><code>-wrap</code>, <code>__num</code>, <code>__muted</code></td></tr>
+        <tr><td>Prose</td><td><code>.glass-prose</code></td><td>–</td></tr>
         <tr><td>Popover</td><td><code>.glass-popover</code></td><td><code>--top</code>, <code>--start</code>, <code>--end</code>, <code>.is-open</code></td></tr>
         <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code></td></tr>
         <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td>–</td></tr>
@@ -1407,7 +1498,7 @@ function <span class="cls">toggleTheme</span>() {
     <table class="docs-table">
       <thead><tr><th>Feature</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td>Copy-paste HTML</td><td>All 24 components with exact nesting and BEM hierarchy</td></tr>
+        <tr><td>Copy-paste HTML</td><td>All 27 components with exact nesting and BEM hierarchy</td></tr>
         <tr><td>Design token tables</td><td>Colors, surfaces, blur, radii, spacing, shadows, typography</td></tr>
         <tr><td>State class mapping</td><td><code>is-active</code>, <code>is-open</code>, <code>is-visible</code>, <code>:checked</code> – where each belongs</td></tr>
         <tr><td>Composition patterns</td><td>6 full page layouts: Login, Dashboard, Form, Modal, Settings, Progress</td></tr>

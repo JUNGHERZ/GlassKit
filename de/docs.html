@@ -178,7 +178,7 @@
     margin-bottom: 24px; max-width: 600px;
   }
 
-  .docs-section h3 {
+  .docs-section > h3 {
     font-size: 17px; font-weight: 600;
     color: var(--gl-color-text);
     margin-top: 32px; margin-bottom: 12px;
@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.12.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.14.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -407,6 +407,9 @@
     <a class="docs-sidebar__link" href="#divider">Divider</a>
     <a class="docs-sidebar__link" href="#status">Status-Hinweis</a>
     <a class="docs-sidebar__link" href="#list">Liste</a>
+    <a class="docs-sidebar__link" href="#skeleton">Skeleton</a>
+    <a class="docs-sidebar__link" href="#table">Tabelle</a>
+    <a class="docs-sidebar__link" href="#prose">Flie&szlig;text</a>
   </div>
 
   <div class="docs-sidebar__group">
@@ -448,10 +451,10 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.12.0</span>
+      <span class="docs-hero__badge">v1.14.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
-      <span class="docs-hero__badge">24 Komponenten</span>
+      <span class="docs-hero__badge">27 Komponenten</span>
     </div>
   </header>
 
@@ -1314,6 +1317,91 @@ function <span class="cls">toggleTheme</span>() {
     </div>
   </section>
 
+  <!-- SKELETON -->
+  <section class="docs-section" id="skeleton">
+    <h2>Skeleton</h2>
+    <p>Ladeplatzhalter: schimmernde Zeilen stehen f&uuml;r Text, der noch nicht da ist. Die Breite jeder Zeile setzt der Aufrufer; der Schimmer folgt dem Theme und steht unter <code>prefers-reduced-motion</code> still. Den Bereich mit <code>aria-busy="true"</code> markieren, damit Hilfstechnik das Laden erkennt.</p>
+    <div class="docs-preview">
+      <div class="glass-skeleton" aria-busy="true" aria-label="L&auml;dt">
+        <div class="glass-skeleton__line glass-skeleton__line--title" style="width:55%"></div>
+        <div class="glass-skeleton__line"></div>
+        <div class="glass-skeleton__line" style="width:80%"></div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-skeleton"</span> <span class="attr">aria-busy=</span><span class="val">"true"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-skeleton__line glass-skeleton__line--title"</span> <span class="attr">style=</span><span class="val">"width:55%"</span><span class="tag">&gt;&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-skeleton__line"</span><span class="tag">&gt;&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-skeleton__line"</span> <span class="attr">style=</span><span class="val">"width:80%"</span><span class="tag">&gt;&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+    <table class="docs-table">
+      <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-skeleton</code></td><td>Stapel aus Zeilen, 10px Abstand</td></tr>
+        <tr><td><code>.glass-skeleton__line</code></td><td>Eine Schimmerzeile (12px); Breite per Inline-Style</td></tr>
+        <tr><td><code>.glass-skeleton__line--title</code></td><td>H&ouml;here Zeile (18px) f&uuml;r eine &Uuml;berschrift</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- TABLE -->
+  <section class="docs-section" id="table">
+    <h2>Tabelle</h2>
+    <p>Eine gew&ouml;hnliche <code>&lt;table&gt;</code> auf Glas: Haarlinien zwischen den Zeilen, ged&auml;mpfter Kopf, Zahlen rechtsb&uuml;ndig in Tabellenziffern. Der Wrapper <code>.glass-table-wrap</code> scrollt seitlich, wo die Spalten nicht passen. Die Klasse geh&ouml;rt auf die Tabelle selbst &mdash; aus einem Shadow Root erreicht <code>::slotted()</code> die Zellen nicht, deshalb ist das bewusst Dokument-CSS.</p>
+    <div class="docs-preview">
+      <div class="glass-table-wrap">
+        <table class="glass-table">
+          <thead><tr><th>Datum</th><th>Posten</th><th class="glass-table__num">Betrag</th></tr></thead>
+          <tbody>
+            <tr><td>2026-09-18</td><td>Rechnung 1042</td><td class="glass-table__num">1.240,00</td></tr>
+            <tr><td>2026-09-19</td><td>Erstattung</td><td class="glass-table__num">&minus;80,00</td></tr>
+            <tr><td class="glass-table__muted">2026-09-20</td><td class="glass-table__muted">Offen</td><td class="glass-table__num glass-table__muted">–</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-table-wrap"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;table</span> <span class="attr">class=</span><span class="val">"glass-table"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;thead&gt;&lt;tr&gt;&lt;th&gt;</span>Datum<span class="tag">&lt;/th&gt;&lt;th</span> <span class="attr">class=</span><span class="val">"glass-table__num"</span><span class="tag">&gt;</span>Betrag<span class="tag">&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span>
+    <span class="tag">&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;</span>2026-09-18<span class="tag">&lt;/td&gt;&lt;td</span> <span class="attr">class=</span><span class="val">"glass-table__num"</span><span class="tag">&gt;</span>1.240,00<span class="tag">&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;</span>
+  <span class="tag">&lt;/table&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+    <table class="docs-table">
+      <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-table-wrap</code></td><td>Optionaler Container mit seitlichem Scrollen</td></tr>
+        <tr><td><code>.glass-table</code></td><td>Die Tabelle: Haarlinien, Hover-Hervorhebung</td></tr>
+        <tr><td><code>.glass-table__num</code></td><td>Rechtsb&uuml;ndig, Tabellenziffern &mdash; auf <code>th</code> und <code>td</code></td></tr>
+        <tr><td><code>.glass-table__muted</code></td><td>Sekund&auml;re Textfarbe f&uuml;r eine Zelle</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- PROSE -->
+  <section class="docs-section" id="prose">
+    <h2>Flie&szlig;text</h2>
+    <p>Flie&szlig;text, den die App nicht von Hand geschrieben hat &mdash; gerendertes Markdown, Hilfe- und Infoseiten. Eine Klasse auf dem Container stylt &Uuml;berschriften, Abs&auml;tze, Listen, Links, Code, Zitate, Bilder und Tabellen. Bewusst Dokument-CSS: der Inhalt ist Light DOM, und <code>::slotted()</code> endet auf der ersten Ebene.</p>
+    <div class="docs-preview">
+      <div class="glass-prose">
+        <h3>Erste Schritte</h3>
+        <p><code>glasskit.css</code> einbinden, <code>data-theme</code> auf <code>&lt;html&gt;</code> setzen, fertig. Alles Weitere ist <strong>optional</strong> &mdash; siehe die <a href="#tokens">Design-Tokens</a>.</p>
+        <ul>
+          <li>Dark Mode ist der Standard</li>
+          <li>Light Mode &uuml;ber <code>data-theme="light"</code></li>
+        </ul>
+        <blockquote>Der Glaseffekt braucht einen farbigen Hintergrund, um sichtbar zu sein.</blockquote>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;article</span> <span class="attr">class=</span><span class="val">"glass-prose"</span><span class="tag">&gt;</span>
+  <span class="cmt">&lt;!-- gerendertes Markdown: h1–h3, p, ul/ol, a, code, pre, blockquote, img, hr, table --&gt;</span>
+<span class="tag">&lt;/article&gt;</span></div>
+    </div>
+  </section>
+
   <!-- UTILITIES -->
   <section class="docs-section" id="utilities">
     <h2>Utilities</h2>
@@ -1381,6 +1469,9 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td>Divider</td><td><code>.glass-divider</code></td><td>–</td></tr>
         <tr><td>Status</td><td><code>.glass-status</code></td><td>–</td></tr>
         <tr><td>Liste</td><td><code>.glass-list</code></td><td><code>--flush</code>, <code>--bare</code>, <code>__item--interactive</code>, <code>__item--center</code>, <code>__item--danger</code>, <code>__item--accent</code>, <code>__leading--lg</code>, <code>__subtitle--wrap</code>, <code>__value</code>, <code>__section-header</code></td></tr>
+        <tr><td>Skeleton</td><td><code>.glass-skeleton</code></td><td><code>__line</code>, <code>__line--title</code></td></tr>
+        <tr><td>Tabelle</td><td><code>.glass-table</code></td><td><code>-wrap</code>, <code>__num</code>, <code>__muted</code></td></tr>
+        <tr><td>Flie&szlig;text</td><td><code>.glass-prose</code></td><td>–</td></tr>
         <tr><td>Popover</td><td><code>.glass-popover</code></td><td><code>--top</code>, <code>--start</code>, <code>--end</code>, <code>.is-open</code></td></tr>
         <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code></td></tr>
         <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td>–</td></tr>
@@ -1407,7 +1498,7 @@ function <span class="cls">toggleTheme</span>() {
     <table class="docs-table">
       <thead><tr><th>Feature</th><th>Beschreibung</th></tr></thead>
       <tbody>
-        <tr><td>Copy-Paste HTML</td><td>Alle 24 Komponenten mit exakter Verschachtelung und BEM-Hierarchie</td></tr>
+        <tr><td>Copy-Paste HTML</td><td>Alle 27 Komponenten mit exakter Verschachtelung und BEM-Hierarchie</td></tr>
         <tr><td>Design-Token-Tabellen</td><td>Farben, Surfaces, Blur, Radii, Spacing, Shadows, Typography</td></tr>
         <tr><td>State-Klassen-Mapping</td><td><code>is-active</code>, <code>is-open</code>, <code>is-visible</code>, <code>:checked</code> – wo was hingehört</td></tr>
         <tr><td>Composition Patterns</td><td>6 fertige Seiten-Layouts: Login, Dashboard, Formular, Modal, Einstellungen, Fortschritt</td></tr>

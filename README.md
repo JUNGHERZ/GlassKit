@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.12.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.14.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-24-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.12.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.14.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -16,7 +16,7 @@
 
 <p align="center">
   <strong>A modern glassmorphism CSS component library.</strong><br>
-  24 Components · Dark & Light Mode · No Dependencies · Design Tokens
+  27 Components · Dark & Light Mode · No Dependencies · Design Tokens
 </p>
 
 <p align="center">
@@ -72,16 +72,16 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.12/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.14/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.12/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.14/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.12/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.14/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.12` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.14` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 ### npm / yarn / pnpm
 
@@ -187,6 +187,9 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Avatar** | `.glass-avatar` | Glass circle (sm/md/lg) |
 | **Status** | `.glass-status` | Notice card with icon |
 | **List** | `.glass-list` | iOS-style grouped settings list with auto dividers |
+| **Skeleton** | `.glass-skeleton` | Shimmer lines while content loads |
+| **Table** | `.glass-table` | Plain `<table>` on glass — hairline rows, tabular numbers |
+| **Prose** | `.glass-prose` | Rendered Markdown / running text with one class |
 
 ### Actions & Feedback
 
@@ -451,7 +454,7 @@ glasskit/
 
 The full documentation with **live previews**, **copy-paste code blocks**, and **class reference tables** is available in `docs.html`:
 
-- Sidebar navigation to all 24 components
+- Sidebar navigation to all 27 components
 - Live previews on a real glassmorphism background
 - Design token reference
 - Theming guide
@@ -493,7 +496,7 @@ GlassKit ships with an **AI-optimized component reference** in [`SKILL.md`](SKIL
 
 ### What it provides
 
-- **Copy-paste-ready HTML** for all 24 components with exact nesting rules
+- **Copy-paste-ready HTML** for all 27 components with exact nesting rules
 - **Complete design token tables** (colors, surfaces, blur, radii, spacing, shadows, typography)
 - **State class reference** – which class goes where (`is-active`, `is-open`, `is-visible`, `:checked`)
 - **6 composition patterns** – full page layouts (Login, Dashboard, Form, Modal, Settings, Progress)
@@ -564,6 +567,15 @@ List Modifiers:
 
 Popover Modifiers:
   .glass-popover--top / --start / --end
+
+Skeleton:
+  .glass-skeleton__line / __line--title
+
+Table:
+  .glass-table-wrap · .glass-table__num / __muted
+
+Prose:
+  .glass-prose   (styles the rendered content beneath it)
 
 Background Modifiers:
   .glass-bg--has-tab-bar

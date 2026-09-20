@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.12.0) with 24 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.14.0) with 27 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -1095,6 +1095,70 @@ Anchored dropdown / menu container. Wrap a trigger button and a `.glass-popover`
 
 ---
 
+### 3.26 Skeleton
+
+Loading placeholder — shimmer lines standing in for text that has not arrived (since 1.14.0). Set each line's width inline; the shimmer follows the theme and holds still under `prefers-reduced-motion`. Mark the region `aria-busy="true"`.
+
+```html
+<div class="glass-skeleton" aria-busy="true" aria-label="Loading">
+  <div class="glass-skeleton__line glass-skeleton__line--title" style="width:55%"></div>
+  <div class="glass-skeleton__line"></div>
+  <div class="glass-skeleton__line" style="width:80%"></div>
+</div>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-skeleton` | Stack of lines, 10px apart |
+| `.glass-skeleton__line` | One shimmer line (12px); width via inline style |
+| `.glass-skeleton__line--title` | Taller line (18px) standing in for a heading |
+
+---
+
+### 3.27 Table
+
+A plain `<table>` on glass (since 1.14.0): hairline rows, a muted header, numbers right-aligned in tabular figures. Wrap it in `.glass-table-wrap` to scroll sideways where the columns do not fit.
+
+```html
+<div class="glass-table-wrap">
+  <table class="glass-table">
+    <thead><tr><th>Date</th><th>Item</th><th class="glass-table__num">Amount</th></tr></thead>
+    <tbody>
+      <tr><td>2026-09-18</td><td>Invoice #1042</td><td class="glass-table__num">1,240.00</td></tr>
+      <tr><td class="glass-table__muted">2026-09-20</td><td class="glass-table__muted">Pending</td><td class="glass-table__num glass-table__muted">–</td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-table-wrap` | Optional horizontal scroll container |
+| `.glass-table` | The table: hairline rows, hover highlight on body rows |
+| `.glass-table__num` | Right-aligned, tabular figures — on `th` and `td` |
+| `.glass-table__muted` | Secondary text colour on a cell |
+
+> **Document-level by design.** From a shadow root, `::slotted()` matches only the slotted `<table>` itself, never its cells — so there is no `<glk-table>`, and a wrapper element could not style the rows. Put the class on the table in the light DOM.
+
+---
+
+### 3.28 Prose
+
+Running text the app did not write by hand (since 1.14.0) — rendered Markdown, help and info pages. One class on the container styles `h1`–`h3`, `p`, `ul`/`ol`, `a`, `code`, `pre`, `blockquote`, `img`, `hr` and `table`. Links are underlined, because colour alone does not mark a link in running text. First and last children lose their outer margins, so the block sits flush inside a card.
+
+```html
+<article class="glass-prose">
+  <h2>Getting started</h2>
+  <p>Include <code>glasskit.css</code> and set <code>data-theme</code> — see the <a href="#">tokens</a>.</p>
+  <ul><li>Dark mode is the default</li></ul>
+  <blockquote>The glass effect needs a coloured background.</blockquote>
+</article>
+```
+
+> **Document-level by design**, for the same reason as the table: the content is light DOM, and `::slotted()` stops at the first level. Render Markdown into the document and put `.glass-prose` on the container.
+
+---
+
 ## 4. Utility Classes
 
 ### Stack (Vertical)
@@ -1595,6 +1659,9 @@ Key points in this composition:
 | Accordion | `.glass-accordion` | `.is-open` on items |
 | List | `.glass-list` | `--flush`, `--bare`, `__item--interactive`, `__item--center`, `__item--danger`, `__item--accent`, `__leading--lg`, `__subtitle--wrap`, `__value`, `__section-header` |
 | Popover | `.glass-popover` | `--top`, `--start`, `--end`, `.is-open` |
+| Skeleton | `.glass-skeleton` | `__line`, `__line--title` |
+| Table | `.glass-table` | `-wrap`, `__num`, `__muted` |
+| Prose | `.glass-prose` | – |
 
 ---
 
