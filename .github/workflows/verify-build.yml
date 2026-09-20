@@ -1,5 +1,5 @@
 # ============================================================
-# GlassKit – Build Smoke Test
+# GlassKit – Build Smoke Test + Pages Deploy
 #
 # Trigger:  Push/PR auf main
 # Zweck:    glasskit.min.css und glasskit-styles.js sind .gitignore'd und
@@ -13,6 +13,16 @@
 #           dieselbe Version nennen wie package.json. Das ist mehrfach
 #           auseinandergelaufen, ohne dass irgendetwas falsch gerendert hätte.
 #
+# Pages:    glasskit.jungherz.com wird seit dem 20.09.2026 aus diesem Workflow
+#           deployt, nicht mehr über „Deploy from a branch". Dessen interner
+#           Trigger hat 7 der letzten 40 Pushes auf main ausgelassen (zuletzt
+#           v1.12.0 und v1.14.0), ohne Muster und ohne Incident — dieser
+#           Workflow lief bei jedem. Der Deploy hängt hinter den Prüfungen:
+#           eine Seite mit veraltetem Badge geht nicht mehr live. Das
+#           Artefakt ist der Repo-Stand plus die gebauten Artefakte, ohne
+#           Jekyll dazwischen (der Legacy-Build ist am 17.08.2026 einmal
+#           daran gescheitert).
+#
 # Lokal:    npm run build && npm run check:versions
 # ============================================================
 
@@ -23,6 +33,11 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write   # OIDC-Token für actions/deploy-pages
 
 jobs:
   verify:
@@ -58,3 +73,42 @@ jobs:
 
       - name: Documented versions match package.json
         run: npm run check:versions
+
+      # ---- Pages-Artefakt (nur Push auf main, nicht für PRs) ----
+      # Der Repo-Stand wie ihn der Legacy-Build auslieferte, plus min.css und
+      # styles.js aus dem Build oben. Nichts wird durch Jekyll geschickt.
+      - name: Assemble the site
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          mkdir _site
+          rsync -a --exclude '.git' --exclude '.github' --exclude 'node_modules' --exclude '_site' ./ _site/
+          du -sh _site && ls _site | head -30
+
+      - name: Configure Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy site to GitHub Pages
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # Nie zwei Deploys gleichzeitig; ein laufender wird nicht abgebrochen,
+    # damit kein halb ausgelieferter Stand entsteht.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
