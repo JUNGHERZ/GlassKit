@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.14.0) with 27 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.15.0) with 31 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -1159,6 +1159,101 @@ Running text the app did not write by hand (since 1.14.0) — rendered Markdown,
 
 ---
 
+### 3.29 Segmented
+
+A small, exclusive choice as one control (since 1.15.0) — traffic light, morning / afternoon, mode. Buttons inside a `role="group"`; the chosen one carries `aria-pressed="true"`, and the styling hangs on that attribute, so state and semantics cannot drift apart. Script only toggles `aria-pressed`; GlassKit Elements ships it as `<glk-segmented>`.
+
+```html
+<div class="glass-segmented glass-segmented--full" role="group" aria-label="Status">
+  <button class="glass-segmented__item glass-segmented__item--success" aria-pressed="true"><span class="glass-segmented__dot"></span>Green</button>
+  <button class="glass-segmented__item glass-segmented__item--warning" aria-pressed="false"><span class="glass-segmented__dot"></span>Yellow</button>
+  <button class="glass-segmented__item" aria-pressed="false" disabled>Locked</button>
+</div>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-segmented` | The group: inset glass track, buttons inside |
+| `.glass-segmented--full` | Buttons share the width |
+| `.glass-segmented__item` | One option; `aria-pressed="true"` marks the chosen one, `disabled` dims it |
+| `.glass-segmented__item--success` / `--warning` / `--error` | Tone: sets `--gl-segmented-tone` for the dot |
+| `.glass-segmented__dot` | The dot before the label, in the tone colour |
+
+---
+
+### 3.30 Steps
+
+Progress through a short flow (since 1.15.0): numbered circles joined by hairlines, done ones on the success surface with an SVG check, the current one in primary and marked `aria-current="step"`. The list is a size container: narrower than 360 px only the current step keeps its label; before that, labels shorten with an ellipsis. Keyed to the block's own width — inside a flex row give it a width, size containment leaves it none.
+
+```html
+<ol class="glass-steps">
+  <li class="glass-steps__item glass-steps__item--done"><span class="glass-steps__num"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="glass-steps__label">Day</span></li>
+  <li class="glass-steps__line" aria-hidden="true"></li>
+  <li class="glass-steps__item glass-steps__item--current" aria-current="step"><span class="glass-steps__num">2</span><span class="glass-steps__label">Slot</span></li>
+  <li class="glass-steps__line" aria-hidden="true"></li>
+  <li class="glass-steps__item"><span class="glass-steps__num">3</span><span class="glass-steps__label">Confirm</span></li>
+</ol>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-steps` | The list, a size container |
+| `.glass-steps__item`, `--done`, `--current` | One step and its states |
+| `.glass-steps__num` | The circle: number, or an SVG check when done |
+| `.glass-steps__label` | Label; hidden below 360 px except on the current step |
+| `.glass-steps__line` | Hairline connector |
+
+---
+
+### 3.31 Sheet
+
+The bottom sheet (since 1.15.0) — the mobile sibling of the modal: `.glass-sheet-overlay` fades, `.glass-sheet` rises from the bottom edge, only the top corners rounded, grip, safe-area padding. Its own block rather than a modal modifier because layout, entry motion and gesture differ. `[hidden]` beats `display: flex`, so the overlay leaves the layout when closed; `prefers-reduced-motion: reduce` drops the transitions. `--inline` embeds the panel in the flow without an overlay.
+
+```html
+<div class="glass-sheet-overlay" hidden>
+  <div class="glass-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <div class="glass-sheet__grip" aria-hidden="true"></div>
+    <h2 class="glass-sheet__title" id="sheet-title">Rebook to …</h2>
+    <div class="glass-sheet__body">…</div>
+    <div class="glass-sheet__actions"><button class="glass-btn glass-btn--secondary glass-btn--sm">Close</button></div>
+  </div>
+</div>
+```
+
+Show: remove `hidden`, force a reflow (`void overlay.offsetHeight`), add `.is-active` on the next animation frame. Hide: remove `.is-active`, set `hidden` after `transitionend` on the panel (fallback 400 ms), immediately under reduced motion. Close on scrim click and Escape. `<glk-sheet>` in GlassKit Elements does all of this.
+
+| Class | Description |
+|---|---|
+| `.glass-sheet-overlay` | Fixed overlay: scrim, blur, panel at the bottom; starts at opacity 0 |
+| `.glass-sheet-overlay.is-active` | Overlay visible, panel risen |
+| `.glass-sheet` | The panel: milky glass, top corners rounded, bottom safe-area padding |
+| `.glass-sheet--inline` | In the flow, no overlay, all corners rounded |
+| `.glass-sheet__grip`, `__title`, `__body`, `__actions` | Grip bar, heading, body, action column |
+
+---
+
+### 3.32 Empty state
+
+For empty lists and result pages (since 1.15.0): a centred column with a round icon plate, a title, a short muted text and room for one action.
+
+```html
+<div class="glass-empty">
+  <span class="glass-empty__icon"><svg viewBox="0 0 24 24">…</svg></span>
+  <p class="glass-empty__title">No bookings yet</p>
+  <p class="glass-empty__text">Pick a day and a dog — the team is looking forward to it.</p>
+  <div class="glass-empty__action"><button class="glass-btn glass-btn--primary glass-btn--sm glass-btn--auto">Book</button></div>
+</div>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-empty` | Centred column |
+| `.glass-empty__icon` | 48 px round plate, 24 px stroked icon inside (`::slotted(svg)` twin) |
+| `.glass-empty__title`, `__text` | Heading and muted text (max 38 ch) |
+| `.glass-empty__action` | Room for one action |
+
+---
+
 ## 4. Utility Classes
 
 ### Stack (Vertical)
@@ -1662,6 +1757,10 @@ Key points in this composition:
 | Skeleton | `.glass-skeleton` | `__line`, `__line--title` |
 | Table | `.glass-table` | `-wrap`, `__num`, `__muted` |
 | Prose | `.glass-prose` | – |
+| Segmented | `.glass-segmented` | `--full`, `__item`, `__item--success`/`--warning`/`--error`, `__dot`, `[aria-pressed]` |
+| Steps | `.glass-steps` | `__item`, `__item--done`, `__item--current`, `__num`, `__label`, `__line` |
+| Sheet | `.glass-sheet-overlay` + `.glass-sheet` | `.is-active`, `--inline`, `__grip`, `__title`, `__body`, `__actions` |
+| Empty state | `.glass-empty` | `__icon`, `__title`, `__text`, `__action` |
 
 ---
 

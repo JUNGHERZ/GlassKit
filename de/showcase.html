@@ -288,7 +288,7 @@
         </button>
       </nav>
 
-      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.14.0</h1>
+      <h1 class="glass-title gl-mb-xl">Komponenten<br>Showcase v1.15.0</h1>
 
       <!-- CARD -->
       <p class="section-label">Card (Glow)</p>
@@ -577,6 +577,81 @@
         <p><code>glasskit.css</code> einbinden, <code>data-theme</code> setzen, fertig. Alles Weitere ist <strong>optional</strong> &mdash; siehe die <a href="docs.html#tokens">Design-Tokens</a>.</p>
         <ul><li>Dark Mode ist der Standard</li><li>Light Mode &uuml;ber <code>data-theme="light"</code></li></ul>
         <blockquote>Der Glaseffekt braucht einen farbigen Hintergrund, um sichtbar zu sein.</blockquote>
+      </div>
+
+      <!-- SEGMENTED -->
+      <p class="section-label">Segmentwahl</p>
+      <div class="gl-stack gl-stack--sm gl-mb-md">
+        <div class="glass-segmented" role="group" aria-label="Modus" data-docs-segmented>
+          <button class="glass-segmented__item" aria-pressed="true">Kontextuell</button>
+          <button class="glass-segmented__item" aria-pressed="false">Hilfeseite</button>
+          <button class="glass-segmented__item" aria-pressed="false">Inline</button>
+        </div>
+        <div class="glass-segmented glass-segmented--full" role="group" aria-label="Status" data-docs-segmented>
+          <button class="glass-segmented__item glass-segmented__item--success" aria-pressed="false"><span class="glass-segmented__dot"></span>Gr&uuml;n</button>
+          <button class="glass-segmented__item glass-segmented__item--warning" aria-pressed="true"><span class="glass-segmented__dot"></span>Gelb</button>
+          <button class="glass-segmented__item glass-segmented__item--error" aria-pressed="false"><span class="glass-segmented__dot"></span>Rot</button>
+          <button class="glass-segmented__item" aria-pressed="false" disabled>Gesperrt</button>
+        </div>
+      </div>
+      <script>
+        for (const group of document.querySelectorAll('[data-docs-segmented]')) group.addEventListener('click', e => {
+          const btn = e.target.closest('.glass-segmented__item'); if (!btn || btn.disabled) return;
+          for (const b of group.querySelectorAll('.glass-segmented__item')) b.setAttribute('aria-pressed', String(b === btn));
+        });
+      </script>
+
+      <!-- STEPS -->
+      <p class="section-label">Schrittanzeige</p>
+      <div class="gl-mb-md"><ol class="glass-steps">
+  <li class="glass-steps__item glass-steps__item--done"><span class="glass-steps__num"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="glass-steps__label">Tag</span></li>
+  <li class="glass-steps__line" aria-hidden="true"></li>
+  <li class="glass-steps__item glass-steps__item--done"><span class="glass-steps__num"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="glass-steps__label">Fenster</span></li>
+  <li class="glass-steps__line" aria-hidden="true"></li>
+  <li class="glass-steps__item glass-steps__item--current" aria-current="step"><span class="glass-steps__num">3</span><span class="glass-steps__label">Hund</span></li>
+  <li class="glass-steps__line" aria-hidden="true"></li>
+  <li class="glass-steps__item"><span class="glass-steps__num">4</span><span class="glass-steps__label">Best&auml;tigen</span></li>
+</ol></div>
+
+      <!-- SHEET -->
+      <p class="section-label">Bottom-Sheet</p>
+      <div class="glass-sheet glass-sheet--inline gl-mb-md">
+        <div class="glass-sheet__grip" aria-hidden="true"></div>
+        <h2 class="glass-sheet__title">Umbuchen auf &hellip;</h2>
+        <div class="glass-sheet__body">Inhalt des Sheets: Liste, Text, Formular. Dieses hier ist eingebettet.</div>
+        <div class="glass-sheet__actions"><button class="glass-btn glass-btn--primary glass-btn--sm" data-docs-sheet-open>Als Overlay &ouml;ffnen</button></div>
+      </div>
+      <div class="glass-sheet-overlay" id="docs-sheet" hidden>
+        <div class="glass-sheet" role="dialog" aria-modal="true" aria-label="Umbuchen auf &hellip;">
+          <div class="glass-sheet__grip" aria-hidden="true"></div>
+          <h2 class="glass-sheet__title">Umbuchen auf &hellip;</h2>
+          <div class="glass-sheet__body">Tippen au&szlig;erhalb oder Escape schlie&szlig;t. Das Overlay blendet, das Panel f&auml;hrt; bei reduzierter Bewegung schaltet beides sofort.</div>
+          <div class="glass-sheet__actions"><button class="glass-btn glass-btn--secondary glass-btn--sm" data-docs-sheet-close>Schlie&szlig;en</button></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const ov = document.getElementById('docs-sheet'), panel = ov.querySelector('.glass-sheet');
+          const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+          let timer;
+          const show = () => { clearTimeout(timer); ov.hidden = false; void ov.offsetHeight; requestAnimationFrame(() => ov.classList.add('is-active')); };
+          const hide = () => { ov.classList.remove('is-active'); const done = () => { clearTimeout(timer); panel.removeEventListener('transitionend', done); ov.hidden = true; }; if (reduced()) return done(); panel.addEventListener('transitionend', done); timer = setTimeout(done, 400); };
+          document.querySelector('[data-docs-sheet-open]').addEventListener('click', show);
+          document.querySelector('[data-docs-sheet-close]').addEventListener('click', hide);
+          ov.addEventListener('click', e => { if (e.target === ov) hide(); });
+          document.addEventListener('keydown', e => { if (e.key === 'Escape' && !ov.hidden) hide(); });
+        })();
+      </script>
+
+      <!-- EMPTY -->
+      <p class="section-label">Leerzustand</p>
+      <div class="glass-card gl-mb-md" style="padding:4px">
+        <div class="glass-empty">
+          <span class="glass-empty__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></span>
+          <p class="glass-empty__title">Noch keine Buchungen</p>
+          <p class="glass-empty__text">Such dir einen Tag und einen Hund aus &mdash; das Team freut sich.</p>
+          <div class="glass-empty__action"><button class="glass-btn glass-btn--primary glass-btn--sm glass-btn--auto">Buchen</button></div>
+        </div>
       </div>
 
       <hr class="glass-divider gl-mb-md">

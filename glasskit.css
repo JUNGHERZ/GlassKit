@@ -1,12 +1,12 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.14.0
+   Jungherz GmbH – v1.15.0
 
    Features:
    - Scoped Reset (box-sizing fix)
    - Dark Mode (default)
    - Light Mode via [data-theme="light"]
-   - 27 components (incl. floating Tab-Bar variant + Accessory)
+   - 31 components (incl. floating Tab-Bar variant + Accessory)
    ============================================================ */
 
 
@@ -1986,7 +1986,193 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 
 
 /* ============================================================
-   29. UTILITIES
+   29. SEGMENTED
+   ============================================================ */
+/* A small, exclusive choice as one control — traffic light, morning /
+   afternoon, mode. Buttons inside a role="group"; the chosen one carries
+   aria-pressed="true", and the styling hangs on exactly that attribute so
+   state and semantics cannot drift apart. --full shares the width between
+   the buttons. The tone modifiers put a dot in a state colour before the
+   label; the dot reads --gl-segmented-tone, so a fourth tone is one line. */
+.glass-segmented {
+  display: inline-flex; gap: 4px; padding: 4px;
+  max-width: 100%;
+  background: var(--gl-surface-1);
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-radius-btn);
+  box-shadow: var(--gl-inset-subtle);
+}
+.glass-segmented--full { display: flex; }
+.glass-segmented--full .glass-segmented__item { flex: 1 1 0; }
+
+.glass-segmented__item {
+  -webkit-appearance: none; appearance: none;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 14px;
+  border: 0; border-radius: var(--gl-radius-sm);
+  background: transparent;
+  color: var(--gl-color-text-muted);
+  font-family: inherit;
+  font-size: var(--gl-font-size-sm);
+  font-weight: var(--gl-font-weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--gl-transition-fast);
+  outline: none; -webkit-tap-highlight-color: transparent;
+}
+.glass-segmented__item:hover { color: var(--gl-color-text); }
+.glass-segmented__item[aria-pressed="true"] {
+  background: var(--gl-surface-5);
+  color: var(--gl-color-text-heading);
+  box-shadow: var(--gl-shadow-btn);
+}
+.glass-segmented__item:focus-visible { box-shadow: var(--gl-shadow-focus); }
+.glass-segmented__item[aria-pressed="true"]:focus-visible { box-shadow: var(--gl-shadow-focus), var(--gl-shadow-btn); }
+.glass-segmented__item:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.glass-segmented__dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gl-segmented-tone, currentColor);
+}
+.glass-segmented__item--success { --gl-segmented-tone: var(--gl-color-success); }
+.glass-segmented__item--warning { --gl-segmented-tone: var(--gl-color-warning); }
+.glass-segmented__item--error   { --gl-segmented-tone: var(--gl-color-error); }
+
+
+/* ============================================================
+   30. STEPS
+   ============================================================ */
+/* Progress through a short flow: numbered circles joined by hairlines,
+   done ones on the success surface, the current one in the primary colour.
+   The list is a size container: narrower than 360px (a phone, a narrow
+   card) only the current step keeps its label and the others show their
+   number; before that, labels shorten with an ellipsis instead of pushing
+   past the edge. Keyed to the block's own width, not the viewport — so in
+   a flex row give the list a width, size containment leaves it none. */
+.glass-steps {
+  display: flex; align-items: center; gap: 6px;
+  margin: 0; padding: 0; list-style: none;
+  min-width: 0; container-type: inline-size;
+}
+.glass-steps__item {
+  display: flex; align-items: center; gap: 6px;
+  flex: 0 1 auto; min-width: 0;
+  font-size: var(--gl-font-size-xs);
+  color: var(--gl-color-text-muted);
+  white-space: nowrap;
+}
+.glass-steps__num {
+  flex: none; width: 22px; height: 22px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--gl-border-medium);
+  font-size: 11px; font-weight: var(--gl-font-weight-semibold);
+}
+.glass-steps__num svg {
+  width: 12px; height: 12px; fill: none; stroke: currentColor;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.glass-steps__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.glass-steps__item--done .glass-steps__num {
+  background: var(--gl-color-success-surface);
+  border-color: var(--gl-color-success-border);
+  color: var(--gl-color-success-on-surface);
+}
+.glass-steps__item--current { color: var(--gl-color-text-heading); }
+.glass-steps__item--current .glass-steps__num {
+  background: var(--gl-color-primary); border-color: transparent;
+  color: var(--gl-color-on-primary);
+}
+.glass-steps__line { flex: 1 1 8px; min-width: 8px; height: 1px; background: var(--gl-border-subtle); }
+@container (max-width: 360px) {
+  .glass-steps__label { display: none; }
+  .glass-steps__item--current .glass-steps__label { display: inline; }
+}
+
+
+/* ============================================================
+   31. SHEET
+   ============================================================ */
+/* Bottom sheet — the mobile sibling of the modal: an overlay that fades,
+   a panel that rises from the bottom edge, only the top corners rounded, a
+   grip, safe-area padding. Its own block rather than a modal modifier,
+   because layout, entry motion and gesture differ. Show: remove [hidden],
+   force a reflow, add .is-active on the next frame. Hide: drop .is-active,
+   set [hidden] after transitionend — so the blurred overlay leaves the
+   layout instead of idling at opacity 0. <glk-sheet> in GlassKit Elements
+   does exactly this. --inline embeds the panel in the flow, no overlay. */
+.glass-sheet-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: flex-end; justify-content: center;
+  background: var(--gl-surface-overlay);
+  backdrop-filter: blur(var(--gl-blur-soft));
+  -webkit-backdrop-filter: blur(var(--gl-blur-soft));
+  font-family: var(--gl-font-family);
+  -webkit-font-smoothing: antialiased;
+  opacity: 0;
+  transition: var(--gl-transition-modal); transition-property: opacity;
+}
+.glass-sheet-overlay[hidden] { display: none; }
+.glass-sheet-overlay.is-active { opacity: 1; }
+
+.glass-sheet {
+  width: min(100%, 560px); max-height: 88dvh; overflow: auto;
+  padding: 8px var(--gl-space-lg) calc(var(--gl-space-lg) + env(safe-area-inset-bottom, 0px));
+  background: var(--gl-surface-milk-strong, var(--gl-surface-5));
+  color: var(--gl-color-text);
+  border: 1px solid var(--gl-border-milk);
+  border-radius: var(--gl-radius-card) var(--gl-radius-card) 0 0;
+  box-shadow: var(--gl-shadow-modal);
+}
+.glass-sheet-overlay .glass-sheet {
+  transform: translateY(100%);
+  transition: var(--gl-transition-modal); transition-property: transform;
+}
+.glass-sheet-overlay.is-active .glass-sheet { transform: translateY(0); }
+.glass-sheet--inline { border-radius: var(--gl-radius-card); box-shadow: var(--gl-shadow-card); }
+
+.glass-sheet__grip { width: 40px; height: 4px; margin: 4px auto 12px; border-radius: 2px; background: var(--gl-border-strong); }
+.glass-sheet__title {
+  margin: 0 0 8px;
+  font-size: var(--gl-font-size-modal); font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text-heading);
+}
+.glass-sheet__body { font-size: var(--gl-font-size-base); line-height: 1.55; }
+.glass-sheet__actions { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+@media (prefers-reduced-motion: reduce) {
+  .glass-sheet-overlay, .glass-sheet-overlay .glass-sheet { transition: none; }
+}
+
+
+/* ============================================================
+   32. EMPTY
+   ============================================================ */
+/* Empty state for lists and result pages: a centred column with a round
+   icon plate, a title, a short muted text and room for one action. */
+.glass-empty {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 28px 16px; text-align: center;
+}
+.glass-empty__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--gl-surface-2); color: var(--gl-icon-default);
+}
+.glass-empty__icon svg,
+.glass-empty__icon ::slotted(svg) {
+  width: 24px; height: 24px; fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.glass-empty__title { margin: 4px 0 0; font-weight: var(--gl-font-weight-semibold); color: var(--gl-color-text-heading); }
+.glass-empty__text {
+  margin: 0; max-width: 38ch;
+  font-size: var(--gl-font-size-sm); line-height: 1.55;
+  color: var(--gl-color-text-muted);
+}
+.glass-empty__action { margin-top: 8px; }
+
+
+/* ============================================================
+   33. UTILITIES
    ============================================================ */
 .gl-stack            { display: flex; flex-direction: column; }
 .gl-row              { display: flex; flex-direction: row; align-items: center; }

@@ -7,6 +7,24 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.15.0] – 2026-09-21
+
+### Added
+
+- **Four more blocks from EhrenPfoten: `.glass-segmented`, `.glass-steps`, `.glass-sheet`, `.glass-empty`.** Built there "CSS first, element after" in GlassKit style — BEM, tokens only, checked in both themes — and reviewed here block by block. Each arrives as a copy with the deviations named below; every token they reference is one this sheet declares.
+
+  `.glass-segmented` is a small exclusive choice as one control (traffic light, morning / afternoon, mode): buttons in a `role="group"`, the chosen one marked `aria-pressed="true"` — the styling hangs on that attribute, so state and semantics cannot drift apart. `--full` shares the width. Deviations from the project block: the tone modifiers are `__item--success/--warning/--error` (GlassKit's state names, not `green/yellow/red`), the dot reads a namespaced `--gl-segmented-tone`, and keyboard focus uses `--gl-shadow-focus` like every other GlassKit control instead of a primary outline.
+
+  `.glass-steps` shows progress through a short flow: numbered circles joined by hairlines, done ones on the success surface, the current one in primary. The list is a size container: narrower than 360 px only the current step keeps its label; before that, labels shorten with an ellipsis. That is keyed to the block's width, not the viewport — the thing that made the project's stepper push past the edge of a narrow card. Done steps take an SVG check (`__num svg`), not a text glyph.
+
+  `.glass-sheet` is the bottom sheet — the mobile sibling of `.glass-modal`, and its own block rather than a modifier because layout, entry motion and gesture differ: `.glass-sheet-overlay` fades, the panel rises from the bottom edge, only the top corners are rounded, safe-area padding at the bottom. `[hidden]` beats `display: flex`, so the overlay can leave the layout after `transitionend` instead of idling at opacity 0 with a blur layer; `prefers-reduced-motion: reduce` drops the transitions. `--inline` embeds the panel in the flow. Added over the project block: the `-webkit-backdrop-filter` twin and the font declarations the modal overlay also carries.
+
+  `.glass-empty` is the empty state for lists and result pages: a centred column with a round icon plate (with the `::slotted(svg)` twin), title, short muted text and room for one action.
+
+  Not taken: `.glass-date-strip`, `.glass-calendar` and `.glass-photo-picker` wait for the project's next milestone, when real data has settled their attributes.
+
+---
+
 ## [1.14.0] – 2026-09-20
 
 Version numbers realign with GlassKit Elements at 1.14.0 — there is no GlassKit 1.13.0.
@@ -839,6 +857,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.15.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.15.0
 [1.14.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.14.0
 [1.12.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.12.0
 [1.11.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.11.0
@@ -859,4 +878,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.14.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.15.0...HEAD
