@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.15.0
+   Jungherz GmbH – v1.15.1
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -359,6 +359,7 @@
   color: var(--gl-color-text);
   -webkit-font-smoothing: antialiased;
   transition: background 0.4s ease, color 0.3s ease;
+  isolation: isolate;
 }
 
 .glass-bg::before {
@@ -370,7 +371,7 @@
     radial-gradient(ellipse at 35% 45%, var(--gl-bg-light-streak-1) 0%, transparent 50%),
     radial-gradient(ellipse at 65% 55%, var(--gl-bg-light-streak-2) 0%, transparent 45%);
   transform: rotate(-8deg);
-  pointer-events: none; z-index: 0;
+  pointer-events: none; z-index: -1;
 }
 
 .glass-bg::after {
@@ -381,10 +382,16 @@
   background: radial-gradient(ellipse at center,
     var(--gl-bg-warm-glow) 0%, transparent 65%
   );
-  pointer-events: none; z-index: 0;
+  pointer-events: none; z-index: -1;
 }
 
-.glass-bg > * { position: relative; z-index: 1; }
+/* The decorations sit at z-index -1 inside .glass-bg's own stacking
+   context (isolation: isolate on .glass-bg), so the children stay above
+   them without a z-index of their own. Before 1.15.1 every child carried
+   z-index: 1 and so became a stacking context — an overlay inside one of
+   them (modal, sheet: z-index 1000) was trapped at level 1 and painted
+   below a tab bar (900) that came later in the DOM. */
+.glass-bg > * { position: relative; }
 
 .glass-bg--has-tab-bar {
   padding-bottom: var(--gl-tab-bar-height);
@@ -2117,9 +2124,18 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-sheet {
   width: min(100%, 560px); max-height: 88dvh; overflow: auto;
   padding: 8px var(--gl-space-lg) calc(var(--gl-space-lg) + env(safe-area-inset-bottom, 0px));
-  background: var(--gl-surface-milk-strong, var(--gl-surface-5));
+  /* The modal's material, not the milk surfaces: milk is a light plate for
+     dark ink (--gl-color-text-on-light, the secondary button) and stays
+     light in dark mode — with --gl-color-text on it the sheet read white
+     on white-grey. The card glow gradient over heavy blur is what the
+     text tokens are made for, in both themes. */
+  background: linear-gradient(to bottom,
+    var(--gl-card-glow-top) 0%, var(--gl-card-glow-bottom) 100%
+  );
+  backdrop-filter: blur(var(--gl-blur-heavy));
+  -webkit-backdrop-filter: blur(var(--gl-blur-heavy));
   color: var(--gl-color-text);
-  border: 1px solid var(--gl-border-milk);
+  border: 1.5px solid var(--gl-border-medium);
   border-radius: var(--gl-radius-card) var(--gl-radius-card) 0 0;
   box-shadow: var(--gl-shadow-modal);
 }

@@ -7,6 +7,16 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.15.1] – 2026-09-21
+
+### Fixed
+
+- **`.glass-sheet` read white on white-grey in dark mode.** The panel used `--gl-surface-milk-strong`, which is a *light* plate in both themes — GlassKit pairs the milk surfaces with dark ink (`--gl-color-text-on-light`, the secondary button) — while the sheet set `--gl-color-text`, white in dark mode. The sheet now has the modal's material: the card-glow gradient over heavy blur with `--gl-border-medium`, which the text tokens are made for. Light mode looks as before; dark mode is dark glass with white text. Reported from the showcase phone frames.
+
+- **Overlays inside `.glass-bg` painted below the tab bar.** `.glass-bg > *` carried `z-index: 1`, so every direct child became a stacking context of its own; a modal or sheet overlay inside one of them (`z-index: 1000`) was trapped at level 1 and lost against a tab bar (`900`) that came later in the DOM — visible in the showcase, and the same in any app whose views and tab bar are siblings under `.glass-bg`. `.glass-bg` is now one isolated stacking context (`isolation: isolate`) with the aurora decorations at `z-index: -1`; the children keep `position: relative` without a `z-index`, so they stay above the decorations and no longer form contexts. Overlays now compete by their own `z-index` — sheet and modal (1000) above the tab bar (900), toast (1100) above both. Compatibility: a child that relied on being a stacking context — say a descendant with a negative `z-index` meant to sit behind that child's own background — now resolves against `.glass-bg` instead. No GlassKit component does this.
+
+---
+
 ## [1.15.0] – 2026-09-21
 
 ### Added
@@ -857,6 +867,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.15.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.15.1
 [1.15.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.15.0
 [1.14.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.14.0
 [1.12.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.12.0
@@ -878,4 +889,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.15.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.15.1...HEAD
