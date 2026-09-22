@@ -1,12 +1,12 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.15.1
+   Jungherz GmbH – v1.16.0
 
    Features:
    - Scoped Reset (box-sizing fix)
    - Dark Mode (default)
    - Light Mode via [data-theme="light"]
-   - 31 components (incl. floating Tab-Bar variant + Accessory)
+   - 34 components (incl. floating Tab-Bar variant + Accessory)
    ============================================================ */
 
 
@@ -523,6 +523,10 @@
 /* Anchors as buttons: shrink-to-fit like real <button> elements
    (block-level flex would fill the line despite --auto) */
 a.glass-btn { display: inline-flex; text-decoration: none; }
+
+/* The hidden attribute is only a user-agent rule, and display:flex above
+   would beat it — a button hidden by script stayed on screen. */
+.glass-btn[hidden] { display: none; }
 
 .glass-btn svg,
 .glass-btn ::slotted(svg) {
@@ -2188,7 +2192,212 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 
 
 /* ============================================================
-   33. UTILITIES
+   33. DATE STRIP
+   ============================================================ */
+/* A row of day chips that scrolls sideways — a booking horizon, the
+   days around today. Each chip is a button: weekday in small caps, the
+   day number, and a dot beneath that a tone modifier lights up. Without
+   a tone the dot is transparent, so chips with and without a mark keep
+   the same height. The chosen chip carries aria-pressed="true" and takes
+   the primary surface, as in .glass-segmented; --today underlines the
+   number; :disabled (or aria-disabled="true", which keeps the chip
+   focusable) dims a day that cannot be chosen. The scrollbar is hidden;
+   the strip pads itself so its own overflow does not clip the focus
+   ring. The dot reads --gl-date-strip-tone, so a fifth tone is one
+   line; on the chosen chip --gl-date-strip-ink turns every tone into
+   the ink on primary, and a dot without a tone stays transparent. */
+.glass-date-strip {
+  display: flex; gap: 6px; padding: 4px;
+  overflow-x: auto; overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.glass-date-strip::-webkit-scrollbar { display: none; }
+
+.glass-date-strip__day {
+  -webkit-appearance: none; appearance: none;
+  flex: 1 0 44px; min-width: 44px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 8px 4px 6px;
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-radius-input);
+  background: var(--gl-surface-1);
+  color: var(--gl-color-text);
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--gl-transition-fast);
+  outline: none; -webkit-tap-highlight-color: transparent;
+}
+.glass-date-strip__day:hover { background: var(--gl-surface-3); }
+.glass-date-strip__day[aria-pressed="true"] {
+  --gl-date-strip-ink: var(--gl-color-on-primary);
+  background: var(--gl-color-primary);
+  color: var(--gl-color-on-primary);
+  border-color: transparent;
+  box-shadow: var(--gl-shadow-btn-primary);
+}
+.glass-date-strip__day:focus-visible { box-shadow: var(--gl-shadow-focus); }
+.glass-date-strip__day[aria-pressed="true"]:focus-visible { box-shadow: var(--gl-shadow-focus), var(--gl-shadow-btn-primary); }
+.glass-date-strip__day:disabled,
+.glass-date-strip__day[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+.glass-date-strip__day:disabled:hover,
+.glass-date-strip__day[aria-disabled="true"]:hover { background: var(--gl-surface-1); }
+.glass-date-strip__day--today .glass-date-strip__num { text-decoration: underline; text-underline-offset: 3px; }
+
+.glass-date-strip__wd {
+  font-size: var(--gl-font-size-xs); opacity: 0.75;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.glass-date-strip__num {
+  font-size: var(--gl-font-size-lg); font-weight: var(--gl-font-weight-semibold);
+  line-height: 1.1;
+}
+.glass-date-strip__mark {
+  width: 6px; height: 6px; margin-top: 2px; border-radius: 50%;
+  background: var(--gl-date-strip-tone, transparent);
+}
+.glass-date-strip__mark--primary { --gl-date-strip-tone: var(--gl-date-strip-ink, var(--gl-color-primary)); }
+.glass-date-strip__mark--success { --gl-date-strip-tone: var(--gl-date-strip-ink, var(--gl-color-success)); }
+.glass-date-strip__mark--warning { --gl-date-strip-tone: var(--gl-date-strip-ink, var(--gl-color-warning)); }
+.glass-date-strip__mark--error   { --gl-date-strip-tone: var(--gl-date-strip-ink, var(--gl-color-error)); }
+
+
+/* ============================================================
+   34. CALENDAR
+   ============================================================ */
+/* One month: a head with the title between two round nav buttons, a
+   weekday row and six rows of seven day buttons, each a square with the
+   number and up to three dots beneath. The chosen day carries
+   aria-pressed="true" and takes the primary surface; --today draws a
+   warm border; --other dims a day of the neighbouring month; :disabled
+   or aria-disabled="true" dims a day outside the allowed range — the
+   second form keeps it focusable, so arrow keys can pass over it. The
+   block is a group of buttons whose names carry the full date, not a
+   role="grid": a grid demands rows and cells with aria-selected, which
+   is not what the styling hangs on. The nav buttons take an SVG chevron.
+   The dot reads --gl-calendar-tone, so a fifth tone is one line; on the
+   chosen day --gl-calendar-ink turns every tone into the ink on primary. */
+.glass-calendar { display: block; }
+.glass-calendar__head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  margin-bottom: 8px;
+}
+.glass-calendar__title {
+  flex: 1 1 auto; min-width: 0; text-align: center;
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text-heading);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.glass-calendar__nav {
+  -webkit-appearance: none; appearance: none;
+  flex: none; width: 32px; height: 32px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-radius-full);
+  background: var(--gl-surface-1);
+  color: var(--gl-color-text);
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--gl-transition-fast);
+  outline: none; -webkit-tap-highlight-color: transparent;
+}
+.glass-calendar__nav:hover { background: var(--gl-surface-3); }
+.glass-calendar__nav:focus-visible { box-shadow: var(--gl-shadow-focus); }
+.glass-calendar__nav svg {
+  width: 16px; height: 16px; fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.glass-calendar__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.glass-calendar__wd {
+  padding: 4px 0; text-align: center;
+  font-size: var(--gl-font-size-xs);
+  color: var(--gl-color-text-muted);
+  text-transform: uppercase; letter-spacing: 0.04em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.glass-calendar__day {
+  -webkit-appearance: none; appearance: none;
+  aspect-ratio: 1; min-width: 0; padding: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  border: 1px solid transparent;
+  border-radius: var(--gl-radius-sm);
+  background: transparent;
+  color: var(--gl-color-text);
+  font-family: inherit;
+  font-size: var(--gl-font-size-sm);
+  cursor: pointer;
+  transition: var(--gl-transition-fast);
+  outline: none; -webkit-tap-highlight-color: transparent;
+}
+.glass-calendar__day:hover { background: var(--gl-surface-2); }
+.glass-calendar__day--other { opacity: 0.35; }
+.glass-calendar__day--today { border-color: var(--gl-border-warm); }
+.glass-calendar__day[aria-pressed="true"] {
+  --gl-calendar-ink: var(--gl-color-on-primary);
+  background: var(--gl-color-primary);
+  color: var(--gl-color-on-primary);
+}
+.glass-calendar__day:focus-visible { box-shadow: var(--gl-shadow-focus); }
+.glass-calendar__day:disabled,
+.glass-calendar__day[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+.glass-calendar__day:disabled:hover,
+.glass-calendar__day[aria-disabled="true"]:hover { background: transparent; }
+
+.glass-calendar__marks { display: flex; gap: 2px; height: 5px; }
+.glass-calendar__mark {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gl-calendar-tone, transparent);
+}
+.glass-calendar__mark--primary { --gl-calendar-tone: var(--gl-calendar-ink, var(--gl-color-primary)); }
+.glass-calendar__mark--success { --gl-calendar-tone: var(--gl-calendar-ink, var(--gl-color-success)); }
+.glass-calendar__mark--warning { --gl-calendar-tone: var(--gl-calendar-ink, var(--gl-color-warning)); }
+.glass-calendar__mark--error   { --gl-calendar-tone: var(--gl-calendar-ink, var(--gl-color-error)); }
+
+
+/* ============================================================
+   35. IMAGE PICKER
+   ============================================================ */
+/* Choosing one image with a preview: a 72px plate on the left — the
+   picture with object-fit: cover, or a placeholder icon in the muted
+   icon colour — and a column with the label, a hint and the actions.
+   The actions are ordinary .glass-btn buttons (secondary --sm --auto to
+   choose, tertiary --sm --auto to remove); the block brings no button
+   look of its own. --round makes the plate a circle for avatars. The
+   column yields (min-width: 0) and the label wraps, so a long label
+   never squeezes the plate. Any image, not only photos — a logo, an
+   illustration — hence the name. */
+.glass-image-picker { display: flex; align-items: center; gap: 14px; }
+.glass-image-picker__preview {
+  flex: none; width: 72px; height: 72px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-radius-input);
+  background: var(--gl-surface-2);
+  color: var(--gl-icon-muted);
+  overflow: hidden;
+}
+.glass-image-picker__preview--round { border-radius: 50%; }
+.glass-image-picker__preview img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.glass-image-picker__preview svg {
+  width: 28px; height: 28px; fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.glass-image-picker__meta {
+  flex: 1 1 auto; min-width: 0;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+}
+.glass-image-picker__label {
+  font-size: var(--gl-font-size-sm); font-weight: var(--gl-font-weight-medium);
+  color: var(--gl-icon-strong);
+  overflow-wrap: anywhere;
+}
+.glass-image-picker__hint { font-size: var(--gl-font-size-xs); color: var(--gl-color-text-muted); }
+.glass-image-picker__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+
+/* ============================================================
+   36. UTILITIES
    ============================================================ */
 .gl-stack            { display: flex; flex-direction: column; }
 .gl-row              { display: flex; flex-direction: row; align-items: center; }

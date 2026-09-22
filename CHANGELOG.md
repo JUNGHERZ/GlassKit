@@ -7,6 +7,26 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.16.0] – 2026-09-22
+
+### Added
+
+- **Three more blocks from EhrenPfoten: `.glass-date-strip`, `.glass-calendar`, `.glass-image-picker`.** The blocks that waited until real data had settled their shape — the strip and the calendar run in booking (29-day horizon), in the team's day view and for schedule exceptions, the picker in the dog and profile photo upload. Built there in GlassKit style and reviewed here block by block; each arrives as a copy with the deviations named below, and every token they reference is one this sheet declares.
+
+  `.glass-date-strip` is a row of day chips that scrolls sideways: weekday, number and a dot beneath, the chosen chip on the primary surface via `aria-pressed="true"`, `--today` underlined, the scrollbar hidden. Deviations from the project block: the dot's modifiers are tones — `__mark--primary/--success/--warning/--error` — not the project's `--booked/--open/--closed`, so a project decides what a colour means; there is no `--none`, a dot without a tone is transparent (and flex stretch keeps the chips level either way); the chosen chip turns every tone into the ink on primary through `--gl-date-strip-ink`, where the project block painted a white dot even on a chip without a mark; the chip's `--closed` is gone — a day that cannot be chosen is `:disabled` or `aria-disabled="true"`, dimmed like `.glass-segmented__item:disabled`; focus is `--gl-shadow-focus`, not a primary outline, and the strip pads itself 4 px so its own overflow does not clip that ring; `-webkit-overflow-scrolling: touch` is dropped, it has done nothing since iOS 13.
+
+  `.glass-calendar` is one month: title between two round nav buttons, weekday row, 42 square day buttons with up to three dots. Deviations: tones as above (`--gl-calendar-tone` / `--gl-calendar-ink`) instead of `--closed/--override/--booked` — the project's own schedule view had already moved to `error` / `warning` while its block still knew the old names, so those marks rendered green; a day outside the allowed range is `:disabled` or `aria-disabled="true"` rather than a `__day--disabled` class, the second form keeps it focusable for arrow keys; the block is a `role="group"` of buttons named with their full date, not `role="grid"` — a grid demands rows and cells with `aria-selected`, which is not what the styling hangs on; the nav buttons take an SVG chevron (`__nav svg`), like the steps check, so the arrow does not depend on the font; `__title` ellipsises instead of pushing the buttons out.
+
+  `.glass-image-picker` — the project's `.glass-photo-picker`, renamed as proposed because it takes any image, a shelter's logo as much as a dog photo: a 72 px preview plate with the picture or a placeholder icon, `--round` for avatars, a column with `__label`, `__hint` and `__actions`. The actions are ordinary `.glass-btn` buttons; the block brings no button look of its own. Deviations: `__label` is a class of its own, in the look of `.glass-label`; the column has `flex: 1 1 auto` and the label wraps (`overflow-wrap: anywhere`), so a long label never squeezes the plate; the `object-fit` on the plate itself is gone, it did nothing on a `<div>`.
+
+  Checked in Chromium and WebKit, dark and light, with a re-coloured primary: 29 chips in a 320 px frame scroll inside the strip while the page does not; 42 cells in 320 px, 37 px each, no number wraps; a long picker label wraps into three lines and the plate stays 72 px. The blocks sit outside the `[data-theme]` blocks, so `componentsSheet` carries them into every shadow root.
+
+### Fixed
+
+- **A hidden `.glass-btn` stayed visible.** The `hidden` attribute is only a user-agent rule, and the button's `display: flex` beat it, so a button hidden by script stayed on screen; `.glass-btn[hidden] { display: none }` now wins. Found through the image picker's remove button.
+
+---
+
 ## [1.15.1] – 2026-09-21
 
 ### Fixed
@@ -867,6 +887,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.16.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.16.0
 [1.15.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.15.1
 [1.15.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.15.0
 [1.14.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.14.0
@@ -889,4 +910,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.15.1...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.16.0...HEAD

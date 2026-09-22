@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.15.1) with 31 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.16.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -1252,6 +1252,90 @@ For empty lists and result pages (since 1.15.0): a centred column with a round i
 | `.glass-empty__title`, `__text` | Heading and muted text (max 38 ch) |
 | `.glass-empty__action` | Room for one action |
 
+### 3.33 Date strip
+
+A row of day chips that scrolls sideways (since 1.16.0) — a booking horizon, the days around today. Chips are buttons in a `role="group"`; the chosen one carries `aria-pressed="true"` (as in the segmented control), `--today` underlines the number, `:disabled` / `aria-disabled="true"` dim a day that cannot be chosen. The dot beneath the number lights up with a tone modifier; without one it is transparent, so all chips are the same height. Give each button an `aria-label` with the full date — the visible "Tu 22" is no name. The scrollbar is hidden; the strip pads itself 4 px so its own overflow does not clip the focus ring. `<glk-date-strip>` in GlassKit Elements builds this from dates.
+
+```html
+<div class="glass-date-strip" role="group" aria-label="Pick a day">
+  <button class="glass-date-strip__day glass-date-strip__day--today" aria-pressed="false" aria-label="Tuesday, 22 September 2026">
+    <span class="glass-date-strip__wd">Tu</span><span class="glass-date-strip__num">22</span>
+    <span class="glass-date-strip__mark glass-date-strip__mark--success"></span>
+  </button>
+  <button class="glass-date-strip__day" aria-pressed="true" aria-label="…">…</button>
+  <button class="glass-date-strip__day" aria-pressed="false" disabled aria-label="…">…</button>
+</div>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-date-strip` | Scrolling row, hidden scrollbar, 4 px padding |
+| `.glass-date-strip__day` | Chip button, 44 px minimum; `[aria-pressed="true"]` chosen on the primary surface; `:disabled` / `[aria-disabled="true"]` dimmed |
+| `.glass-date-strip__day--today` | Underlines the number |
+| `.glass-date-strip__wd`, `__num` | Weekday in small caps, day number |
+| `.glass-date-strip__mark` | 6 px dot, transparent without a tone |
+| `.glass-date-strip__mark--primary`, `--success`, `--warning`, `--error` | Tone via `--gl-date-strip-tone`; on the chosen chip every tone becomes the ink on primary (`--gl-date-strip-ink`) |
+
+---
+
+### 3.34 Calendar
+
+One month (since 1.16.0): a title between two round nav buttons, a weekday row and 42 square day buttons with up to three dots beneath the number. The chosen day carries `aria-pressed="true"`, `--today` draws a warm border, `--other` dims a day of the neighbouring month, `:disabled` / `aria-disabled="true"` dim a day outside the allowed range — the second keeps it focusable for arrow keys. The days are a `role="group"` of buttons named with their full date, not a `role="grid"` (a grid demands rows and cells with `aria-selected`). The nav buttons take an SVG chevron. `<glk-calendar>` in GlassKit Elements builds it, with keyboard navigation and `Intl` names.
+
+```html
+<div class="glass-calendar">
+  <div class="glass-calendar__head">
+    <button class="glass-calendar__nav" aria-label="Previous month"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <div class="glass-calendar__title">September 2026</div>
+    <button class="glass-calendar__nav" aria-label="Next month"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+  </div>
+  <div class="glass-calendar__grid" role="group" aria-label="Pick a day">
+    <span class="glass-calendar__wd" aria-hidden="true">Mo</span> <!-- × 7 -->
+    <button class="glass-calendar__day glass-calendar__day--other" aria-pressed="false" aria-label="Monday, 31 August 2026"><span>31</span><span class="glass-calendar__marks"></span></button>
+    <button class="glass-calendar__day glass-calendar__day--today" aria-pressed="true" aria-label="Tuesday, 22 September 2026"><span>22</span><span class="glass-calendar__marks"><span class="glass-calendar__mark glass-calendar__mark--warning"></span></span></button>
+    <!-- 42 cells -->
+  </div>
+</div>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-calendar` | Block |
+| `.glass-calendar__head`, `__title`, `__nav` | Head row; title (ellipsis when tight); 32 px round nav buttons with an SVG chevron |
+| `.glass-calendar__grid` | Seven columns, 4 px gap |
+| `.glass-calendar__wd` | Weekday header cell, muted small caps |
+| `.glass-calendar__day` | Square day button; `[aria-pressed="true"]` chosen; `--today` warm border; `--other` dimmed; `:disabled` / `[aria-disabled="true"]` dimmed and unpickable |
+| `.glass-calendar__marks`, `__mark` | 5 px dots beneath the number, up to three; `__mark--primary` / `--success` / `--warning` / `--error` via `--gl-calendar-tone`, the ink on the chosen day via `--gl-calendar-ink` |
+
+---
+
+### 3.35 Image picker
+
+Choosing one image with a preview (since 1.16.0): a 72 px plate — the picture with `object-fit: cover`, or a placeholder icon — and a column with the label, a hint and the actions, which are ordinary `.glass-btn` buttons (`--secondary --sm --auto` to choose, `--tertiary --sm --auto` to remove); the block brings no button look of its own. `--round` makes the plate a circle for avatars; the column yields and the label wraps, so a long label never squeezes the plate. Any image, not only photos — hence the name. `<glk-image-picker>` in GlassKit Elements adds the file dialog, EXIF rotation and resizing.
+
+```html
+<div class="glass-image-picker" role="group" aria-labelledby="photo-label">
+  <div class="glass-image-picker__preview glass-image-picker__preview--round"><img src="…" alt=""></div>
+  <div class="glass-image-picker__meta">
+    <span class="glass-image-picker__label" id="photo-label">Profile photo</span>
+    <span class="glass-image-picker__hint">JPG or PNG</span>
+    <div class="glass-image-picker__actions">
+      <button class="glass-btn glass-btn--secondary glass-btn--sm glass-btn--auto">Change</button>
+      <button class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto">Remove</button>
+    </div>
+  </div>
+</div>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-image-picker` | Row: plate left, column right, 14 px gap |
+| `.glass-image-picker__preview` | 72 px plate; `img` covers it, `svg` is the 28 px placeholder in the muted icon colour |
+| `.glass-image-picker__preview--round` | Circle, for avatars |
+| `.glass-image-picker__meta` | Column that yields (`min-width: 0`) |
+| `.glass-image-picker__label`, `__hint` | Label in the look of `.glass-label`, wraps anywhere; small muted hint |
+| `.glass-image-picker__actions` | Wrapping row of `.glass-btn` buttons |
+
 ---
 
 ## 4. Utility Classes
@@ -1761,6 +1845,9 @@ Key points in this composition:
 | Steps | `.glass-steps` | `__item`, `__item--done`, `__item--current`, `__num`, `__label`, `__line` |
 | Sheet | `.glass-sheet-overlay` + `.glass-sheet` | `.is-active`, `--inline`, `__grip`, `__title`, `__body`, `__actions` |
 | Empty state | `.glass-empty` | `__icon`, `__title`, `__text`, `__action` |
+| Date strip | `.glass-date-strip` | `__day`, `__day--today`, `__wd`, `__num`, `__mark`, `__mark--primary`/`--success`/`--warning`/`--error`, `[aria-pressed]`, `:disabled` |
+| Calendar | `.glass-calendar` | `__head`, `__title`, `__nav`, `__grid`, `__wd`, `__day`, `__day--today`, `__day--other`, `__marks`, `__mark--primary`/`--success`/`--warning`/`--error`, `[aria-pressed]`, `[aria-disabled]` |
+| Image picker | `.glass-image-picker` | `__preview`, `__preview--round`, `__meta`, `__label`, `__hint`, `__actions` |
 
 ---
 
