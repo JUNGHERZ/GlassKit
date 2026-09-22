@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.16.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.17.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -665,6 +665,12 @@ Disabled:
 <input class="glass-input" type="text" disabled>
 ```
 
+Date and time fields (`type="date"`, `time`, `datetime-local`, `month`) take the same class. Since 1.17.0 they drop the native appearance, so iOS keeps them at the column width with the value at the start, like every other field; the native picker still opens.
+
+```html
+<input class="glass-input" type="date" value="2026-09-22">
+```
+
 | Class | Description |
 |---|---|
 | `.glass-input-group` | Wrapper for label + input + hint |
@@ -1171,10 +1177,22 @@ A small, exclusive choice as one control (since 1.15.0) — traffic light, morni
 </div>
 ```
 
+More options than fit — seven areas on a phone: without a modifier the row stays one line and runs past the edge. `--scroll` keeps one row and lets it scroll sideways (scrollbar hidden, as on the date strip); `--wrap` breaks it into lines. Both combine with `--full`; use one or the other.
+
+```html
+<div class="glass-segmented glass-segmented--full glass-segmented--scroll" role="group" aria-label="Area">
+  <button class="glass-segmented__item" aria-pressed="true">General</button>
+  <button class="glass-segmented__item" aria-pressed="false">Hours</button>
+  <!-- … seven in all -->
+</div>
+```
+
 | Class | Description |
 |---|---|
 | `.glass-segmented` | The group: inset glass track, buttons inside |
 | `.glass-segmented--full` | Buttons share the width |
+| `.glass-segmented--scroll` | One row that scrolls sideways when the options do not fit, scrollbar hidden (since 1.17.0) |
+| `.glass-segmented--wrap` | Breaks the row into lines when the options do not fit (since 1.17.0) |
 | `.glass-segmented__item` | One option; `aria-pressed="true"` marks the chosen one, `disabled` dims it |
 | `.glass-segmented__item--success` / `--warning` / `--error` | Tone: sets `--gl-segmented-tone` for the dot |
 | `.glass-segmented__dot` | The dot before the label, in the tone colour |
@@ -1250,7 +1268,7 @@ For empty lists and result pages (since 1.15.0): a centred column with a round i
 | `.glass-empty` | Centred column |
 | `.glass-empty__icon` | 48 px round plate, 24 px stroked icon inside (`::slotted(svg)` twin) |
 | `.glass-empty__title`, `__text` | Heading and muted text (max 38 ch) |
-| `.glass-empty__action` | Room for one action |
+| `.glass-empty__action` | Room for one action or several: side by side with 8 px between them, wrapping and centred when narrow (since 1.17.0) |
 
 ### 3.33 Date strip
 
@@ -1841,7 +1859,7 @@ Key points in this composition:
 | Skeleton | `.glass-skeleton` | `__line`, `__line--title` |
 | Table | `.glass-table` | `-wrap`, `__num`, `__muted` |
 | Prose | `.glass-prose` | – |
-| Segmented | `.glass-segmented` | `--full`, `__item`, `__item--success`/`--warning`/`--error`, `__dot`, `[aria-pressed]` |
+| Segmented | `.glass-segmented` | `--full`, `--scroll`, `--wrap`, `__item`, `__item--success`/`--warning`/`--error`, `__dot`, `[aria-pressed]` |
 | Steps | `.glass-steps` | `__item`, `__item--done`, `__item--current`, `__num`, `__label`, `__line` |
 | Sheet | `.glass-sheet-overlay` + `.glass-sheet` | `.is-active`, `--inline`, `__grip`, `__title`, `__body`, `__actions` |
 | Empty state | `.glass-empty` | `__icon`, `__title`, `__text`, `__action` |

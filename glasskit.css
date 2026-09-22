@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.16.0
+   Jungherz GmbH – v1.17.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -656,6 +656,23 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 .glass-input::placeholder { color: var(--gl-placeholder); }
+
+/* Date and time fields drop the native appearance. iOS draws them as a
+   native control with a width of its own: width: 100% notwithstanding, a
+   date field came out wider than its column (two side by side overlapped),
+   an empty one narrower than a filled one, and the value sat centred where
+   every other field starts at the left. Without the appearance iOS gives
+   them the column width like any other field; the picker still opens. The
+   box was GlassKit's already, so other browsers draw the same as before. */
+.glass-input[type="date"],
+.glass-input[type="time"],
+.glass-input[type="datetime-local"],
+.glass-input[type="month"] {
+  -webkit-appearance: none; appearance: none;
+}
+/* A rule of its own: a browser that does not know this pseudo-element
+   drops the whole rule, and must not take the one above with it. */
+.glass-input::-webkit-date-and-time-value { text-align: start; }
 
 .glass-input:focus {
   border-color: var(--gl-border-focus);
@@ -2016,6 +2033,20 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-segmented--full { display: flex; }
 .glass-segmented--full .glass-segmented__item { flex: 1 1 0; }
 
+/* More options than fit: --scroll keeps one row and lets it scroll
+   sideways with the scrollbar hidden, as on the date strip; --wrap breaks
+   the row into lines. Without either the row stays one line and runs past
+   the edge — seven options on a phone lost the last ones. Both combine
+   with --full; use one or the other. The 4px padding keeps the focus ring
+   inside the scroll box. */
+.glass-segmented--scroll {
+  overflow-x: auto; overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.glass-segmented--scroll::-webkit-scrollbar { display: none; }
+.glass-segmented--wrap { flex-wrap: wrap; }
+
 .glass-segmented__item {
   -webkit-appearance: none; appearance: none;
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
@@ -2188,7 +2219,12 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   font-size: var(--gl-font-size-sm); line-height: 1.55;
   color: var(--gl-color-text-muted);
 }
-.glass-empty__action { margin-top: 8px; }
+/* Room for one action or several: side by side with 8px between them,
+   wrapping and centred when the width runs out. One alone sits as before. */
+.glass-empty__action {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  margin-top: 8px;
+}
 
 
 /* ============================================================

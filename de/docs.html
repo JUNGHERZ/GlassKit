@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.16.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.17.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -458,7 +458,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.16.0</span>
+      <span class="docs-hero__badge">v1.17.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">31 Komponenten</span>
@@ -1174,8 +1174,13 @@ function <span class="cls">toggleTheme</span>() {
           <input class="glass-input glass-input--error" type="email" value="ungueltig@">
           <span class="glass-hint glass-hint--error">Bitte gültige E-Mail angeben</span>
         </div>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+          <div class="glass-input-group"><label class="glass-label">Von</label><input class="glass-input" type="date" value="2026-09-01"></div>
+          <div class="glass-input-group"><label class="glass-label">Bis</label><input class="glass-input" type="date" value="2026-09-30"></div>
+        </div>
       </div>
     </div>
+    <p>Datums- und Zeitfelder &mdash; <code>type="date"</code>, <code>time</code>, <code>datetime-local</code>, <code>month</code> &mdash; nehmen dieselbe Klasse. Sie verzichten auf das native Aussehen (seit 1.17.0): iOS zeichnete sie breiter als ihre Spalte, ein leeres schmaler als ein gef&uuml;lltes, den Wert mittig. Jetzt sitzen sie wie jedes andere Feld in ihrer Spalte, der Wert am Anfang; der native Picker &ouml;ffnet weiter.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-input-group"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;label</span> <span class="attr">class=</span><span class="val">"glass-label"</span><span class="tag">&gt;</span>Label<span class="tag">&lt;/label&gt;</span>
@@ -1412,7 +1417,7 @@ function <span class="cls">toggleTheme</span>() {
   <!-- SEGMENTED -->
   <section class="docs-section" id="segmented">
     <h2>Segmentwahl</h2>
-    <p>Eine kleine, exklusive Auswahl als ein Bedienelement &mdash; Ampel, Vormittag / Nachmittag, Modus. Kn&ouml;pfe in einer <code>role="group"</code>; der gew&auml;hlte tr&auml;gt <code>aria-pressed="true"</code>, und genau an diesem Attribut h&auml;ngt das Styling, damit Zustand und Semantik nicht auseinanderlaufen. Die Ton-Modifier setzen einen Punkt in einer Zustandsfarbe vor die Beschriftung. Probier es: Klick oder Tab auf einen Knopf und Leertaste.</p>
+    <p>Eine kleine, exklusive Auswahl als ein Bedienelement &mdash; Ampel, Vormittag / Nachmittag, Modus. Kn&ouml;pfe in einer <code>role="group"</code>; der gew&auml;hlte tr&auml;gt <code>aria-pressed="true"</code>, und genau an diesem Attribut h&auml;ngt das Styling, damit Zustand und Semantik nicht auseinanderlaufen. Die Ton-Modifier setzen einen Punkt in einer Zustandsfarbe vor die Beschriftung. Probier es: Klick oder Tab auf einen Knopf und Leertaste. Mehr Optionen als Platz? Ohne Modifier bleibt die Zeile einzeilig und l&auml;uft &uuml;ber den Rand; <code>--scroll</code> l&auml;sst sie seitw&auml;rts scrollen, <code>--wrap</code> bricht sie um. Beide lassen sich mit <code>--full</code> kombinieren.</p>
     <div class="docs-preview docs-preview--row docs-preview--compact">
       <div class="glass-segmented" role="group" aria-label="Modus" data-docs-segmented>
         <button class="glass-segmented__item" aria-pressed="true">Kontextuell</button>
@@ -1428,6 +1433,30 @@ function <span class="cls">toggleTheme</span>() {
         <button class="glass-segmented__item" aria-pressed="false" disabled>Gesperrt</button>
       </div>
     </div>
+    <div class="docs-preview docs-preview--compact" style="display:flex;flex-direction:column;gap:10px">
+      <div style="max-width:320px">
+        <div class="glass-segmented glass-segmented--full glass-segmented--scroll" role="group" aria-label="Bereich" data-docs-segmented>
+          <button class="glass-segmented__item" aria-pressed="true">Allgemein</button>
+          <button class="glass-segmented__item" aria-pressed="false">Zeiten</button>
+          <button class="glass-segmented__item" aria-pressed="false">Hunde</button>
+          <button class="glass-segmented__item" aria-pressed="false">Team</button>
+          <button class="glass-segmented__item" aria-pressed="false">Texte</button>
+          <button class="glass-segmented__item" aria-pressed="false">Benachrichtigungen</button>
+          <button class="glass-segmented__item" aria-pressed="false">Datenschutz</button>
+        </div>
+      </div>
+      <div style="max-width:320px">
+        <div class="glass-segmented glass-segmented--wrap" role="group" aria-label="Bereich" data-docs-segmented>
+          <button class="glass-segmented__item" aria-pressed="true">Allgemein</button>
+          <button class="glass-segmented__item" aria-pressed="false">Zeiten</button>
+          <button class="glass-segmented__item" aria-pressed="false">Hunde</button>
+          <button class="glass-segmented__item" aria-pressed="false">Team</button>
+          <button class="glass-segmented__item" aria-pressed="false">Texte</button>
+          <button class="glass-segmented__item" aria-pressed="false">Benachrichtigungen</button>
+          <button class="glass-segmented__item" aria-pressed="false">Datenschutz</button>
+        </div>
+      </div>
+    </div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-segmented glass-segmented--full"</span> <span class="attr">role=</span><span class="val">"group"</span> <span class="attr">aria-label=</span><span class="val">"Status"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-segmented__item glass-segmented__item--success"</span> <span class="attr">aria-pressed=</span><span class="val">"true"</span><span class="tag">&gt;</span>
@@ -1441,6 +1470,8 @@ function <span class="cls">toggleTheme</span>() {
       <tbody>
         <tr><td><code>.glass-segmented</code></td><td>Die Gruppe: eingelassene Glas-Schiene, Kn&ouml;pfe darin</td></tr>
         <tr><td><code>--full</code></td><td>Kn&ouml;pfe teilen sich die Breite</td></tr>
+        <tr><td><code>--scroll</code></td><td>Eine Zeile, die seitw&auml;rts scrollt, wenn die Optionen nicht passen; Scrollbar versteckt (seit 1.17.0)</td></tr>
+        <tr><td><code>--wrap</code></td><td>Bricht die Zeile um, wenn die Optionen nicht passen (seit 1.17.0)</td></tr>
         <tr><td><code>__item</code></td><td>Eine Option; <code>aria-pressed="true"</code> markiert die gew&auml;hlte, <code>disabled</code> d&auml;mpft</td></tr>
         <tr><td><code>__item--success</code> / <code>--warning</code> / <code>--error</code></td><td>Ton: setzt <code>--gl-segmented-tone</code> f&uuml;r den Punkt</td></tr>
         <tr><td><code>__dot</code></td><td>Der Punkt vor der Beschriftung, in der Tonfarbe</td></tr>
@@ -1566,14 +1597,14 @@ function <span class="cls">toggleTheme</span>() {
   <!-- EMPTY -->
   <section class="docs-section" id="empty">
     <h2>Leerzustand</h2>
-    <p>F&uuml;r leere Listen und Ergebnisseiten: eine zentrierte Spalte mit runder Icon-Fl&auml;che, Titel, kurzem ged&auml;mpftem Text und Platz f&uuml;r eine Aktion.</p>
+    <p>F&uuml;r leere Listen und Ergebnisseiten: eine zentrierte Spalte mit runder Icon-Fl&auml;che, Titel, kurzem ged&auml;mpftem Text und Platz f&uuml;r eine oder mehrere Aktionen nebeneinander.</p>
     <div class="docs-preview">
       <div class="glass-card" style="padding:4px">
         <div class="glass-empty">
           <span class="glass-empty__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></span>
           <p class="glass-empty__title">Noch keine Buchungen</p>
           <p class="glass-empty__text">Such dir einen Tag und einen Hund aus &mdash; das Team freut sich.</p>
-          <div class="glass-empty__action"><button class="glass-btn glass-btn--primary glass-btn--sm glass-btn--auto">Buchen</button></div>
+          <div class="glass-empty__action"><button class="glass-btn glass-btn--primary glass-btn--sm glass-btn--auto">Buchen</button><button class="glass-btn glass-btn--secondary glass-btn--sm glass-btn--auto">Hunde ansehen</button></div>
         </div>
       </div>
     </div>
@@ -1591,7 +1622,7 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td><code>.glass-empty</code></td><td>Zentrierte Spalte</td></tr>
         <tr><td><code>__icon</code></td><td>48-px-Kreisfl&auml;che, darin ein 24-px-Strich-Icon (<code>::slotted(svg)</code>-Zwilling f&uuml;r Elements)</td></tr>
         <tr><td><code>__title</code>, <code>__text</code></td><td>&Uuml;berschrift und ged&auml;mpfter Text (max. 38 Zeichen breit)</td></tr>
-        <tr><td><code>__action</code></td><td>Platz f&uuml;r eine Aktion, z. B. ein kleiner Knopf</td></tr>
+        <tr><td><code>__action</code></td><td>Platz f&uuml;r eine oder mehrere Aktionen: nebeneinander mit 8 px Abstand, umbrechend und zentriert, wenn es eng wird (seit 1.17.0)</td></tr>
       </tbody>
     </table>
   </section>
@@ -1852,7 +1883,7 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td>Skeleton</td><td><code>.glass-skeleton</code></td><td><code>__line</code>, <code>__line--title</code></td></tr>
         <tr><td>Tabelle</td><td><code>.glass-table</code></td><td><code>-wrap</code>, <code>__num</code>, <code>__muted</code></td></tr>
         <tr><td>Flie&szlig;text</td><td><code>.glass-prose</code></td><td>–</td></tr>
-        <tr><td>Segmentwahl</td><td><code>.glass-segmented</code></td><td><code>--full</code>, <code>__item</code>, <code>__item--success</code>/<code>--warning</code>/<code>--error</code>, <code>__dot</code>, <code>[aria-pressed]</code></td></tr>
+        <tr><td>Segmentwahl</td><td><code>.glass-segmented</code></td><td><code>--full</code>, <code>--scroll</code>, <code>--wrap</code>, <code>__item</code>, <code>__item--success</code>/<code>--warning</code>/<code>--error</code>, <code>__dot</code>, <code>[aria-pressed]</code></td></tr>
         <tr><td>Schrittanzeige</td><td><code>.glass-steps</code></td><td><code>__item</code>, <code>__item--done</code>, <code>__item--current</code>, <code>__num</code>, <code>__label</code>, <code>__line</code></td></tr>
         <tr><td>Bottom-Sheet</td><td><code>.glass-sheet-overlay</code> + <code>.glass-sheet</code></td><td><code>.is-active</code>, <code>--inline</code>, <code>__grip</code>, <code>__title</code>, <code>__body</code>, <code>__actions</code></td></tr>
         <tr><td>Leerzustand</td><td><code>.glass-empty</code></td><td><code>__icon</code>, <code>__title</code>, <code>__text</code>, <code>__action</code></td></tr>

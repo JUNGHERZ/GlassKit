@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.16.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.17.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.16.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.17.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -72,16 +72,16 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.16/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.17/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.16/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.17/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.16/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.17/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.16` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.17` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 ### npm / yarn / pnpm
 
@@ -190,7 +190,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Skeleton** | `.glass-skeleton` | Shimmer lines while content loads |
 | **Table** | `.glass-table` | Plain `<table>` on glass — hairline rows, tabular numbers |
 | **Prose** | `.glass-prose` | Rendered Markdown / running text with one class |
-| **Segmented** | `.glass-segmented` | Small exclusive choice as one control, with tone dots |
+| **Segmented** | `.glass-segmented` | Small exclusive choice as one control, with tone dots; scrolls or wraps when crowded |
 | **Steps** | `.glass-steps` | Progress through a short flow; container-query aware |
 | **Sheet** | `.glass-sheet` | Bottom sheet — the mobile sibling of the modal |
 | **Empty state** | `.glass-empty` | Icon, title, text and one action for empty lists |
@@ -585,7 +585,7 @@ Prose:
   .glass-prose   (styles the rendered content beneath it)
 
 Segmented:
-  .glass-segmented--full · __item[aria-pressed] · __item--success / --warning / --error · __dot
+  .glass-segmented--full / --scroll / --wrap · __item[aria-pressed] · __item--success / --warning / --error · __dot
 
 Steps:
   .glass-steps__item--done / --current · __num · __label · __line

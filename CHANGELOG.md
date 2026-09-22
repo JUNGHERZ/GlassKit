@@ -7,6 +7,20 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.17.0] – 2026-09-22
+
+### Added
+
+- **`.glass-segmented--scroll` and `.glass-segmented--wrap` for more options than fit.** The items carry `white-space: nowrap` and the group only `max-width: 100%`, so seven areas as a full-width group on a phone ran past the edge of the group and the last ones could not be reached. `--scroll` keeps one row and lets it scroll sideways — `overflow-x: auto`, the scrollbar hidden, `overscroll-behavior-x: contain`, as on the date strip; `--wrap` breaks it into lines with the same 4 px gap. Both combine with `--full`; without either the row stays one line, as before. The group's 4 px padding keeps the focus ring inside the scroll box at both ends. Measured with seven items in a 320 px frame, Chromium and WebKit: `--full --scroll` scrolls 666 / 318 px with 4 px left at either end, `--wrap` gives three rows inside the frame, the unmodified group is unchanged. `<glk-segmented overflow="scroll" | "wrap">` in GlassKit Elements 1.17.0 sets them. (EhrenPfoten, finding 4.)
+
+### Fixed
+
+- **Date and time fields ran out of their column on iOS.** iOS draws `input[type="date"]` as a native control with a width of its own: `.glass-input` sets `width: 100%`, yet a date field came out wider than its column — alone past the card's edge, two in a row overlapping — an empty one narrower than a filled one, and the value centred where every other field starts at the left. `.glass-input` of type `date`, `time`, `datetime-local` and `month` now drops the native appearance (`appearance: none`), which gives it the column width like any other field; `::-webkit-date-and-time-value` aligns the value to the start, in a rule of its own so a browser that does not know the pseudo-element drops only that. Measured in the iOS 26.3 and 27.0 simulators at 402 px: before, 35 px past the column and 55 px high, two fields in a row overlapping by 23 px; after, flush with the column and 52 px high like a text field. Chromium and WebKit on the desktop render the fields pixel for pixel as before; the picker opens as before. (EhrenPfoten, finding 3, reported from an iPhone.)
+
+- **Several actions in an empty state stuck together.** `.glass-empty__action` had only a top margin, so two buttons — "My bookings" and "Book again" after a booking — sat without a gap, and stacked without one when the width ran out. It is now a centred, wrapping flex row with an 8 px gap; a single action sits exactly where it did (same position and size, measured). (EhrenPfoten, finding 2.)
+
+---
+
 ## [1.16.0] – 2026-09-22
 
 ### Added
@@ -887,6 +901,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.17.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.17.0
 [1.16.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.16.0
 [1.15.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.15.1
 [1.15.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.15.0
@@ -910,4 +925,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.16.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.17.0...HEAD
