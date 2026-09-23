@@ -7,6 +7,22 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.18.0] – 2026-09-23
+
+### Added
+
+- **A warning tone for badges, and the warning tokens that were missing.** `.glass-badge` came as `--primary`, `--success` and `--error`, while segmented control, date strip, calendar and toast already knew `warning` — and unlike success and error, warning had no tinted-surface tokens at all. A state that waits for someone (a booking to assign, an open item) had to use the neutral badge and looked like a cancelled one. New, in both themes and derived from `--gl-color-warning` like their siblings, so re-colouring the warning colour moves them along:
+
+  | Token | Dark | Light |
+  |---|---|---|
+  | `--gl-color-warning-surface` | `color-mix(… warning 15%, transparent)` | same |
+  | `--gl-color-warning-border` | `color-mix(… warning 30%, transparent)` | same |
+  | `--gl-color-warning-on-surface` | `color-mix(… warning 80%, #fff)` | `color-mix(… warning 56%, #000)` |
+
+  `.glass-badge--warning` uses them exactly as `--success` uses its own, and points `--gl-badge-accent` at the warning colour, so an interactive or selected warning chip stays yellow. The ink mixes differ from the siblings' because yellow is light to begin with: it takes less white in the dark theme and more black in the light one. They were measured, not guessed — text against the rendered chip, at four places on the glass background, bare and on a glass card, plain, selected and selected-with-hover, in Chromium. A plain warning badge reads at 6.42:1 (dark) / 4.74:1 (light) on the page background and 4.50:1 / 5.22:1 on a glass card; in every state and place it reads at least as well as `--success`. The dark ink stays saturated enough to tell the warning badge from the primary one, whose text is a pale orange. Compatibility: the tokens and the modifier are new; a page that already referenced the token names — EhrenPfoten's week plan does — now gets them filled, and a brand file that defines its own values still wins. (EhrenPfoten, finding 5.)
+
+---
+
 ## [1.17.0] – 2026-09-22
 
 ### Added
@@ -901,6 +917,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.18.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.18.0
 [1.17.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.17.0
 [1.16.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.16.0
 [1.15.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.15.1
@@ -925,4 +942,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.17.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.18.0...HEAD

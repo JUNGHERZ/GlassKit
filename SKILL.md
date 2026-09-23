@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.17.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.18.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -118,9 +118,11 @@ All are derived from the state color via `color-mix()`, so overriding
 | `--gl-color-primary-on-surface` | Badge text on the primary tint | lightened (dark) / darkened (light) primary |
 | `--gl-color-success-on-surface` | Badge text on the success tint | lightened / darkened success |
 | `--gl-color-error-on-surface` | Badge text on the error tint | lightened / darkened error |
+| `--gl-color-warning-on-surface` | Badge text on the warning tint (since 1.18.0) | lightened (dark) / darkened (light) warning |
 | `--gl-color-primary-surface` / `-border` | Badge fill / border | `color-mix(… primary 25% / 30%, transparent)` |
 | `--gl-color-success-surface` / `-border` | Badge fill / border | `color-mix(… success 15% / 30%, transparent)` |
 | `--gl-color-error-surface` / `-border` | Badge fill / border | `color-mix(… error 15% / 30%, transparent)` |
+| `--gl-color-warning-surface` / `-border` | Badge fill / border (since 1.18.0) | `color-mix(… warning 15% / 30%, transparent)` |
 | `--gl-state-scrim` | Layer behind a badge tint | `rgba(0,0,0,0.30)` dark, `rgba(255,255,255,0.30)` light |
 
 The scrim keeps a translucent chip readable over an unpredictable backdrop. `0.30` is
@@ -481,6 +483,7 @@ Tags and labels.
 <span class="glass-badge">Default</span>
 <span class="glass-badge glass-badge--primary">Active</span>
 <span class="glass-badge glass-badge--success">Done</span>
+<span class="glass-badge glass-badge--warning">Pending</span>
 <span class="glass-badge glass-badge--error">Error</span>
 ```
 
@@ -489,6 +492,7 @@ Tags and labels.
 | `.glass-badge` | Default (subtle glass) |
 | `.glass-badge--primary` | Primary color |
 | `.glass-badge--success` | Green |
+| `.glass-badge--warning` | Yellow — states that wait for someone (since 1.18.0) |
 | `.glass-badge--error` | Red |
 | `.glass-badge--interactive` | Pressable chip — cursor, hover tint, focus ring, press feedback |
 | `.glass-badge--selected` | The chip that is on |
@@ -509,6 +513,8 @@ Since 1.7.0 each variant is built from tokens rather than fixed `rgba()` literal
 `-on-surface` for the text, plus `--gl-state-scrim` behind the tint. Re-coloring
 `--gl-color-success` therefore moves the whole chip, not just its text. All three
 variants clear 4.5:1 in both themes.
+
+`--warning` (since 1.18.0) is built the same way from `--gl-color-warning-surface`, `-border` and `-on-surface`. Yellow is light to begin with, so its text takes less white in the dark theme (80 % warning) and more black in the light one (56 %); measured on the glass background, a plain warning badge reads at 6.4:1 (dark) and 4.7:1 (light), and in every state at least as well as `--success`.
 
 ---
 
@@ -1834,7 +1840,7 @@ Key points in this composition:
 | Title | `.glass-title` | – |
 | Card | `.glass-card` | `--glow` |
 | Button | `.glass-btn` | `--primary`, `--secondary`, `--tertiary`, `--sm`, `--lg`, `--auto` |
-| Badge | `.glass-badge` | `--primary`, `--success`, `--error`, `--interactive`, `--selected` |
+| Badge | `.glass-badge` | `--primary`, `--success`, `--warning`, `--error`, `--interactive`, `--selected` |
 | Avatar | `.glass-avatar` | `--sm`, `--lg` |
 | Divider | `.glass-divider` | – |
 | Status | `.glass-status` | – |

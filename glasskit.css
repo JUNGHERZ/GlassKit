@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.17.0
+   Jungherz GmbH – v1.18.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -87,6 +87,9 @@
   --gl-color-primary-on-surface:    color-mix(in srgb, var(--gl-color-primary) 50%, #ffffff);
   --gl-color-success-on-surface:    color-mix(in srgb, var(--gl-color-success) 62%, #ffffff);
   --gl-color-error-on-surface:      color-mix(in srgb, var(--gl-color-error)   50%, #ffffff);
+  /* Yellow is light already: it takes less white here, and more black in the
+     light theme, to read like the others (measured, see CHANGELOG 1.18.0). */
+  --gl-color-warning-on-surface:    color-mix(in srgb, var(--gl-color-warning) 80%, #ffffff);
 
   /* ---- State Surfaces & Borders (badge, chip) ----
      The scrim sits *behind* the colored tint and makes the chip
@@ -98,6 +101,8 @@
   --gl-color-success-border:   color-mix(in srgb, var(--gl-color-success) 30%, transparent);
   --gl-color-error-surface:    color-mix(in srgb, var(--gl-color-error)   15%, transparent);
   --gl-color-error-border:     color-mix(in srgb, var(--gl-color-error)   30%, transparent);
+  --gl-color-warning-surface:  color-mix(in srgb, var(--gl-color-warning) 15%, transparent);
+  --gl-color-warning-border:   color-mix(in srgb, var(--gl-color-warning) 30%, transparent);
 
   /* ---- Glass Surfaces ---- */
   --gl-surface-1:            rgba(255, 255, 255, 0.08);
@@ -268,6 +273,7 @@
   --gl-color-primary-on-surface:    color-mix(in srgb, var(--gl-color-primary) 60%, #000000);
   --gl-color-success-on-surface:    color-mix(in srgb, var(--gl-color-success) 68%, #000000);
   --gl-color-error-on-surface:      color-mix(in srgb, var(--gl-color-error)   82%, #000000);
+  --gl-color-warning-on-surface:    color-mix(in srgb, var(--gl-color-warning) 56%, #000000);
 
   --gl-state-scrim:            rgba(255, 255, 255, 0.30);
   --gl-color-primary-surface:  color-mix(in srgb, var(--gl-color-primary) 25%, transparent);
@@ -276,6 +282,8 @@
   --gl-color-success-border:   color-mix(in srgb, var(--gl-color-success) 30%, transparent);
   --gl-color-error-surface:    color-mix(in srgb, var(--gl-color-error)   15%, transparent);
   --gl-color-error-border:     color-mix(in srgb, var(--gl-color-error)   30%, transparent);
+  --gl-color-warning-surface:  color-mix(in srgb, var(--gl-color-warning) 15%, transparent);
+  --gl-color-warning-border:   color-mix(in srgb, var(--gl-color-warning) 30%, transparent);
 
   --gl-surface-1:            rgba(255, 255, 255, 0.50);
   --gl-surface-2:            rgba(255, 255, 255, 0.60);
@@ -1514,6 +1522,16 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
     var(--gl-state-scrim, transparent);
   border-color: var(--gl-color-error-border, rgba(255,59,48,0.30));
   color: var(--gl-color-error-on-surface, var(--gl-color-error));
+}
+.glass-badge--warning {
+  --gl-badge-accent: var(--gl-color-warning);
+  --gl-badge-accent-text: var(--gl-color-warning-on-surface, var(--gl-color-warning));
+  background:
+    linear-gradient(var(--gl-color-warning-surface, rgba(255,204,0,0.15)) 0%,
+                    var(--gl-color-warning-surface, rgba(255,204,0,0.15)) 100%),
+    var(--gl-state-scrim, transparent);
+  border-color: var(--gl-color-warning-border, rgba(255,204,0,0.30));
+  color: var(--gl-color-warning-on-surface, var(--gl-color-warning));
 }
 
 
