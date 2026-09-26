@@ -23,7 +23,11 @@
 import { readFileSync, writeFileSync } from 'fs';
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf-8'));
-const css = readFileSync('glasskit.min.css', 'utf-8');
+// The minifier ends glasskit.min.css with a sourceMappingURL comment. It
+// means something only in a file that is served next to its map; in a
+// constructed stylesheet there is no URL to resolve it against, and the
+// comment travelled into every GlassKit Elements bundle. Cut it off.
+const css = readFileSync('glasskit.min.css', 'utf-8').replace(/\/\*# sourceMappingURL=.*?\*\/\s*$/, '');
 
 // ---- Split off the token blocks -------------------------------------------
 // Both selectors appear exactly once in the minified output. The light block
@@ -68,6 +72,7 @@ const checks = [
   [tokensCss.includes('--gl-color-primary:'), 'tokensCss is missing --gl-color-primary'],
   [tokensCss.includes('--gl-state-scrim:'), 'tokensCss is missing --gl-state-scrim'],
   [!componentsCss.includes('--gl-color-primary:'), 'componentsCss still declares tokens'],
+  [!css.includes('sourceMappingURL'), 'the embedded CSS still names a source map'],
   [componentsCss.includes('.glass-btn--primary'), 'componentsCss is missing component rules'],
   [componentsCss.includes('.glass-theme-toggle'), 'componentsCss lost the theme-toggle rules'],
   [tokensCss.length + componentsCss.length === css.length, 'split lost or duplicated bytes'],

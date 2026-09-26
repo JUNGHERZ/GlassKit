@@ -7,6 +7,19 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.19.1] – 2026-09-26
+
+### Fixed
+
+- **The package ships `glasskit.min.css.map`.** `glasskit.min.css` ends with a `sourceMappingURL` comment, but `files` in package.json did not list the map, so no release had it: jsDelivr and unpkg answered `@jungherz-de/glasskit@1.19.0/glasskit.min.css.map` with a 404, and a browser's developer tools reported a source map they could not load for every page that used the minified sheet from npm or a CDN.
+- **`glasskit-styles.js` no longer carries that comment inside its CSS.** The build embedded `glasskit.min.css` as it was, comment included — meaningless in a constructed stylesheet, which has no URL to resolve a map against, and from there it travelled into every GlassKit Elements bundle. The build now cuts it off and fails if it is still there.
+
+### Added
+
+- **`npm run check:package`, in CI and before every publish.** The release workflow runs it before it publishes, so a package that misses a file it points to no longer goes out. It packs the package without publishing and fails when an entry point of package.json, `README.md`, `LICENSE`, `CHANGELOG.md`, `SKILL.md`, a stylesheet or a source map named by a shipped file is missing. `SKILL.md` and `CHANGELOG.md` have been in the GlassKit package all along — the check keeps it that way; GlassKit Elements was missing both. The same check as NotionKit's, where the question came up.
+
+---
+
 ## [1.19.0] – 2026-09-26
 
 ### Added
@@ -931,6 +944,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.19.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.19.1
 [1.19.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.19.0
 [1.18.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.18.0
 [1.17.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.17.0
@@ -957,4 +971,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.19.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.19.1...HEAD

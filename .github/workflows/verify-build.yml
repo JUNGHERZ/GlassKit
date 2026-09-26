@@ -74,6 +74,9 @@ jobs:
       - name: Documented versions match package.json
         run: npm run check:versions
 
+      - name: The package carries every file it points to
+        run: npm run check:package
+
       # ---- Pages-Artefakt (nur Push auf main, nicht für PRs) ----
       # Der Repo-Stand wie ihn der Legacy-Build auslieferte, plus min.css und
       # styles.js aus dem Build oben. Nichts wird durch Jekyll geschickt.

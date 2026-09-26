@@ -1,12 +1,13 @@
 {
   "name": "@jungherz-de/glasskit",
-  "version": "1.19.0",
+  "version": "1.19.1",
   "description": "A modern glassmorphism CSS component library – inspired by iOS 26 Liquid Glass. 24 components, dark & light mode, no dependencies.",
   "main": "glasskit.css",
   "style": "glasskit.css",
   "files": [
     "glasskit.css",
     "glasskit.min.css",
+    "glasskit.min.css.map",
     "glasskit-styles.js",
     "theme-override.css",
     "LICENSE",
@@ -19,6 +20,7 @@
     "build:styles-js": "node build-styles-js.mjs",
     "build": "npm run minify && npm run build:styles-js",
     "check:versions": "node check-versions.mjs",
+    "check:package": "node check-package.mjs",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
