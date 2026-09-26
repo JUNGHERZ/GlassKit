@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.18.0
+   Jungherz GmbH – v1.19.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -1140,8 +1140,14 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 /* ============================================================
    17. TOAST
    ============================================================ */
+/* Where the toast sits: --gl-toast-top, 56px from the top unless a page
+   sets it — for instance just below its own header, and with
+   env(safe-area-inset-top) added when the page uses viewport-fit=cover.
+   The toast stays at the top also with an action: one place for every
+   toast, so a confirmation that briefly replaces a standing offer does not
+   jump, and it covers neither the tab bar nor a form's last button. */
 .glass-toast {
-  position: fixed; top: var(--gl-space-4xl); left: 50%;
+  position: fixed; top: var(--gl-toast-top, var(--gl-space-4xl)); left: 50%;
   transform: translateX(-50%) translateY(-20px);
   min-width: 280px; max-width: 340px;
   padding: var(--gl-space-md) var(--gl-space-lg);
@@ -1164,17 +1170,93 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 
 .glass-toast__icon {
   width: 22px; height: 22px; flex-shrink: 0;
+  stroke: currentColor;
   stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round;
 }
+.glass-toast__icon ::slotted(svg) { display: block; width: 100%; height: 100%; }
 .glass-toast--success .glass-toast__icon { stroke: var(--gl-color-success); }
 .glass-toast--error   .glass-toast__icon { stroke: var(--gl-color-error); }
 .glass-toast--warning .glass-toast__icon { stroke: var(--gl-color-warning); }
 
 .glass-toast__text {
+  flex: 1 1 auto; min-width: 0;
   font-size: var(--gl-font-size-sm);
   font-weight: var(--gl-font-weight-medium);
   color: var(--gl-color-text); line-height: 1.4;
 }
+
+/* One action and a close button — "A new version · Reload". __action is a
+   small pill in the toast's own tone: primary on a plain toast, the state
+   colour on a variant, from the same -surface, -border and -on-surface
+   tokens as the badges. It lies on a doubled scrim because the toast's
+   glass is lighter than the page: on a single one the label sat at the
+   AA threshold, on two it reads at 4.9:1 or better in every tone and
+   theme. __close is the × at the end. Both keep a 44px hit area without
+   making the toast taller. A toast with an action may grow to 480px, or
+   the viewport minus 16px each side: the text wraps, the buttons never
+   shrink. Only a shown toast takes the pointer. */
+.glass-toast:has(.glass-toast__action) {
+  width: max-content;
+  max-width: min(480px, calc(100% - 2 * var(--gl-space-md)));
+}
+.glass-toast--success {
+  --gl-toast-action-surface: var(--gl-color-success-surface);
+  --gl-toast-action-border: var(--gl-color-success-border);
+  --gl-toast-action-ink: var(--gl-color-success-on-surface);
+}
+.glass-toast--error {
+  --gl-toast-action-surface: var(--gl-color-error-surface);
+  --gl-toast-action-border: var(--gl-color-error-border);
+  --gl-toast-action-ink: var(--gl-color-error-on-surface);
+}
+.glass-toast--warning {
+  --gl-toast-action-surface: var(--gl-color-warning-surface);
+  --gl-toast-action-border: var(--gl-color-warning-border);
+  --gl-toast-action-ink: var(--gl-color-warning-on-surface);
+}
+.glass-toast__action,
+.glass-toast__close {
+  -webkit-appearance: none; appearance: none;
+  flex: none; position: relative;
+  font: inherit;
+  cursor: pointer;
+  transition: var(--gl-transition-fast);
+  outline: none; -webkit-tap-highlight-color: transparent;
+}
+.glass-toast__action {
+  height: 32px; padding: 0 14px;
+  border: 1px solid var(--gl-toast-action-border, var(--gl-color-primary-border));
+  border-radius: var(--gl-radius-full);
+  background:
+    linear-gradient(var(--gl-toast-action-surface, var(--gl-color-primary-surface)),
+                    var(--gl-toast-action-surface, var(--gl-color-primary-surface))),
+    linear-gradient(var(--gl-state-scrim), var(--gl-state-scrim)),
+    var(--gl-state-scrim);
+  color: var(--gl-toast-action-ink, var(--gl-color-primary-on-surface));
+  font-size: var(--gl-font-size-sm);
+  font-weight: var(--gl-font-weight-semibold);
+  white-space: nowrap;
+}
+.glass-toast__action::after { content: ""; position: absolute; inset: -6px 0; }
+.glass-toast__action:hover {
+  box-shadow: inset 0 0 0 100px color-mix(in srgb, var(--gl-toast-action-ink, var(--gl-color-primary-on-surface)) 10%, transparent);
+}
+.glass-toast__action:active { transform: scale(0.96); }
+.glass-toast__close {
+  width: 28px; height: 28px; margin: 0 -8px 0 -4px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 0; border-radius: 50%;
+  background: transparent;
+  color: var(--gl-color-text-muted);
+}
+.glass-toast__close::after { content: ""; position: absolute; inset: -8px; }
+.glass-toast__close:hover { background: var(--gl-surface-3); color: var(--gl-color-text); }
+.glass-toast__close svg {
+  width: 16px; height: 16px; fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round;
+}
+.glass-toast__action:focus-visible,
+.glass-toast__close:focus-visible { box-shadow: var(--gl-shadow-focus); }
 
 
 /* ============================================================

@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.18.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.19.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -640,6 +640,22 @@ Temporary notification. Visible via `is-visible`. Three variants.
 | `.glass-toast.is-visible` | Visible + faded in |
 | `.glass-toast__icon` | Icon (SVG) |
 | `.glass-toast__text` | Message text |
+| `.glass-toast__action` | One action button: pill in the toast's tone — primary, or the state colour on a variant (since 1.19.0) |
+| `.glass-toast__close` | The ×, needs an `aria-label` (since 1.19.0) |
+| `--gl-toast-top` | Distance from the top; default `var(--gl-space-4xl)` (since 1.19.0) |
+
+**With an action (since 1.19.0).** An offer — "A new version · Reload" — takes one `__action` and a `__close`. Both keep a 44 px hit area; the toast may grow to 480 px, the text wraps, the buttons never shrink. Keep such a toast up until one of the two is used, and mark the toast `role="status"` so the message is announced. The action is a pill in the toast's own tone, from the same `-surface`, `-border` and `-on-surface` tokens as the badges, on a doubled scrim: 4.9:1 or better in every tone and theme.
+
+```html
+<div class="glass-toast is-visible" role="status">
+  <svg class="glass-toast__icon" viewBox="0 0 24 24"><!-- Icon --></svg>
+  <span class="glass-toast__text">A new version is ready</span>
+  <button class="glass-toast__action" type="button">Reload</button>
+  <button class="glass-toast__close" type="button" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+```
+
+The toast stays at the top also with an action — one place for every toast. Set `--gl-toast-top` to put it below your own header; with `viewport-fit=cover` include `env(safe-area-inset-top)`.
 
 ---
 
@@ -1857,7 +1873,7 @@ Key points in this composition:
 | Range | `.glass-range` | – |
 | Progress | `.glass-progress` | `--sm`, `--lg`, `--success`, `--error` |
 | Modal | `.glass-modal-overlay` | `.is-active` |
-| Toast | `.glass-toast` | `--success`, `--error`, `--warning`, `.is-visible` |
+| Toast | `.glass-toast` | `--success`, `--error`, `--warning`, `.is-visible`, `__action`, `__close` |
 | Tab Bar | `.glass-tab-bar` | `.is-active` on items |
 | Accordion | `.glass-accordion` | `.is-open` on items |
 | List | `.glass-list` | `--flush`, `--bare`, `__item--interactive`, `__item--center`, `__item--danger`, `__item--accent`, `__leading--lg`, `__subtitle--wrap`, `__value`, `__section-header` |

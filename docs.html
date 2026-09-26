@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.18.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.19.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -458,7 +458,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.18.0</span>
+      <span class="docs-hero__badge">v1.19.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">31 Components</span>
@@ -1090,18 +1090,44 @@ function <span class="cls">toggleTheme</span>() {
   <section class="docs-section" id="toast">
     <h2>Toast</h2>
     <p>Visible via <code>.is-visible</code>. Variants: <code>--success</code>, <code>--error</code>, <code>--warning</code>.</p>
+    <p>With an action (since 1.19.0): <code>__action</code> is a small pill in the toast&rsquo;s own tone &mdash; primary on a plain toast, the state colour on a variant &mdash; and <code>__close</code> the &times; at the end; give it an <code>aria-label</code>. Both have a 44&nbsp;px hit area. A toast with an action may grow to 480&nbsp;px, the text wraps, the buttons never shrink; it should stay until one of them is used. The toast sits <code>--gl-toast-top</code> from the top (56&nbsp;px unless set) &mdash; set it below your header, and add <code>env(safe-area-inset-top)</code> with <code>viewport-fit=cover</code>. It stays at the top also with an action: one place for every toast.</p>
     <div class="docs-preview docs-preview--constrained" style="position:relative;min-height:60px;">
       <div class="glass-toast glass-toast--success" style="position:relative;top:auto;left:auto;transform:none;opacity:1;pointer-events:auto;">
         <svg class="glass-toast__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>
         <span class="glass-toast__text">Document uploaded successfully!</span>
+      </div>
+      <div class="glass-toast" style="position:relative;top:auto;left:auto;transform:none;opacity:1;pointer-events:auto;margin-top:12px">
+        <svg class="glass-toast__icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+        <span class="glass-toast__text">A new version is ready</span>
+        <button class="glass-toast__action" type="button">Reload</button>
+        <button class="glass-toast__close" type="button" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       </div>
     </div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-toast glass-toast--success"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;svg</span> <span class="attr">class=</span><span class="val">"glass-toast__icon"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/svg&gt;</span>
   <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-toast__text"</span><span class="tag">&gt;</span>Success!<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">&lt;!-- with an action --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-toast is-visible"</span> <span class="attr">role=</span><span class="val">"status"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;svg</span> <span class="attr">class=</span><span class="val">"glass-toast__icon"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/svg&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-toast__text"</span><span class="tag">&gt;</span>A new version is ready<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-toast__action"</span><span class="tag">&gt;</span>Reload<span class="tag">&lt;/button&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-toast__close"</span> <span class="attr">aria-label=</span><span class="val">"Close"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- × SVG --&gt;</span><span class="tag">&lt;/button&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-toast</code>, <code>.is-visible</code></td><td>Fixed at the top, faded in while visible</td></tr>
+        <tr><td><code>--success</code>, <code>--error</code>, <code>--warning</code></td><td>Colour the icon; tint the action in the state colour</td></tr>
+        <tr><td><code>__icon</code>, <code>__text</code></td><td>22&nbsp;px stroked icon, message (wraps and yields)</td></tr>
+        <tr><td><code>__action</code></td><td>One action: pill in the toast&rsquo;s tone, 44&nbsp;px hit area, never shrinks (since 1.19.0)</td></tr>
+        <tr><td><code>__close</code></td><td>The &times;, 28&nbsp;px with a 44&nbsp;px hit area (since 1.19.0)</td></tr>
+        <tr><td><code>--gl-toast-top</code></td><td>Distance from the top, default <code>var(--gl-space-4xl)</code> (since 1.19.0)</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <!-- POPOVER -->
@@ -1907,7 +1933,7 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td>Range</td><td><code>.glass-range</code></td><td>–</td></tr>
         <tr><td>Progress</td><td><code>.glass-progress</code></td><td><code>--sm</code>, <code>--lg</code>, <code>--success</code>, <code>--error</code></td></tr>
         <tr><td>Modal</td><td><code>.glass-modal-overlay</code></td><td><code>.is-active</code></td></tr>
-        <tr><td>Toast</td><td><code>.glass-toast</code></td><td><code>--success</code>, <code>--error</code>, <code>--warning</code>, <code>.is-visible</code></td></tr>
+        <tr><td>Toast</td><td><code>.glass-toast</code></td><td><code>--success</code>, <code>--error</code>, <code>--warning</code>, <code>.is-visible</code>, <code>__action</code>, <code>__close</code></td></tr>
         <tr><td>Tab-Bar</td><td><code>.glass-tab-bar</code></td><td><code>.is-active</code> auf Items</td></tr>
         <tr><td>Tab-Bar Floating</td><td><code>.glass-tab-bar-dock</code> + <code>.glass-tab-bar--floating</code></td><td><code>__accessory</code>, <code>__accessory--accent</code>/<code>--success</code>/<code>--error</code>, <code>--accessory-left</code></td></tr>
         <tr><td>Accordion</td><td><code>.glass-accordion</code></td><td><code>.is-open</code> auf Items</td></tr>

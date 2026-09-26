@@ -7,6 +7,20 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.19.0] – 2026-09-26
+
+### Added
+
+- **A toast can carry one action and a close button: `.glass-toast__action` and `.glass-toast__close`.** `.glass-toast` knew an icon and a text, so an offer that waits for the user — "A new version · Reload" — had nowhere to go but a banner in the page. `__action` is a small pill in the toast's own tone: primary on a plain toast, the state colour on `--success`, `--error` and `--warning`, drawn from the same `-surface`, `-border` and `-on-surface` tokens as the badges. It lies on a doubled `--gl-state-scrim`, because the toast's glass is lighter than the page — on a single scrim the label sat at the AA threshold (4.43–4.71:1 in the dark theme); on two it reads at 5.46–6.49:1 dark and 4.95–5.18:1 light, measured against the rendered toast on the glass background in every tone. A filled primary button was tried and set aside: white on the default orange reads at 2.3–2.9:1. `__close` is the × at the end (the page supplies its `aria-label`); its icon reads at 5:1 or better. Both keep a 44 px hit area without making the toast taller. A toast with an action may grow wider than 340 px — up to 480 px, on a phone the viewport minus 16 px on each side: the text wraps, the buttons never shrink (measured at 390 px: toast 358 px, action and × inside). (EhrenPfoten, finding 6.)
+
+- **`--gl-toast-top` for the toast's distance from the top.** The toast sat at `var(--gl-space-4xl)` with no hook of its own, so a page with a header had to redefine a spacing token to move it below. `top` now reads `var(--gl-toast-top, var(--gl-space-4xl))` — the same 56 px unless a page sets it; with `viewport-fit=cover` add `env(safe-area-inset-top)`. The toast stays at the top also with an action, which the finding left to GlassKit to decide: one place for every toast, so a short confirmation that briefly replaces a standing offer does not jump from one edge to the other, and at the top it covers neither the tab bar nor a form's last button.
+
+### Changed
+
+- `.glass-toast__icon` sets `stroke: currentColor` as a default the variants override, and has a `::slotted(svg)` twin — so GlassKit Elements' built-in icons take the variant colour and a slotted icon fits. `.glass-toast__text` takes the remaining width and may shrink (`flex: 1 1 auto; min-width: 0`); a toast without an action looks as before.
+
+---
+
 ## [1.18.0] – 2026-09-23
 
 ### Added
@@ -917,6 +931,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.19.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.19.0
 [1.18.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.18.0
 [1.17.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.17.0
 [1.16.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.16.0
@@ -942,4 +957,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.18.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.19.0...HEAD

@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.18.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.19.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.18.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.19.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -72,16 +72,16 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.18/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.19/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.18/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.19/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.18/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.19/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.18` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.19` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 ### npm / yarn / pnpm
 
@@ -203,7 +203,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Button (Secondary)** | `.glass-btn--secondary` | Milky white – secondary action |
 | **Button (Tertiary)** | `.glass-btn--tertiary` | Subtle glass – tertiary action |
 | **Modal** | `.glass-modal` | Centered dialog with blur overlay |
-| **Toast** | `.glass-toast` | Temporary notification |
+| **Toast** | `.glass-toast` | Temporary notification, optionally with one action and a close button |
 | **Popover** | `.glass-popover` | Anchored dropdown / menu with fade & scale animation |
 
 ### Form Elements
@@ -564,6 +564,8 @@ Avatar Modifiers:
 
 Toast Modifiers:
   .glass-toast--success / --error / --warning
+  .glass-toast__action / __close   (offer with a button)
+  --gl-toast-top                   (distance from the top)
 
 Modal Action Modifiers:
   .glass-modal__action--primary / --danger
