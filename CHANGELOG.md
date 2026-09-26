@@ -16,7 +16,7 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- **`npm run check:package`, in CI and before every publish.** The release workflow runs it before it publishes, so a package that misses a file it points to no longer goes out. It packs the package without publishing and fails when an entry point of package.json, `README.md`, `LICENSE`, `CHANGELOG.md`, `SKILL.md`, a stylesheet or a source map named by a shipped file is missing. `SKILL.md` and `CHANGELOG.md` have been in the GlassKit package all along — the check keeps it that way; GlassKit Elements was missing both. The same check as NotionKit's, where the question came up.
+- **`npm run check:package`, in CI and before every publish.** The release workflow runs it before it publishes, so a package that misses a file it points to no longer goes out; it reads the output of npm 10 and npm 12 alike (npm 12, which the release workflow installs, prints an object keyed by package name instead of a list). It packs the package without publishing and fails when an entry point of package.json, `README.md`, `LICENSE`, `CHANGELOG.md`, `SKILL.md`, a stylesheet or a source map named by a shipped file is missing. `SKILL.md` and `CHANGELOG.md` have been in the GlassKit package all along — the check keeps it that way; GlassKit Elements was missing both. The same check as NotionKit's, where the question came up.
 
 ---
 

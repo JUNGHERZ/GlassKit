@@ -18,7 +18,9 @@ import { posix } from 'node:path';
 const REQUIRED = ['package.json', 'README.md', 'LICENSE', 'CHANGELOG.md', 'SKILL.md', 'glasskit.css', 'glasskit.min.css', 'glasskit-styles.js', 'theme-override.css'];
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf-8'));
-const [{ files }] = JSON.parse(execFileSync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], { encoding: 'utf-8' }));
+const packed = JSON.parse(execFileSync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], { encoding: 'utf-8' }));
+// npm 10 prints a list of packages, npm 12 an object keyed by package name.
+const [{ files }] = Array.isArray(packed) ? packed : Object.values(packed);
 const shipped = new Set(files.map(f => f.path));
 const problems = [];
 
