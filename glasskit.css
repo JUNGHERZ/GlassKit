@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.21.0
+   Jungherz GmbH – v1.21.1
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -2685,3 +2685,36 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 /* Escape hatch: deliberately filled icons (e.g. brand logos),
    overrides the outline defaults of the components */
 svg.glass-icon--fill { fill: currentColor; stroke: none; }
+
+
+/* ============================================================
+   37. PRINT
+   ============================================================ */
+/* Printing drops backgrounds unless "Background graphics" is ticked, and it
+   is off by default in the print dialogs. Several states are drawn with a
+   background only: the checked box and its white tick, the chosen radio and
+   its dot, the toggle's on track, the progress fill, the current step, the
+   chosen day of date strip and calendar, the slider thumb, and the tone dots
+   of calendar, date strip and segmented control. On paper a checked box
+   printed like an empty one and the chosen day came out paler than the rest.
+   These parts print as on screen; thumb, tick, dot and marks inherit the
+   setting from the part they sit in. Everything else keeps the economical
+   mode — including the browser darkening light text for white paper, which
+   is why whole day buttons or step numbers are not listed, only the chosen
+   and the current ones. Both spellings: browsers differ in which they read. */
+@media print {
+  .glass-toggle__track,
+  .glass-checkbox__box,
+  .glass-radio__circle,
+  .glass-progress__fill,
+  .glass-range,
+  .glass-steps__item--current .glass-steps__num,
+  .glass-date-strip__day[aria-pressed="true"],
+  .glass-calendar__day[aria-pressed="true"],
+  .glass-date-strip__mark,
+  .glass-calendar__mark,
+  .glass-segmented__dot {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

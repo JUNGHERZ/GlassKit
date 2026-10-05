@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.21.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.21.1 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -459,7 +459,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.21.0</span>
+      <span class="docs-hero__badge">v1.21.1</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Komponenten</span>
@@ -568,6 +568,19 @@ function <span class="cls">toggleTheme</span>() {
     </div>
     <h3>Rechts nach links</h3>
     <p>Seit 1.20.0 folgen die Komponenten der Schreibrichtung. <code>dir="rtl"</code> auf <code>&lt;html&gt;</code> oder einem beliebigen Container genügt: Abstände, Positionen und Rahmen sind logische Eigenschaften, also spiegeln sich Labels und Hinweise, das Such-Icon, die Trennlinien der Liste, die Popover-Anker, die Tab-Badges, die Modal-Aktionen, das &times; des Toasts und die Ausrichtung von Akkordeon, Liste, Tabelle und Prose. Wo zwei Werte gemeinsam wandern müssen &mdash; der Chevron des Selects und der Platz für ihn, der Knopf des Schalters und sein Weg, der Verlauf der Fortschrittsfüllung &mdash; steht die Regel unter <code>:dir(rtl)</code>: Chrome und Edge ab 120, Safari ab 16.4, Firefox ab 49. Ein älterer Browser lässt diese Teile links nach rechts, statt sie auseinanderzureißen.</p>
+    <h3>Drucken</h3>
+    <p>Druckdialoge lassen Hintergrundgrafiken standardmäßig weg, und manche Zustände sind nur mit einem Hintergrund gezeichnet. Seit 1.21.1 behalten diese Teile auf Papier ihre Farben &mdash; das angehakte Kästchen und sein Haken, das gewählte Radio, die Spur des Toggles, die Füllung des Fortschrittsbalkens, der aktuelle Schritt, der gewählte Tag von Datumsstreifen und Kalender, der Knopf des Schiebereglers und die Tonpunkte &mdash;, der Rest der Seite druckt sparsam. Einzustellen ist nichts. Eine dunkle Seite druckt ihre helle Schrift und ihre Flächen auf weißes Papier; eine Seite, die gedruckt werden soll, wechselt dafür ins helle Theme:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code">let printTheme = null;
+addEventListener(<span class="val">'beforeprint'</span>, () =&gt; {
+  printTheme = document.documentElement.getAttribute(<span class="val">'data-theme'</span>);
+  document.documentElement.setAttribute(<span class="val">'data-theme'</span>, <span class="val">'light'</span>);
+});
+addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
+  if (printTheme) document.documentElement.setAttribute(<span class="val">'data-theme'</span>, printTheme);
+  else document.documentElement.removeAttribute(<span class="val">'data-theme'</span>);
+});</div>
+    </div>
   </section>
 
   <!-- DENSITY -->

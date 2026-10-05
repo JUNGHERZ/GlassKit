@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.21.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.21.1 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -459,7 +459,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.21.0</span>
+      <span class="docs-hero__badge">v1.21.1</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Components</span>
@@ -568,6 +568,19 @@ function <span class="cls">toggleTheme</span>() {
     </div>
     <h3>Right to left</h3>
     <p>Since 1.20.0 the components follow the writing direction. Set <code>dir="rtl"</code> on <code>&lt;html&gt;</code> or on any container: paddings, insets and borders are logical properties, so labels and hints, the search icon, list dividers, popover anchors, tab badges, modal actions, the toast&rsquo;s close button and the alignment of accordion, list, table and prose all mirror. Where two values have to move together &mdash; the select&rsquo;s chevron and the room kept for it, the toggle&rsquo;s thumb and its travel, the progress fill&rsquo;s gradient &mdash; the rule sits under <code>:dir(rtl)</code>: Chrome and Edge from 120, Safari from 16.4, Firefox from 49. An older browser keeps those parts left to right instead of tearing them apart.</p>
+    <h3>Printing</h3>
+    <p>Print dialogs leave out background graphics by default, and some states are drawn with a background only. Since 1.21.1 those parts keep their colours on paper &mdash; the checked box and its tick, the chosen radio, the toggle&rsquo;s track, the progress fill, the current step, the chosen day of date strip and calendar, the slider thumb and the tone dots &mdash; while the rest of the page prints economically. Nothing to set. A dark page prints its light text and surfaces on white paper; a page meant for printing switches to the light theme for it:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code">let printTheme = null;
+addEventListener(<span class="val">'beforeprint'</span>, () =&gt; {
+  printTheme = document.documentElement.getAttribute(<span class="val">'data-theme'</span>);
+  document.documentElement.setAttribute(<span class="val">'data-theme'</span>, <span class="val">'light'</span>);
+});
+addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
+  if (printTheme) document.documentElement.setAttribute(<span class="val">'data-theme'</span>, printTheme);
+  else document.documentElement.removeAttribute(<span class="val">'data-theme'</span>);
+});</div>
+    </div>
   </section>
 
   <!-- DENSITY -->

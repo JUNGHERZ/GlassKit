@@ -7,6 +7,18 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.21.1] – 2026-10-05
+
+### Fixed
+
+- **Printed pages keep the state of checkboxes, radios, toggles, progress bars and steps.** Print dialogs leave out background graphics by default, and these states were drawn with a background only: the checked box with its white tick, the chosen radio and its dot, the toggle's on track, the progress fill, the current step's circle. On paper a checked box printed like an empty one, told apart only by a faint orange ring, and the progress bar printed empty. The parts that carry the state now print as on screen (`print-color-adjust: exact`, in both spellings, inside `@media print`); everything else keeps the economical print mode. Beyond the issue, the same holds for the slider thumb, for the chosen day of date strip and calendar — which printed paler than the other days — and for the tone dots of calendar, date strip and segmented control, which did not print at all. Whole day buttons and step numbers are not included, only the chosen and the current ones: the setting also stops the browser from darkening light text for paper, which keeps the other days readable on a dark page. Measured in Chromium with `page.pdf()` without background graphics, counting the inked pixels inside each indicator, on / off: toggle 231 / 222 → 1025 / 226, checkbox 87 / 79 → 511 / 79, radio 75 / 67 → 383 / 67; the chosen calendar day 28 → 1632 against 63 for another day; progress fill, marks and dots from nothing to printed. On screen nothing changes — docs and showcase render pixel-identical in Chromium and WebKit. WebKit cannot print to PDF under Playwright; Safari reads the same properties. ([#6](https://github.com/JUNGHERZ/GlassKit/issues/6))
+
+### Documentation
+
+- README, SKILL.md and the docs (English and German) describe printing, with a `beforeprint` / `afterprint` snippet that prints a dark page in the light theme — it keeps its light text and surfaces otherwise, on white paper.
+
+---
+
 ## [1.21.0] – 2026-10-05
 
 Contributed as pull request [#5](https://github.com/JUNGHERZ/GlassKit/pull/5) by the product that is adopting GlassKit at full depth; GlassKit Elements 1.21.0 follows the attribute.
@@ -1012,6 +1024,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.21.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.1
 [1.21.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.0
 [1.20.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.20.0
 [1.19.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.19.1
@@ -1041,4 +1054,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.21.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.21.1...HEAD

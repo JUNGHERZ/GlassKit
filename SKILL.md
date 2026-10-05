@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.21.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.21.1) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -98,6 +98,24 @@ Denser controls for admin screens, desktop layouts and narrow forms: `data-densi
 ```
 
 Fields and buttons are 40px high instead of 52 and 56px; toggles, checkboxes, radios, list rows and modal actions shrink with them. Colours, type and spacing stay. Without the attribute nothing changes; `removeAttribute('data-density')` switches back at runtime. The values are the density tokens in section 2 — never shrink controls by overriding their `height`. It combines with `dir="rtl"`: the toggle's thumb and the select's padding mirror at either density.
+
+### Printing (since 1.21.1)
+
+Print dialogs leave out backgrounds by default. The parts that carry a state keep their colours on paper (`print-color-adjust: exact` inside `@media print`): checkbox box and tick, radio circle and dot, toggle track and thumb, progress fill, the current step, the chosen day of date strip and calendar, the slider thumb, the tone dots. Everything else prints economically. Nothing to set — do not add your own `print-color-adjust` to whole components: it also stops the browser from darkening light text for paper.
+
+A dark page prints light text and surfaces on white paper. For pages meant to be printed, switch to the light theme around printing:
+
+```js
+let printTheme = null;
+addEventListener('beforeprint', () => {
+  printTheme = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', 'light');
+});
+addEventListener('afterprint', () => {
+  if (printTheme) document.documentElement.setAttribute('data-theme', printTheme);
+  else document.documentElement.removeAttribute('data-theme');
+});
+```
 
 ---
 

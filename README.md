@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.21.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.21.1-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.21.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.21.1-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -317,6 +317,24 @@ Every token can also be set on its own, for one density or both — the toggle's
 ```
 
 Like `data-theme`, keep `data-density` on `<html>`: an element further down that carries `data-theme="dark"` re-declares the dark block, the default sizes included.
+
+### Printing
+
+Print dialogs leave out background graphics by default, and some states are drawn with a background only. Since **1.21.1** those parts keep their colours on paper — the checked box and its tick, the chosen radio, the toggle's track, the progress fill, the current step, the chosen day of date strip and calendar, the slider thumb and the tone dots — while the rest of the page prints economically. Nothing to set.
+
+A dark page prints its light text and surfaces on white paper. A page meant for printing switches to the light theme for it:
+
+```js
+let printTheme = null;
+addEventListener('beforeprint', () => {
+  printTheme = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', 'light');
+});
+addEventListener('afterprint', () => {
+  if (printTheme) document.documentElement.setAttribute('data-theme', printTheme);
+  else document.documentElement.removeAttribute('data-theme');
+});
+```
 
 ---
 
