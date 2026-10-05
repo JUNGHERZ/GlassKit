@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.20.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.21.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference

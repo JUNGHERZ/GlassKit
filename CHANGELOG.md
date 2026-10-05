@@ -7,7 +7,9 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [Unreleased]
+## [1.21.0] – 2026-10-05
+
+Contributed as pull request [#5](https://github.com/JUNGHERZ/GlassKit/pull/5) by the product that is adopting GlassKit at full depth; GlassKit Elements 1.21.0 follows the attribute.
 
 ### Added
 
@@ -1010,6 +1012,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.21.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.0
 [1.20.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.20.0
 [1.19.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.19.1
 [1.19.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.19.0
@@ -1038,4 +1041,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.20.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.21.0...HEAD
