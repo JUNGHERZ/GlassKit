@@ -280,6 +280,44 @@ The `theme-override.css` template comes with **4 example themes**:
 - 🌹 Rose
 - 🎨 Custom (empty, ready to fill)
 
+### Density
+
+Admin screens, desktop layouts and narrow forms want denser controls. Set `data-density="compact"` on `<html>`, next to `data-theme`:
+
+```html
+<html data-theme="dark" data-density="compact">
+```
+
+```js
+// Switch at runtime
+document.documentElement.setAttribute('data-density', 'compact');
+document.documentElement.removeAttribute('data-density');   // back to the default
+```
+
+Since **1.21.0** the control sizes are tokens, and the attribute swaps in a denser set. Without it every control keeps the size it has always had. Colours, type and spacing stay as they are, so nothing outside the controls moves:
+
+| Token | Default | Compact |
+|---|---|---|
+| `--gl-control-height` (input, select, search) | `52px` | `40px` |
+| `--gl-control-padding-x` (input, select, textarea) | unset → `var(--gl-space-md)` | `var(--gl-space-sm)` |
+| `--gl-btn-height` / `-sm` / `-lg` | `56px` / `44px` / `64px` | `40px` / `32px` / `48px` |
+| `--gl-textarea-min-height` | `120px` | `88px` |
+| `--gl-list-item-min-height` | `56px` | `48px` |
+| `--gl-list-item-padding-y` | unset → `var(--gl-space-md)` | `10px` |
+| `--gl-toggle-width` × `--gl-toggle-height` | `52px` × `30px` | `44px` × `26px` |
+| `--gl-toggle-thumb-size` | `22px` | `18px` |
+| `--gl-check-size` (checkbox, radio) | `24px` | `20px` |
+| `--gl-modal-action-height` | `52px` | `44px` |
+
+Every token can also be set on its own, for one density or both — the toggle's thumb and the first-line alignment of toggle, checkbox and radio follow whatever size you give:
+
+```css
+:root                    { --gl-btn-height: 48px; }   /* default density */
+[data-density='compact'] { --gl-btn-height: 36px; }   /* compact only */
+```
+
+Like `data-theme`, keep `data-density` on `<html>`: an element further down that carries `data-theme="dark"` re-declares the dark block, the default sizes included.
+
 ---
 
 ## 🎛️ Design Tokens
@@ -307,6 +345,12 @@ All visual values are controlled via CSS Custom Properties:
 
 /* Spacing */
 --gl-space-xs … --gl-space-4xl
+
+/* Density – control sizes, denser with data-density="compact" */
+--gl-control-height       /* 52px – input, select */
+--gl-btn-height           /* 56px; -sm 44px, -lg 64px */
+--gl-check-size           /* 24px – checkbox, radio */
+--gl-toggle-width … --gl-modal-action-height
 
 /* Shadows & Insets */
 --gl-shadow-card
@@ -437,6 +481,8 @@ Since CSS Custom Properties penetrate the shadow boundary, **theme switching wor
 document.documentElement.setAttribute('data-theme', 'light');
 ```
 
+`data-density="compact"` reaches the shadow roots the same way: the preset only sets tokens, and tokens cross the shadow boundary by inheritance.
+
 > **Tip:** For maximum performance with many component instances, import `glassSheet` once and share it across all components. The browser keeps the stylesheet in memory only once.
 
 ---
@@ -547,6 +593,10 @@ A few refinements arrive later and fall back quietly where they are missing:
 ## 📋 States & Modifiers – Cheat Sheet
 
 ```
+Page Attributes (on <html>):
+  data-theme="dark" / "light"
+  data-density="compact"          (denser controls)
+
 Interactive States:
   .is-active          → Tab Bar item, Modal Overlay
   .is-open            → Accordion item, Popover

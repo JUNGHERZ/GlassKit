@@ -7,6 +7,42 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- **Density tokens for the control sizes, and a compact preset: `data-density="compact"`.** The heights of fields, buttons, toggles, checkboxes, radios, list rows and modal actions were px literals in the component rules, so a denser layout — an admin screen, a desktop form, a narrow column — had to override a dozen selectors and keep the toggle's thumb, its travel and the first-line alignment of the labels in step by hand. They are tokens now, declared next to the spacing tokens with the values GlassKit has always drawn and read with that value as fallback, as `--gl-modal-max-width` is; `data-density="compact"` on `<html>`, next to `data-theme`, swaps in a denser set, at load or at runtime:
+
+  | Token | Default | Compact |
+  |---|---|---|
+  | `--gl-control-height` (input, select, search) | `52px` | `40px` |
+  | `--gl-control-padding-x` (input, select, textarea) | unset → `var(--gl-space-md)` | `var(--gl-space-sm)` |
+  | `--gl-btn-height` / `-sm` / `-lg` | `56px` / `44px` / `64px` | `40px` / `32px` / `48px` |
+  | `--gl-textarea-min-height` | `120px` | `88px` |
+  | `--gl-list-item-min-height` | `56px` | `48px` |
+  | `--gl-list-item-padding-y` | unset → `var(--gl-space-md)` | `10px` |
+  | `--gl-toggle-width` × `--gl-toggle-height` | `52px` × `30px` | `44px` × `26px` |
+  | `--gl-toggle-thumb-size` | `22px` | `18px` |
+  | `--gl-check-size` (checkbox, radio) | `24px` | `20px` |
+  | `--gl-modal-action-height` | `52px` | `44px` |
+
+  Only these tokens change; colours, type and spacing stay, so nothing outside the controls moves. The toggle's thumb sits `(height − thumb) / 2 − 1px` inside the track — 3 px at 52 × 30, where it has always sat — and travels `width − height`, from the right and to the left under `dir="rtl"`; the invisible inputs that lie on top of the controls since 1.20.0 take the same sizes, and the first-line offsets of toggle, checkbox and radio are computed from them. Any value a project sets therefore stays aligned. Two paddings join the heights because the heights alone would not have shown: a list row's 16 px top and bottom padding already makes a plain row 50 px tall, so a 48 px minimum needs `--gl-list-item-padding-y`; and a 40 px field reads better with 12 px inside (`--gl-control-padding-x`, which the textarea follows too, so stacked fields keep one text edge). Both are left unset by default, like `--gl-toast-top`: the rules fall back to `--gl-space-md` as before, so a spacing override still reaches them wherever it is declared. The select keeps its padding pair under `:dir(rtl)`: the token takes the text side, left to right on the left and right to left on the right, and the chevron's room stays with the chevron. The chevron, the search icon and the check and radio glyphs keep their sizes.
+
+  The preset is a bare attribute selector, like `[data-theme="light"]`, placed after the theme blocks, and the build puts it into `tokensCss` / `tokensSheet` with them. GlassKit Elements adopts only `componentsSheet` in its shadow roots and places the tokens on the document, so the compact values reach every element by inheritance — and so does a project's own `[data-density="compact"] { --gl-btn-height: 36px; }`, which a preset inside `componentsSheet` would have overridden in every shadow root. A `glassSheet` consumer whose shadow root holds an element with `data-theme` has to mirror `data-density` onto it as well, as GlassKit Elements does with its theme wrapper.
+
+  Measured in Chromium and WebKit (Playwright 1.63) against 1.20.0: without the attribute every one of these controls has the same size, padding, thumb position, input box, label offset and first-line centre as before, left to right and right to left, and full-page screenshots — a test page in both themes, this repository's index, showcase and docs in English and German — are pixel-identical, apart from regions that also differ between two renders of 1.20.0. With `data-density="compact"` on `<html>`, at load and switched at runtime: input, select and search 40 px with 12 px inner padding, buttons 40 / 32 / 48 px, the textarea 88 px, list rows 48 px with or without a 28 px icon (about 56 px with title and subtitle), the toggle 44 × 26 px with an 18 px thumb and the same gap at either end in both directions, checkbox and radio 20 px with their inputs on top, modal actions 44 px, every label still centred on its first line; under `dir="rtl"` the select's 12 px move to the right with the chevron on the left. Removing the attribute restores every value.
+
+### Changed
+
+- `build-styles-js.mjs` splits three token blocks off instead of two — `:root, [data-theme="dark"]`, `[data-theme="light"]` and `[data-density="compact"]` — and fails if `tokensCss` lacks the preset or `componentsCss` declares a density token.
+
+### Compatibility
+
+- Without `data-density` nothing changes, and a stylesheet that lacks the new tokens — an older `tokensCss` next to this `componentsSheet` — gets the old sizes from the fallbacks.
+- Like every token of the dark block, the size defaults are declared again by an element below `<html>` that carries `data-theme="dark"`; keep `data-density` on `<html>`, next to `data-theme`.
+
+---
+
 ## [1.20.0] – 2026-10-05
 
 The first batch of findings filed as GitHub issues, from a product that is adopting GlassKit at full depth; GlassKit Elements 1.20.0 ships the matching element changes.

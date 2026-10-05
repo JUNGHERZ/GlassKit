@@ -6,6 +6,7 @@
    - Scoped Reset (box-sizing fix)
    - Dark Mode (default)
    - Light Mode via [data-theme="light"]
+   - Compact density via [data-density="compact"]
    - 34 components (incl. floating Tab-Bar variant + Accessory)
    ============================================================ */
 
@@ -200,6 +201,29 @@
   --gl-space-3xl:            40px;
   --gl-space-4xl:            56px;
 
+  /* ---- Density: control sizes ----
+     The sizes GlassKit has always drawn its controls at, as tokens; the
+     rules read them with that value as fallback, like --gl-modal-max-width.
+     [data-density="compact"] (1c below) swaps in a denser set. The toggle's
+     thumb inset and travel and the first-line alignment of toggle, checkbox
+     and radio are derived from these, so any value set here stays aligned.
+     Two more are left unset on purpose, like --gl-toast-top:
+     --gl-control-padding-x (inner left and right of input, select and
+     textarea) and --gl-list-item-padding-y. Unset, the rules fall back to
+     --gl-space-md as before, so a spacing override still reaches them
+     wherever it is declared. */
+  --gl-control-height:       52px;   /* input, select */
+  --gl-btn-height:           56px;
+  --gl-btn-height-sm:        44px;
+  --gl-btn-height-lg:        64px;
+  --gl-textarea-min-height:  120px;
+  --gl-list-item-min-height: 56px;
+  --gl-toggle-width:         52px;
+  --gl-toggle-height:        30px;
+  --gl-toggle-thumb-size:    22px;
+  --gl-check-size:           24px;   /* checkbox, radio */
+  --gl-modal-action-height:  52px;
+
   /* ---- Typography ---- */
   --gl-font-family:          -apple-system, BlinkMacSystemFont, 'SF Pro Display',
                              'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -349,6 +373,37 @@
   --gl-toggle-thumb-bg:      linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
   --gl-range-track-bg:       var(--gl-surface-2);
   --gl-range-track-border:   var(--gl-border-subtle);
+}
+
+
+/* ============================================================
+   1c. DESIGN TOKENS – COMPACT DENSITY
+   ============================================================ */
+/* Opt-in, next to the theme: <html data-density="compact">. Fields and
+   buttons at 40px instead of 52 and 56, smaller toggles and boxes, denser
+   list rows — for admin screens, desktop layouts and narrow forms. Only
+   the density tokens change; colours, type and spacing stay as they are.
+
+   A bare attribute selector, like [data-theme="light"]: it matches <html>,
+   and a theme wrapper that carries the attribute in a shadow root that
+   adopts the full sheet. build-styles-js.mjs moves it into tokensCss with
+   the theme blocks. It stays after them: the dark one declares the
+   defaults with the same specificity, and where both match, the later
+   block wins. */
+[data-density="compact"] {
+  --gl-control-height:       40px;
+  --gl-control-padding-x:    var(--gl-space-sm);
+  --gl-btn-height:           40px;
+  --gl-btn-height-sm:        32px;
+  --gl-btn-height-lg:        48px;
+  --gl-textarea-min-height:  88px;
+  --gl-list-item-min-height: 48px;
+  --gl-list-item-padding-y:  10px;
+  --gl-toggle-width:         44px;
+  --gl-toggle-height:        26px;
+  --gl-toggle-thumb-size:    18px;
+  --gl-check-size:           20px;
+  --gl-modal-action-height:  44px;
 }
 
 
@@ -524,7 +579,7 @@
    ============================================================ */
 .glass-btn {
   display: flex; align-items: center; justify-content: center;
-  gap: 10px; width: 100%; height: 56px;
+  gap: 10px; width: 100%; height: var(--gl-btn-height, 56px);
   border: none; border-radius: var(--gl-radius-btn);
   font-family: var(--gl-font-family);
   font-size: var(--gl-font-size-btn);
@@ -603,8 +658,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-btn--tertiary:active { transform: translateY(1px); }
 
 /* Sizes */
-.glass-btn--sm { height: 44px; font-size: var(--gl-font-size-sm); border-radius: var(--gl-radius-sm); }
-.glass-btn--lg { height: 64px; font-size: var(--gl-font-size-lg); }
+.glass-btn--sm { height: var(--gl-btn-height-sm, 44px); font-size: var(--gl-font-size-sm); border-radius: var(--gl-radius-sm); }
+.glass-btn--lg { height: var(--gl-btn-height-lg, 64px); font-size: var(--gl-font-size-lg); }
 .glass-btn--auto { width: auto; padding: 0 var(--gl-space-xl); }
 
 
@@ -652,8 +707,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 .glass-input {
-  width: 100%; height: 52px;
-  padding: 0 var(--gl-space-md);
+  width: 100%; height: var(--gl-control-height, 52px);
+  padding: 0 var(--gl-control-padding-x, var(--gl-space-md));
   background: var(--gl-surface-2);
   backdrop-filter: blur(var(--gl-blur-light));
   -webkit-backdrop-filter: blur(var(--gl-blur-light));
@@ -708,8 +763,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 
 /* Textarea */
 .glass-textarea {
-  width: 100%; min-height: 120px;
-  padding: var(--gl-space-md);
+  width: 100%; min-height: var(--gl-textarea-min-height, 120px);
+  padding: var(--gl-space-md) var(--gl-control-padding-x, var(--gl-space-md));
   background: var(--gl-surface-2);
   backdrop-filter: blur(var(--gl-blur-light));
   -webkit-backdrop-filter: blur(var(--gl-blur-light));
@@ -735,8 +790,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
    9. SELECT
    ============================================================ */
 .glass-select {
-  width: 100%; height: 52px;
-  padding: 0 var(--gl-space-3xl) 0 var(--gl-space-md);
+  width: 100%; height: var(--gl-control-height, 52px);
+  padding: 0 var(--gl-space-3xl) 0 var(--gl-control-padding-x, var(--gl-space-md));
   background: var(--gl-surface-2);
   backdrop-filter: blur(var(--gl-blur-light));
   -webkit-backdrop-filter: blur(var(--gl-blur-light));
@@ -757,7 +812,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 /* Right to left: the chevron and the room kept for it move to the left —
    together, under :dir(), so a browser without it keeps both on the right. */
 .glass-select:dir(rtl) {
-  padding: 0 var(--gl-space-md) 0 var(--gl-space-3xl);
+  padding: 0 var(--gl-control-padding-x, var(--gl-space-md)) 0 var(--gl-space-3xl);
   background-position: left 16px center;
 }
 .glass-select:focus {
@@ -795,7 +850,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 /* ============================================================
    11. TOGGLE SWITCH
    ============================================================ */
-/* First-line alignment — see the note on .glass-checkbox below. Track is 30px. */
+/* First-line alignment — see the note on .glass-checkbox below. The track
+   is --gl-toggle-height high (30px by default). */
 .glass-toggle {
   display: inline-flex; align-items: flex-start;
   gap: var(--gl-space-sm); cursor: pointer;
@@ -812,12 +868,12 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
    the lh unit drops it and keeps margin: 0, as the track does. */
 .glass-toggle__input {
   position: absolute; z-index: 1; opacity: 0; cursor: inherit;
-  width: 52px; height: 30px; margin: 0; font: inherit;
-  margin-top: max(0px, calc((1lh - 30px) / 2));
+  width: var(--gl-toggle-width, 52px); height: var(--gl-toggle-height, 30px); margin: 0; font: inherit;
+  margin-top: max(0px, calc((1lh - var(--gl-toggle-height, 30px)) / 2));
 }
 
 .glass-toggle__track {
-  position: relative; width: 52px; height: 30px;
+  position: relative; width: var(--gl-toggle-width, 52px); height: var(--gl-toggle-height, 30px);
   background: var(--gl-surface-2);
   backdrop-filter: blur(var(--gl-blur-soft));
   -webkit-backdrop-filter: blur(var(--gl-blur-soft));
@@ -826,12 +882,19 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   transition: var(--gl-transition);
   box-shadow: var(--gl-inset-subtle);
   flex-shrink: 0;
-  margin-top: max(0px, calc((1lh - 30px) / 2));
+  margin-top: max(0px, calc((1lh - var(--gl-toggle-height, 30px)) / 2));
 }
 
+/* Inset and travel follow the track. Top and left (right, right to left)
+   are (height − thumb) / 2 − 1px inside the 1.5px border: 3px at 52 × 30,
+   where the thumb has always sat (taking off the whole border would move
+   it by half a pixel). It travels width − height, so the gap at the end
+   mirrors the one below. */
 .glass-toggle__thumb {
-  position: absolute; top: 3px; left: 3px;
-  width: 22px; height: 22px;
+  position: absolute;
+  top: calc((var(--gl-toggle-height, 30px) - var(--gl-toggle-thumb-size, 22px)) / 2 - 1px);
+  left: calc((var(--gl-toggle-height, 30px) - var(--gl-toggle-thumb-size, 22px)) / 2 - 1px);
+  width: var(--gl-toggle-thumb-size, 22px); height: var(--gl-toggle-thumb-size, 22px);
   border-radius: var(--gl-radius-pill);
   background: var(--gl-toggle-thumb-bg);
   box-shadow: 0 2px 6px rgba(0,0,0,0.2), var(--gl-inset-milk);
@@ -846,13 +909,15 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 .glass-toggle__input:checked + .glass-toggle__track .glass-toggle__thumb {
-  transform: translateX(22px);
+  transform: translateX(calc(var(--gl-toggle-width, 52px) - var(--gl-toggle-height, 30px)));
 }
 /* Right to left the thumb starts on the right and travels left — both
    under :dir(), so a browser without it keeps the left-to-right switch. */
-.glass-toggle__thumb:dir(rtl) { left: auto; right: 3px; }
+.glass-toggle__thumb:dir(rtl) {
+  left: auto; right: calc((var(--gl-toggle-height, 30px) - var(--gl-toggle-thumb-size, 22px)) / 2 - 1px);
+}
 .glass-toggle__input:checked + .glass-toggle__track .glass-toggle__thumb:dir(rtl) {
-  transform: translateX(-22px);
+  transform: translateX(calc(var(--gl-toggle-height, 30px) - var(--gl-toggle-width, 52px)));
 }
 
 .glass-toggle__input:focus-visible + .glass-toggle__track { box-shadow: var(--gl-shadow-focus); }
@@ -861,7 +926,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   font-size: var(--gl-font-size-base);
   color: var(--gl-color-text);
   user-select: none;
-  margin-top: max(0px, calc((30px - 1lh) / 2));
+  margin-top: max(0px, calc((var(--gl-toggle-height, 30px) - 1lh) / 2));
 }
 /* A control without a label keeps no gap for one. */
 .glass-toggle__label:empty,
@@ -874,11 +939,12 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
    ============================================================ */
 /* Control and label are aligned on the *first line*, not on the middle of the
    text block — a consent label runs over several lines and a centred box then
-   points at nothing. The two margins below centre the 24px box on that first
-   line; whichever is the shorter of the two gets the offset, so exactly one is
-   ever non-zero. For a single-line label this is pixel-identical to the
-   `align-items: center` of pre-1.11.0. Repeated on .glass-radio (24px) and
-   .glass-toggle (30px) — keep the three in step. */
+   points at nothing. The two margins below centre the box (--gl-check-size,
+   24px by default) on that first line; whichever is the shorter of the two
+   gets the offset, so exactly one is ever non-zero. For a single-line label
+   this is pixel-identical to the `align-items: center` of pre-1.11.0.
+   Repeated on .glass-radio (--gl-check-size) and .glass-toggle
+   (--gl-toggle-height) — keep the three in step. */
 .glass-checkbox {
   display: inline-flex; align-items: flex-start;
   gap: var(--gl-space-sm); cursor: pointer;
@@ -887,12 +953,12 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 /* On top of the box, covering it only — see .glass-toggle__input. */
 .glass-checkbox__input {
   position: absolute; z-index: 1; opacity: 0; cursor: inherit;
-  width: 24px; height: 24px; margin: 0; font: inherit;
-  margin-top: max(0px, calc((1lh - 24px) / 2));
+  width: var(--gl-check-size, 24px); height: var(--gl-check-size, 24px); margin: 0; font: inherit;
+  margin-top: max(0px, calc((1lh - var(--gl-check-size, 24px)) / 2));
 }
 
 .glass-checkbox__box {
-  width: 24px; height: 24px;
+  width: var(--gl-check-size, 24px); height: var(--gl-check-size, 24px);
   border-radius: var(--gl-radius-xs);
   background: var(--gl-surface-2);
   backdrop-filter: blur(var(--gl-blur-soft));
@@ -902,7 +968,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   transition: var(--gl-transition);
   box-shadow: var(--gl-inset-subtle);
   flex-shrink: 0;
-  margin-top: max(0px, calc((1lh - 24px) / 2));
+  margin-top: max(0px, calc((1lh - var(--gl-check-size, 24px)) / 2));
 }
 
 .glass-checkbox__box svg {
@@ -925,7 +991,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-checkbox__label {
   font-size: var(--gl-font-size-base);
   color: var(--gl-color-text); user-select: none;
-  margin-top: max(0px, calc((24px - 1lh) / 2));
+  margin-top: max(0px, calc((var(--gl-check-size, 24px) - 1lh) / 2));
 }
 
 
@@ -941,12 +1007,12 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 /* On top of the circle, covering it only — see .glass-toggle__input. */
 .glass-radio__input {
   position: absolute; z-index: 1; opacity: 0; cursor: inherit;
-  width: 24px; height: 24px; margin: 0; font: inherit;
-  margin-top: max(0px, calc((1lh - 24px) / 2));
+  width: var(--gl-check-size, 24px); height: var(--gl-check-size, 24px); margin: 0; font: inherit;
+  margin-top: max(0px, calc((1lh - var(--gl-check-size, 24px)) / 2));
 }
 
 .glass-radio__circle {
-  width: 24px; height: 24px;
+  width: var(--gl-check-size, 24px); height: var(--gl-check-size, 24px);
   border-radius: var(--gl-radius-pill);
   background: var(--gl-surface-2);
   backdrop-filter: blur(var(--gl-blur-soft));
@@ -955,7 +1021,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   transition: var(--gl-transition);
   box-shadow: var(--gl-inset-subtle);
   flex-shrink: 0;
-  margin-top: max(0px, calc((1lh - 24px) / 2));
+  margin-top: max(0px, calc((1lh - var(--gl-check-size, 24px)) / 2));
 }
 
 .glass-radio__dot {
@@ -978,7 +1044,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-radio__label {
   font-size: var(--gl-font-size-base);
   color: var(--gl-color-text); user-select: none;
-  margin-top: max(0px, calc((24px - 1lh) / 2));
+  margin-top: max(0px, calc((var(--gl-check-size, 24px) - 1lh) / 2));
 }
 
 
@@ -1166,7 +1232,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-modal__footer { display: flex; border-top: 1px solid var(--gl-border-subtle); }
 
 .glass-modal__action {
-  flex: 1; height: 52px;
+  flex: 1; height: var(--gl-modal-action-height, 52px);
   background: transparent; border: none;
   font-family: var(--gl-font-family);
   font-size: var(--gl-font-size-btn);
@@ -1894,8 +1960,8 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   display: flex;
   align-items: center;
   gap: var(--gl-space-sm);
-  padding: var(--gl-space-md) var(--gl-space-lg);
-  min-height: 56px;
+  padding: var(--gl-list-item-padding-y, var(--gl-space-md)) var(--gl-space-lg);
+  min-height: var(--gl-list-item-min-height, 56px);
   color: var(--gl-color-text);
   font-size: var(--gl-font-size-base);
   text-decoration: none;

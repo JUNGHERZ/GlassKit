@@ -290,6 +290,13 @@
 
       <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.20.0</h1>
 
+      <!-- DENSITY -->
+      <p class="section-label">Density</p>
+      <div class="glass-segmented glass-segmented--full gl-mb-md" role="group" aria-label="Density">
+        <button class="glass-segmented__item" type="button" aria-pressed="true" onclick="setDensity(this, null)">Default</button>
+        <button class="glass-segmented__item" type="button" aria-pressed="false" onclick="setDensity(this, 'compact')">Compact</button>
+      </div>
+
       <!-- CARD -->
       <p class="section-label">Card (Glow)</p>
       <div class="glass-card glass-card--glow gl-mb-md">
@@ -1005,6 +1012,14 @@
     const html = document.documentElement;
     const current = html.getAttribute('data-theme');
     html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  }
+
+  // Density: data-density="compact" on <html>, or none
+  function setDensity(button, density) {
+    const html = document.documentElement;
+    if (density) html.setAttribute('data-density', density);
+    else html.removeAttribute('data-density');
+    for (const b of button.parentElement.children) b.setAttribute('aria-pressed', String(b === button));
   }
 
   // Background Switcher

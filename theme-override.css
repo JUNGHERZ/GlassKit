@@ -127,6 +127,26 @@
 
 
 /* ============================================================
+   BEISPIEL: Dichtere Bedienelemente (seit 1.21.0)
+
+   Für die ganze Seite genügt <html data-density="compact">.
+   Einzelne Größen lassen sich setzen wie jedes Token: auf :root
+   für beide Dichten, auf [data-density="compact"] nur für die
+   kompakte. Knopf und Zeilenausrichtung von Toggle, Checkbox
+   und Radio folgen der gesetzten Größe.
+   ============================================================ */
+
+/*
+:root {
+  --gl-btn-height:           48px;
+}
+[data-density="compact"] {
+  --gl-btn-height:           36px;
+}
+*/
+
+
+/* ============================================================
    DEIN CUSTOM THEME
    Entkommentiere und passe an:
    ============================================================ */
