@@ -7,6 +7,24 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.21.2] – 2026-10-05
+
+### Fixed
+
+- **Disabled buttons look disabled.** `.glass-btn` had no rule for `:disabled` or `[aria-disabled="true"]`: a disabled button rendered exactly like an enabled one, kept the pointer cursor, and primary, secondary and tertiary still lifted by 1 px on hover — the tertiary one brightened as well. A Save button waiting for a change invited a tap that did nothing. It is now dimmed to 0.45, the value of the segmented control and the date chips, shows the not-allowed cursor and stays put; the tertiary keeps its surface and its muted label on hover. `[aria-disabled="true"]` covers `a.glass-btn`, which cannot be disabled; the link still navigates unless the page stops it — no `pointer-events: none`, which would take the cursor and tooltips along. Measured as in the issue, 280 × 56 px with a tolerance of 24: enabled and disabled differed in 0 of 15,680 pixels for every variant in both themes; now in 15,409 / 814 / 234 (light) and 15,518 / 15,365 / 15,473 (dark) for primary / secondary / tertiary in Chromium, WebKit within 15. In the light theme secondary and tertiary differ mainly in the label, which turns grey. ([#7](https://github.com/JUNGHERZ/GlassKit/issues/7))
+- **The same for every other control that can be disabled.** The issue took them for covered; only the input, the segmented control and the date chips were. Pill, tab-bar accessory, modal actions, interactive list rows and the calendar's month arrows dim to 0.45 with the not-allowed cursor and drop their hover effects. Toggle, checkbox and radio dim their control and their label — sibling selectors, so it holds without `:has()`; the cursor over the gap between follows where `:has()` is supported. Select, textarea and range dim to 0.4 like the input, and the slider thumb no longer grows on hover. The accessory's hover rules now leave a disabled one out through `:where(:not(:disabled, [aria-disabled="true"]))`, which keeps their specificity — a reset could not have restored the icon colour that each tone variant sets on its own. GlassKit Elements' `disabled` reaches all of these. GlassKit's own showcase had a "Disabled toggle" that looked enabled.
+- Enabled controls render and hover exactly as before: docs, showcase and landing pages are pixel-identical in Chromium and WebKit, and the hover states of pill, accessory (plain and accent), modal action and calendar arrow were compared property by property.
+
+### Documentation
+
+- The buttons section shows a disabled button (English and German); the quick references, the README cheat sheet and SKILL.md list the disabled state of each control.
+
+### Compatibility
+
+- A page that faked a disabled look with its own `opacity` on these classes now dims twice; drop the own rule.
+
+---
+
 ## [1.21.1] – 2026-10-05
 
 ### Fixed
@@ -1024,6 +1042,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.21.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.2
 [1.21.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.1
 [1.21.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.0
 [1.20.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.20.0
@@ -1054,4 +1073,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.21.1...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.21.2...HEAD

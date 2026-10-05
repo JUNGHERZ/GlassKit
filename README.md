@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.21.1-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.21.2-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.21.1-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.21.2-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -621,7 +621,9 @@ Interactive States:
   .is-visible         → Toast
   :checked            → Toggle, Checkbox, Radio
   :focus              → Input, Textarea, Select, Range
-  :disabled           → Input
+  :disabled           → Input, Select, Textarea, Range, Toggle, Checkbox, Radio,
+                        Button, Pill, Tab Bar Accessory, Modal action, list row
+  [aria-disabled]     → a.glass-btn and the other buttons (link still navigates)
 
 Button Modifiers:
   .glass-btn--primary / --secondary / --tertiary

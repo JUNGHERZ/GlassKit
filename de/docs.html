@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.21.1 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.21.2 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -459,7 +459,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.21.1</span>
+      <span class="docs-hero__badge">v1.21.2</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Komponenten</span>
@@ -850,6 +850,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <button class="glass-btn glass-btn--primary"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="15" rx="2" fill="currentColor"/><circle cx="12" cy="13" r="4" fill="none" stroke="#e8852d" stroke-width="2"/></svg>Primary</button>
         <button class="glass-btn glass-btn--secondary"><svg viewBox="0 0 24 24"><path d="M12 16V4"/><polyline points="8 8 12 4 16 8"/><path d="M20 17v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1"/></svg>Secondary</button>
         <button class="glass-btn glass-btn--tertiary"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Tertiary</button>
+        <button class="glass-btn glass-btn--primary" disabled>Deaktiviert</button>
       </div>
     </div>
     <table class="docs-table">
@@ -862,9 +863,11 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>--sm</code></td><td>44px Höhe</td></tr>
         <tr><td><code>--lg</code></td><td>64px Höhe</td></tr>
         <tr><td><code>--auto</code></td><td>Auto-Breite</td></tr>
+        <tr><td><code>:disabled</code>, <code>[aria-disabled="true"]</code></td><td>Gedimmt auf 0,45, Cursor not-allowed, kein Hover (seit 1.21.2)</td></tr>
         <tr><td><code>svg.glass-icon--fill</code></td><td>Bewusst gefülltes Icon (z.&nbsp;B. Brand-Logos)</td></tr>
       </tbody>
     </table>
+    <p>Ein deaktivierter Button &mdash; <code>disabled</code>, oder <code>aria-disabled="true"</code> an einem <code>a.glass-btn</code>, der sich nicht deaktivieren lässt &mdash; ist gedimmt, zeigt den Cursor not-allowed und hebt sich beim Hover nicht mehr an (seit 1.21.2; vorher sah er genau aus wie ein aktiver). Der Link selbst navigiert weiter, wenn die Seite ihn nicht abfängt. Dasselbe gilt für Pill, Tab-Bar-Accessory, Modal-Aktionen, interaktive Listenzeilen und die Monatspfeile des Kalenders; Toggle, Checkbox und Radio dimmen Bedienelement und Label, Select, Textarea und Range dimmen wie das Input.</p>
   </section>
 
   <!-- BADGE -->
@@ -2013,11 +2016,11 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       <tbody>
         <tr><td>Hintergrund</td><td><code>.glass-bg</code></td><td><code>--has-tab-bar</code></td></tr>
         <tr><td>Navigation</td><td><code>.glass-nav</code></td><td>–</td></tr>
-        <tr><td>Pill-Button</td><td><code>.glass-pill</code></td><td>–</td></tr>
+        <tr><td>Pill-Button</td><td><code>.glass-pill</code></td><td><code>:disabled</code></td></tr>
         <tr><td>Theme-Toggle</td><td><code>.glass-theme-toggle</code></td><td>–</td></tr>
         <tr><td>Titel</td><td><code>.glass-title</code></td><td>–</td></tr>
         <tr><td>Card</td><td><code>.glass-card</code></td><td><code>--glow</code></td></tr>
-        <tr><td>Button</td><td><code>.glass-btn</code></td><td><code>--primary</code>, <code>--secondary</code>, <code>--tertiary</code>, <code>--sm</code>, <code>--lg</code>, <code>--auto</code></td></tr>
+        <tr><td>Button</td><td><code>.glass-btn</code></td><td><code>--primary</code>, <code>--secondary</code>, <code>--tertiary</code>, <code>--sm</code>, <code>--lg</code>, <code>--auto</code>, <code>:disabled</code></td></tr>
         <tr><td>Badge</td><td><code>.glass-badge</code></td><td><code>--primary</code>, <code>--success</code>, <code>--warning</code>, <code>--error</code>, <code>--interactive</code>, <code>--selected</code></td></tr>
         <tr><td>Avatar</td><td><code>.glass-avatar</code></td><td><code>--sm</code>, <code>--lg</code></td></tr>
         <tr><td>Divider</td><td><code>.glass-divider</code></td><td>–</td></tr>
@@ -2035,13 +2038,13 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td>Bildauswahl</td><td><code>.glass-image-picker</code></td><td><code>__preview</code>, <code>__preview--round</code>, <code>__meta</code>, <code>__label</code>, <code>__hint</code>, <code>__actions</code></td></tr>
         <tr><td>Popover</td><td><code>.glass-popover</code></td><td><code>--top</code>, <code>--start</code>, <code>--end</code>, <code>.is-open</code></td></tr>
         <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code></td></tr>
-        <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td>–</td></tr>
-        <tr><td>Select</td><td><code>.glass-select</code></td><td>–</td></tr>
+        <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td><code>:disabled</code></td></tr>
+        <tr><td>Select</td><td><code>.glass-select</code></td><td><code>:disabled</code></td></tr>
         <tr><td>Suchfeld</td><td><code>.glass-search</code></td><td>–</td></tr>
-        <tr><td>Toggle</td><td><code>.glass-toggle</code></td><td><code>:checked</code></td></tr>
-        <tr><td>Checkbox</td><td><code>.glass-checkbox</code></td><td><code>:checked</code></td></tr>
-        <tr><td>Radio</td><td><code>.glass-radio</code></td><td><code>:checked</code></td></tr>
-        <tr><td>Range</td><td><code>.glass-range</code></td><td>–</td></tr>
+        <tr><td>Toggle</td><td><code>.glass-toggle</code></td><td><code>:checked</code>, <code>:disabled</code></td></tr>
+        <tr><td>Checkbox</td><td><code>.glass-checkbox</code></td><td><code>:checked</code>, <code>:disabled</code></td></tr>
+        <tr><td>Radio</td><td><code>.glass-radio</code></td><td><code>:checked</code>, <code>:disabled</code></td></tr>
+        <tr><td>Range</td><td><code>.glass-range</code></td><td><code>:disabled</code></td></tr>
         <tr><td>Progress</td><td><code>.glass-progress</code></td><td><code>--sm</code>, <code>--lg</code>, <code>--success</code>, <code>--error</code></td></tr>
         <tr><td>Modal</td><td><code>.glass-modal-overlay</code></td><td><code>.is-active</code></td></tr>
         <tr><td>Toast</td><td><code>.glass-toast</code></td><td><code>--success</code>, <code>--error</code>, <code>--warning</code>, <code>.is-visible</code>, <code>__action</code>, <code>__close</code></td></tr>

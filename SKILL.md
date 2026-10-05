@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.21.1) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.21.2) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -527,6 +527,8 @@ Full-width buttons (56px height) with three variants and size modifiers.
 | `.glass-icon--fill` | On the `<svg>`: deliberately filled icon (e.g. brand logos) |
 
 **Important:** Buttons default to `width: 100%`. Use `--auto` for inline/auto-width buttons.
+
+**Disabled (since 1.21.2):** `disabled` — or `aria-disabled="true"` on `a.glass-btn`, which cannot be disabled — dims the button to 0.45, shows the not-allowed cursor and stops the hover lift. The link still navigates unless the page stops it. Never fake a disabled look with your own opacity: pill, tab-bar accessory, modal actions, interactive list rows, calendar arrows, toggle, checkbox, radio, select, textarea and range all have the state too.
 
 **Heights** are density tokens: `--gl-btn-height`, `-sm`, `-lg` — 56 / 44 / 64px, or 40 / 32 / 48px with `data-density="compact"` on `<html>` (since 1.21.0).
 
@@ -1569,7 +1571,8 @@ Flexbox row with gap.
 | `.is-visible` | `.glass-toast` | Toast is visible |
 | `:checked` | Toggle, Checkbox, Radio (on the input) | Native checked state |
 | `:focus` | Input, Textarea, Select, Range | Focus ring |
-| `:disabled` | `.glass-input` | Disabled input |
+| `:disabled` | Input, Select, Textarea, Range (0.4); Button, Pill, Tab Bar Accessory, Modal action, list row, calendar arrow, Toggle, Checkbox, Radio (0.45) | Dimmed, not-allowed cursor, no hover (most since 1.21.2) |
+| `[aria-disabled="true"]` | `a.glass-btn` and the other buttons; date strip and calendar days | As `:disabled`, for elements that cannot be disabled — a link still navigates |
 
 ---
 
@@ -1963,11 +1966,11 @@ Key points in this composition:
 |---|---|---|
 | Background | `.glass-bg` | `--has-tab-bar` |
 | Navigation | `.glass-nav` | – |
-| Pill Button | `.glass-pill` | – |
+| Pill Button | `.glass-pill` | `:disabled` |
 | Theme Toggle | `.glass-theme-toggle` | – |
 | Title | `.glass-title` | – |
 | Card | `.glass-card` | `--glow` |
-| Button | `.glass-btn` | `--primary`, `--secondary`, `--tertiary`, `--sm`, `--lg`, `--auto` |
+| Button | `.glass-btn` | `--primary`, `--secondary`, `--tertiary`, `--sm`, `--lg`, `--auto`, `:disabled` |
 | Badge | `.glass-badge` | `--primary`, `--success`, `--warning`, `--error`, `--interactive`, `--selected` |
 | Avatar | `.glass-avatar` | `--sm`, `--lg` |
 | Divider | `.glass-divider` | – |
@@ -1976,13 +1979,13 @@ Key points in this composition:
 | Input Group | `.glass-input-group` | – |
 | Label | `.glass-label` | – |
 | Hint | `.glass-hint` | `--error` |
-| Textarea | `.glass-textarea` | – |
-| Select | `.glass-select` | – |
+| Textarea | `.glass-textarea` | `:disabled` |
+| Select | `.glass-select` | `:disabled` |
 | Search | `.glass-search` | – |
-| Toggle | `.glass-toggle` | `:checked` |
-| Checkbox | `.glass-checkbox` | `:checked` |
-| Radio | `.glass-radio` | `:checked` |
-| Range | `.glass-range` | – |
+| Toggle | `.glass-toggle` | `:checked`, `:disabled` |
+| Checkbox | `.glass-checkbox` | `:checked`, `:disabled` |
+| Radio | `.glass-radio` | `:checked`, `:disabled` |
+| Range | `.glass-range` | `:disabled` |
 | Progress | `.glass-progress` | `--sm`, `--lg`, `--success`, `--error` |
 | Modal | `.glass-modal-overlay` | `.is-active` |
 | Toast | `.glass-toast` | `--success`, `--error`, `--warning`, `.is-visible`, `__action`, `__close` |

@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.21.1
+   Jungherz GmbH – v1.21.2
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -500,6 +500,11 @@
 
 .glass-pill:hover { background: var(--gl-surface-5); transform: scale(1.05); }
 .glass-pill:active { transform: scale(0.95); }
+/* Disabled: dimmed, not-allowed cursor, no hover — see .glass-btn:disabled. */
+.glass-pill:disabled,
+.glass-pill[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+.glass-pill:disabled:is(:hover, :active),
+.glass-pill[aria-disabled="true"]:is(:hover, :active) { background: var(--gl-surface-3); transform: none; }
 
 .glass-pill svg,
 .glass-pill ::slotted(svg) {
@@ -656,6 +661,21 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   transform: translateY(-1px);
 }
 .glass-btn--tertiary:active { transform: translateY(1px); }
+
+/* Disabled. A disabled button looked exactly like an enabled one, kept the
+   pointer cursor and still lifted on hover — a tap did nothing, with no cue
+   beforehand. Dimmed to 0.45 like the segmented control and the date chips,
+   the not-allowed cursor, and it stays put. [aria-disabled="true"] covers
+   a.glass-btn, which cannot be disabled; the link itself still navigates
+   unless the page stops it. */
+.glass-btn:disabled,
+.glass-btn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+.glass-btn:disabled:is(:hover, :active),
+.glass-btn[aria-disabled="true"]:is(:hover, :active) { transform: none; }
+.glass-btn--tertiary:disabled:hover,
+.glass-btn--tertiary[aria-disabled="true"]:hover {
+  background: var(--gl-surface-2); color: var(--gl-color-text-muted);
+}
 
 /* Sizes */
 .glass-btn--sm { height: var(--gl-btn-height-sm, 44px); font-size: var(--gl-font-size-sm); border-radius: var(--gl-radius-sm); }
@@ -820,6 +840,9 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   box-shadow: var(--gl-shadow-focus), var(--gl-inset-medium);
 }
 .glass-select option { background: var(--gl-color-bg-mid); color: var(--gl-color-text); }
+/* Disabled like .glass-input. */
+.glass-select:disabled,
+.glass-textarea:disabled { opacity: 0.4; cursor: not-allowed; }
 
 
 /* ============================================================
@@ -921,6 +944,13 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 .glass-toggle__input:focus-visible + .glass-toggle__track { box-shadow: var(--gl-shadow-focus); }
+/* Disabled: track and label dim, the cursor says no. Sibling selectors, so
+   it holds without :has() too; the gap between them follows where :has()
+   is supported. The same for checkbox and radio. */
+.glass-toggle__input:disabled { cursor: not-allowed; }
+.glass-toggle__input:disabled + .glass-toggle__track,
+.glass-toggle__input:disabled ~ .glass-toggle__label { opacity: 0.45; cursor: not-allowed; }
+.glass-toggle:has(> .glass-toggle__input:disabled) { cursor: not-allowed; }
 
 .glass-toggle__label {
   font-size: var(--gl-font-size-base);
@@ -987,6 +1017,11 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 .glass-checkbox__input:checked + .glass-checkbox__box svg { opacity: 1; transform: scale(1); }
 .glass-checkbox__input:focus-visible + .glass-checkbox__box { box-shadow: var(--gl-shadow-focus); }
+/* Disabled — see .glass-toggle__input:disabled. */
+.glass-checkbox__input:disabled { cursor: not-allowed; }
+.glass-checkbox__input:disabled + .glass-checkbox__box,
+.glass-checkbox__input:disabled ~ .glass-checkbox__label { opacity: 0.45; cursor: not-allowed; }
+.glass-checkbox:has(> .glass-checkbox__input:disabled) { cursor: not-allowed; }
 
 .glass-checkbox__label {
   font-size: var(--gl-font-size-base);
@@ -1040,6 +1075,11 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 .glass-radio__input:checked + .glass-radio__circle .glass-radio__dot { opacity: 1; transform: scale(1); }
 .glass-radio__input:focus-visible + .glass-radio__circle { box-shadow: var(--gl-shadow-focus); }
+/* Disabled — see .glass-toggle__input:disabled. */
+.glass-radio__input:disabled { cursor: not-allowed; }
+.glass-radio__input:disabled + .glass-radio__circle,
+.glass-radio__input:disabled ~ .glass-radio__label { opacity: 0.45; cursor: not-allowed; }
+.glass-radio:has(> .glass-radio__input:disabled) { cursor: not-allowed; }
 
 .glass-radio__label {
   font-size: var(--gl-font-size-base);
@@ -1104,6 +1144,11 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 .glass-range:focus-visible { box-shadow: var(--gl-shadow-focus); }
+/* Disabled like .glass-input; the thumb keeps its size on hover. One rule
+   per engine's thumb — a list naming both would be dropped by both. */
+.glass-range:disabled { opacity: 0.4; cursor: not-allowed; }
+.glass-range:disabled::-webkit-slider-thumb { cursor: not-allowed; transform: none; }
+.glass-range:disabled::-moz-range-thumb { cursor: not-allowed; }
 
 
 /* ============================================================
@@ -1241,6 +1286,8 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   cursor: pointer; transition: var(--gl-transition-fast); outline: none;
 }
 .glass-modal__action:hover { background: var(--gl-surface-1); }
+.glass-modal__action:disabled { opacity: 0.45; cursor: not-allowed; }
+.glass-modal__action:disabled:hover { background: transparent; }
 .glass-modal__action + .glass-modal__action { border-inline-start: 1px solid var(--gl-border-subtle); }
 .glass-modal__action--primary { color: var(--gl-color-primary); font-weight: var(--gl-font-weight-semibold); }
 .glass-modal__action--danger { color: var(--gl-color-error); font-weight: var(--gl-font-weight-semibold); }
@@ -1538,9 +1585,14 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   transition: var(--gl-transition);
 }
 
-.glass-tab-bar__accessory:hover { transform: translateY(-1px); }
-.glass-tab-bar__accessory:hover svg,
-.glass-tab-bar__accessory:hover ::slotted(svg) { stroke: var(--gl-icon-strong); }
+/* :where() keeps the hover rules at their specificity while leaving a
+   disabled accessory out of them — a reset could not restore the icon
+   colour, which each tone variant sets on its own. */
+.glass-tab-bar__accessory:where(:not(:disabled, [aria-disabled="true"])):hover { transform: translateY(-1px); }
+.glass-tab-bar__accessory:where(:not(:disabled, [aria-disabled="true"])):hover svg,
+.glass-tab-bar__accessory:where(:not(:disabled, [aria-disabled="true"])):hover ::slotted(svg) { stroke: var(--gl-icon-strong); }
+.glass-tab-bar__accessory:disabled,
+.glass-tab-bar__accessory[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
 
 .glass-tab-bar__accessory:focus-visible {
   box-shadow:
@@ -2017,6 +2069,11 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-list__item--interactive:active {
   background: var(--gl-surface-3);
 }
+/* A row that is a disabled <button>, or carries aria-disabled="true". */
+.glass-list__item--interactive:disabled,
+.glass-list__item--interactive[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+.glass-list__item--interactive:disabled:is(:hover, :active),
+.glass-list__item--interactive[aria-disabled="true"]:is(:hover, :active) { background: transparent; }
 
 .glass-list__item--danger { color: var(--gl-color-error); }
 .glass-list__item--danger .glass-list__title,
@@ -2554,6 +2611,8 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 }
 .glass-calendar__nav:hover { background: var(--gl-surface-3); }
 .glass-calendar__nav:focus-visible { box-shadow: var(--gl-shadow-focus); }
+.glass-calendar__nav:disabled { opacity: 0.45; cursor: not-allowed; }
+.glass-calendar__nav:disabled:hover { background: var(--gl-surface-1); }
 .glass-calendar__nav svg {
   width: 16px; height: 16px; fill: none; stroke: currentColor;
   stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
