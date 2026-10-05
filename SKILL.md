@@ -89,6 +89,16 @@ and prose mirror. Pairs that must move together — the select's chevron and its
 toggle's thumb and its travel, the progress fill's gradient — are under `:dir(rtl)`
 (Chrome 120+); an older browser keeps them left to right rather than splitting them.
 
+### Density
+
+Denser controls for admin screens, desktop layouts and narrow forms: `data-density="compact"` on `<html>`, next to `data-theme` (since 1.21.0).
+
+```html
+<html data-theme="dark" data-density="compact">
+```
+
+Fields and buttons are 40px high instead of 52 and 56px; toggles, checkboxes, radios, list rows and modal actions shrink with them. Colours, type and spacing stay. Without the attribute nothing changes; `removeAttribute('data-density')` switches back at runtime. The values are the density tokens in section 2 — never shrink controls by overriding their `height`. It combines with `dir="rtl"`: the toggle's thumb and the select's padding mirror at either density.
+
 ---
 
 ## 2. Design Tokens
@@ -214,6 +224,28 @@ fully-translucent pre-1.7.0 chip.
 | `--gl-space-2xl` | `32px` |
 | `--gl-space-3xl` | `40px` |
 | `--gl-space-4xl` | `56px` |
+
+### Density (since 1.21.0)
+
+The control sizes. `data-density="compact"` on `<html>` switches to the second value column.
+
+| Token | Default | Compact | Used by |
+|---|---|---|---|
+| `--gl-control-height` | `52px` | `40px` | `.glass-input`, `.glass-select` (and the search field) |
+| `--gl-control-padding-x` | unset → `var(--gl-space-md)` | `var(--gl-space-sm)` | Inner left/right padding of input, select, textarea |
+| `--gl-btn-height` | `56px` | `40px` | `.glass-btn` |
+| `--gl-btn-height-sm` | `44px` | `32px` | `.glass-btn--sm` |
+| `--gl-btn-height-lg` | `64px` | `48px` | `.glass-btn--lg` |
+| `--gl-textarea-min-height` | `120px` | `88px` | `.glass-textarea` |
+| `--gl-list-item-min-height` | `56px` | `48px` | `.glass-list__item` |
+| `--gl-list-item-padding-y` | unset → `var(--gl-space-md)` | `10px` | `.glass-list__item`, top and bottom |
+| `--gl-toggle-width` | `52px` | `44px` | `.glass-toggle__track` |
+| `--gl-toggle-height` | `30px` | `26px` | `.glass-toggle__track` |
+| `--gl-toggle-thumb-size` | `22px` | `18px` | `.glass-toggle__thumb` |
+| `--gl-check-size` | `24px` | `20px` | `.glass-checkbox__box`, `.glass-radio__circle` |
+| `--gl-modal-action-height` | `52px` | `44px` | `.glass-modal__action` |
+
+The rules read each size with its default as fallback, like `--gl-modal-max-width`. The toggle's thumb inset and travel (in both directions) and the first-line alignment of toggle, checkbox and radio are derived from these, so any value stays aligned. The two paddings are unset by default and fall back to `--gl-space-md`, so a spacing override still reaches them. Set any token on `:root` for both densities, or on `[data-density="compact"]` for compact only.
 
 ### Shadows
 
@@ -477,6 +509,8 @@ Full-width buttons (56px height) with three variants and size modifiers.
 | `.glass-icon--fill` | On the `<svg>`: deliberately filled icon (e.g. brand logos) |
 
 **Important:** Buttons default to `width: 100%`. Use `--auto` for inline/auto-width buttons.
+
+**Heights** are density tokens: `--gl-btn-height`, `-sm`, `-lg` — 56 / 44 / 64px, or 40 / 32 / 48px with `data-density="compact"` on `<html>` (since 1.21.0).
 
 **Icons:** Button SVGs need **no inline `fill`/`stroke` attributes** – GlassKit styles them automatically: outline style (`fill: none; stroke: currentColor; stroke-width: 2`, round caps/joins) as the default, `--secondary`/`--tertiary` use their icon tokens, `--primary` renders icons filled. For deliberately filled icons (e.g. brand logos like the GitHub mark) add `glass-icon--fill` to the `<svg>`.
 
@@ -1884,6 +1918,7 @@ Key points in this composition:
 7. **`data-theme`** – Always set on `<html>`, never on `<body>` or deeper elements.
 8. **List dividers are automatic** – Never add a `<hr>` or divider element between `.glass-list__item`s. The divider is rendered via `::after` and respects `:has(.glass-list__leading)` for the inset.
 9. **Popover toggle naming** – Never name your popover toggle JS function `togglePopover`. It collides with the native `HTMLElement.togglePopover()` method. Use a prefix like `gkTogglePopover`.
+10. **`data-density`** – Like `data-theme`, on `<html>`: `compact` or absent. For a denser UI set the attribute or a density token, never `height` on the components.
 
 ### ❌ Common Mistakes
 
@@ -1900,6 +1935,7 @@ Key points in this composition:
 | Putting `glass-list` inside `glass-popover` without `--bare` | Add `.glass-list--bare` to strip the double glass surface |
 | JS function named `togglePopover()` | Rename to `gkTogglePopover()` or similar to avoid native API clash |
 | Putting `.is-open` on the trigger button instead of `.glass-popover` | The state class belongs on the popover element |
+| Overriding `height` of `.glass-btn`, `.glass-input` etc. for a denser UI | `data-density="compact"` on `<html>`, or set a density token — toggle thumb and label alignment follow the tokens, not a hand-set `height` |
 
 ---
 
@@ -1977,7 +2013,7 @@ customElements.define('my-card', MyCard);
 | `css` | `string` | The same, as a string |
 | `componentsSheet` | `CSSStyleSheet` | Component rules only, no token declarations (since 1.9.0) |
 | `componentsCss` | `string` | The same, as a string |
-| `tokensSheet` | `CSSStyleSheet` | Only the two `[data-theme]` blocks that declare `--gl-*` (since 1.9.0) |
+| `tokensSheet` | `CSSStyleSheet` | Only the blocks that declare `--gl-*`: the two `[data-theme]` blocks (since 1.9.0) and the `[data-density="compact"]` preset (since 1.21.0) |
 | `tokensCss` | `string` | The same, as a string |
 
 CSS Custom Properties (`--gl-*`) cross the shadow boundary by inheritance, so the example
@@ -1988,6 +2024,7 @@ above picks up whatever the document defines and theme switching works globally.
 > element carrying `data-theme`, that selector matches it and re-declares every token
 > locally — and a matching rule always beats an inherited value. A project's
 > `:root { --gl-color-primary: … }` then silently stops arriving inside your component.
+> The dark block declares the default control sizes too, so `<html data-density="compact">` stops arriving as well — unless that element carries `data-density` mirrored from `<html>`, which lets the compact preset (also in the full sheet) match it.
 >
 > If you need a themed element inside the shadow root, adopt `componentsSheet` instead
 > and make sure the tokens are present on the document:
@@ -2059,6 +2096,13 @@ Two things worth knowing:
 Overriding `--gl-color-success` / `--gl-color-error` is enough on its own: fill, border,
 text and glow of every state component are derived from those tokens. Only if you want
 a different ink than the derived one do you need to touch `--gl-color-{state}-on-surface`.
+
+The density tokens (section 2) are overridden the same way, for both densities or for compact only:
+
+```css
+:root                    { --gl-btn-height: 48px; }
+[data-density='compact'] { --gl-btn-height: 36px; }
+```
 
 Included theme templates in `theme-override.css`:
 - 🔵 Ocean Blue

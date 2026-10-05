@@ -387,6 +387,7 @@
     <a class="docs-sidebar__link" href="#installation">Installation</a>
     <a class="docs-sidebar__link" href="#tokens">Design Tokens</a>
     <a class="docs-sidebar__link" href="#theming">Theming (Light/Dark)</a>
+    <a class="docs-sidebar__link" href="#density">Density (Compact)</a>
     <a class="docs-sidebar__link" href="#background">Background</a>
   </div>
 
@@ -530,6 +531,25 @@
         <tr><td><code>--gl-space-2xl</code></td><td>32px</td><td><code>--gl-radius-pill</code></td><td>50%</td></tr>
       </tbody>
     </table>
+
+    <h3>Density</h3>
+    <table class="docs-table">
+      <thead><tr><th>Token</th><th>Default</th><th>Compact</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gl-control-height</code></td><td>52px</td><td>40px</td><td>Input, select, search</td></tr>
+        <tr><td><code>--gl-control-padding-x</code></td><td>unset &rarr; <code>--gl-space-md</code></td><td><code>--gl-space-sm</code></td><td>Inner left/right padding of input, select, textarea</td></tr>
+        <tr><td><code>--gl-btn-height</code></td><td>56px</td><td>40px</td><td>Button</td></tr>
+        <tr><td><code>--gl-btn-height-sm</code></td><td>44px</td><td>32px</td><td>Button <code>--sm</code></td></tr>
+        <tr><td><code>--gl-btn-height-lg</code></td><td>64px</td><td>48px</td><td>Button <code>--lg</code></td></tr>
+        <tr><td><code>--gl-textarea-min-height</code></td><td>120px</td><td>88px</td><td>Textarea</td></tr>
+        <tr><td><code>--gl-list-item-min-height</code></td><td>56px</td><td>48px</td><td>List row</td></tr>
+        <tr><td><code>--gl-list-item-padding-y</code></td><td>unset &rarr; <code>--gl-space-md</code></td><td>10px</td><td>List row, top and bottom</td></tr>
+        <tr><td><code>--gl-toggle-width</code> &times; <code>-height</code></td><td>52 &times; 30px</td><td>44 &times; 26px</td><td>Toggle track</td></tr>
+        <tr><td><code>--gl-toggle-thumb-size</code></td><td>22px</td><td>18px</td><td>Toggle thumb</td></tr>
+        <tr><td><code>--gl-check-size</code></td><td>24px</td><td>20px</td><td>Checkbox, radio</td></tr>
+        <tr><td><code>--gl-modal-action-height</code></td><td>52px</td><td>44px</td><td>Modal actions</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <!-- THEMING -->
@@ -548,6 +568,43 @@ function <span class="cls">toggleTheme</span>() {
     </div>
     <h3>Right to left</h3>
     <p>Since 1.20.0 the components follow the writing direction. Set <code>dir="rtl"</code> on <code>&lt;html&gt;</code> or on any container: paddings, insets and borders are logical properties, so labels and hints, the search icon, list dividers, popover anchors, tab badges, modal actions, the toast&rsquo;s close button and the alignment of accordion, list, table and prose all mirror. Where two values have to move together &mdash; the select&rsquo;s chevron and the room kept for it, the toggle&rsquo;s thumb and its travel, the progress fill&rsquo;s gradient &mdash; the rule sits under <code>:dir(rtl)</code>: Chrome and Edge from 120, Safari from 16.4, Firefox from 49. An older browser keeps those parts left to right instead of tearing them apart.</p>
+  </section>
+
+  <!-- DENSITY -->
+  <section class="docs-section" id="density">
+    <h2>Density (Compact)</h2>
+    <p>Admin screens, desktop layouts and narrow forms want denser controls. Since 1.21.0 the control sizes are <a href="#tokens">density tokens</a>, and <code>data-density="compact"</code> on the <code>&lt;html&gt;</code> element swaps in a smaller set: fields and buttons 40px high instead of 52 and 56, smaller toggles, checkboxes and radios, denser list rows and modal actions. Colours, type and spacing stay as they are. Without the attribute every control keeps the size it has always had.</p>
+    <div class="docs-preview">
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px">
+        <div class="gl-stack gl-stack--sm">
+          <span class="glass-label">Default</span>
+          <input class="glass-input" type="text" placeholder="Name">
+          <button class="glass-btn glass-btn--primary">Save</button>
+          <label class="glass-toggle"><input class="glass-toggle__input" type="checkbox" checked><span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span><span class="glass-toggle__label">Notifications</span></label>
+          <label class="glass-checkbox"><input class="glass-checkbox__input" type="checkbox" checked><span class="glass-checkbox__box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="glass-checkbox__label">Remember me</span></label>
+        </div>
+        <div class="gl-stack gl-stack--sm" data-density="compact">
+          <span class="glass-label">Compact</span>
+          <input class="glass-input" type="text" placeholder="Name">
+          <button class="glass-btn glass-btn--primary">Save</button>
+          <label class="glass-toggle"><input class="glass-toggle__input" type="checkbox" checked><span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span><span class="glass-toggle__label">Notifications</span></label>
+          <label class="glass-checkbox"><input class="glass-checkbox__input" type="checkbox" checked><span class="glass-checkbox__box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="glass-checkbox__label">Remember me</span></label>
+        </div>
+      </div>
+    </div>
+    <p>The preview sets the attribute on its right column. On a page it belongs on <code>&lt;html&gt;</code>, next to <code>data-theme</code>: an element further down that carries <code>data-theme="dark"</code> re-declares the default sizes.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;html</span> <span class="attr">data-theme=</span><span class="val">"dark"</span> <span class="attr">data-density=</span><span class="val">"compact"</span><span class="tag">&gt;</span>
+
+<span class="cmt">// Switch at runtime:</span>
+<span class="cls">document.documentElement</span>.setAttribute(<span class="val">'data-density'</span>, <span class="val">'compact'</span>);
+<span class="cls">document.documentElement</span>.removeAttribute(<span class="val">'data-density'</span>);
+
+<span class="cmt">/* One token for both densities &ndash; or for compact only: */</span>
+:root                    { --gl-btn-height: <span class="val">48px</span>; }
+[data-density=<span class="val">'compact'</span>] { --gl-btn-height: <span class="val">36px</span>; }</div>
+    </div>
+    <p>The toggle's thumb inset and travel &mdash; in either writing direction &mdash; and the first-line alignment of toggle, checkbox and radio are derived from the tokens, so any size a project sets stays aligned. The rules read every size with today's value as fallback, like <code>--gl-modal-max-width</code>, so a page whose token sheet predates them keeps the old sizes.</p>
   </section>
 
   <!-- BACKGROUND -->
