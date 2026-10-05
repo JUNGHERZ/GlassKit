@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.19.1
+   Jungherz GmbH – v1.20.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -68,6 +68,8 @@
   --gl-color-text-muted:     rgba(255, 255, 255, 0.60);
   --gl-color-text-on-light:  #1a3a4a;
   --gl-color-text-heading:   #ffffff;
+  /* The select's chevron, drawn in the muted text colour of each theme. */
+  --gl-select-chevron:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   --gl-color-success:        #34c759;
   --gl-color-error:          #ff3b30;
   --gl-color-warning:        #ffcc00;
@@ -219,6 +221,8 @@
 
   /* ---- Tab-Bar ---- */
   --gl-tab-bar-height:       82px;
+  /* Widest a .glass-modal grows; dialogs with a form or a table can take more. */
+  --gl-modal-max-width:      340px;
 
   /* ---- Tab-Bar Floating ---- */
   --gl-tab-bar-floating-bottom:    16px;
@@ -261,6 +265,7 @@
   --gl-color-text-muted:     rgba(26, 42, 54, 0.55);
   --gl-color-text-on-light:  #1a3a4a;
   --gl-color-text-heading:   #0f1f2a;
+  --gl-select-chevron:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(26,42,54,0.55)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   --gl-color-success:        #28a745;
   --gl-color-error:          #dc3545;
   --gl-color-warning:        #e6a800;
@@ -643,7 +648,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   font-size: var(--gl-font-size-sm);
   font-weight: var(--gl-font-weight-medium);
   color: var(--gl-icon-strong);
-  padding-left: var(--gl-space-2xs);
+  padding-inline-start: var(--gl-space-2xs);
 }
 
 .glass-input {
@@ -697,7 +702,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-hint {
   font-size: var(--gl-font-size-xs);
   color: var(--gl-color-text-muted);
-  padding-left: var(--gl-space-2xs);
+  padding-inline-start: var(--gl-space-2xs);
 }
 .glass-hint--error { color: var(--gl-color-error); }
 
@@ -745,9 +750,15 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   box-shadow: var(--gl-inset-subtle);
   cursor: pointer;
   appearance: none; -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-image: var(--gl-select-chevron, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"));
   background-repeat: no-repeat;
   background-position: right 16px center;
+}
+/* Right to left: the chevron and the room kept for it move to the left —
+   together, under :dir(), so a browser without it keeps both on the right. */
+.glass-select:dir(rtl) {
+  padding: 0 var(--gl-space-md) 0 var(--gl-space-3xl);
+  background-position: left 16px center;
 }
 .glass-select:focus {
   border-color: var(--gl-border-focus);
@@ -764,7 +775,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 .glass-search__icon {
-  position: absolute; left: var(--gl-space-md);
+  position: absolute; inset-inline-start: var(--gl-space-md);
   width: 18px; height: 18px;
   stroke: var(--gl-icon-muted) !important;
   stroke-width: 2 !important;
@@ -776,7 +787,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 .glass-search .glass-input {
-  padding-left: 44px;
+  padding-inline-start: 44px;
   border-radius: var(--gl-radius-full);
 }
 
@@ -791,12 +802,18 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Visually hidden but keeps the control's area: zero-size inputs make the
-   browser suppress the native validation bubble on required fields
-   (silent submit block). pointer-events: none — the label handles clicks. */
+/* Visually hidden, but it keeps the control's area and lies on top of it.
+   Zero-size inputs make the browser suppress the native validation bubble
+   on required fields (silent submit block). On top, a pointer — or a test
+   tool that clicks the switch by its role — reaches the input itself; the
+   track drew over it before and took the click. It covers the track only:
+   the label text, which may hold a link, stays the label's. margin-top is
+   the track's first-line offset, from the label's font; a browser without
+   the lh unit drops it and keeps margin: 0, as the track does. */
 .glass-toggle__input {
-  position: absolute; opacity: 0; margin: 0;
-  width: 52px; height: 30px; pointer-events: none;
+  position: absolute; z-index: 1; opacity: 0; cursor: inherit;
+  width: 52px; height: 30px; margin: 0; font: inherit;
+  margin-top: max(0px, calc((1lh - 30px) / 2));
 }
 
 .glass-toggle__track {
@@ -831,6 +848,12 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-toggle__input:checked + .glass-toggle__track .glass-toggle__thumb {
   transform: translateX(22px);
 }
+/* Right to left the thumb starts on the right and travels left — both
+   under :dir(), so a browser without it keeps the left-to-right switch. */
+.glass-toggle__thumb:dir(rtl) { left: auto; right: 3px; }
+.glass-toggle__input:checked + .glass-toggle__track .glass-toggle__thumb:dir(rtl) {
+  transform: translateX(-22px);
+}
 
 .glass-toggle__input:focus-visible + .glass-toggle__track { box-shadow: var(--gl-shadow-focus); }
 
@@ -840,6 +863,10 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   user-select: none;
   margin-top: max(0px, calc((30px - 1lh) / 2));
 }
+/* A control without a label keeps no gap for one. */
+.glass-toggle__label:empty,
+.glass-checkbox__label:empty,
+.glass-radio__label:empty { display: none; }
 
 
 /* ============================================================
@@ -857,10 +884,11 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   gap: var(--gl-space-sm); cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-/* See .glass-toggle__input: keep area so native validation bubbles anchor */
+/* On top of the box, covering it only — see .glass-toggle__input. */
 .glass-checkbox__input {
-  position: absolute; opacity: 0; margin: 0;
-  width: 24px; height: 24px; pointer-events: none;
+  position: absolute; z-index: 1; opacity: 0; cursor: inherit;
+  width: 24px; height: 24px; margin: 0; font: inherit;
+  margin-top: max(0px, calc((1lh - 24px) / 2));
 }
 
 .glass-checkbox__box {
@@ -910,10 +938,11 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   gap: var(--gl-space-sm); cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-/* See .glass-toggle__input: keep area so native validation bubbles anchor */
+/* On top of the circle, covering it only — see .glass-toggle__input. */
 .glass-radio__input {
-  position: absolute; opacity: 0; margin: 0;
-  width: 24px; height: 24px; pointer-events: none;
+  position: absolute; z-index: 1; opacity: 0; cursor: inherit;
+  width: 24px; height: 24px; margin: 0; font: inherit;
+  margin-top: max(0px, calc((1lh - 24px) / 2));
 }
 
 .glass-radio__circle {
@@ -1071,6 +1100,9 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   );
   box-shadow: 0 0 8px color-mix(in srgb, var(--gl-color-error) 30%, transparent), var(--gl-inset-strong);
 }
+/* The fill grows from the inline start; right to left its gradient turns
+   round so the darker end still leads. */
+.glass-progress__fill:dir(rtl) { scale: -1 1; }
 
 
 /* ============================================================
@@ -1089,9 +1121,20 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   -webkit-font-smoothing: antialiased;
 }
 .glass-modal-overlay.is-active { opacity: 1; pointer-events: auto; }
+/* The overlay may be a native <dialog>: opened with showModal() it lies in
+   the top layer, the page behind it is inert, focus moves in and Escape
+   closes it. These rules undo the dialog's own box and backdrop; the
+   overlay above paints the dimmed, blurred layer. GlassKit Elements'
+   <glk-modal> uses exactly this. */
+dialog.glass-modal-overlay {
+  width: auto; height: auto; max-width: none; max-height: none;
+  margin: 0; border: 0; color: inherit;
+}
+dialog.glass-modal-overlay:not([open]) { display: none; }
+dialog.glass-modal-overlay::backdrop { background: transparent; }
 
 .glass-modal {
-  width: 100%; max-width: 340px;
+  width: 100%; max-width: var(--gl-modal-max-width, 340px);
   background: linear-gradient(to bottom,
     var(--gl-card-glow-top) 0%, var(--gl-card-glow-bottom) 100%
   );
@@ -1132,7 +1175,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   cursor: pointer; transition: var(--gl-transition-fast); outline: none;
 }
 .glass-modal__action:hover { background: var(--gl-surface-1); }
-.glass-modal__action + .glass-modal__action { border-left: 1px solid var(--gl-border-subtle); }
+.glass-modal__action + .glass-modal__action { border-inline-start: 1px solid var(--gl-border-subtle); }
 .glass-modal__action--primary { color: var(--gl-color-primary); font-weight: var(--gl-font-weight-semibold); }
 .glass-modal__action--danger { color: var(--gl-color-error); font-weight: var(--gl-font-weight-semibold); }
 
@@ -1243,7 +1286,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 .glass-toast__action:active { transform: scale(0.96); }
 .glass-toast__close {
-  width: 28px; height: 28px; margin: 0 -8px 0 -4px; padding: 0;
+  width: 28px; height: 28px; margin-block: 0; margin-inline: -4px -8px; padding: 0;
   display: inline-flex; align-items: center; justify-content: center;
   border: 0; border-radius: 50%;
   background: transparent;
@@ -1327,7 +1370,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-tab-bar__item:not(.is-active):hover .glass-tab-bar__label { color: var(--gl-icon-default); }
 
 .glass-tab-bar__badge {
-  position: absolute; top: -4px; right: -8px;
+  position: absolute; top: -4px; inset-inline-end: -8px;
   min-width: 16px; height: 16px; padding: 0 4px;
   border-radius: var(--gl-radius-full);
   /* 10px text needs 4.5:1 – white on the plain error red only reaches 3.55:1
@@ -1513,7 +1556,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   font-family: var(--gl-font-family);
   font-size: var(--gl-font-size-base);
   font-weight: var(--gl-font-weight-semibold);
-  color: var(--gl-color-text); text-align: left;
+  color: var(--gl-color-text); text-align: start;
   outline: none; transition: var(--gl-transition);
   -webkit-tap-highlight-color: transparent;
 }
@@ -1782,18 +1825,19 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   transform-origin: bottom center;
 }
 .glass-popover--start {
-  left: 0;
+  inset-inline-start: 0; inset-inline-end: auto;
   transform: translateY(-4px) scale(0.96);
   transform-origin: top left;
 }
+.glass-popover--start:dir(rtl) { transform-origin: top right; }
 .glass-popover--start.is-open { transform: translateY(0) scale(1); }
 
 .glass-popover--end {
-  left: auto;
-  right: 0;
+  inset-inline-start: auto; inset-inline-end: 0;
   transform: translateY(-4px) scale(0.96);
   transform-origin: top right;
 }
+.glass-popover--end:dir(rtl) { transform-origin: top left; }
 .glass-popover--end.is-open { transform: translateY(0) scale(1); }
 
 
@@ -1858,7 +1902,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   background: transparent;
   border: none;
   width: 100%;
-  text-align: left;
+  text-align: start;
   font-family: inherit;
   list-style: none;
 }
@@ -1866,20 +1910,20 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-list__item:not(:last-child)::after {
   content: '';
   position: absolute;
-  left: calc(var(--gl-space-lg) + 28px + var(--gl-space-sm));
-  right: var(--gl-space-lg);
+  inset-inline-start: calc(var(--gl-space-lg) + 28px + var(--gl-space-sm));
+  inset-inline-end: var(--gl-space-lg);
   bottom: 0;
   height: 1px;
   background: var(--gl-border-subtle);
   pointer-events: none;
 }
-/* Items without a leading icon: divider follows the standard horizontal
-   padding instead of the (non-existent) icon slot. */
-.glass-list__item:not(:has(.glass-list__leading)):not(:last-child)::after {
-  left: var(--gl-space-lg);
+/* Items without a leading icon — no slot, or a hidden one: divider follows
+   the standard horizontal padding instead of the icon slot. */
+.glass-list__item:not(:has(.glass-list__leading:not([hidden]))):not(:last-child)::after {
+  inset-inline-start: var(--gl-space-lg);
 }
-.glass-list__item:has(.glass-list__leading--lg):not(:last-child)::after {
-  left: calc(var(--gl-space-lg) + 40px + var(--gl-space-sm));
+.glass-list__item:has(.glass-list__leading--lg:not([hidden])):not(:last-child)::after {
+  inset-inline-start: calc(var(--gl-space-lg) + 40px + var(--gl-space-sm));
 }
 
 .glass-list__item--center {
@@ -1925,6 +1969,10 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   justify-content: center;
   color: var(--gl-icon-strong);
 }
+/* display: flex above beats the hidden attribute's own rule: an empty slot
+   hidden by script kept its 28px and its gap. */
+.glass-list__leading[hidden],
+.glass-list__trailing[hidden] { display: none; }
 .glass-list__leading svg,
 .glass-list__leading ::slotted(svg) {
   width: 24px;
@@ -2049,7 +2097,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   font-size: var(--gl-font-size-sm); color: var(--gl-color-text);
 }
 .glass-table th {
-  text-align: left; padding: 8px 10px; white-space: nowrap;
+  text-align: start; padding: 8px 10px; white-space: nowrap;
   font-weight: var(--gl-font-weight-medium); color: var(--gl-color-text-muted);
   border-bottom: 1px solid var(--gl-border-medium);
 }
@@ -2059,7 +2107,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 .glass-table tbody tr:last-child td { border-bottom: 0; }
 .glass-table tbody tr:hover td { background: var(--gl-surface-1); }
-.glass-table__num { text-align: right; font-variant-numeric: tabular-nums; }
+.glass-table__num { text-align: end; font-variant-numeric: tabular-nums; }
 .glass-table__muted { color: var(--gl-color-text-muted); }
 
 
@@ -2085,7 +2133,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-prose h3 { font-size: var(--gl-font-size-lg); }
 .glass-prose p, .glass-prose ul, .glass-prose ol, .glass-prose pre,
 .glass-prose blockquote, .glass-prose table { margin: 0 0 0.9em; }
-.glass-prose ul, .glass-prose ol { padding-left: 1.3em; }
+.glass-prose ul, .glass-prose ol { padding-inline-start: 1.3em; }
 .glass-prose strong { color: var(--gl-color-text-heading); }
 /* Links in running text are underlined: colour alone does not mark them. */
 .glass-prose a { color: var(--gl-color-primary); text-decoration: underline; text-underline-offset: 2px; }
@@ -2100,15 +2148,16 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-prose pre code { background: none; padding: 0; }
 .glass-prose blockquote {
   padding: 8px 14px;
-  border-left: 3px solid var(--gl-color-primary);
+  border-inline-start: 3px solid var(--gl-color-primary);
   background: var(--gl-surface-1);
-  border-radius: 0 var(--gl-radius-xs) var(--gl-radius-xs) 0;
+  border-start-start-radius: 0; border-end-start-radius: 0;
+  border-start-end-radius: var(--gl-radius-xs); border-end-end-radius: var(--gl-radius-xs);
 }
 .glass-prose img { max-width: 100%; height: auto; border-radius: var(--gl-radius-sm); }
 .glass-prose hr { height: 1px; border: 0; margin: 1.2em 0; background: var(--gl-border-subtle); }
 .glass-prose table { width: 100%; border-collapse: collapse; }
 .glass-prose th, .glass-prose td {
-  padding: 6px 8px; text-align: left;
+  padding: 6px 8px; text-align: start;
   border-bottom: 1px solid var(--gl-border-subtle);
 }
 

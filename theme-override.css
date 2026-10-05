@@ -109,6 +109,24 @@
 
 
 /* ============================================================
+   BEISPIEL: Komponenten-Haken (seit 1.20.0)
+
+   Breitere Dialoge für Formulare und Tabellen, und ein eigener
+   Chevron für das Select. Der Chevron ist pro Theme gesetzt — wer
+   ihn ersetzt, setzt ihn für beide.
+   ============================================================ */
+
+/*
+:root {
+  --gl-modal-max-width:      560px;
+}
+[data-theme="light"] {
+  --gl-select-chevron:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230055CC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+*/
+
+
+/* ============================================================
    DEIN CUSTOM THEME
    Entkommentiere und passe an:
    ============================================================ */

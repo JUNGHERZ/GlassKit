@@ -7,6 +7,36 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.20.0] – 2026-10-05
+
+The first batch of findings filed as GitHub issues, from a product that is adopting GlassKit at full depth; GlassKit Elements 1.20.0 ships the matching element changes.
+
+### Fixed
+
+- **The select's chevron shows in the light theme.** It was an SVG with a fixed white stroke (`rgba(255,255,255,0.6)`) in both themes, so on light glass the arrow all but disappeared and the select no longer read as one. It is now the token `--gl-select-chevron`, set per theme: the dark theme keeps the same white stroke, the light theme draws it in its muted text colour, `rgba(26,42,54,0.55)`. The rule reads `var(--gl-select-chevron, …)` with the old image as fallback; a page replaces the arrow by setting the token to its own `url(…)`. Measured: docs and showcase render pixel-identical in the dark theme; in the light theme the chevron's 28 pixels are all that changes. ([#1](https://github.com/JUNGHERZ/GlassKit/issues/1))
+- **A hidden list slot takes no room.** `.glass-list__leading { display: flex }` beat the user-agent rule for `[hidden]`, so a `<glk-list-item>` without an icon, which hides its empty leading slot, kept the 28 px box and its gap: title at 60 px instead of 20, row 60 px instead of 56. `.glass-list__leading[hidden]` and `.glass-list__trailing[hidden]` are now `display: none` — the same fix 1.16.0 made for `.glass-btn[hidden]` — and the divider rules look for a *visible* leading slot, so such a row's divider starts at 20 px like that of a row built without the slot. Measured in Chromium and WebKit: title 20 px, row 56 px, divider from 20 px. ([#4](https://github.com/JUNGHERZ/GlassKit/issues/4))
+- **Toggle, checkbox and radio: the invisible input lies on top of its control.** With `pointer-events: none`, and painted below the track, box or circle, the input was covered — a test tool that clicks the control by its role (`getByRole('switch').click()`, `check()` in Playwright) found something else at the spot and timed out, and a pointer reached the input only by way of the label. It now has `z-index: 1` and takes the click itself. It covers exactly the track (52 × 30) or the box and circle (24 × 24), left to right, right to left and next to large text alike (measured offset: 0 px in Chromium and WebKit), and lines up with their first-line offset through the same `lh` margin; without `lh` support it keeps `margin: 0`, as the visuals do. The label text — a link in a consent label included — stays the label's: the link follows and the box stays unticked. Nothing changes visually; docs and showcase render pixel-identical. Found while moving `<glk-toggle>`'s switch role onto its input. (GlassKit Elements [#6](https://github.com/JUNGHERZ/glasskit-elements/issues/6))
+- **An empty control label takes no room.** `.glass-toggle__label`, `.glass-checkbox__label` and `.glass-radio__label` are `display: none` while `:empty`, so a switch without text keeps no 12 px gap for one: 52 px wide instead of 64. (GlassKit Elements [#8](https://github.com/JUNGHERZ/glasskit-elements/issues/8))
+
+### Added
+
+- **Right to left.** With `dir="rtl"` on `<html>` or a container, the components mirror. Paddings, insets and borders are logical properties now: label and hint padding, the search icon and the room kept for it, the toast's ×, the tab bar badge, the list dividers, the popover's `--start` and `--end` anchors, the line between modal actions, and the prose list indent and blockquote rule; accordion triggers, list rows, table headers and prose align to the start, `.glass-table__num` to the end. Pairs that must move together sit under `:dir(rtl)` — the select's chevron and its 40 px padding, the toggle's thumb and its travel, the popover's transform origin, the progress fill's gradient (turned with `scale: -1 1`, so its darker end still leads) — so a browser without `:dir()` (Chrome before 120) keeps them left to right instead of splitting them. Left to right nothing moves: docs and showcase render pixel-identical in both themes, apart from the light chevron above. Checked under `dir="rtl"` in Chromium and WebKit: chevron at 16 px from the left with the padding on its side, label and hint padding on the right, search icon on the right, thumb starting right and travelling left, rows without icon with title and divider at 20 px from the right, fill growing from the right. ([#2](https://github.com/JUNGHERZ/GlassKit/issues/2))
+- **`--gl-modal-max-width`.** `.glass-modal` was capped by a literal 340 px, so a dialog with a form or a table could not grow on tablet or desktop without overriding the component rule. It reads `var(--gl-modal-max-width, 340px)` now, with the token in the `:root` block: `.settings-dialog { --gl-modal-max-width: 560px; }`. ([#3](https://github.com/JUNGHERZ/GlassKit/issues/3))
+- **The modal overlay may be a native `<dialog>`.** Opened with `showModal()`, it lies in the top layer, the page behind it is inert for pointer, keyboard and screen readers, focus moves in and goes back to where it came from, and Escape closes it. `dialog.glass-modal-overlay` undoes the dialog's own box — size, margin, border, colour — keeps a closed dialog hidden (the overlay's `display: flex` would beat the user-agent rule) and makes its `::backdrop` transparent, because the overlay paints the dimmed, blurred layer itself; the `.is-active` fade works as before. While such a dialog is open, everything outside it is inert, a toast included: it is neither clickable nor announced. GlassKit Elements 1.20.0 builds `<glk-modal>` on it. (GlassKit Elements [#5](https://github.com/JUNGHERZ/glasskit-elements/issues/5))
+
+### Documentation
+
+- **Browser support in the README.** It still named Firefox 103 and "full" support elsewhere, but the token derivations use `color-mix()` since 1.11.0: the floor is Chrome and Edge 111, Safari 16.4, Firefox 113, Samsung Internet 22. Three refinements come later and fall back quietly — first-line alignment of toggle, checkbox and radio (`lh`, Firefox 120), the divider of rows without icon (`:has()`, Firefox 121), the right-to-left pairs (`:dir()`, Chrome 120). (GlassKit Elements [#9](https://github.com/JUNGHERZ/glasskit-elements/issues/9) asked for the check.)
+- The docs pages counted 31 components and the package description 24; README, SKILL.md and the landing pages say 34, and now all of them do. Docs (English and German) and SKILL.md describe right to left, the dialog overlay, both tokens and the control inputs; `theme-override.css` has an example for the two tokens.
+
+### Compatibility
+
+- Pages under `dir="rtl"` that mirrored GlassKit with their own rules can drop them.
+- A pointer click on a toggle, checkbox or radio now targets the input: listeners above it see one `click` (from the input) where they saw two (one from the track, box or circle, one from the input that the label then activated).
+- A page that gave the select its own chevron through `background-image` keeps it; setting `--gl-select-chevron` is the simpler way now.
+
+---
+
 ## [1.19.1] – 2026-09-26
 
 ### Fixed
@@ -944,6 +974,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.20.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.20.0
 [1.19.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.19.1
 [1.19.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.19.0
 [1.18.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.18.0
@@ -971,4 +1002,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.19.1...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.20.0...HEAD

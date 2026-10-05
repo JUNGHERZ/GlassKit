@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.19.1 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.20.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -458,10 +458,10 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.19.1</span>
+      <span class="docs-hero__badge">v1.20.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
-      <span class="docs-hero__badge">31 Components</span>
+      <span class="docs-hero__badge">34 Components</span>
     </div>
   </header>
 
@@ -546,6 +546,8 @@ function <span class="cls">toggleTheme</span>() {
   );
 }</div>
     </div>
+    <h3>Right to left</h3>
+    <p>Since 1.20.0 the components follow the writing direction. Set <code>dir="rtl"</code> on <code>&lt;html&gt;</code> or on any container: paddings, insets and borders are logical properties, so labels and hints, the search icon, list dividers, popover anchors, tab badges, modal actions, the toast&rsquo;s close button and the alignment of accordion, list, table and prose all mirror. Where two values have to move together &mdash; the select&rsquo;s chevron and the room kept for it, the toggle&rsquo;s thumb and its travel, the progress fill&rsquo;s gradient &mdash; the rule sits under <code>:dir(rtl)</code>: Chrome and Edge from 120, Safari from 16.4, Firefox from 49. An older browser keeps those parts left to right instead of tearing them apart.</p>
   </section>
 
   <!-- BACKGROUND -->
@@ -1023,7 +1025,7 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td><code>.glass-list__value</code></td><td>Muted text inside <code>.glass-list__trailing</code> (e.g. file size)</td></tr>
       </tbody>
     </table>
-    <p style="margin-top:12px;"><strong>Dividers</strong> between rows are rendered automatically via <code>::after</code>. Items <em>with</em> a leading icon get an icon-aligned inset; items <em>without</em> get a standard left/right padding inset. The last item never has a divider. SVG icon convention: <code>24px</code> for leading, <code>18px</code> for trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
+    <p style="margin-top:12px;"><strong>Dividers</strong> between rows are rendered automatically via <code>::after</code>. Items <em>with</em> a leading icon get an icon-aligned inset; items <em>without</em> &mdash; no <code>__leading</code>, or one carrying the <code>hidden</code> attribute (since 1.20.0) &mdash; get the standard padding inset. A hidden <code>__leading</code> or <code>__trailing</code> takes no room. The last item never has a divider. SVG icon convention: <code>24px</code> for leading, <code>18px</code> for trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
   </section>
 
   <!-- MODAL -->
@@ -1075,7 +1077,8 @@ function <span class="cls">toggleTheme</span>() {
       <tbody>
         <tr><td><code>.glass-modal-overlay</code></td><td>Fullscreen blur overlay</td></tr>
         <tr><td><code>.glass-modal-overlay.is-active</code></td><td>Visible + animated</td></tr>
-        <tr><td><code>.glass-modal</code></td><td>Dialog container (max-width 340px)</td></tr>
+        <tr><td><code>dialog.glass-modal-overlay</code></td><td>The overlay as a native dialog, opened with <code>showModal()</code> (since 1.20.0)</td></tr>
+        <tr><td><code>.glass-modal</code></td><td>Dialog container, at most <code>--gl-modal-max-width</code> wide (340px unless set)</td></tr>
         <tr><td><code>__header / __title</code></td><td>Title area</td></tr>
         <tr><td><code>__body</code></td><td>Content area</td></tr>
         <tr><td><code>__footer / __action</code></td><td>Action bar</td></tr>
@@ -1084,6 +1087,40 @@ function <span class="cls">toggleTheme</span>() {
       </tbody>
     </table>
     <p style="margin-top:12px;"><strong>Note:</strong> the <code>.is-active</code> class belongs on the <code>.glass-modal-overlay</code>, not on <code>.glass-modal</code> itself. The overlay handles the fullscreen backdrop, and its <code>:is-active</code> state triggers both the backdrop fade-in and the inner dialog's scale-up animation.</p>
+    <h3>As a native dialog</h3>
+    <p>Since 1.20.0 the overlay may also be a <code>&lt;dialog&gt;</code>. Opened with <code>showModal()</code> it lies in the top layer; the page behind it is inert for the pointer, the keyboard and screen readers; focus moves in and goes back to where it came from on closing; Escape closes it. GlassKit undoes the dialog&rsquo;s own box and backdrop, so it looks exactly like the <code>&lt;div&gt;</code> overlay. Name it by its title with <code>aria-labelledby</code>. GlassKit Elements&rsquo; <code>&lt;glk-modal&gt;</code> works this way.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;dialog</span> <span class="attr">class=</span><span class="val">"glass-modal-overlay"</span> <span class="attr">id=</span><span class="val">"confirm"</span> <span class="attr">aria-labelledby=</span><span class="val">"confirm-title"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-modal"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-modal__header"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;h2</span> <span class="attr">class=</span><span class="val">"glass-modal__title"</span> <span class="attr">id=</span><span class="val">"confirm-title"</span><span class="tag">&gt;</span>Delete document?<span class="tag">&lt;/h2&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="cmt">&lt;!-- __body and __footer as above --&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/dialog&gt;</span>
+
+<span class="tag">&lt;script&gt;</span>
+  <span class="attr">const</span> dialog = document.getElementById(<span class="val">'confirm'</span>);
+  <span class="attr">function</span> openDialog() {
+    dialog.showModal();
+    <span class="attr">void</span> dialog.offsetHeight;             <span class="cmt">// the closed state first …</span>
+    dialog.classList.add(<span class="val">'is-active'</span>);   <span class="cmt">// … so the fade runs</span>
+  }
+  <span class="attr">function</span> closeDialog() {
+    dialog.classList.remove(<span class="val">'is-active'</span>);
+    setTimeout(() =&gt; dialog.close(), <span class="val">300</span>);   <span class="cmt">// once it has faded out</span>
+  }
+  <span class="cmt">// Escape would close at once — fade out instead</span>
+  dialog.addEventListener(<span class="val">'cancel'</span>, (e) =&gt; { e.preventDefault(); closeDialog(); });
+<span class="tag">&lt;/script&gt;</span></div>
+    </div>
+    <p>While a modal dialog is open, everything outside it is inert &mdash; a toast shown then is neither clickable nor announced. Give feedback inside the dialog, or close it first.</p>
+
+    <h3>Width</h3>
+    <p>The panel is at most <code>--gl-modal-max-width</code> wide &mdash; 340&nbsp;px unless set (since 1.20.0; before, a literal). A dialog with a form or a table can take more:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">.settings-dialog</span> { <span class="attr">--gl-modal-max-width</span>: <span class="val">560px</span>; }</div>
+    </div>
   </section>
 
   <!-- TOAST -->
@@ -1244,6 +1281,7 @@ function <span class="cls">toggleTheme</span>() {
   <span class="tag">&lt;option&gt;</span>Please select…<span class="tag">&lt;/option&gt;</span>
 <span class="tag">&lt;/select&gt;</span></div>
     </div>
+    <p>The chevron is <code>--gl-select-chevron</code>, an SVG drawn in each theme&rsquo;s muted text colour &mdash; since 1.20.0; before, it stayed white in the light theme and all but vanished. Set the token to your own <code>url(&hellip;)</code> to replace it. Right to left, the chevron and the room kept for it move to the left.</p>
   </section>
 
   <!-- SEARCH -->
@@ -1281,6 +1319,7 @@ function <span class="cls">toggleTheme</span>() {
   <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-toggle__label"</span><span class="tag">&gt;</span>Label<span class="tag">&lt;/span&gt;</span>
 <span class="tag">&lt;/label&gt;</span></div>
     </div>
+    <p>The input is invisible, but it lies on top of the track and takes the click itself (since 1.20.0): a test tool that clicks the switch by its role reaches it, where the track used to draw over it and take the click. It covers the track only &mdash; the label text, which may hold a link, stays the label&rsquo;s. A <code>__label</code> left empty takes no room, so a switch without text keeps no 12&nbsp;px gap for one. Both hold for the checkbox and the radio button too. Right to left, the thumb starts on the right.</p>
   </section>
 
   <!-- CHECKBOX -->
@@ -1292,6 +1331,7 @@ function <span class="cls">toggleTheme</span>() {
         <label class="glass-checkbox"><input class="glass-checkbox__input" type="checkbox"><span class="glass-checkbox__box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="glass-checkbox__label">Not selected</span></label>
       </div>
     </div>
+    <p>As with the toggle, the input lies on top of the box and an empty <code>__label</code> takes no room (since 1.20.0).</p>
   </section>
 
   <!-- RADIO -->
@@ -1303,6 +1343,7 @@ function <span class="cls">toggleTheme</span>() {
         <label class="glass-radio"><input class="glass-radio__input" type="radio" name="demo"><span class="glass-radio__circle"><span class="glass-radio__dot"></span></span><span class="glass-radio__label">Option B</span></label>
       </div>
     </div>
+    <p>As with the toggle, the input lies on top of the circle and an empty <code>__label</code> takes no room (since 1.20.0).</p>
   </section>
 
   <!-- RANGE -->
@@ -1948,7 +1989,7 @@ function <span class="cls">toggleTheme</span>() {
     <table class="docs-table">
       <thead><tr><th>Feature</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td>Copy-paste HTML</td><td>All 31 components with exact nesting and BEM hierarchy</td></tr>
+        <tr><td>Copy-paste HTML</td><td>All 34 components with exact nesting and BEM hierarchy</td></tr>
         <tr><td>Design token tables</td><td>Colors, surfaces, blur, radii, spacing, shadows, typography</td></tr>
         <tr><td>State class mapping</td><td><code>is-active</code>, <code>is-open</code>, <code>is-visible</code>, <code>:checked</code> – where each belongs</td></tr>
         <tr><td>Composition patterns</td><td>6 full page layouts: Login, Dashboard, Form, Modal, Settings, Progress</td></tr>

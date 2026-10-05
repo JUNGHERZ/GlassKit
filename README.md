@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.19.1-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.20.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.19.1-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.20.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -72,16 +72,16 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.19/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.20/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.19/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.20/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.19/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.20/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.19` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.20` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 ### npm / yarn / pnpm
 
@@ -311,6 +311,11 @@ All visual values are controlled via CSS Custom Properties:
 /* Shadows & Insets */
 --gl-shadow-card
 --gl-inset-strong
+
+/* Component hooks */
+--gl-modal-max-width      /* 340px */
+--gl-select-chevron       /* url(…) per theme */
+--gl-toast-top            /* distance of the toast from the top */
 ```
 
 The full token reference can be found in the [Documentation](docs.html).
@@ -520,14 +525,20 @@ Attach or reference `SKILL.md` when asking an AI to generate GlassKit HTML. It p
 
 ## 🌐 Browser Compatibility
 
-GlassKit uses `backdrop-filter` for glass effects. Support:
+The floor is set by `color-mix()`, which derives the brand, state and focus tokens on `:root` (since 1.11.0):
 
-| Browser | Support |
+| Browser | Version |
 |---|---|
-| Safari (iOS/macOS) | ✅ Full |
-| Chrome / Edge | ✅ Full |
-| Firefox | ✅ From version 103 |
-| Samsung Internet | ✅ Full |
+| Chrome / Edge | 111+ |
+| Safari (iOS/macOS) | 16.4+ |
+| Firefox | 113+ |
+| Samsung Internet | 22+ |
+
+A few refinements arrive later and fall back quietly where they are missing:
+
+- The first-line alignment of toggle, checkbox and radio uses the `lh` unit (Firefox 120); without it the control sits at the top of its label.
+- List rows without a leading icon move their divider in with `:has()` (Firefox 121); without it the divider keeps the icon inset.
+- Right to left, the pairs that must move together — select chevron and padding, toggle thumb and travel, progress gradient — sit under `:dir(rtl)` (Chrome 120); without it they stay left to right.
 
 > **Note:** In browsers without `backdrop-filter` support, elements will be rendered with the defined background colors – the UI remains usable, just without the blur effect.
 
@@ -567,8 +578,13 @@ Toast Modifiers:
   .glass-toast__action / __close   (offer with a button)
   --gl-toast-top                   (distance from the top)
 
-Modal Action Modifiers:
+Modal:
   .glass-modal__action--primary / --danger
+  dialog.glass-modal-overlay       (native <dialog>, opened with showModal())
+  --gl-modal-max-width             (panel width, 340px unless set)
+
+Select:
+  --gl-select-chevron              (the chevron, per theme)
 
 List Modifiers:
   .glass-list--flush / --bare
@@ -616,6 +632,9 @@ Tab Bar – Floating:
   .glass-tab-bar--floating
   .glass-tab-bar__accessory
   .glass-tab-bar__accessory--accent / --success / --error
+
+Right to left:
+  dir="rtl" on <html> or a container – the components mirror
 ```
 
 ---

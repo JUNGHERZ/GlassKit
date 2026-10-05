@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.19.1 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.20.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -458,10 +458,10 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.19.1</span>
+      <span class="docs-hero__badge">v1.20.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
-      <span class="docs-hero__badge">31 Komponenten</span>
+      <span class="docs-hero__badge">34 Komponenten</span>
     </div>
   </header>
 
@@ -546,6 +546,8 @@ function <span class="cls">toggleTheme</span>() {
   );
 }</div>
     </div>
+    <h3>Rechts nach links</h3>
+    <p>Seit 1.20.0 folgen die Komponenten der Schreibrichtung. <code>dir="rtl"</code> auf <code>&lt;html&gt;</code> oder einem beliebigen Container genügt: Abstände, Positionen und Rahmen sind logische Eigenschaften, also spiegeln sich Labels und Hinweise, das Such-Icon, die Trennlinien der Liste, die Popover-Anker, die Tab-Badges, die Modal-Aktionen, das &times; des Toasts und die Ausrichtung von Akkordeon, Liste, Tabelle und Prose. Wo zwei Werte gemeinsam wandern müssen &mdash; der Chevron des Selects und der Platz für ihn, der Knopf des Schalters und sein Weg, der Verlauf der Fortschrittsfüllung &mdash; steht die Regel unter <code>:dir(rtl)</code>: Chrome und Edge ab 120, Safari ab 16.4, Firefox ab 49. Ein älterer Browser lässt diese Teile links nach rechts, statt sie auseinanderzureißen.</p>
   </section>
 
   <!-- BACKGROUND -->
@@ -1023,7 +1025,7 @@ function <span class="cls">toggleTheme</span>() {
         <tr><td><code>.glass-list__value</code></td><td>Gedämpfter Text in <code>.glass-list__trailing</code> (z.B. Dateigröße)</td></tr>
       </tbody>
     </table>
-    <p style="margin-top:12px;"><strong>Trennlinien</strong> zwischen Zeilen werden automatisch via <code>::after</code> gerendert. Items <em>mit</em> Leading-Icon erhalten einen icon-aligned Inset; Items <em>ohne</em> bekommen ein normales Padding-Inset. Das letzte Item hat nie eine Trennlinie. SVG-Icon-Konvention: <code>24px</code> für Leading, <code>18px</code> für Trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
+    <p style="margin-top:12px;"><strong>Trennlinien</strong> zwischen Zeilen werden automatisch via <code>::after</code> gerendert. Items <em>mit</em> Leading-Icon erhalten einen icon-aligned Inset; Items <em>ohne</em> &mdash; kein <code>__leading</code>, oder eines mit dem Attribut <code>hidden</code> (seit 1.20.0) &mdash; bekommen das normale Padding-Inset. Ein verstecktes <code>__leading</code> oder <code>__trailing</code> nimmt keinen Platz ein. Das letzte Item hat nie eine Trennlinie. SVG-Icon-Konvention: <code>24px</code> für Leading, <code>18px</code> für Trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
   </section>
 
   <!-- MODAL -->
@@ -1075,7 +1077,8 @@ function <span class="cls">toggleTheme</span>() {
       <tbody>
         <tr><td><code>.glass-modal-overlay</code></td><td>Fullscreen Blur-Overlay</td></tr>
         <tr><td><code>.glass-modal-overlay.is-active</code></td><td>Sichtbar + animiert</td></tr>
-        <tr><td><code>.glass-modal</code></td><td>Dialog-Container (max-width 340px)</td></tr>
+        <tr><td><code>dialog.glass-modal-overlay</code></td><td>Das Overlay als natives Dialog-Element, geöffnet mit <code>showModal()</code> (seit 1.20.0)</td></tr>
+        <tr><td><code>.glass-modal</code></td><td>Dialog-Container, höchstens <code>--gl-modal-max-width</code> breit (340px, wenn nicht gesetzt)</td></tr>
         <tr><td><code>__header / __title</code></td><td>Titel-Bereich</td></tr>
         <tr><td><code>__body</code></td><td>Inhaltsbereich</td></tr>
         <tr><td><code>__footer / __action</code></td><td>Aktionsleiste</td></tr>
@@ -1084,6 +1087,40 @@ function <span class="cls">toggleTheme</span>() {
       </tbody>
     </table>
     <p style="margin-top:12px;"><strong>Hinweis:</strong> die <code>.is-active</code>-Klasse gehört auf das <code>.glass-modal-overlay</code>, nicht auf <code>.glass-modal</code> selbst. Das Overlay übernimmt den Fullscreen-Backdrop, und sein <code>:is-active</code>-Zustand triggert sowohl das Backdrop-Fade-In als auch die Scale-Up-Animation des inneren Dialogs.</p>
+    <h3>Als natives Dialog-Element</h3>
+    <p>Seit 1.20.0 darf das Overlay auch ein <code>&lt;dialog&gt;</code> sein. Mit <code>showModal()</code> geöffnet liegt es in der Top Layer; die Seite dahinter ist für Zeiger, Tastatur und Screenreader inert; der Fokus wandert hinein und beim Schließen dorthin zurück, wo er herkam; Escape schließt. GlassKit nimmt dem Dialog seinen eigenen Kasten und Backdrop, er sieht also genau aus wie das <code>&lt;div&gt;</code>-Overlay. Seinen Namen bekommt er über <code>aria-labelledby</code> vom Titel. <code>&lt;glk-modal&gt;</code> aus GlassKit Elements arbeitet so.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;dialog</span> <span class="attr">class=</span><span class="val">"glass-modal-overlay"</span> <span class="attr">id=</span><span class="val">"confirm"</span> <span class="attr">aria-labelledby=</span><span class="val">"confirm-title"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-modal"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-modal__header"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;h2</span> <span class="attr">class=</span><span class="val">"glass-modal__title"</span> <span class="attr">id=</span><span class="val">"confirm-title"</span><span class="tag">&gt;</span>Dokument löschen?<span class="tag">&lt;/h2&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="cmt">&lt;!-- __body und __footer wie oben --&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/dialog&gt;</span>
+
+<span class="tag">&lt;script&gt;</span>
+  <span class="attr">const</span> dialog = document.getElementById(<span class="val">'confirm'</span>);
+  <span class="attr">function</span> openDialog() {
+    dialog.showModal();
+    <span class="attr">void</span> dialog.offsetHeight;             <span class="cmt">// erst der geschlossene Zustand …</span>
+    dialog.classList.add(<span class="val">'is-active'</span>);   <span class="cmt">// … damit die Blende läuft</span>
+  }
+  <span class="attr">function</span> closeDialog() {
+    dialog.classList.remove(<span class="val">'is-active'</span>);
+    setTimeout(() =&gt; dialog.close(), <span class="val">300</span>);   <span class="cmt">// nach dem Ausblenden</span>
+  }
+  <span class="cmt">// Escape würde sofort schließen — stattdessen ausblenden</span>
+  dialog.addEventListener(<span class="val">'cancel'</span>, (e) =&gt; { e.preventDefault(); closeDialog(); });
+<span class="tag">&lt;/script&gt;</span></div>
+    </div>
+    <p>Solange ein modaler Dialog offen ist, ist alles außerhalb inert &mdash; ein Toast, der dann erscheint, ist weder anklickbar noch wird er vorgelesen. Rückmeldungen gehören in den Dialog, oder der Dialog schließt zuerst.</p>
+
+    <h3>Breite</h3>
+    <p>Das Panel ist höchstens <code>--gl-modal-max-width</code> breit &mdash; 340&nbsp;px, wenn nicht gesetzt (seit 1.20.0; vorher ein fester Wert). Ein Dialog mit Formular oder Tabelle darf breiter werden:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">.settings-dialog</span> { <span class="attr">--gl-modal-max-width</span>: <span class="val">560px</span>; }</div>
+    </div>
   </section>
 
   <!-- TOAST -->
@@ -1244,6 +1281,7 @@ function <span class="cls">toggleTheme</span>() {
   <span class="tag">&lt;option&gt;</span>Bitte wählen…<span class="tag">&lt;/option&gt;</span>
 <span class="tag">&lt;/select&gt;</span></div>
     </div>
+    <p>Der Chevron ist <code>--gl-select-chevron</code>, ein SVG in der gedämpften Textfarbe des jeweiligen Themes &mdash; seit 1.20.0; vorher blieb er auch im hellen Theme weiß und war kaum zu sehen. Mit einem eigenen <code>url(&hellip;)</code> im Token lässt er sich ersetzen. Von rechts nach links wandern der Chevron und der Platz für ihn nach links.</p>
   </section>
 
   <!-- SEARCH -->
@@ -1281,6 +1319,7 @@ function <span class="cls">toggleTheme</span>() {
   <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-toggle__label"</span><span class="tag">&gt;</span>Label<span class="tag">&lt;/span&gt;</span>
 <span class="tag">&lt;/label&gt;</span></div>
     </div>
+    <p>Das Input ist unsichtbar, liegt aber über der Spur und nimmt den Klick selbst an (seit 1.20.0): Ein Testwerkzeug, das den Schalter über seine Rolle anklickt, erreicht es &mdash; vorher zeichnete die Spur darüber und nahm den Klick. Es deckt nur die Spur ab; der Labeltext, der auch einen Link enthalten kann, bleibt beim Label. Ein leeres <code>__label</code> nimmt keinen Platz ein, ein Schalter ohne Text hält also keine 12&nbsp;px Lücke dafür frei. Beides gilt genauso für Checkbox und Radio Button. Von rechts nach links beginnt der Knopf rechts.</p>
   </section>
 
   <!-- CHECKBOX -->
@@ -1292,6 +1331,7 @@ function <span class="cls">toggleTheme</span>() {
         <label class="glass-checkbox"><input class="glass-checkbox__input" type="checkbox"><span class="glass-checkbox__box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="glass-checkbox__label">Nicht ausgewählt</span></label>
       </div>
     </div>
+    <p>Wie beim Toggle liegt das Input über der Box, und ein leeres <code>__label</code> nimmt keinen Platz ein (seit 1.20.0).</p>
   </section>
 
   <!-- RADIO -->
@@ -1303,6 +1343,7 @@ function <span class="cls">toggleTheme</span>() {
         <label class="glass-radio"><input class="glass-radio__input" type="radio" name="demo"><span class="glass-radio__circle"><span class="glass-radio__dot"></span></span><span class="glass-radio__label">Option B</span></label>
       </div>
     </div>
+    <p>Wie beim Toggle liegt das Input über dem Kreis, und ein leeres <code>__label</code> nimmt keinen Platz ein (seit 1.20.0).</p>
   </section>
 
   <!-- RANGE -->
@@ -1948,7 +1989,7 @@ function <span class="cls">toggleTheme</span>() {
     <table class="docs-table">
       <thead><tr><th>Feature</th><th>Beschreibung</th></tr></thead>
       <tbody>
-        <tr><td>Copy-Paste HTML</td><td>Alle 31 Komponenten mit exakter Verschachtelung und BEM-Hierarchie</td></tr>
+        <tr><td>Copy-Paste HTML</td><td>Alle 34 Komponenten mit exakter Verschachtelung und BEM-Hierarchie</td></tr>
         <tr><td>Design-Token-Tabellen</td><td>Farben, Surfaces, Blur, Radii, Spacing, Shadows, Typography</td></tr>
         <tr><td>State-Klassen-Mapping</td><td><code>is-active</code>, <code>is-open</code>, <code>is-visible</code>, <code>:checked</code> – wo was hingehört</td></tr>
         <tr><td>Composition Patterns</td><td>6 fertige Seiten-Layouts: Login, Dashboard, Formular, Modal, Einstellungen, Fortschritt</td></tr>

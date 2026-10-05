@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.19.1) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.20.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -79,6 +79,15 @@ function toggleTheme() {
   html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
 }
 ```
+
+### Right to Left (since 1.20.0)
+
+Set `dir="rtl"` on `<html>` or on any container; nothing else. Paddings, insets and borders
+are logical properties, so labels, hints, the search icon, list dividers, popover anchors,
+tab badges, modal actions, the toast's × and the text alignment of accordion, list, table
+and prose mirror. Pairs that must move together — the select's chevron and its padding, the
+toggle's thumb and its travel, the progress fill's gradient — are under `:dir(rtl)`
+(Chrome 120+); an older browser keeps them left to right rather than splitting them.
 
 ---
 
@@ -598,7 +607,8 @@ Danger variant:
 |---|---|
 | `.glass-modal-overlay` | Fullscreen container with blur |
 | `.glass-modal-overlay.is-active` | Visible + animated |
-| `.glass-modal` | Dialog box |
+| `dialog.glass-modal-overlay` | The overlay as a native `<dialog>`, opened with `showModal()` (since 1.20.0) |
+| `.glass-modal` | Dialog box, at most `--gl-modal-max-width` wide (340px unless set; since 1.20.0) |
 | `.glass-modal__header` | Header area |
 | `.glass-modal__title` | Title (20px, bold) |
 | `.glass-modal__body` | Content area |
@@ -617,6 +627,43 @@ document.querySelector('.glass-modal-overlay').classList.add('is-active');
 // Close
 document.querySelector('.glass-modal-overlay').classList.remove('is-active');
 ```
+
+**Prefer a native `<dialog>` (since 1.20.0).** Opened with `showModal()` it lies in the top
+layer, the page behind it is inert (pointer, keyboard, screen readers), focus moves in and
+returns on close, and Escape closes it. GlassKit resets the dialog's own box and backdrop:
+
+```html
+<dialog class="glass-modal-overlay" id="confirm" aria-labelledby="confirm-title">
+  <div class="glass-modal">
+    <div class="glass-modal__header">
+      <h2 class="glass-modal__title" id="confirm-title">Delete contract?</h2>
+    </div>
+    <div class="glass-modal__body"><p>This action cannot be undone.</p></div>
+    <div class="glass-modal__footer">
+      <button class="glass-modal__action" onclick="closeDialog()">Cancel</button>
+      <button class="glass-modal__action glass-modal__action--danger">Delete</button>
+    </div>
+  </div>
+</dialog>
+```
+
+```js
+const dialog = document.getElementById('confirm');
+function openDialog() {
+  dialog.showModal();
+  void dialog.offsetHeight;            // compute the closed state first,
+  dialog.classList.add('is-active');   // so the fade runs
+}
+function closeDialog() {
+  dialog.classList.remove('is-active');
+  setTimeout(() => dialog.close(), 300);   // after the fade
+}
+dialog.addEventListener('cancel', (e) => { e.preventDefault(); closeDialog(); }); // Escape fades too
+```
+
+While a modal dialog is open everything outside it is inert — a toast shown then is neither
+clickable nor announced; give feedback inside the dialog. Wider dialogs (forms, tables):
+`.my-dialog { --gl-modal-max-width: 560px; }`.
 
 ---
 
@@ -734,6 +781,10 @@ Dropdown with glass styling and custom chevron.
 |---|---|
 | `.glass-select` | Styled dropdown |
 
+The chevron is the token `--gl-select-chevron` — an SVG `url(…)` in each theme's muted text
+colour (since 1.20.0; before, it stayed white in the light theme). Override it with your own
+`url(…)`. Right to left, chevron and padding move to the left.
+
 ---
 
 ### 3.17 Search
@@ -753,7 +804,7 @@ Search field with embedded search icon.
 | Class | Description |
 |---|---|
 | `.glass-search` | Wrapper (position: relative) |
-| `.glass-search__icon` | Positioned search icon (left) |
+| `.glass-search__icon` | Positioned search icon (inline start — left, or right under `dir="rtl"`) |
 
 **Important:** The input inside `.glass-search` uses the regular `.glass-input` class.
 
@@ -782,6 +833,12 @@ iOS-style switch.
 | `.glass-toggle__label` | Text label |
 
 **State:** `:checked` on the input activates the toggle visually.
+
+The input is invisible but lies **on top of** the track and takes the click itself (since
+1.20.0) — a test tool clicking the switch by role (`getByRole('switch')` with
+`role="switch"` on the input) reaches it. It covers only the track; label text, links in it
+included, stays the label's. An empty `__label` takes no room (no 12px gap). Both apply to
+checkbox and radio as well.
 
 ---
 
@@ -1050,7 +1107,8 @@ iOS-style grouped settings list. Items can carry a leading icon, a title with op
 
 **Notes:**
 - Dividers are auto-rendered via `::after`. The last item never has a divider.
-- Items **with** a `__leading` slot get an icon-aligned divider inset; items **without** a leading slot get a standard left/right padding inset (handled via `:has()`). Large leading (`--lg`) adjusts the divider inset automatically.
+- Items **with** a `__leading` slot get an icon-aligned divider inset; items **without** one — or with a `__leading` that carries the `hidden` attribute (since 1.20.0) — get the standard padding inset (handled via `:has()`). Large leading (`--lg`) adjusts the divider inset automatically.
+- A `__leading` or `__trailing` with `hidden` takes no room (since 1.20.0; `display: flex` used to beat the attribute).
 - SVG icon convention: `24px` for leading (32px for `--lg`), `18px` for trailing, `stroke: currentColor`, `stroke-width: 2`.
 - Use `<ul>` + `<li>` for semantic lists. For interactive rows wrap in `<a>` or `<button>` instead of `<li>` if a single-row list is needed.
 - `.glass-list__section-header` sits **outside** the `.glass-list` container, directly above it.
