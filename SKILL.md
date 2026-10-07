@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.21.2) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.22.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -802,6 +802,21 @@ Date and time fields (`type="date"`, `time`, `datetime-local`, `month`) take the
 | `.glass-input--error` | Red border for error state |
 | `.glass-hint` | Help text below input |
 | `.glass-hint--error` | Red help text |
+| `.glass-input-wrap` | Box around the input that holds a prefix and/or suffix (since 1.22.0) |
+| `.glass-input-wrap__prefix` / `__suffix` | Icon, currency, unit or button at the field's start / end (logical: they swap sides under `dir="rtl"`) |
+| `.glass-input-wrap--prefix` / `--suffix` | Makes room in the field; also automatic where `:has()` is supported |
+
+**Prefix and suffix (since 1.22.0).** The affixes lie on the field, centred; its padding grows by `--gl-input-prefix-size` / `--gl-input-suffix-size` (18px — an icon — unless set; set it for a wider unit). A click on text or an icon reaches the field; buttons and links inside take their own clicks. `<glk-input>` in GlassKit Elements has `prefix` / `suffix` slots on this and measures the width itself.
+
+```html
+<div class="glass-input-group">
+  <label class="glass-label" for="price">Price</label>
+  <div class="glass-input-wrap glass-input-wrap--suffix" style="--gl-input-suffix-size: 30px">
+    <input class="glass-input" id="price" inputmode="decimal">
+    <span class="glass-input-wrap__suffix">EUR</span>
+  </div>
+</div>
+```
 
 ---
 
@@ -1975,7 +1990,7 @@ Key points in this composition:
 | Avatar | `.glass-avatar` | `--sm`, `--lg` |
 | Divider | `.glass-divider` | – |
 | Status | `.glass-status` | – |
-| Input | `.glass-input` | `--error`, `:disabled` |
+| Input | `.glass-input` | `--error`, `:disabled`; `.glass-input-wrap` with `__prefix` / `__suffix`, `--prefix` / `--suffix` |
 | Input Group | `.glass-input-group` | – |
 | Label | `.glass-label` | – |
 | Hint | `.glass-hint` | `--error` |

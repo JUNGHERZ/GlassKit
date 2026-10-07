@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.21.2
+   Jungherz GmbH – v1.22.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -772,6 +772,53 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-input--error { border-color: var(--gl-color-error); }
 .glass-input--error:focus {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--gl-color-error) 25%, transparent), var(--gl-inset-medium);
+}
+
+/* Input with a prefix and a suffix inside its box: an icon, a currency, a
+   unit, a button. The wrapper is a one-cell grid, so the affixes lie on the
+   field, centred on it, at its inline start and end (they swap sides right
+   to left). The field's padding grows by their width: --gl-input-prefix-size
+   and --gl-input-suffix-size, 18px (an icon) unless set — set them for a
+   wider unit; GlassKit Elements' <glk-input> measures them. The padding
+   follows the --prefix / --suffix modifier, or, where :has() is supported,
+   a visible affix. A click on text or an icon reaches the field; buttons and
+   links inside take their own clicks. */
+.glass-input-wrap { display: grid; align-items: center; }
+.glass-input-wrap > * { grid-area: 1 / 1; }
+/* The room for an affix changes at once: animated, the text would slide
+   sideways while the page loads and an affix gets measured. */
+.glass-input-wrap > .glass-input { transition: var(--gl-transition), padding 0s; }
+.glass-input-wrap__prefix,
+.glass-input-wrap__suffix {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; gap: var(--gl-space-2xs);
+  color: var(--gl-color-text-muted);
+  font-family: var(--gl-font-family); font-size: var(--gl-font-size-base);
+  white-space: nowrap; pointer-events: none;
+}
+.glass-input-wrap__prefix { justify-self: start; margin-inline-start: var(--gl-control-padding-x, var(--gl-space-md)); }
+.glass-input-wrap__suffix { justify-self: end; margin-inline-end: var(--gl-control-padding-x, var(--gl-space-md)); }
+.glass-input-wrap__prefix[hidden],
+.glass-input-wrap__suffix[hidden] { display: none; }
+.glass-input-wrap__prefix :is(button, a[href], input, select, [tabindex]),
+.glass-input-wrap__suffix :is(button, a[href], input, select, [tabindex]) { pointer-events: auto; }
+.glass-input-wrap__prefix svg, .glass-input-wrap__suffix svg,
+.glass-input-wrap__prefix ::slotted(svg), .glass-input-wrap__suffix ::slotted(svg) {
+  width: 18px; height: 18px; flex-shrink: 0;
+  fill: none; stroke: var(--gl-icon-muted);
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.glass-input-wrap--prefix > .glass-input {
+  padding-inline-start: calc(var(--gl-control-padding-x, var(--gl-space-md)) + var(--gl-input-prefix-size, 18px) + var(--gl-space-xs));
+}
+.glass-input-wrap--suffix > .glass-input {
+  padding-inline-end: calc(var(--gl-control-padding-x, var(--gl-space-md)) + var(--gl-input-suffix-size, 18px) + var(--gl-space-xs));
+}
+.glass-input-wrap:has(> .glass-input-wrap__prefix:not([hidden])) > .glass-input {
+  padding-inline-start: calc(var(--gl-control-padding-x, var(--gl-space-md)) + var(--gl-input-prefix-size, 18px) + var(--gl-space-xs));
+}
+.glass-input-wrap:has(> .glass-input-wrap__suffix:not([hidden])) > .glass-input {
+  padding-inline-end: calc(var(--gl-control-padding-x, var(--gl-space-md)) + var(--gl-input-suffix-size, 18px) + var(--gl-space-xs));
 }
 
 .glass-hint {

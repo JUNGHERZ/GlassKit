@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.21.2 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.22.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -459,7 +459,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.21.2</span>
+      <span class="docs-hero__badge">v1.22.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Komponenten</span>
@@ -1320,6 +1320,13 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
           <div class="glass-input-group"><label class="glass-label">Von</label><input class="glass-input" type="date" value="2026-09-01"></div>
           <div class="glass-input-group"><label class="glass-label">Bis</label><input class="glass-input" type="date" value="2026-09-30"></div>
         </div>
+        <div class="glass-input-group">
+          <label class="glass-label" for="docs-price">Preis</label>
+          <div class="glass-input-wrap glass-input-wrap--suffix" style="--gl-input-suffix-size: 30px">
+            <input class="glass-input" id="docs-price" type="text" inputmode="decimal" value="49,90">
+            <span class="glass-input-wrap__suffix">EUR</span>
+          </div>
+        </div>
       </div>
     </div>
     <p>Datums- und Zeitfelder &mdash; <code>type="date"</code>, <code>time</code>, <code>datetime-local</code>, <code>month</code> &mdash; nehmen dieselbe Klasse. Sie verzichten auf das native Aussehen (seit 1.17.0): iOS zeichnete sie breiter als ihre Spalte, ein leeres schmaler als ein gef&uuml;lltes, den Wert mittig. Jetzt sitzen sie wie jedes andere Feld in ihrer Spalte, der Wert am Anfang; der native Picker &ouml;ffnet weiter.</p>
@@ -1328,6 +1335,14 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <span class="tag">&lt;label</span> <span class="attr">class=</span><span class="val">"glass-label"</span><span class="tag">&gt;</span>Label<span class="tag">&lt;/label&gt;</span>
   <span class="tag">&lt;input</span> <span class="attr">class=</span><span class="val">"glass-input"</span> <span class="attr">type=</span><span class="val">"text"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-hint"</span><span class="tag">&gt;</span>Hilfetext<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+    <h3>Präfix und Suffix</h3>
+    <p>Ein Icon, eine Währung, eine Einheit oder ein Button im Kasten des Feldes (seit 1.22.0): das Input in <code>.glass-input-wrap</code> legen und <code>__prefix</code> und <code>__suffix</code> daneben setzen. Sie liegen auf dem Feld, mittig, an seinem Anfang und Ende &mdash; von rechts nach links tauschen sie die Seiten. Das Padding des Feldes wächst um ihre Breite, <code>--gl-input-prefix-size</code> und <code>--gl-input-suffix-size</code>: 18px, ein Icon, wenn nicht gesetzt &mdash; für eine breitere Einheit setzen. Es folgt dem Modifier <code>--prefix</code> / <code>--suffix</code>, oder einem sichtbaren Affix, wo <code>:has()</code> unterstützt wird. Ein Klick auf Text oder Icon erreicht das Feld; Buttons und Links darin nehmen ihre eigenen Klicks. <code>&lt;glk-input&gt;</code> aus GlassKit Elements hat darauf die Slots <code>prefix</code> und <code>suffix</code> und misst die Breite selbst.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-input-wrap glass-input-wrap--suffix"</span> <span class="attr">style=</span><span class="val">"--gl-input-suffix-size: 30px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">class=</span><span class="val">"glass-input"</span> <span class="attr">inputmode=</span><span class="val">"decimal"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-input-wrap__suffix"</span><span class="tag">&gt;</span>EUR<span class="tag">&lt;/span&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
   </section>
@@ -2037,7 +2052,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td>Monatskalender</td><td><code>.glass-calendar</code></td><td><code>__head</code>, <code>__title</code>, <code>__nav</code>, <code>__grid</code>, <code>__wd</code>, <code>__day</code>, <code>__day--today</code>, <code>__day--other</code>, <code>__marks</code>, <code>__mark--primary</code>/<code>--success</code>/<code>--warning</code>/<code>--error</code>, <code>[aria-pressed]</code>, <code>[aria-disabled]</code></td></tr>
         <tr><td>Bildauswahl</td><td><code>.glass-image-picker</code></td><td><code>__preview</code>, <code>__preview--round</code>, <code>__meta</code>, <code>__label</code>, <code>__hint</code>, <code>__actions</code></td></tr>
         <tr><td>Popover</td><td><code>.glass-popover</code></td><td><code>--top</code>, <code>--start</code>, <code>--end</code>, <code>.is-open</code></td></tr>
-        <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code></td></tr>
+        <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code>; <code>.glass-input-wrap</code> with <code>__prefix</code> / <code>__suffix</code></td></tr>
         <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td><code>:disabled</code></td></tr>
         <tr><td>Select</td><td><code>.glass-select</code></td><td><code>:disabled</code></td></tr>
         <tr><td>Suchfeld</td><td><code>.glass-search</code></td><td>–</td></tr>

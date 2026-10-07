@@ -1,6 +1,6 @@
 {
   "name": "@jungherz-de/glasskit",
-  "version": "1.21.2",
+  "version": "1.22.0",
   "description": "A modern glassmorphism CSS component library – inspired by iOS 26 Liquid Glass. 34 components, dark & light mode, no dependencies.",
   "main": "glasskit.css",
   "style": "glasskit.css",

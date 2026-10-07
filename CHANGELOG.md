@@ -7,6 +7,18 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.22.0] – 2026-10-07
+
+### Added
+
+- **Prefix and suffix inside an input: `.glass-input-wrap`.** A currency, a unit, an icon or a button inside the field's box had no place: an app laid its element over the field from outside and pushed the text clear of it through the field's padding by hand. Wrap the input in `.glass-input-wrap` and put `.glass-input-wrap__prefix` and `__suffix` next to it. The wrapper is a one-cell grid, so the affixes lie on the field, centred on it, at its inline start and end — right to left they swap sides. The field's padding grows by their width, `--gl-input-prefix-size` and `--gl-input-suffix-size`: 18px, an icon, unless set — set it for a wider unit. The padding follows the `--prefix` / `--suffix` modifier, or a visible affix where `:has()` is supported; it changes at once, not animated, so text does not slide while a page loads. Icons take the search icon's size and colour, text the muted colour. A click on text or an icon passes through to the field; a button or link inside takes its own click. Without an affix nothing changes. Measured in Chromium and WebKit: an icon prefix gives 42px padding, "EUR" with `--gl-input-suffix-size: 30px` 54px; a click on the icon or on "EUR" focuses the field, a button in the suffix gets its click. GlassKit Elements 1.22.0 puts `prefix` and `suffix` slots on it in `<glk-input>`. (GlassKit Elements [#12](https://github.com/JUNGHERZ/GlassKit-Elements/issues/12))
+
+### Documentation
+
+- The input section shows a field with a unit (English and German); README, SKILL.md and the quick references list the wrapper and its tokens.
+
+---
+
 ## [1.21.2] – 2026-10-05
 
 ### Fixed
@@ -1042,6 +1054,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.22.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.0
 [1.21.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.2
 [1.21.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.1
 [1.21.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.0
@@ -1073,4 +1086,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.21.2...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.22.0...HEAD
