@@ -7,6 +7,14 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.22.1] – 2026-10-08
+
+### Fixed
+
+- **Date and time inputs fit narrow columns again inside `.glass-input-wrap`.** The wrapper that 1.22.0 introduced for prefix and suffix is a one-cell grid, and its column was `auto`: it held the input at its content-based minimum width, which Chromium measures for date and time inputs as their whole intrinsic width, picker icon included. In a narrow column they ran out of the wrapper — two date fields side by side in a 300 px row ended at x = 339 where the row ended at 320, two time fields in a 200 px row were 138 px wide in 95 px columns; GlassKit Elements' `<glk-input>` always renders the wrapper, so its date and time fields overlapped on phones in Chrome and Edge. Safari was not affected. The column is `minmax(0, 1fr)` now and shrinks like the field did before 1.22.0. Measured in Chromium and WebKit: every date, time and text field ends at its column, 145 / 145 and 95 / 95 px; a field with a suffix keeps its padding; docs, showcase and landing pages render pixel-identical to 1.22.0. ([#8](https://github.com/JUNGHERZ/GlassKit/issues/8))
+
+---
+
 ## [1.22.0] – 2026-10-07
 
 ### Added
@@ -1054,6 +1062,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.22.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.1
 [1.22.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.0
 [1.21.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.2
 [1.21.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.1
@@ -1086,4 +1095,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.22.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.22.1...HEAD

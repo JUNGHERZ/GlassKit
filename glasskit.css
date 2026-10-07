@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.22.0
+   Jungherz GmbH – v1.22.1
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -783,7 +783,11 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
    follows the --prefix / --suffix modifier, or, where :has() is supported,
    a visible affix. A click on text or an icon reaches the field; buttons and
    links inside take their own clicks. */
-.glass-input-wrap { display: grid; align-items: center; }
+/* The one column may shrink to nothing: as an `auto` track it held a grid
+   item at its content-based minimum, and Chromium's date and time inputs
+   count their whole intrinsic width as that, picker icon included — in a
+   narrow column they ran out of the wrapper (1.22.0). */
+.glass-input-wrap { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; }
 .glass-input-wrap > * { grid-area: 1 / 1; }
 /* The room for an affix changes at once: animated, the text would slide
    sideways while the page loads and an affix gets measured. */
