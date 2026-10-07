@@ -82,12 +82,7 @@ function toggleTheme() {
 
 ### Right to Left (since 1.20.0)
 
-Set `dir="rtl"` on `<html>` or on any container; nothing else. Paddings, insets and borders
-are logical properties, so labels, hints, the search icon, list dividers, popover anchors,
-tab badges, modal actions, the toast's × and the text alignment of accordion, list, table
-and prose mirror. Pairs that must move together — the select's chevron and its padding, the
-toggle's thumb and its travel, the progress fill's gradient — are under `:dir(rtl)`
-(Chrome 120+); an older browser keeps them left to right rather than splitting them.
+Set `dir="rtl"` on `<html>` or on any container; nothing else. Paddings, insets and borders are logical properties, so labels, hints, the search icon, list dividers, popover anchors, tab badges, modal actions, the toast's × and the text alignment of accordion, list, table and prose mirror. Pairs that must move together — the select's chevron and its padding, the toggle's thumb and its travel, the progress fill's gradient — are under `:dir(rtl)` (Chrome 120+); an older browser keeps them left to right rather than splitting them.
 
 ### Density
 
@@ -682,9 +677,7 @@ document.querySelector('.glass-modal-overlay').classList.add('is-active');
 document.querySelector('.glass-modal-overlay').classList.remove('is-active');
 ```
 
-**Prefer a native `<dialog>` (since 1.20.0).** Opened with `showModal()` it lies in the top
-layer, the page behind it is inert (pointer, keyboard, screen readers), focus moves in and
-returns on close, and Escape closes it. GlassKit resets the dialog's own box and backdrop:
+**Prefer a native `<dialog>` (since 1.20.0).** Opened with `showModal()` it lies in the top layer, the page behind it is inert (pointer, keyboard, screen readers), focus moves in and returns on close, and Escape closes it. GlassKit resets the dialog's own box and backdrop:
 
 ```html
 <dialog class="glass-modal-overlay" id="confirm" aria-labelledby="confirm-title">
@@ -715,9 +708,7 @@ function closeDialog() {
 dialog.addEventListener('cancel', (e) => { e.preventDefault(); closeDialog(); }); // Escape fades too
 ```
 
-While a modal dialog is open everything outside it is inert — a toast shown then is neither
-clickable nor announced; give feedback inside the dialog. Wider dialogs (forms, tables):
-`.my-dialog { --gl-modal-max-width: 560px; }`.
+While a modal dialog is open everything outside it is inert — a toast shown then is neither clickable nor announced; give feedback inside the dialog. Wider dialogs (forms, tables): `.my-dialog { --gl-modal-max-width: 560px; }`.
 
 ---
 
@@ -850,9 +841,7 @@ Dropdown with glass styling and custom chevron.
 |---|---|
 | `.glass-select` | Styled dropdown |
 
-The chevron is the token `--gl-select-chevron` — an SVG `url(…)` in each theme's muted text
-colour (since 1.20.0; before, it stayed white in the light theme). Override it with your own
-`url(…)`. Right to left, chevron and padding move to the left.
+The chevron is the token `--gl-select-chevron` — an SVG `url(…)` in each theme's muted text colour (since 1.20.0; before, it stayed white in the light theme). Override it with your own `url(…)`. Right to left, chevron and padding move to the left.
 
 ---
 
@@ -903,11 +892,7 @@ iOS-style switch.
 
 **State:** `:checked` on the input activates the toggle visually.
 
-The input is invisible but lies **on top of** the track and takes the click itself (since
-1.20.0) — a test tool clicking the switch by role (`getByRole('switch')` with
-`role="switch"` on the input) reaches it. It covers only the track; label text, links in it
-included, stays the label's. An empty `__label` takes no room (no 12px gap). Both apply to
-checkbox and radio as well.
+The input is invisible but lies **on top of** the track and takes the click itself (since 1.20.0) — a test tool clicking the switch by role (`getByRole('switch')` with `role="switch"` on the input) reaches it. It covers only the track; label text, links in it included, stays the label's. An empty `__label` takes no room (no 12px gap). Both apply to checkbox and radio as well.
 
 ---
 
@@ -2055,12 +2040,7 @@ customElements.define('my-card', MyCard);
 CSS Custom Properties (`--gl-*`) cross the shadow boundary by inheritance, so the example
 above picks up whatever the document defines and theme switching works globally.
 
-> **Pitfall: do not put `data-theme` inside the shadow root while adopting `glassSheet`.**
-> The full sheet contains `:root, [data-theme="dark"] { … }`. If your shadow root holds an
-> element carrying `data-theme`, that selector matches it and re-declares every token
-> locally — and a matching rule always beats an inherited value. A project's
-> `:root { --gl-color-primary: … }` then silently stops arriving inside your component.
-> The dark block declares the default control sizes too, so `<html data-density="compact">` stops arriving as well — unless that element carries `data-density` mirrored from `<html>`, which lets the compact preset (also in the full sheet) match it.
+> **Pitfall: do not put `data-theme` inside the shadow root while adopting `glassSheet`.** The full sheet contains `:root, [data-theme="dark"] { … }`. If your shadow root holds an element carrying `data-theme`, that selector matches it and re-declares every token locally — and a matching rule always beats an inherited value. A project's `:root { --gl-color-primary: … }` then silently stops arriving inside your component. The dark block declares the default control sizes too, so `<html data-density="compact">` stops arriving as well — unless that element carries `data-density` mirrored from `<html>`, which lets the compact preset (also in the full sheet) match it.
 >
 > If you need a themed element inside the shadow root, adopt `componentsSheet` instead
 > and make sure the tokens are present on the document:
