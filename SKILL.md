@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.22.1) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.22.2) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -797,7 +797,7 @@ Date and time fields (`type="date"`, `time`, `datetime-local`, `month`) take the
 | `.glass-input-wrap__prefix` / `__suffix` | Icon, currency, unit or button at the field's start / end (logical: they swap sides under `dir="rtl"`) |
 | `.glass-input-wrap--prefix` / `--suffix` | Makes room in the field; also automatic where `:has()` is supported |
 
-**Prefix and suffix (since 1.22.0).** The affixes lie on the field, centred; its padding grows by `--gl-input-prefix-size` / `--gl-input-suffix-size` (18px — an icon — unless set; set it for a wider unit). A click on text or an icon reaches the field; buttons and links inside take their own clicks. `<glk-input>` in GlassKit Elements has `prefix` / `suffix` slots on this and measures the width itself.
+**Prefix and suffix (since 1.22.0).** The affixes lie on the field, centred; its padding grows by `--gl-input-prefix-size` / `--gl-input-suffix-size` (18px — an icon — unless set; set it for a wider unit). A click on text, an icon or a disabled control reaches the field; enabled controls, links and elements with `tabindex` take their own, form-associated custom elements such as `<glk-button>` included (since 1.22.2 — before, a disabled button took the click and a `<glk-button>` got none). They take it even inside a container locked with `pointer-events: none`: lock it with `inert`, or disable them. `<glk-input>` in GlassKit Elements has `prefix` / `suffix` slots on this and measures the width itself.
 
 ```html
 <div class="glass-input-group">

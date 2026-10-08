@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.22.1
+   Jungherz GmbH – v1.22.2
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -781,8 +781,8 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
    and --gl-input-suffix-size, 18px (an icon) unless set — set them for a
    wider unit; GlassKit Elements' <glk-input> measures them. The padding
    follows the --prefix / --suffix modifier, or, where :has() is supported,
-   a visible affix. A click on text or an icon reaches the field; buttons and
-   links inside take their own clicks. */
+   a visible affix. A click on text, an icon or a disabled control reaches
+   the field; what can be used inside takes its own click. */
 /* The one column may shrink to nothing: as an `auto` track it held a grid
    item at its content-based minimum, and Chromium's date and time inputs
    count their whole intrinsic width as that, picker icon included — in a
@@ -804,8 +804,14 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-input-wrap__suffix { justify-self: end; margin-inline-end: var(--gl-control-padding-x, var(--gl-space-md)); }
 .glass-input-wrap__prefix[hidden],
 .glass-input-wrap__suffix[hidden] { display: none; }
-.glass-input-wrap__prefix :is(button, a[href], input, select, [tabindex]),
-.glass-input-wrap__suffix :is(button, a[href], input, select, [tabindex]) { pointer-events: auto; }
+/* What can be used takes the pointer back: an enabled control — a
+   form-associated custom element such as <glk-button> too — a link, an
+   element with tabindex. Until 1.22.1 a fixed list did: a disabled button
+   kept the click from the field, and a <glk-button> took none. The `auto`
+   also outweighs a `none` inherited from a container that locks a form:
+   lock it with `inert`, or disable the controls. */
+.glass-input-wrap__prefix :is(:enabled, a[href], [tabindex]):not(:disabled),
+.glass-input-wrap__suffix :is(:enabled, a[href], [tabindex]):not(:disabled) { pointer-events: auto; }
 .glass-input-wrap__prefix svg, .glass-input-wrap__suffix svg,
 .glass-input-wrap__prefix ::slotted(svg), .glass-input-wrap__suffix ::slotted(svg) {
   width: 18px; height: 18px; flex-shrink: 0;

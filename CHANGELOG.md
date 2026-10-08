@@ -7,6 +7,14 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.22.2] – 2026-10-08
+
+### Fixed
+
+- **In an input affix, only what can be used takes the click.** `.glass-input-wrap__prefix` and `__suffix` let clicks through to the field and gave them back to a fixed list, `button, a[href], input, select, [tabindex]`. A disabled button in that list kept the click from the field, and a form-associated custom element such as GlassKit Elements' `<glk-button>` was not in it, so it could not be clicked at all. The rule is `:is(:enabled, a[href], [tabindex]):not(:disabled)` now: enabled controls, form-associated custom elements and `<textarea>` included, links and elements with `tabindex` take the click; text, icons and disabled controls, also those in a disabled `<fieldset>`, let it through to the field. One limit stays as before: their `pointer-events: auto` outweighs a `none` inherited from a container that locks a form, so lock it with `inert`, or disable the controls. Measured in Chromium and WebKit: a disabled button in the suffix hands the click to the field, a `<glk-button>` there takes it, an enabled button and a link keep theirs; docs, showcase and landing pages render pixel-identical to 1.22.1. (GlassKit Elements [#14](https://github.com/JUNGHERZ/GlassKit-Elements/issues/14))
+
+---
+
 ## [1.22.1] – 2026-10-08
 
 ### Fixed
@@ -1062,6 +1070,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.22.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.2
 [1.22.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.1
 [1.22.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.0
 [1.21.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.21.2
@@ -1095,4 +1104,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.22.1...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.22.2...HEAD

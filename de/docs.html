@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.22.1 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.22.2 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -459,7 +459,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.22.1</span>
+      <span class="docs-hero__badge">v1.22.2</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Komponenten</span>
@@ -1338,7 +1338,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
     <h3>Präfix und Suffix</h3>
-    <p>Ein Icon, eine Währung, eine Einheit oder ein Button im Kasten des Feldes (seit 1.22.0): das Input in <code>.glass-input-wrap</code> legen und <code>__prefix</code> und <code>__suffix</code> daneben setzen. Sie liegen auf dem Feld, mittig, an seinem Anfang und Ende &mdash; von rechts nach links tauschen sie die Seiten. Das Padding des Feldes wächst um ihre Breite, <code>--gl-input-prefix-size</code> und <code>--gl-input-suffix-size</code>: 18px, ein Icon, wenn nicht gesetzt &mdash; für eine breitere Einheit setzen. Es folgt dem Modifier <code>--prefix</code> / <code>--suffix</code>, oder einem sichtbaren Affix, wo <code>:has()</code> unterstützt wird. Ein Klick auf Text oder Icon erreicht das Feld; Buttons und Links darin nehmen ihre eigenen Klicks. <code>&lt;glk-input&gt;</code> aus GlassKit Elements hat darauf die Slots <code>prefix</code> und <code>suffix</code> und misst die Breite selbst.</p>
+    <p>Ein Icon, eine Währung, eine Einheit oder ein Button im Kasten des Feldes (seit 1.22.0): das Input in <code>.glass-input-wrap</code> legen und <code>__prefix</code> und <code>__suffix</code> daneben setzen. Sie liegen auf dem Feld, mittig, an seinem Anfang und Ende &mdash; von rechts nach links tauschen sie die Seiten. Das Padding des Feldes wächst um ihre Breite, <code>--gl-input-prefix-size</code> und <code>--gl-input-suffix-size</code>: 18px, ein Icon, wenn nicht gesetzt &mdash; für eine breitere Einheit setzen. Es folgt dem Modifier <code>--prefix</code> / <code>--suffix</code>, oder einem sichtbaren Affix, wo <code>:has()</code> unterstützt wird. Ein Klick auf Text, ein Icon oder ein deaktiviertes Bedienelement erreicht das Feld; aktive Bedienelemente, Links und Elemente mit <code>tabindex</code> nehmen ihren eigenen, formularassoziierte Custom Elements wie <code>&lt;glk-button&gt;</code> eingeschlossen (seit 1.22.2). Das tun sie auch in einem Container, der mit <code>pointer-events: none</code> gesperrt ist: ihn mit <code>inert</code> sperren oder sie deaktivieren. <code>&lt;glk-input&gt;</code> aus GlassKit Elements hat darauf die Slots <code>prefix</code> und <code>suffix</code> und misst die Breite selbst.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-input-wrap glass-input-wrap--suffix"</span> <span class="attr">style=</span><span class="val">"--gl-input-suffix-size: 30px"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;input</span> <span class="attr">class=</span><span class="val">"glass-input"</span> <span class="attr">inputmode=</span><span class="val">"decimal"</span><span class="tag">&gt;</span>
