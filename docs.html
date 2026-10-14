@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.22.2 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.23.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -459,7 +459,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.22.2</span>
+      <span class="docs-hero__badge">v1.23.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Components</span>
@@ -1091,14 +1091,25 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-list__leading</code></td><td>Leading slot (28&times;28, holds an icon SVG)</td></tr>
         <tr><td><code>.glass-list__leading--lg</code></td><td>Large leading slot (40&times;40, rounded square, supports <code>&lt;img&gt;</code>)</td></tr>
         <tr><td><code>.glass-list__content</code></td><td>Flexible middle slot &mdash; takes remaining width, enables truncation</td></tr>
-        <tr><td><code>.glass-list__title</code></td><td>Primary text (medium weight, ellipsis)</td></tr>
-        <tr><td><code>.glass-list__subtitle</code></td><td>Secondary text (small, muted, ellipsis)</td></tr>
-        <tr><td><code>.glass-list__subtitle--wrap</code></td><td>Multi-line subtitle (up to 3 lines, clamped with ellipsis)</td></tr>
+        <tr><td><code>.glass-list__title</code></td><td>Primary text (medium weight, one line with ellipsis unless <code>--gl-list-title-white-space</code> lets it wrap)</td></tr>
+        <tr><td><code>.glass-list__subtitle</code></td><td>Secondary text (small, muted, one line with ellipsis unless <code>--gl-list-subtitle-white-space</code> lets it wrap)</td></tr>
+        <tr><td><code>.glass-list__subtitle--wrap</code></td><td>Multi-line subtitle (up to 3 lines, clamped with ellipsis; <code>--gl-list-subtitle-lines</code> sets the limit)</td></tr>
         <tr><td><code>.glass-list__trailing</code></td><td>Trailing slot &mdash; chevron, value, button, badge</td></tr>
         <tr><td><code>.glass-list__value</code></td><td>Muted text inside <code>.glass-list__trailing</code> (e.g. file size)</td></tr>
       </tbody>
     </table>
     <p style="margin-top:12px;"><strong>Dividers</strong> between rows are rendered automatically via <code>::after</code>. Items <em>with</em> a leading icon get an icon-aligned inset; items <em>without</em> &mdash; no <code>__leading</code>, or one carrying the <code>hidden</code> attribute (since 1.20.0) &mdash; get the standard padding inset. A hidden <code>__leading</code> or <code>__trailing</code> takes no room. The last item never has a divider. SVG icon convention: <code>24px</code> for leading, <code>18px</code> for trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
+    <h3>Wrapping text</h3>
+    <p>Title and subtitle keep to one line, cut with an ellipsis, and <code>--wrap</code> clamps the subtitle at three lines. Since 1.23.0 a project decides otherwise once, on <code>:root</code>, or for one list or one row: <code>--gl-list-title-white-space</code> and <code>--gl-list-subtitle-white-space</code> take <code>nowrap</code> (the default) or <code>normal</code>, and <code>--gl-list-subtitle-lines</code> sets the clamp of <code>--wrap</code> &mdash; <code>3</code> unless set, <code>none</code> shows every line. The tokens are inherited, so they reach <code>&lt;glk-list-item&gt;</code> in GlassKit Elements as well. A word wider than the column, such as an e-mail address, breaks where it has to instead of running out of the row; text still breaks at spaces. For breaks at syllables, set <code>hyphens</code> on the list or the page: it is inherited too and follows the page&rsquo;s <code>lang</code>.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">:root</span> {
+  <span class="attr">--gl-list-title-white-space</span>: <span class="val">normal</span>;
+  <span class="attr">--gl-list-subtitle-white-space</span>: <span class="val">normal</span>;
+  <span class="attr">--gl-list-subtitle-lines</span>: <span class="val">none</span>;
+}
+<span class="cmt">/* Breaks at syllables; short words stay whole */</span>
+<span class="cls">.glass-list, glk-list</span> { <span class="attr">hyphens</span>: <span class="val">auto</span>; <span class="attr">-webkit-hyphens</span>: <span class="val">auto</span>; <span class="attr">hyphenate-limit-chars</span>: <span class="val">10 4 4</span>; }</div>
+    </div>
   </section>
 
   <!-- MODAL -->

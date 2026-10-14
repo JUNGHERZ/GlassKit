@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.22.2
+   Jungherz GmbH – v1.23.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -2104,12 +2104,13 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-list__item--center {
   justify-content: center;
   text-align: center;
-  white-space: nowrap;
+  white-space: var(--gl-list-title-white-space, nowrap);
   overflow: hidden;
   text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 .glass-list__item--center > .glass-list__title {
-  white-space: nowrap;
+  white-space: var(--gl-list-title-white-space, nowrap);
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -2190,28 +2191,44 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   gap: 2px;
   overflow: hidden;
 }
+/* Title and subtitle keep to one line, cut with an ellipsis, and --wrap
+   clamps the subtitle at three lines. A project may decide otherwise once,
+   on :root, or for one list or one row (since 1.23.0); the tokens are
+   inherited, so they reach into <glk-list-item> as well:
+     --gl-list-title-white-space     nowrap, or normal to wrap the title
+     --gl-list-subtitle-white-space  nowrap, or normal to wrap the subtitle
+     --gl-list-subtitle-lines        the clamp of --wrap, 3; none shows all
+   A word wider than the column breaks where it has to instead of running
+   out of it — an e-mail address in a --wrap subtitle used to — while text
+   still breaks at spaces. hyphens is left to inheritance: set it on the
+   list or the page for breaks at syllables. */
 .glass-list__title {
   font-size: var(--gl-font-size-base);
   font-weight: var(--gl-font-weight-medium);
   color: var(--gl-color-text);
-  white-space: nowrap;
+  white-space: var(--gl-list-title-white-space, nowrap);
   overflow: hidden;
   text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 .glass-list__subtitle {
   font-size: var(--gl-font-size-sm);
   color: var(--gl-color-text-muted);
-  white-space: nowrap;
+  white-space: var(--gl-list-subtitle-white-space, nowrap);
   overflow: hidden;
   text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 .glass-list__subtitle--wrap {
   white-space: normal;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: var(--gl-list-subtitle-lines, 3);
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+/* display: -webkit-box above beats the hidden attribute's own rule: an empty
+   --wrap subtitle kept its place, and the title sat 1px off centre. */
+.glass-list__subtitle[hidden] { display: none; }
 
 .glass-list__trailing {
   flex-shrink: 0;

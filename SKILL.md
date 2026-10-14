@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.22.2) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.23.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -1153,9 +1153,9 @@ iOS-style grouped settings list. Items can carry a leading icon, a title with op
 | `.glass-list__leading` | Leading slot (28×28, holds an icon SVG) |
 | `.glass-list__leading--lg` | Large leading slot (40×40, rounded square, supports `<img>`) |
 | `.glass-list__content` | Flexible middle slot — takes remaining width, enables truncation |
-| `.glass-list__title` | Primary text (medium weight, ellipsis) |
-| `.glass-list__subtitle` | Secondary text (small, muted, ellipsis) |
-| `.glass-list__subtitle--wrap` | Multi-line subtitle (up to 3 lines, clamped with ellipsis) |
+| `.glass-list__title` | Primary text (medium weight, one line with ellipsis unless `--gl-list-title-white-space` lets it wrap) |
+| `.glass-list__subtitle` | Secondary text (small, muted, one line with ellipsis unless `--gl-list-subtitle-white-space` lets it wrap) |
+| `.glass-list__subtitle--wrap` | Multi-line subtitle (up to 3 lines, clamped with ellipsis; `--gl-list-subtitle-lines` sets the limit) |
 | `.glass-list__trailing` | Trailing slot — chevron, value, button, badge |
 | `.glass-list__value` | Muted text inside `.glass-list__trailing` (e.g. file size) |
 
@@ -1167,6 +1167,15 @@ iOS-style grouped settings list. Items can carry a leading icon, a title with op
 - Use `<ul>` + `<li>` for semantic lists. For interactive rows wrap in `<a>` or `<button>` instead of `<li>` if a single-row list is needed.
 - `.glass-list__section-header` sits **outside** the `.glass-list` container, directly above it.
 - `--danger` and `--accent` affect the title and leading icon color; the subtitle stays muted.
+- **Wrapping text (since 1.23.0).** Title and subtitle keep to one line by default, and `--wrap` clamps the subtitle at three lines. Three inherited tokens change that once for a whole app (`:root`), one list or one row, `<glk-list-item>` included: `--gl-list-title-white-space` and `--gl-list-subtitle-white-space` (`nowrap` by default, `normal` wraps) and `--gl-list-subtitle-lines` (the clamp of `--wrap`, `3` unless set, `none` = every line). A word wider than the column (an e-mail address, a URL) breaks where it has to instead of running out of the row; before 1.23.0 it was clipped in a `--wrap` subtitle. For breaks at syllables set `hyphens: auto; -webkit-hyphens: auto` (optionally `hyphenate-limit-chars: 10 4 4`, so short words stay whole) on `.glass-list` / `glk-list` or the page; it is inherited and follows the page's `lang`.
+
+```css
+:root {
+  --gl-list-title-white-space: normal;
+  --gl-list-subtitle-white-space: normal;
+  --gl-list-subtitle-lines: none;
+}
+```
 
 ---
 

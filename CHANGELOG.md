@@ -7,6 +7,21 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.23.0] – 2026-10-14
+
+### Added
+
+- **List text can wrap, decided once for a whole app.** The title and subtitle of a list row keep to one line, cut with an ellipsis, and `--wrap` clamps the subtitle at three lines. Nothing could change that: on a phone, where a row beside an icon and a badge leaves a column of 120 to 200 px, names, legal terms and explanations lost their end, and inside GlassKit Elements' `<glk-list-item>` a project could not reach the rules at all. Three tokens decide it now, on `:root` for the whole app or on one list or one row: `--gl-list-title-white-space` and `--gl-list-subtitle-white-space` (`nowrap` unless set, `normal` wraps) and `--gl-list-subtitle-lines` (the clamp of `--wrap`, `3` unless set, `none` shows every line). A centred row follows the title token. The tokens are inherited, so they reach the shadow root of `<glk-list-item>` like the colours do. Unset, every row renders as before. Measured in Chromium, WebKit and Firefox at a 360 px viewport, in a card with a 28 px icon and a badge: with the three tokens set, no title or subtitle is cut any more — a long title takes two lines, a sentence as subtitle five, with and without `--wrap` — and `<glk-list-item>` gives the same numbers as plain markup. ([#10](https://github.com/JUNGHERZ/GlassKit/issues/10))
+
+### Fixed
+
+- **A word wider than the column breaks in a list row.** In a `--wrap` subtitle an e-mail address, which has no break opportunity, ran past the column and was clipped without an ellipsis: 310 px of text in a 198 px column. Title and subtitle carry `overflow-wrap: anywhere` now, so such a word breaks where it has to, while text still breaks at spaces. Breaks at syllables stay the page's choice: `hyphens` is inherited into the shadow roots as well and follows the page's `lang` — set on the list, WebKit and Firefox break "Tierver-waltung" at a syllable. ([#10](https://github.com/JUNGHERZ/GlassKit/issues/10))
+- **An empty `--wrap` subtitle takes no room.** `display: -webkit-box` beat the `hidden` attribute, so a `<glk-list-item wrap>` without a subtitle kept an empty line in its content, and its title sat 1 px off centre. ([#10](https://github.com/JUNGHERZ/GlassKit/issues/10))
+
+Docs, showcase and landing pages of GlassKit and GlassKit Elements render pixel-identical to 1.22.2 and 1.22.3 in Chromium and WebKit.
+
+---
+
 ## [1.22.2] – 2026-10-08
 
 ### Fixed
@@ -1070,6 +1085,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.23.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.23.0
 [1.22.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.2
 [1.22.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.1
 [1.22.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.0
@@ -1104,4 +1120,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.22.2...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.23.0...HEAD

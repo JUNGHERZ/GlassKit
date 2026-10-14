@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.22.2 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.23.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -459,7 +459,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.22.2</span>
+      <span class="docs-hero__badge">v1.23.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Komponenten</span>
@@ -1091,14 +1091,25 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-list__leading</code></td><td>Leading-Slot (28&times;28, enthält ein Icon-SVG)</td></tr>
         <tr><td><code>.glass-list__leading--lg</code></td><td>Großer Leading-Slot (40&times;40, abgerundetes Quadrat, unterstützt <code>&lt;img&gt;</code>)</td></tr>
         <tr><td><code>.glass-list__content</code></td><td>Flexibler mittlerer Slot &mdash; nimmt verbleibende Breite, ermöglicht Truncation</td></tr>
-        <tr><td><code>.glass-list__title</code></td><td>Primärer Text (medium weight, ellipsis)</td></tr>
-        <tr><td><code>.glass-list__subtitle</code></td><td>Sekundärer Text (klein, gedämpft, ellipsis)</td></tr>
-        <tr><td><code>.glass-list__subtitle--wrap</code></td><td>Mehrzeiliger Subtitle (bis 3 Zeilen, mit Ellipsis-Clamp)</td></tr>
+        <tr><td><code>.glass-list__title</code></td><td>Primärer Text (medium weight, eine Zeile mit Ellipsis, außer <code>--gl-list-title-white-space</code> lässt ihn umbrechen)</td></tr>
+        <tr><td><code>.glass-list__subtitle</code></td><td>Sekundärer Text (klein, gedämpft, eine Zeile mit Ellipsis, außer <code>--gl-list-subtitle-white-space</code> lässt ihn umbrechen)</td></tr>
+        <tr><td><code>.glass-list__subtitle--wrap</code></td><td>Mehrzeiliger Subtitle (bis 3 Zeilen, mit Ellipsis-Clamp; <code>--gl-list-subtitle-lines</code> setzt die Grenze)</td></tr>
         <tr><td><code>.glass-list__trailing</code></td><td>Trailing-Slot &mdash; Chevron, Wert, Button, Badge</td></tr>
         <tr><td><code>.glass-list__value</code></td><td>Gedämpfter Text in <code>.glass-list__trailing</code> (z.B. Dateigröße)</td></tr>
       </tbody>
     </table>
     <p style="margin-top:12px;"><strong>Trennlinien</strong> zwischen Zeilen werden automatisch via <code>::after</code> gerendert. Items <em>mit</em> Leading-Icon erhalten einen icon-aligned Inset; Items <em>ohne</em> &mdash; kein <code>__leading</code>, oder eines mit dem Attribut <code>hidden</code> (seit 1.20.0) &mdash; bekommen das normale Padding-Inset. Ein verstecktes <code>__leading</code> oder <code>__trailing</code> nimmt keinen Platz ein. Das letzte Item hat nie eine Trennlinie. SVG-Icon-Konvention: <code>24px</code> für Leading, <code>18px</code> für Trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
+    <h3>Umbrechender Text</h3>
+    <p>Titel und Subtitle bleiben einzeilig und werden mit Ellipsis gekürzt, <code>--wrap</code> begrenzt den Subtitle auf drei Zeilen. Seit 1.23.0 entscheidet ein Projekt das einmal anders, auf <code>:root</code>, oder für eine Liste oder eine Zeile: <code>--gl-list-title-white-space</code> und <code>--gl-list-subtitle-white-space</code> nehmen <code>nowrap</code> (Standard) oder <code>normal</code>, und <code>--gl-list-subtitle-lines</code> setzt die Grenze von <code>--wrap</code> &mdash; <code>3</code>, wenn nicht gesetzt, <code>none</code> zeigt alle Zeilen. Die Tokens werden vererbt und erreichen so auch <code>&lt;glk-list-item&gt;</code> aus GlassKit Elements. Ein Wort, das breiter ist als die Spalte, etwa eine E-Mail-Adresse, bricht dort, wo es muss, statt aus der Zeile zu laufen; Text bricht weiter an Leerzeichen. Für Trennung nach Silben <code>hyphens</code> auf der Liste oder der Seite setzen: Es wird ebenfalls vererbt und folgt dem <code>lang</code> der Seite.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">:root</span> {
+  <span class="attr">--gl-list-title-white-space</span>: <span class="val">normal</span>;
+  <span class="attr">--gl-list-subtitle-white-space</span>: <span class="val">normal</span>;
+  <span class="attr">--gl-list-subtitle-lines</span>: <span class="val">none</span>;
+}
+<span class="cmt">/* Trennt nach Silben; kurze Wörter bleiben ganz */</span>
+<span class="cls">.glass-list, glk-list</span> { <span class="attr">hyphens</span>: <span class="val">auto</span>; <span class="attr">-webkit-hyphens</span>: <span class="val">auto</span>; <span class="attr">hyphenate-limit-chars</span>: <span class="val">10 4 4</span>; }</div>
+    </div>
   </section>
 
   <!-- MODAL -->
