@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.23.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.24.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -93,6 +93,16 @@ Denser controls for admin screens, desktop layouts and narrow forms: `data-densi
 ```
 
 Fields and buttons are 40px high instead of 52 and 56px; toggles, checkboxes, radios, list rows and modal actions shrink with them. Colours, type and spacing stay. Without the attribute nothing changes; `removeAttribute('data-density')` switches back at runtime. The values are the density tokens in section 2 — never shrink controls by overriding their `height`. It combines with `dir="rtl"`: the toggle's thumb and the select's padding mirror at either density.
+
+### Solid surfaces
+
+Opaque surfaces without blur and gloss, for admin screens, forms on a plain background and designs without glass: `data-surface="solid"` on `<html>`, next to `data-theme` and `data-density` (since 1.24.0).
+
+```html
+<html data-theme="dark" data-surface="solid">
+```
+
+Each surface (`--gl-surface-*`, the milk surfaces, the card glow) takes the colour the glass shows over `--gl-color-bg-mid`, so the order of the surfaces stays and a re-branded background carries over. `--gl-blur*` are `0px`, the `--gl-inset-*` shine and the gloss tokens (`--gl-gloss-card`, `--gl-gloss-modal`, `--gl-gloss-progress`, `--gl-range-thumb-border`) are off. Borders, drop shadows, the tints of badges and chips and the overlay stay. A theme scope inside the page (an element with its own `data-theme`) stays solid. It is tokens only: tune it with `[data-surface='solid'] { --gl-surface-2: … }`, never by overriding a component's `background` or `backdrop-filter`. Without the attribute nothing changes; `removeAttribute('data-surface')` switches back at runtime. GlassKit Elements mirrors the attribute into its shadow roots.
 
 ### Printing (since 1.21.1)
 
@@ -211,6 +221,19 @@ fully-translucent pre-1.7.0 chip.
 | `--gl-blur-light` | `16px` |
 | `--gl-blur-soft` | `12px` |
 | `--gl-blur-heavy` | `40px` |
+
+All four are `0px` under `data-surface="solid"`.
+
+### Gloss (since 1.24.0)
+
+| Token | Value | Usage |
+|---|---|---|
+| `--gl-gloss-card` | `linear-gradient(90deg, …)` | Highlight along the top edge of `.glass-card--glow` |
+| `--gl-gloss-modal` | `linear-gradient(90deg, …)` | The same on `.glass-modal` |
+| `--gl-gloss-progress` | `linear-gradient(to bottom, …)` | Sheen on the progress fill |
+| `--gl-range-thumb-border` | `2px solid rgba(255,255,255,0.5)` | Rim of the range thumb |
+
+The same in both themes; `data-surface="solid"` sets them to `none` (the thumb's rim to `2px solid transparent`). They were literals before 1.24.0.
 
 ### Radii
 

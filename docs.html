@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.23.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.24.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -388,6 +388,7 @@
     <a class="docs-sidebar__link" href="#tokens">Design Tokens</a>
     <a class="docs-sidebar__link" href="#theming">Theming (Light/Dark)</a>
     <a class="docs-sidebar__link" href="#density">Density (Compact)</a>
+    <a class="docs-sidebar__link" href="#surface">Surfaces (Solid)</a>
     <a class="docs-sidebar__link" href="#background">Background</a>
   </div>
 
@@ -459,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.23.0</span>
+      <span class="docs-hero__badge">v1.24.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Components</span>
@@ -517,6 +518,18 @@
         <tr><td><code>--gl-surface-milk-strong</code></td><td>rgba(…, 0.75)</td><td>Secondary button</td></tr>
       </tbody>
     </table>
+
+    <h3>Gloss</h3>
+    <table class="docs-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gl-gloss-card</code></td><td>linear-gradient(90deg, …)</td><td>Highlight along the top edge of <code>.glass-card--glow</code></td></tr>
+        <tr><td><code>--gl-gloss-modal</code></td><td>linear-gradient(90deg, …)</td><td>The same on <code>.glass-modal</code></td></tr>
+        <tr><td><code>--gl-gloss-progress</code></td><td>linear-gradient(to bottom, …)</td><td>Sheen on the progress fill</td></tr>
+        <tr><td><code>--gl-range-thumb-border</code></td><td>2px solid rgba(255,255,255,0.5)</td><td>Rim of the range thumb</td></tr>
+      </tbody>
+    </table>
+    <p>Since 1.24.0, the same in both themes. <a href="#surface"><code>data-surface="solid"</code></a> turns them off, together with the blur and the <code>--gl-inset-*</code> shine.</p>
 
     <h3>Spacing & Radii</h3>
     <table class="docs-table">
@@ -618,6 +631,40 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 [data-density=<span class="val">'compact'</span>] { --gl-btn-height: <span class="val">36px</span>; }</div>
     </div>
     <p>The toggle's thumb inset and travel &mdash; in either writing direction &mdash; and the first-line alignment of toggle, checkbox and radio are derived from the tokens, so any size a project sets stays aligned. The rules read every size with today's value as fallback, like <code>--gl-modal-max-width</code>, so a page whose token sheet predates them keeps the old sizes.</p>
+  </section>
+
+  <!-- SURFACES -->
+  <section class="docs-section" id="surface">
+    <h2>Surfaces (Solid)</h2>
+    <p>Not every screen wants glass: admin screens, forms on a plain background, designs without it. Since 1.24.0 <code>data-surface="solid"</code> on the <code>&lt;html&gt;</code> element makes every surface opaque and turns blur and gloss off. Each surface takes the colour the glass shows over the theme&rsquo;s middle background, <code>--gl-color-bg-mid</code>: cards, fields and buttons keep their order, and a re-branded background carries over. The inner shine (<code>--gl-inset-*</code>), the highlight along the top edge of the glow card and the modal, the sheen on the progress fill and the rim of the range thumb are off. Borders, drop shadows, the tints of badges and chips and the dimming overlay stay as they are. Without the attribute nothing changes.</p>
+    <div class="docs-preview" style="background:repeating-linear-gradient(45deg,#e63946 0 18px,#2a9d8f 18px 36px,#f4a261 36px 54px,#264653 54px 72px)">
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px">
+        <div class="glass-card gl-stack gl-stack--sm" style="padding:20px">
+          <span class="glass-label">Glass</span>
+          <input class="glass-input" type="text" placeholder="Name">
+          <button class="glass-btn glass-btn--secondary">Cancel</button>
+          <label class="glass-toggle"><input class="glass-toggle__input" type="checkbox" checked><span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span><span class="glass-toggle__label">Notifications</span></label>
+        </div>
+        <div class="glass-card gl-stack gl-stack--sm" data-surface="solid" style="padding:20px">
+          <span class="glass-label">Solid</span>
+          <input class="glass-input" type="text" placeholder="Name">
+          <button class="glass-btn glass-btn--secondary">Cancel</button>
+          <label class="glass-toggle"><input class="glass-toggle__input" type="checkbox" checked><span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span><span class="glass-toggle__label">Notifications</span></label>
+        </div>
+      </div>
+    </div>
+    <p>The preview sets the attribute on its right card. On a page it belongs on <code>&lt;html&gt;</code>, next to <code>data-theme</code> and <code>data-density</code>; a theme scope further down &mdash; an element with its own <code>data-theme</code> &mdash; stays solid. Everything runs through tokens, so a project tunes the preset as it tunes a theme. GlassKit Elements carries the attribute into its shadow roots, as it does with <code>data-theme</code>.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;html</span> <span class="attr">data-theme=</span><span class="val">"dark"</span> <span class="attr">data-surface=</span><span class="val">"solid"</span><span class="tag">&gt;</span>
+
+<span class="cmt">// Switch at runtime:</span>
+<span class="cls">document.documentElement</span>.setAttribute(<span class="val">'data-surface'</span>, <span class="val">'solid'</span>);
+<span class="cls">document.documentElement</span>.removeAttribute(<span class="val">'data-surface'</span>);
+
+<span class="cmt">/* Tune it like a theme &ndash; here a darker card surface in dark mode: */</span>
+[data-surface=<span class="val">'solid'</span>] { --gl-surface-2: <span class="val">#17313d</span>; }</div>
+    </div>
+    <p>The gloss is made of tokens now as well: <code>--gl-gloss-card</code>, <code>--gl-gloss-modal</code>, <code>--gl-gloss-progress</code> and <code>--gl-range-thumb-border</code> (see <a href="#tokens">Design Tokens</a>). Before 1.24.0 they were literals that a project&rsquo;s own solid skin could not reach.</p>
   </section>
 
   <!-- BACKGROUND -->

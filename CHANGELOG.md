@@ -7,6 +7,17 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.24.0] – 2026-10-14
+
+### Added
+
+- **Solid surfaces: `data-surface="solid"`.** GlassKit had one look, glass. An app that needed opaque surfaces — admin screens, forms on a plain background, designs without glass — built that variant itself and had to check it on every release, since a new literal could slip past it. The preset on `<html>`, next to `data-theme` and `data-density`, makes every surface opaque and turns blur and gloss off. Each surface (`--gl-surface-1` … `-5`, the milk surfaces, the card glow) takes the colour the glass shows over the theme's middle background, `--gl-color-bg-mid`, so the surfaces keep their order and a re-branded background carries over. `--gl-blur*` are `0px`; the `--gl-inset-*` shine, the gloss, the white glow in `--gl-shadow-glow` and the see-through toggle thumb are gone. Borders, drop shadows, the tints of badges and chips and the dimming overlay stay. A theme scope inside the page — an element with its own `data-theme` — stays solid. The preset is tokens only, so a project tunes it like a theme, and `build-styles-js.mjs` puts both of its blocks into `tokensCss`, so it also reaches pages that load only GlassKit Elements. Measured in Chromium, WebKit and Firefox, in both themes: 40 components, plain and as GlassKit Elements, each rendered once over red and once over blue, show the same pixels inside (with glass, all 40 differ), and every `backdrop-filter` computes to `blur(0px)`. The docs have a preview, the showcase a Glass / Solid switch. ([#9](https://github.com/JUNGHERZ/GlassKit/issues/9))
+- **The gloss is made of tokens.** `--gl-gloss-card` (the highlight along the top edge of the glow card), `--gl-gloss-modal` (the same on the modal), `--gl-gloss-progress` (the sheen on the progress fill) and `--gl-range-thumb-border` (the rim of the range thumb) were literals that no skin could reach. Their defaults are the old values. ([#9](https://github.com/JUNGHERZ/GlassKit/issues/9))
+
+With the attribute unset, the stylesheet renders pixel-identical to 1.23.0, measured on the docs, showcase and landing pages of GlassKit and GlassKit Elements in Chromium and WebKit.
+
+---
+
 ## [1.23.0] – 2026-10-14
 
 ### Added
@@ -1085,6 +1096,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.24.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.24.0
 [1.23.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.23.0
 [1.22.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.2
 [1.22.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.1
@@ -1120,4 +1132,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.23.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.24.0...HEAD

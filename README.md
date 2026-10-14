@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.23.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.24.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.23.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.24.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -72,16 +72,16 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.23/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.24/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.23/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.24/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.23/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.24/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.23` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.24` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 ### npm / yarn / pnpm
 
@@ -318,6 +318,22 @@ Every token can also be set on its own, for one density or both — the toggle's
 
 Like `data-theme`, keep `data-density` on `<html>`: an element further down that carries `data-theme="dark"` re-declares the dark block, the default sizes included.
 
+### Solid surfaces
+
+Not every screen wants glass — admin screens, forms on a plain background, designs without it. Since **1.24.0** `data-surface="solid"` on `<html>` makes every surface opaque and turns blur and gloss off:
+
+```html
+<html data-theme="dark" data-surface="solid">
+```
+
+Each surface takes the colour the glass shows over the theme's middle background, `--gl-color-bg-mid`, so cards, fields and buttons keep their order and a re-branded background carries over. The blur (`--gl-blur*`), the inner shine (`--gl-inset-*`) and the gloss (`--gl-gloss-card`, `--gl-gloss-modal`, `--gl-gloss-progress`, `--gl-range-thumb-border`) are off. Borders, drop shadows, the tints of badges and chips and the dimming overlay stay as they are. A theme scope further down the page — an element with its own `data-theme` — stays solid, and the preset is tokens only, so a project tunes it like a theme:
+
+```css
+[data-surface='solid'] { --gl-surface-2: #17313d; }   /* a darker card surface in dark mode */
+```
+
+GlassKit Elements carries the attribute into its shadow roots, as it does with `data-theme`.
+
 ### Printing
 
 Print dialogs leave out background graphics by default, and some states are drawn with a background only. Since **1.21.1** those parts keep their colours on paper — the checked box and its tick, the chosen radio, the toggle's track, the progress fill, the current step, the chosen day of date strip and calendar, the slider thumb and the tone dots — while the rest of the page prints economically. Nothing to set.
@@ -373,6 +389,12 @@ All visual values are controlled via CSS Custom Properties:
 /* Shadows & Insets */
 --gl-shadow-card
 --gl-inset-strong
+
+/* Gloss – off with data-surface="solid" */
+--gl-gloss-card           /* highlight on the top edge of the glow card */
+--gl-gloss-modal          /* the same on the modal */
+--gl-gloss-progress       /* sheen on the progress fill */
+--gl-range-thumb-border   /* rim of the range thumb */
 
 /* Component hooks */
 --gl-modal-max-width      /* 340px */

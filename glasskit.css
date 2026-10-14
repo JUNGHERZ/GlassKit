@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.23.0
+   Jungherz GmbH – v1.24.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -178,6 +178,18 @@
   --gl-inset-medium:         inset 0 1px 1px rgba(255, 255, 255, 0.15);
   --gl-inset-strong:         inset 0 1px 2px rgba(255, 255, 255, 0.25);
   --gl-inset-milk:           inset 0 1px 2px rgba(255, 255, 255, 0.40);
+
+  /* ---- Gloss ----
+     The light that glass catches: the highlight along the top edge of the
+     glow card and of the modal, the sheen on the progress fill and the rim
+     of the range thumb. The same in both themes, so only declared here.
+     Literals until 1.23.0; [data-surface="solid"] (1d) turns them off. */
+  --gl-gloss-card:           linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 30%,
+                               rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.5) 70%, transparent 100%);
+  --gl-gloss-modal:          linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 30%,
+                               rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.4) 70%, transparent 100%);
+  --gl-gloss-progress:       linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, transparent 100%);
+  --gl-range-thumb-border:   2px solid rgba(255,255,255,0.5);
 
   /* ---- Background Effects ----
      Deliberately *not* derived from --gl-color-primary: the aurora is the scene
@@ -408,6 +420,74 @@
 
 
 /* ============================================================
+   1d. SURFACE PRESET – SOLID
+   ============================================================ */
+/* Opt-in, next to the theme and the density: <html data-surface="solid">.
+   Opaque surfaces without blur and gloss, for admin screens, forms on a
+   plain background, designs without glass (since 1.24.0). Each surface
+   takes the colour the glass shows over the theme's middle background,
+   --gl-color-bg-mid: one surface above another keeps its place in the
+   order, and a re-branded background carries over. Blur, the inner shine
+   (--gl-inset-*) and the gloss are off. Borders, drop shadows, the tints
+   of badges and chips and the dimming overlay stay as they are.
+
+   The bare selector matches <html>, like the density preset. A theme scope
+   inside the page — an element with its own data-theme — re-declares its
+   theme's glass tokens, so the preset names it too. build-styles-js.mjs
+   moves both blocks into tokensCss, after the density block. */
+[data-surface="solid"],
+[data-surface="solid"] [data-theme="dark"] {
+  --gl-surface-1:            color-mix(in srgb, #ffffff 8%,  var(--gl-color-bg-mid));
+  --gl-surface-2:            color-mix(in srgb, #ffffff 10%, var(--gl-color-bg-mid));
+  --gl-surface-3:            color-mix(in srgb, #ffffff 14%, var(--gl-color-bg-mid));
+  --gl-surface-4:            color-mix(in srgb, #ffffff 16%, var(--gl-color-bg-mid));
+  --gl-surface-5:            color-mix(in srgb, #ffffff 22%, var(--gl-color-bg-mid));
+  --gl-surface-milk:         color-mix(in srgb, #ffffff 55%, var(--gl-color-bg-mid));
+  --gl-surface-milk-strong:  color-mix(in srgb, #ffffff 75%, var(--gl-color-bg-mid));
+  --gl-card-glow-top:        color-mix(in srgb, #ffffff 32%, var(--gl-color-bg-mid));
+  --gl-card-glow-mid:        color-mix(in srgb, #ffffff 22%, var(--gl-color-bg-mid));
+  --gl-card-glow-low:        color-mix(in srgb, #ffffff 14%, var(--gl-color-bg-mid));
+  --gl-card-glow-bottom:     color-mix(in srgb, #ffffff 8%,  var(--gl-color-bg-mid));
+  --gl-toggle-thumb-bg:      linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
+  --gl-shadow-glow:          0 4px 16px rgba(0, 0, 0, 0.15);
+  --gl-blur:                 0px;
+  --gl-blur-light:           0px;
+  --gl-blur-soft:            0px;
+  --gl-blur-heavy:           0px;
+  /* No inner shine. A zero shadow, not none: the insets sit in shadow lists. */
+  --gl-inset-subtle:         inset 0 0 0 transparent;
+  --gl-inset-medium:         inset 0 0 0 transparent;
+  --gl-inset-strong:         inset 0 0 0 transparent;
+  --gl-inset-milk:           inset 0 0 0 transparent;
+  --gl-gloss-card:           none;
+  --gl-gloss-modal:          none;
+  --gl-gloss-progress:       none;
+  --gl-range-thumb-border:   2px solid transparent;
+}
+[data-surface="solid"][data-theme="light"],
+[data-surface="solid"] [data-theme="light"],
+[data-theme="light"] [data-surface="solid"] {
+  --gl-surface-1:            color-mix(in srgb, #ffffff 50%, var(--gl-color-bg-mid));
+  --gl-surface-2:            color-mix(in srgb, #ffffff 60%, var(--gl-color-bg-mid));
+  --gl-surface-3:            color-mix(in srgb, #ffffff 70%, var(--gl-color-bg-mid));
+  --gl-surface-4:            color-mix(in srgb, #ffffff 75%, var(--gl-color-bg-mid));
+  --gl-surface-5:            color-mix(in srgb, #ffffff 85%, var(--gl-color-bg-mid));
+  --gl-surface-milk:         color-mix(in srgb, #ffffff 85%, var(--gl-color-bg-mid));
+  --gl-surface-milk-strong:  color-mix(in srgb, #ffffff 92%, var(--gl-color-bg-mid));
+  --gl-card-glow-top:        color-mix(in srgb, #ffffff 90%, var(--gl-color-bg-mid));
+  --gl-card-glow-mid:        color-mix(in srgb, #ffffff 78%, var(--gl-color-bg-mid));
+  --gl-card-glow-low:        color-mix(in srgb, #ffffff 65%, var(--gl-color-bg-mid));
+  --gl-card-glow-bottom:     color-mix(in srgb, #ffffff 50%, var(--gl-color-bg-mid));
+  --gl-shadow-glow:          0 2px 8px rgba(0, 0, 0, 0.05),
+                             0 4px 12px rgba(0, 0, 0, 0.04);
+  --gl-inset-subtle:         inset 0 0 0 transparent;
+  --gl-inset-medium:         inset 0 0 0 transparent;
+  --gl-inset-strong:         inset 0 0 0 transparent;
+  --gl-inset-milk:           inset 0 0 0 transparent;
+}
+
+
+/* ============================================================
    2. HINTERGRUND
    ============================================================ */
 .glass-bg {
@@ -554,10 +634,7 @@
 .glass-card--glow::before {
   content: '';
   position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0%, rgba(255,255,255,0.5) 30%,
-    rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.5) 70%, transparent 100%
-  );
+  background: var(--gl-gloss-card);
   z-index: 1;
 }
 
@@ -1175,7 +1252,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   background: linear-gradient(135deg,
     var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
   );
-  border: 2px solid rgba(255,255,255,0.5);
+  border: var(--gl-range-thumb-border);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--gl-color-primary-mid) 35%, transparent), var(--gl-inset-strong);
   margin-top: -2px; cursor: pointer;
   transition: var(--gl-transition);
@@ -1189,7 +1266,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   background: linear-gradient(135deg,
     var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
   );
-  border: 2px solid rgba(255,255,255,0.5);
+  border: var(--gl-range-thumb-border);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--gl-color-primary-mid) 35%, transparent);
   cursor: pointer;
 }
@@ -1250,7 +1327,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   content: '';
   position: absolute; top: 0; left: 0; right: 0; height: 50%;
   border-radius: var(--gl-radius-full);
-  background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, transparent 100%);
+  background: var(--gl-gloss-progress);
 }
 
 .glass-progress--sm .glass-progress__track { height: 4px; }
@@ -1321,10 +1398,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-modal::before {
   content: '';
   position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0%, rgba(255,255,255,0.4) 30%,
-    rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.4) 70%, transparent 100%
-  );
+  background: var(--gl-gloss-modal);
 }
 
 .glass-modal__header { padding: var(--gl-space-xl) var(--gl-space-xl) var(--gl-space-sm); text-align: center; }
