@@ -38,15 +38,18 @@ const css = readFileSync('glasskit.min.css', 'utf-8').replace(/\/\*# sourceMappi
 // The preset belongs with the tokens: in componentsCss it would re-declare
 // the density tokens inside every shadow root that carries the attribute,
 // and a project's own density values would stop arriving there. The same
-// holds for the solid surface preset (1.24.0). Its light block is written as
-// the minifier orders the selector list; should that order change, the
-// lookup fails below instead of splitting wrong.
+// holds for the surface presets, solid (1.24.0) and tint (1.25.0). Their
+// blocks are written as the minifier orders the selector lists; should that
+// order change, the lookup fails below instead of splitting wrong. The tint
+// preset's panel rule (1e) is a component rule and stays in componentsCss:
+// it has to match inside the shadow roots.
 const TOKEN_BLOCK_STARTS = [
   ':root,[data-theme=dark]{',
   '[data-theme=light]{',
   '[data-density=compact]{',
-  '[data-surface=solid],[data-surface=solid] [data-theme=dark]{',
-  '[data-surface=solid] [data-theme=light],[data-surface=solid][data-theme=light],[data-theme=light] [data-surface=solid]{',
+  '[data-surface=solid],[data-surface=solid] [data-theme=dark],[data-surface=tint],[data-surface=tint] [data-theme=dark]{',
+  '[data-surface=solid] [data-theme=light],[data-surface=solid][data-theme=light],[data-surface=tint] [data-theme=light],[data-surface=tint][data-theme=light],[data-theme=light] [data-surface=solid],[data-theme=light] [data-surface=tint]{',
+  ':root[data-surface=tint],[data-surface=tint] [data-theme],[data-surface=tint][data-theme],[data-theme] [data-surface=tint]{',
 ];
 
 /** Returns [start, end) of the rule block beginning at `open`. */
@@ -87,6 +90,8 @@ const checks = [
   [tokensCss.includes('--gl-state-scrim:'), 'tokensCss is missing --gl-state-scrim'],
   [tokensCss.includes('--gl-control-height:40px'), 'tokensCss is missing the compact density preset'],
   [tokensCss.includes('--gl-blur:0'), 'tokensCss is missing the solid surface preset'],
+  [tokensCss.includes(':root[data-surface=tint]'), 'tokensCss is missing the tint surface preset'],
+  [componentsCss.includes('[data-surface=tint] :is(.glass-modal'), 'componentsCss is missing the tint panel rule'],
   [!componentsCss.includes('--gl-color-primary:'), 'componentsCss still declares tokens'],
   [!componentsCss.includes('--gl-control-height:'), 'componentsCss still declares density tokens'],
   [!componentsCss.includes('--gl-blur:'), 'componentsCss still declares surface tokens'],

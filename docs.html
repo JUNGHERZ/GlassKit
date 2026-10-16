@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.24.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.25.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -388,7 +388,7 @@
     <a class="docs-sidebar__link" href="#tokens">Design Tokens</a>
     <a class="docs-sidebar__link" href="#theming">Theming (Light/Dark)</a>
     <a class="docs-sidebar__link" href="#density">Density (Compact)</a>
-    <a class="docs-sidebar__link" href="#surface">Surfaces (Solid)</a>
+    <a class="docs-sidebar__link" href="#surface">Surfaces (Solid, Tint)</a>
     <a class="docs-sidebar__link" href="#background">Background</a>
   </div>
 
@@ -460,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.24.0</span>
+      <span class="docs-hero__badge">v1.25.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Components</span>
@@ -635,10 +635,11 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 
   <!-- SURFACES -->
   <section class="docs-section" id="surface">
-    <h2>Surfaces (Solid)</h2>
+    <h2>Surfaces (Solid, Tint)</h2>
     <p>Not every screen wants glass: admin screens, forms on a plain background, designs without it. Since 1.24.0 <code>data-surface="solid"</code> on the <code>&lt;html&gt;</code> element makes every surface opaque and turns blur and gloss off. Each surface takes the colour the glass shows over the theme&rsquo;s middle background, <code>--gl-color-bg-mid</code>: cards, fields and buttons keep their order, and a re-branded background carries over. The inner shine (<code>--gl-inset-*</code>), the highlight along the top edge of the glow card and the modal, the sheen on the progress fill and the rim of the range thumb are off. Borders, drop shadows, the tints of badges and chips and the dimming overlay stay as they are. Without the attribute nothing changes.</p>
+    <p>A page with a background of its own &mdash; a brand colour, a photo, a pattern &mdash; takes <code>data-surface="tint"</code> instead (since 1.25.0). A surface mixed over <code>--gl-color-bg-mid</code> would stand out there as a foreign block, so the surfaces in the flow of the page become see-through tints of the text colour, nothing blurred: a field on a card stays as see-through as the card, and its contrast follows the text. What lies over other content keeps the solid values &mdash; modal, sheet, popover, toast and the tab bars, with the fields and rows inside them &mdash; and so does the secondary button, a light plate for dark ink. Blur and gloss are off as with solid; a blur behind dialogs stays where a project sets <a href="#modal"><code>--gl-blur-overlay</code></a>.</p>
     <div class="docs-preview" style="background:repeating-linear-gradient(45deg,#e63946 0 18px,#2a9d8f 18px 36px,#f4a261 36px 54px,#264653 54px 72px)">
-      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px">
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
         <div class="glass-card gl-stack gl-stack--sm" style="padding:20px">
           <span class="glass-label">Glass</span>
           <input class="glass-input" type="text" placeholder="Name">
@@ -651,9 +652,15 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
           <button class="glass-btn glass-btn--secondary">Cancel</button>
           <label class="glass-toggle"><input class="glass-toggle__input" type="checkbox" checked><span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span><span class="glass-toggle__label">Notifications</span></label>
         </div>
+        <div class="glass-card gl-stack gl-stack--sm" data-surface="tint" style="padding:20px">
+          <span class="glass-label">Tint</span>
+          <input class="glass-input" type="text" placeholder="Name">
+          <button class="glass-btn glass-btn--secondary">Cancel</button>
+          <label class="glass-toggle"><input class="glass-toggle__input" type="checkbox" checked><span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span><span class="glass-toggle__label">Notifications</span></label>
+        </div>
       </div>
     </div>
-    <p>The preview sets the attribute on its right card. On a page it belongs on <code>&lt;html&gt;</code>, next to <code>data-theme</code> and <code>data-density</code>; a theme scope further down &mdash; an element with its own <code>data-theme</code> &mdash; stays solid. Everything runs through tokens, so a project tunes the preset as it tunes a theme. GlassKit Elements carries the attribute into its shadow roots, as it does with <code>data-theme</code>.</p>
+    <p>The preview sets the attribute on its second and third card. On a page it belongs on <code>&lt;html&gt;</code>, next to <code>data-theme</code> and <code>data-density</code>; a theme scope further down &mdash; an element with its own <code>data-theme</code> &mdash; stays solid. Everything runs through tokens, so a project tunes the preset as it tunes a theme. GlassKit Elements carries the attribute into its shadow roots, as it does with <code>data-theme</code>.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;html</span> <span class="attr">data-theme=</span><span class="val">"dark"</span> <span class="attr">data-surface=</span><span class="val">"solid"</span><span class="tag">&gt;</span>
 
@@ -662,7 +669,12 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="cls">document.documentElement</span>.removeAttribute(<span class="val">'data-surface'</span>);
 
 <span class="cmt">/* Tune it like a theme &ndash; here a darker card surface in dark mode: */</span>
-[data-surface=<span class="val">'solid'</span>] { --gl-surface-2: <span class="val">#17313d</span>; }</div>
+[data-surface=<span class="val">'solid'</span>] { --gl-surface-2: <span class="val">#17313d</span>; }
+
+<span class="cmt">/* Both presets mix their opaque surfaces over --gl-color-bg-mid; the panels
+   of the tint preset take them as --gl-solid-surface-1 … -5 and
+   --gl-solid-card-glow-*. A brand sets the middle colour to its own: */</span>
+[data-surface=<span class="val">'tint'</span>] { --gl-color-bg-mid: <span class="val">#5c1310</span>; }</div>
     </div>
     <p>The gloss is made of tokens now as well: <code>--gl-gloss-card</code>, <code>--gl-gloss-modal</code>, <code>--gl-gloss-progress</code> and <code>--gl-range-thumb-border</code> (see <a href="#tokens">Design Tokens</a>). Before 1.24.0 they were literals that a project&rsquo;s own solid skin could not reach.</p>
   </section>
@@ -1252,6 +1264,11 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="cls">.settings-dialog</span> { <span class="attr">--gl-modal-max-width</span>: <span class="val">560px</span>; }</div>
     </div>
+    <h3>Blur behind the dialog</h3>
+    <p>The dimmer behind a dialog, and behind a <a href="#sheet">sheet</a>, blurs with <code>--gl-blur-overlay</code> where a project sets it, else with <code>--gl-blur-soft</code> (since 1.25.0). The <a href="#surface">surface presets</a> set the blur tokens to 0 but leave this one alone, so a page without glass can keep a blurred dimmer:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">:root</span> { <span class="attr">--gl-blur-overlay</span>: <span class="val">8px</span>; }</div>
+    </div>
   </section>
 
   <!-- TOAST -->
@@ -1403,6 +1420,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-input-wrap__suffix"</span><span class="tag">&gt;</span>EUR<span class="tag">&lt;/span&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
+    <p>A value or placeholder too long for the field ends in an ellipsis while the field is not being edited, and a <code>.glass-label</code> without text takes no room (both since 1.25.0). Date and time fields keep the browser&rsquo;s own picker button; <code>--gl-input-picker-icon: none</code> hides it in Chromium &mdash; when the field&rsquo;s prefix is the picker, for instance; call <code>showPicker()</code> from it then. It also hides the arrow of a field with a <code>&lt;datalist&gt;</code>.</p>
   </section>
 
   <!-- TEXTAREA -->
@@ -1413,6 +1431,10 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
     </div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;textarea</span> <span class="attr">class=</span><span class="val">"glass-textarea"</span><span class="tag">&gt;&lt;/textarea&gt;</span></div>
+    </div>
+    <p>A text area that cannot be edited has no resize handle (since 1.25.0). <code>--gl-textarea-field-sizing: content</code> lets text areas grow with their text in browsers with <code>field-sizing</code>; it is off by default, because it ignores <code>rows</code>.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">:root</span> { <span class="attr">--gl-textarea-field-sizing</span>: <span class="val">content</span>; }</div>
     </div>
   </section>
 
@@ -1466,6 +1488,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/label&gt;</span></div>
     </div>
     <p>The input is invisible, but it lies on top of the track and takes the click itself (since 1.20.0): a test tool that clicks the switch by its role reaches it, where the track used to draw over it and take the click. It covers the track only &mdash; the label text, which may hold a link, stays the label&rsquo;s. A <code>__label</code> left empty takes no room, so a switch without text keeps no 12&nbsp;px gap for one. Both hold for the checkbox and the radio button too. Right to left, the thumb starts on the right.</p>
+    <p>The track is <code>--gl-toggle-track-bg</code> when off and <code>--gl-toggle-track-bg-checked</code> when on (since 1.25.0; unset, <code>--gl-surface-2</code> and the primary gradient): a stronger track for a page without glass, where the surface can be hard to see.</p>
   </section>
 
   <!-- CHECKBOX -->
@@ -1490,6 +1513,17 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       </div>
     </div>
     <p>As with the toggle, the input lies on top of the circle and an empty <code>__label</code> takes no room (since 1.20.0).</p>
+    <p>Fill, rim and dot are tokens (since 1.25.0): <code>--gl-radio-bg</code> and <code>--gl-radio-bg-checked</code>, <code>--gl-radio-border</code> and <code>--gl-radio-border-checked</code> (whole border values, so give both the same width), <code>--gl-radio-dot-size</code> (10px) and <code>--gl-radio-dot-color</code> (white). A ring in the text colour that turns the accent colour when checked:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">:root</span> {
+  <span class="attr">--gl-radio-bg</span>: <span class="val">transparent</span>;
+  <span class="attr">--gl-radio-bg-checked</span>: <span class="val">transparent</span>;
+  <span class="attr">--gl-radio-border</span>: <span class="val">2px solid color-mix(in srgb, var(--gl-color-text) 60%, transparent)</span>;
+  <span class="attr">--gl-radio-border-checked</span>: <span class="val">2px solid var(--gl-color-primary)</span>;
+  <span class="attr">--gl-radio-dot-size</span>: <span class="val">50%</span>;
+  <span class="attr">--gl-radio-dot-color</span>: <span class="val">var(--gl-color-primary)</span>;
+}</div>
+    </div>
   </section>
 
   <!-- RANGE -->

@@ -288,7 +288,7 @@
         </button>
       </nav>
 
-      <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.24.0</h1>
+      <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.25.0</h1>
 
       <!-- DENSITY -->
       <p class="section-label">Density</p>
@@ -302,6 +302,7 @@
       <div class="glass-segmented glass-segmented--full gl-mb-md" role="group" aria-label="Surface">
         <button class="glass-segmented__item" type="button" aria-pressed="true" onclick="setSurface(this, null)">Glass</button>
         <button class="glass-segmented__item" type="button" aria-pressed="false" onclick="setSurface(this, 'solid')">Solid</button>
+        <button class="glass-segmented__item" type="button" aria-pressed="false" onclick="setSurface(this, 'tint')">Tint</button>
       </div>
 
       <!-- CARD -->
@@ -1029,7 +1030,7 @@
     for (const b of button.parentElement.children) b.setAttribute('aria-pressed', String(b === button));
   }
 
-  // Surface: data-surface="solid" on <html>, or none
+  // Surface: data-surface="solid" or "tint" on <html>, or none
   function setSurface(button, surface) {
     const html = document.documentElement;
     if (surface) html.setAttribute('data-surface', surface);

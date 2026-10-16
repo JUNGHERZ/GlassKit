@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.24.0
+   Jungherz GmbH – v1.25.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -420,34 +420,63 @@
 
 
 /* ============================================================
-   1d. SURFACE PRESET – SOLID
+   1d. SURFACE PRESETS – SOLID AND TINT
    ============================================================ */
-/* Opt-in, next to the theme and the density: <html data-surface="solid">.
-   Opaque surfaces without blur and gloss, for admin screens, forms on a
-   plain background, designs without glass (since 1.24.0). Each surface
-   takes the colour the glass shows over the theme's middle background,
-   --gl-color-bg-mid: one surface above another keeps its place in the
-   order, and a re-branded background carries over. Blur, the inner shine
-   (--gl-inset-*) and the gloss are off. Borders, drop shadows, the tints
-   of badges and chips and the dimming overlay stay as they are.
+/* Opt-in, next to the theme and the density, on <html>.
 
-   The bare selector matches <html>, like the density preset. A theme scope
+   data-surface="solid" (since 1.24.0): opaque surfaces without blur and
+   gloss, for admin screens, forms on a plain background, designs without
+   glass. Each surface takes the colour the glass shows over the theme's
+   middle background, --gl-color-bg-mid: one surface above another keeps
+   its place in the order, and a re-branded background carries over.
+
+   data-surface="tint" (since 1.25.0): for a page with a background of its
+   own — a brand colour, a photo, a pattern — where a surface mixed over
+   --gl-color-bg-mid would stand out as a foreign block. The surfaces in the
+   flow of the page become see-through tints of the text colour, nothing
+   blurred: a field on a card stays as see-through as the card, and its
+   contrast follows the text. What lies over other content keeps the solid
+   values: modal, sheet, popover, toast and the tab bars (1e). So do the
+   milk surfaces, light plates for dark ink: a see-through secondary button
+   would lose its text on a dark page.
+
+   Both turn off the blur, the inner shine (--gl-inset-*) and the gloss.
+   Borders, drop shadows, the tints of badges and chips and the dimming
+   overlay stay as they are; a blur behind dialogs stays where a project
+   sets --gl-blur-overlay.
+
+   The bare selectors match <html>, like the density preset. A theme scope
    inside the page — an element with its own data-theme — re-declares its
-   theme's glass tokens, so the preset names it too. build-styles-js.mjs
-   moves both blocks into tokensCss, after the density block. */
+   theme's glass tokens, so the presets name it too. build-styles-js.mjs
+   moves the three blocks into tokensCss, after the density block. */
+
+/* Solid, dark theme — and the ground of the tint preset. The solid
+   surfaces are kept under names of their own as well, --gl-solid-*: the
+   panels of the tint preset take them from there (1e). */
 [data-surface="solid"],
-[data-surface="solid"] [data-theme="dark"] {
-  --gl-surface-1:            color-mix(in srgb, #ffffff 8%,  var(--gl-color-bg-mid));
-  --gl-surface-2:            color-mix(in srgb, #ffffff 10%, var(--gl-color-bg-mid));
-  --gl-surface-3:            color-mix(in srgb, #ffffff 14%, var(--gl-color-bg-mid));
-  --gl-surface-4:            color-mix(in srgb, #ffffff 16%, var(--gl-color-bg-mid));
-  --gl-surface-5:            color-mix(in srgb, #ffffff 22%, var(--gl-color-bg-mid));
+[data-surface="tint"],
+[data-surface="solid"] [data-theme="dark"],
+[data-surface="tint"] [data-theme="dark"] {
+  --gl-solid-surface-1:      color-mix(in srgb, #ffffff 8%,  var(--gl-color-bg-mid));
+  --gl-solid-surface-2:      color-mix(in srgb, #ffffff 10%, var(--gl-color-bg-mid));
+  --gl-solid-surface-3:      color-mix(in srgb, #ffffff 14%, var(--gl-color-bg-mid));
+  --gl-solid-surface-4:      color-mix(in srgb, #ffffff 16%, var(--gl-color-bg-mid));
+  --gl-solid-surface-5:      color-mix(in srgb, #ffffff 22%, var(--gl-color-bg-mid));
+  --gl-solid-card-glow-top:    color-mix(in srgb, #ffffff 32%, var(--gl-color-bg-mid));
+  --gl-solid-card-glow-mid:    color-mix(in srgb, #ffffff 22%, var(--gl-color-bg-mid));
+  --gl-solid-card-glow-low:    color-mix(in srgb, #ffffff 14%, var(--gl-color-bg-mid));
+  --gl-solid-card-glow-bottom: color-mix(in srgb, #ffffff 8%,  var(--gl-color-bg-mid));
+  --gl-surface-1:            var(--gl-solid-surface-1);
+  --gl-surface-2:            var(--gl-solid-surface-2);
+  --gl-surface-3:            var(--gl-solid-surface-3);
+  --gl-surface-4:            var(--gl-solid-surface-4);
+  --gl-surface-5:            var(--gl-solid-surface-5);
   --gl-surface-milk:         color-mix(in srgb, #ffffff 55%, var(--gl-color-bg-mid));
   --gl-surface-milk-strong:  color-mix(in srgb, #ffffff 75%, var(--gl-color-bg-mid));
-  --gl-card-glow-top:        color-mix(in srgb, #ffffff 32%, var(--gl-color-bg-mid));
-  --gl-card-glow-mid:        color-mix(in srgb, #ffffff 22%, var(--gl-color-bg-mid));
-  --gl-card-glow-low:        color-mix(in srgb, #ffffff 14%, var(--gl-color-bg-mid));
-  --gl-card-glow-bottom:     color-mix(in srgb, #ffffff 8%,  var(--gl-color-bg-mid));
+  --gl-card-glow-top:        var(--gl-solid-card-glow-top);
+  --gl-card-glow-mid:        var(--gl-solid-card-glow-mid);
+  --gl-card-glow-low:        var(--gl-solid-card-glow-low);
+  --gl-card-glow-bottom:     var(--gl-solid-card-glow-bottom);
   --gl-toggle-thumb-bg:      linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
   --gl-shadow-glow:          0 4px 16px rgba(0, 0, 0, 0.15);
   --gl-blur:                 0px;
@@ -464,26 +493,78 @@
   --gl-gloss-progress:       none;
   --gl-range-thumb-border:   2px solid transparent;
 }
+/* Solid, light theme — and the tint preset's ground in it. */
 [data-surface="solid"][data-theme="light"],
 [data-surface="solid"] [data-theme="light"],
-[data-theme="light"] [data-surface="solid"] {
-  --gl-surface-1:            color-mix(in srgb, #ffffff 50%, var(--gl-color-bg-mid));
-  --gl-surface-2:            color-mix(in srgb, #ffffff 60%, var(--gl-color-bg-mid));
-  --gl-surface-3:            color-mix(in srgb, #ffffff 70%, var(--gl-color-bg-mid));
-  --gl-surface-4:            color-mix(in srgb, #ffffff 75%, var(--gl-color-bg-mid));
-  --gl-surface-5:            color-mix(in srgb, #ffffff 85%, var(--gl-color-bg-mid));
+[data-theme="light"] [data-surface="solid"],
+[data-surface="tint"][data-theme="light"],
+[data-surface="tint"] [data-theme="light"],
+[data-theme="light"] [data-surface="tint"] {
+  --gl-solid-surface-1:      color-mix(in srgb, #ffffff 50%, var(--gl-color-bg-mid));
+  --gl-solid-surface-2:      color-mix(in srgb, #ffffff 60%, var(--gl-color-bg-mid));
+  --gl-solid-surface-3:      color-mix(in srgb, #ffffff 70%, var(--gl-color-bg-mid));
+  --gl-solid-surface-4:      color-mix(in srgb, #ffffff 75%, var(--gl-color-bg-mid));
+  --gl-solid-surface-5:      color-mix(in srgb, #ffffff 85%, var(--gl-color-bg-mid));
+  --gl-solid-card-glow-top:    color-mix(in srgb, #ffffff 90%, var(--gl-color-bg-mid));
+  --gl-solid-card-glow-mid:    color-mix(in srgb, #ffffff 78%, var(--gl-color-bg-mid));
+  --gl-solid-card-glow-low:    color-mix(in srgb, #ffffff 65%, var(--gl-color-bg-mid));
+  --gl-solid-card-glow-bottom: color-mix(in srgb, #ffffff 50%, var(--gl-color-bg-mid));
+  --gl-surface-1:            var(--gl-solid-surface-1);
+  --gl-surface-2:            var(--gl-solid-surface-2);
+  --gl-surface-3:            var(--gl-solid-surface-3);
+  --gl-surface-4:            var(--gl-solid-surface-4);
+  --gl-surface-5:            var(--gl-solid-surface-5);
   --gl-surface-milk:         color-mix(in srgb, #ffffff 85%, var(--gl-color-bg-mid));
   --gl-surface-milk-strong:  color-mix(in srgb, #ffffff 92%, var(--gl-color-bg-mid));
-  --gl-card-glow-top:        color-mix(in srgb, #ffffff 90%, var(--gl-color-bg-mid));
-  --gl-card-glow-mid:        color-mix(in srgb, #ffffff 78%, var(--gl-color-bg-mid));
-  --gl-card-glow-low:        color-mix(in srgb, #ffffff 65%, var(--gl-color-bg-mid));
-  --gl-card-glow-bottom:     color-mix(in srgb, #ffffff 50%, var(--gl-color-bg-mid));
+  --gl-card-glow-top:        var(--gl-solid-card-glow-top);
+  --gl-card-glow-mid:        var(--gl-solid-card-glow-mid);
+  --gl-card-glow-low:        var(--gl-solid-card-glow-low);
+  --gl-card-glow-bottom:     var(--gl-solid-card-glow-bottom);
   --gl-shadow-glow:          0 2px 8px rgba(0, 0, 0, 0.05),
                              0 4px 12px rgba(0, 0, 0, 0.04);
   --gl-inset-subtle:         inset 0 0 0 transparent;
   --gl-inset-medium:         inset 0 0 0 transparent;
   --gl-inset-strong:         inset 0 0 0 transparent;
   --gl-inset-milk:           inset 0 0 0 transparent;
+}
+/* Tint: the surfaces in the flow of the page become see-through tints of
+   the text colour. One block for both themes: the text colour is the
+   theme's. It comes after the solid blocks and outranks the light one. */
+:root[data-surface="tint"],
+[data-surface="tint"][data-theme],
+[data-surface="tint"] [data-theme],
+[data-theme] [data-surface="tint"] {
+  --gl-surface-1:            color-mix(in srgb, var(--gl-color-text) 4%,  transparent);
+  --gl-surface-2:            color-mix(in srgb, var(--gl-color-text) 6%,  transparent);
+  --gl-surface-3:            color-mix(in srgb, var(--gl-color-text) 9%,  transparent);
+  --gl-surface-4:            color-mix(in srgb, var(--gl-color-text) 12%, transparent);
+  --gl-surface-5:            color-mix(in srgb, var(--gl-color-text) 16%, transparent);
+  --gl-card-glow-top:        color-mix(in srgb, var(--gl-color-text) 16%, transparent);
+  --gl-card-glow-mid:        color-mix(in srgb, var(--gl-color-text) 12%, transparent);
+  --gl-card-glow-low:        color-mix(in srgb, var(--gl-color-text) 9%,  transparent);
+  --gl-card-glow-bottom:     color-mix(in srgb, var(--gl-color-text) 6%,  transparent);
+}
+
+
+/* ============================================================
+   1e. TINT PRESET – PANELS
+   ============================================================ */
+/* What lies over other content stays opaque under data-surface="tint":
+   it takes the solid surfaces the preset keeps under --gl-solid-*, and so
+   does what sits inside it — a field in a modal, a row in a popover. A
+   component rule, not a token block, so that it also matches inside the
+   shadow roots of GlassKit Elements, on the theme wrapper that mirrors
+   data-surface. */
+[data-surface="tint"] :is(.glass-modal, .glass-sheet, .glass-popover, .glass-toast, .glass-tab-bar, .glass-tab-bar__accessory) {
+  --gl-surface-1:            var(--gl-solid-surface-1);
+  --gl-surface-2:            var(--gl-solid-surface-2);
+  --gl-surface-3:            var(--gl-solid-surface-3);
+  --gl-surface-4:            var(--gl-solid-surface-4);
+  --gl-surface-5:            var(--gl-solid-surface-5);
+  --gl-card-glow-top:        var(--gl-solid-card-glow-top);
+  --gl-card-glow-mid:        var(--gl-solid-card-glow-mid);
+  --gl-card-glow-low:        var(--gl-solid-card-glow-low);
+  --gl-card-glow-bottom:     var(--gl-solid-card-glow-bottom);
 }
 
 
@@ -802,6 +883,9 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   color: var(--gl-icon-strong);
   padding-inline-start: var(--gl-space-2xs);
 }
+/* Without text a label takes no room: an empty one kept the group's gap
+   above its field (until 1.24.0). */
+.glass-label:empty { display: none; }
 
 .glass-input {
   width: 100%; height: var(--gl-control-height, 52px);
@@ -818,7 +902,15 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   outline: none;
   box-shadow: var(--gl-inset-subtle);
   -webkit-tap-highlight-color: transparent;
+  /* A value or placeholder too long for the field ends in an ellipsis
+     while the field is not being edited (since 1.25.0). */
+  text-overflow: ellipsis;
 }
+/* The browser's own picker button of a date or time field, and the arrow
+   of a datalist, unless --gl-input-picker-icon is none (since 1.25.0) —
+   when the field's prefix is the picker, for instance; call showPicker()
+   from it then. Unset, revert keeps each browser's own. */
+.glass-input::-webkit-calendar-picker-indicator { display: var(--gl-input-picker-icon, revert); }
 
 .glass-input::placeholder { color: var(--gl-placeholder); }
 
@@ -931,7 +1023,13 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   transition: var(--gl-transition);
   outline: none;
   box-shadow: var(--gl-inset-subtle);
+  /* --gl-textarea-field-sizing: content lets text areas grow with their
+     text (since 1.25.0); off by default, because it ignores rows. Browsers
+     without field-sizing keep the fixed height. */
+  field-sizing: var(--gl-textarea-field-sizing, fixed);
 }
+/* Nothing to resize in a text area that cannot be edited (since 1.25.0). */
+.glass-textarea:read-only { resize: none; }
 .glass-textarea::placeholder { color: var(--gl-placeholder); }
 .glass-textarea:focus {
   border-color: var(--gl-border-focus);
@@ -1031,7 +1129,9 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 
 .glass-toggle__track {
   position: relative; width: var(--gl-toggle-width, 52px); height: var(--gl-toggle-height, 30px);
-  background: var(--gl-surface-2);
+  /* --gl-toggle-track-bg and -checked (since 1.25.0): a stronger track for
+     a page without glass, where the surface can be hard to see. */
+  background: var(--gl-toggle-track-bg, var(--gl-surface-2));
   backdrop-filter: blur(var(--gl-blur-soft));
   -webkit-backdrop-filter: blur(var(--gl-blur-soft));
   border: 1.5px solid var(--gl-border-medium);
@@ -1059,9 +1159,9 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 .glass-toggle__input:checked + .glass-toggle__track {
-  background: linear-gradient(135deg,
+  background: var(--gl-toggle-track-bg-checked, linear-gradient(135deg,
     var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
-  );
+  ));
   border-color: var(--gl-border-warm);
 }
 
@@ -1180,12 +1280,15 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   margin-top: max(0px, calc((1lh - var(--gl-check-size, 24px)) / 2));
 }
 
+/* --gl-radio-* (since 1.25.0): fill, rim and dot, for a look without glass —
+   a ring in the text colour that turns the accent colour when checked, say.
+   The two rims are whole border values, so give both the same width. */
 .glass-radio__circle {
   width: var(--gl-check-size, 24px); height: var(--gl-check-size, 24px);
   border-radius: var(--gl-radius-pill);
-  background: var(--gl-surface-2);
+  background: var(--gl-radio-bg, var(--gl-surface-2));
   backdrop-filter: blur(var(--gl-blur-soft));
-  border: 1.5px solid var(--gl-border-medium);
+  border: var(--gl-radio-border, 1.5px solid var(--gl-border-medium));
   display: flex; align-items: center; justify-content: center;
   transition: var(--gl-transition);
   box-shadow: var(--gl-inset-subtle);
@@ -1194,18 +1297,18 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 .glass-radio__dot {
-  width: 10px; height: 10px;
+  width: var(--gl-radio-dot-size, 10px); height: var(--gl-radio-dot-size, 10px);
   border-radius: var(--gl-radius-pill);
-  background: white;
+  background: var(--gl-radio-dot-color, white);
   opacity: 0; transform: scale(0);
   transition: var(--gl-transition-fast);
 }
 
 .glass-radio__input:checked + .glass-radio__circle {
-  background: linear-gradient(135deg,
+  background: var(--gl-radio-bg-checked, linear-gradient(135deg,
     var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%
-  );
-  border-color: var(--gl-border-warm);
+  ));
+  border: var(--gl-radio-border-checked, 1.5px solid var(--gl-border-warm));
 }
 .glass-radio__input:checked + .glass-radio__circle .glass-radio__dot { opacity: 1; transform: scale(1); }
 .glass-radio__input:focus-visible + .glass-radio__circle { box-shadow: var(--gl-shadow-focus); }
@@ -1353,11 +1456,15 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 /* ============================================================
    16. MODAL
    ============================================================ */
+/* The dimmer behind a dialog blurs with --gl-blur-overlay where a project
+   sets it, else with --gl-blur-soft (since 1.25.0). The surface presets set
+   the blur tokens to 0 but leave this one alone: a blurred dimmer suits a
+   page without glass as well. */
 .glass-modal-overlay {
   position: fixed; inset: 0;
   background: var(--gl-surface-overlay);
-  backdrop-filter: blur(var(--gl-blur-soft));
-  -webkit-backdrop-filter: blur(var(--gl-blur-soft));
+  backdrop-filter: blur(var(--gl-blur-overlay, var(--gl-blur-soft)));
+  -webkit-backdrop-filter: blur(var(--gl-blur-overlay, var(--gl-blur-soft)));
   display: flex; align-items: center; justify-content: center;
   padding: var(--gl-space-lg); z-index: 1000;
   opacity: 0; pointer-events: none;
@@ -2566,8 +2673,9 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   position: fixed; inset: 0; z-index: 1000;
   display: flex; align-items: flex-end; justify-content: center;
   background: var(--gl-surface-overlay);
-  backdrop-filter: blur(var(--gl-blur-soft));
-  -webkit-backdrop-filter: blur(var(--gl-blur-soft));
+  /* Like the modal's dimmer: --gl-blur-overlay where set (1.25.0). */
+  backdrop-filter: blur(var(--gl-blur-overlay, var(--gl-blur-soft)));
+  -webkit-backdrop-filter: blur(var(--gl-blur-overlay, var(--gl-blur-soft)));
   font-family: var(--gl-font-family);
   -webkit-font-smoothing: antialiased;
   opacity: 0;

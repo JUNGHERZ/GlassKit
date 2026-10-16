@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.24.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.25.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.24.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.25.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -72,16 +72,16 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.24/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.25/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.24/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.25/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.24/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.25/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.24` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.25` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 ### npm / yarn / pnpm
 
@@ -318,7 +318,7 @@ Every token can also be set on its own, for one density or both — the toggle's
 
 Like `data-theme`, keep `data-density` on `<html>`: an element further down that carries `data-theme="dark"` re-declares the dark block, the default sizes included.
 
-### Solid surfaces
+### Solid and tint surfaces
 
 Not every screen wants glass — admin screens, forms on a plain background, designs without it. Since **1.24.0** `data-surface="solid"` on `<html>` makes every surface opaque and turns blur and gloss off:
 
@@ -333,6 +333,18 @@ Each surface takes the colour the glass shows over the theme's middle background
 ```
 
 GlassKit Elements carries the attribute into its shadow roots, as it does with `data-theme`.
+
+A page with a background of its own — a brand colour, a photo, a pattern — takes `data-surface="tint"` instead (since **1.25.0**). The surfaces in the flow of the page become see-through tints of the text colour, nothing blurred, so a field on a card stays as see-through as the card. What lies over other content (modal, sheet, popover, toast, the tab bars) and the secondary button keep the solid values, which come from `--gl-color-bg-mid` — set it to a colour of your brand:
+
+```html
+<html data-theme="dark" data-surface="tint">
+```
+
+```css
+[data-surface='tint'] { --gl-color-bg-mid: #5c1310; }   /* panels in a dark red */
+```
+
+Both presets set the blur tokens to 0 but leave `--gl-blur-overlay` alone: set it to keep a blurred dimmer behind dialogs.
 
 ### Printing
 
@@ -405,6 +417,13 @@ All visual values are controlled via CSS Custom Properties:
 --gl-list-title-white-space     /* nowrap, or normal to wrap list titles */
 --gl-list-subtitle-white-space  /* nowrap, or normal to wrap list subtitles */
 --gl-list-subtitle-lines        /* clamp of __subtitle--wrap, 3; none = all */
+--gl-blur-overlay               /* blur behind dialogs; unset: --gl-blur-soft; kept by the surface presets */
+--gl-toggle-track-bg            /* toggle track when off; unset: --gl-surface-2 (…-checked: the primary gradient) */
+--gl-radio-bg, --gl-radio-bg-checked, --gl-radio-border, --gl-radio-border-checked
+--gl-radio-dot-size             /* 10px */
+--gl-radio-dot-color            /* white */
+--gl-textarea-field-sizing      /* fixed; content lets text areas grow with their text */
+--gl-input-picker-icon          /* none hides Chromium's picker button of date and time fields */
 ```
 
 The full token reference can be found in the [Documentation](docs.html).

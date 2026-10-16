@@ -7,6 +7,27 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.25.0] – 2026-10-16
+
+### Added
+
+- **Tint surfaces: `data-surface="tint"`.** The solid preset mixes each surface over `--gl-color-bg-mid`, which fits a page whose background is the theme's middle colour. On a page with a background of its own — a brand colour, a photo, a pattern — an opaque surface stood out as a foreign block. The tint preset makes the surfaces in the flow of the page see-through tints of the text colour (`--gl-surface-1` … `-5` at 4, 6, 9, 12 and 16 %, the card glow likewise), nothing blurred: a field on a card stays as see-through as the card, and its contrast follows the text. What lies over other content keeps the solid values — modal, sheet, popover, toast and the tab bars, with the fields and rows inside them — and so do the milk surfaces, because a see-through secondary button would lose its dark text on a dark page. The solid values are kept as `--gl-solid-surface-1` … `-5` and `--gl-solid-card-glow-*` and follow `--gl-color-bg-mid`, so a brand sets that to its own colour. The solid preset is built on them now and renders pixel-identical to 1.24.0. Measured in Chromium, WebKit and Firefox, in both themes: of 19 elements rendered over red and over blue — plain and GlassKit Elements, one nested `data-theme` scope among them — the ones in the flow show the page through, while the panels, the secondary button and a field inside a popover do not; `<glk-modal>`'s panel is opaque inside its shadow root; nothing is blurred. The showcase switch has a third option. ([#11](https://github.com/JUNGHERZ/GlassKit/issues/11))
+- **`--gl-blur-overlay`, a blur behind dialogs that the presets leave alone.** `.glass-modal-overlay` and `.glass-sheet-overlay` blur with it where it is set, else with `--gl-blur-soft` as before, which the surface presets set to `0`. A blurred dimmer suits a page without glass as well. ([#11](https://github.com/JUNGHERZ/GlassKit/issues/11))
+- **Toggle track tokens:** `--gl-toggle-track-bg` and `--gl-toggle-track-bg-checked`; unset, `--gl-surface-2` and the primary gradient. ([#11](https://github.com/JUNGHERZ/GlassKit/issues/11))
+- **Radio tokens:** `--gl-radio-bg`, `--gl-radio-bg-checked`, `--gl-radio-border`, `--gl-radio-border-checked`, `--gl-radio-dot-size` and `--gl-radio-dot-color`; unset, today's values. A ring in the text colour that turns the accent colour takes six declarations, shown in the docs. ([#11](https://github.com/JUNGHERZ/GlassKit/issues/11))
+- **`--gl-textarea-field-sizing`:** `content` lets text areas grow with their text where `field-sizing` is supported. It is off by default because it ignores `rows`: a text area with `rows="8"` would shrink from 214 to 120 px. ([#11](https://github.com/JUNGHERZ/GlassKit/issues/11))
+- **`--gl-input-picker-icon`:** `none` hides Chromium's picker button of date and time fields, and the arrow of a datalist, for a field whose prefix is the picker. Unset, every browser keeps its own (`revert`). ([#11](https://github.com/JUNGHERZ/GlassKit/issues/11))
+
+### Fixed
+
+- **An empty `.glass-label` takes no room.** It kept the input group's 8px gap above its field. ([#11](https://github.com/JUNGHERZ/GlassKit/issues/11))
+- **A long value or placeholder in `.glass-input` ends in an ellipsis** while the field is not being edited, instead of being cut off. ([#11](https://github.com/JUNGHERZ/GlassKit/issues/11))
+- **A read-only or disabled text area has no resize handle.** ([#11](https://github.com/JUNGHERZ/GlassKit/issues/11))
+
+With the presets and the new tokens unset, docs, showcase and landing pages of GlassKit and GlassKit Elements render pixel-identical to 1.24.0 in Chromium and WebKit.
+
+---
+
 ## [1.24.0] – 2026-10-14
 
 ### Added
@@ -1096,6 +1117,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.25.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.25.0
 [1.24.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.24.0
 [1.23.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.23.0
 [1.22.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.22.2
@@ -1132,4 +1154,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.24.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.25.0...HEAD

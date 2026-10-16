@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.24.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.25.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -103,6 +103,8 @@ Opaque surfaces without blur and gloss, for admin screens, forms on a plain back
 ```
 
 Each surface (`--gl-surface-*`, the milk surfaces, the card glow) takes the colour the glass shows over `--gl-color-bg-mid`, so the order of the surfaces stays and a re-branded background carries over. `--gl-blur*` are `0px`, the `--gl-inset-*` shine and the gloss tokens (`--gl-gloss-card`, `--gl-gloss-modal`, `--gl-gloss-progress`, `--gl-range-thumb-border`) are off. Borders, drop shadows, the tints of badges and chips and the overlay stay. A theme scope inside the page (an element with its own `data-theme`) stays solid. It is tokens only: tune it with `[data-surface='solid'] { --gl-surface-2: … }`, never by overriding a component's `background` or `backdrop-filter`. Without the attribute nothing changes; `removeAttribute('data-surface')` switches back at runtime. GlassKit Elements mirrors the attribute into its shadow roots.
+
+**Tint (since 1.25.0).** For a page with a background of its own — a brand colour, a photo, a pattern — `data-surface="tint"`: the surfaces in the flow of the page become see-through tints of the text colour (`--gl-surface-1` … `-5` at 4, 6, 9, 12, 16 %, the card glow likewise), nothing blurred. What lies over other content — modal, sheet, popover, toast, the tab bars, with the fields and rows inside them — keeps the solid values, and so do the milk surfaces (the secondary button is a light plate for dark ink). The solid values are kept as `--gl-solid-surface-1` … `-5` and `--gl-solid-card-glow-*` and follow `--gl-color-bg-mid`: a brand sets `[data-surface='tint'] { --gl-color-bg-mid: … }`. Blur and gloss are off as with solid; both presets leave `--gl-blur-overlay` alone.
 
 ### Printing (since 1.21.1)
 
@@ -733,6 +735,8 @@ dialog.addEventListener('cancel', (e) => { e.preventDefault(); closeDialog(); })
 
 While a modal dialog is open everything outside it is inert — a toast shown then is neither clickable nor announced; give feedback inside the dialog. Wider dialogs (forms, tables): `.my-dialog { --gl-modal-max-width: 560px; }`.
 
+**Blur behind the dialog (since 1.25.0).** The dimmer of `.glass-modal-overlay` and `.glass-sheet-overlay` blurs with `--gl-blur-overlay` where set, else with `--gl-blur-soft`. The surface presets set the blur tokens to 0 but not this one, so `:root { --gl-blur-overlay: 8px; }` keeps a blurred dimmer on a page without glass.
+
 ---
 
 ### 3.13 Toast
@@ -832,6 +836,8 @@ Date and time fields (`type="date"`, `time`, `datetime-local`, `month`) take the
 </div>
 ```
 
+**Long values, empty labels, picker icon (since 1.25.0).** A value or placeholder too long for the field ends in an ellipsis while the field is not being edited, and a `.glass-label` without text takes no room (`:empty`; it used to keep the group's 8px gap). Date and time fields keep the browser's own picker button; `--gl-input-picker-icon: none` hides it in Chromium (WebKit and Firefox draw none to hide) — for a field whose prefix is the picker; call `showPicker()` from it then. It also hides the arrow of a field with a `<datalist>`.
+
 ---
 
 ### 3.15 Textarea
@@ -845,6 +851,8 @@ Multi-line text field.
 | Class | Description |
 |---|---|
 | `.glass-textarea` | Multi-line glass input |
+
+**Growing and read-only (since 1.25.0).** `--gl-textarea-field-sizing: content` lets text areas grow with their text, where `field-sizing` is supported; off by default (`fixed`), because it ignores `rows`. A read-only or disabled text area has no resize handle.
 
 ---
 
@@ -917,6 +925,8 @@ iOS-style switch.
 
 The input is invisible but lies **on top of** the track and takes the click itself (since 1.20.0) — a test tool clicking the switch by role (`getByRole('switch')` with `role="switch"` on the input) reaches it. It covers only the track; label text, links in it included, stays the label's. An empty `__label` takes no room (no 12px gap). Both apply to checkbox and radio as well.
 
+**Track tokens (since 1.25.0).** `--gl-toggle-track-bg` (off; unset `--gl-surface-2`) and `--gl-toggle-track-bg-checked` (on; unset the primary gradient) — a stronger track for a page without glass, e.g. `color-mix(in srgb, var(--gl-color-text) 35%, transparent)`.
+
 ---
 
 ### 3.19 Checkbox
@@ -978,6 +988,8 @@ Animated radio button with dot.
 | `.glass-radio__label` | Text label |
 
 **Important:** Radio buttons in the same group need the same `name` attribute value.
+
+**Radio tokens (since 1.25.0).** `--gl-radio-bg` / `--gl-radio-bg-checked` (unset `--gl-surface-2` / the primary gradient), `--gl-radio-border` / `--gl-radio-border-checked` (whole border values; unset `1.5px solid` in `--gl-border-medium` / `--gl-border-warm` — give both the same width), `--gl-radio-dot-size` (`10px`; `50%` follows the circle) and `--gl-radio-dot-color` (`white`). A ring that turns the accent colour: `--gl-radio-bg: transparent; --gl-radio-bg-checked: transparent; --gl-radio-border: 2px solid color-mix(in srgb, var(--gl-color-text) 60%, transparent); --gl-radio-border-checked: 2px solid var(--gl-color-primary); --gl-radio-dot-size: 50%; --gl-radio-dot-color: var(--gl-color-primary)`.
 
 ---
 
