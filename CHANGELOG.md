@@ -7,6 +7,17 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.27.0] – 2026-10-18
+
+### Added
+
+- **Droplet: a fluid selection for the tab bar and the segmented control.** `.glass-tab-bar--droplet` and `.glass-segmented--droplet` set the chosen item on a drop of glass that floats a little above the row, as in iOS 26. On a change the drop runs to the new item like water on a pane: the leading edge goes first, the trailing one follows and overshoots, the drop runs flatter on the way and settles with a small wobble, and the icons or the text it passes grow or light up as under a lens. A finger can drag it along the row; let go, and the item below it is chosen, a disabled one skipped. In a segmented row that scrolls (`--scroll`) a swipe still scrolls: only the drop itself is dragged, and the row scrolls along at its edges. The stylesheet draws the drop, the row's `::before`. The motion comes from the new optional module `glasskit-droplet.js`, without dependencies and about 4 KB minified: `attachDroplets(root)` attaches every `--droplet` row below a root, `attachDroplet(row)` one, and returns `update()` and `destroy()`. It follows `.is-active` and `aria-pressed="true"`, which the page keeps setting its own way, and clicks the item a drag ends on, so the page's own handler makes the choice. Without the module a row keeps its usual look, the tab bar its spotlight. The drop takes the active item's surface where a project set one (below); its highlight is the new `--gl-gloss-droplet`; `data-surface="solid"` and `"tint"` make it opaque; with `prefers-reduced-motion` it jumps. Measured in Chromium, WebKit and Firefox on both showcases: at rest and after a tap the drop covers the chosen item to 0.1 px; a drag picks the item below it and skips a disabled one; a drag held at the edge of a scrolling row scrolls it and picks an option beyond the first view; a swipe that starts beside the drop leaves it; and while the row scrolls the drop stays on its option. Docs, README, SKILL.md and both showcases (switch *Selection*) have it. ([#13](https://github.com/JUNGHERZ/GlassKit/issues/13))
+- **The active tab can stand on a capsule of its own.** `--gl-tab-bar-active-bg` and `--gl-tab-bar-active-shadow` draw a surface behind the active item, like the selected tab of iOS 26; `--gl-tab-bar-spotlight-opacity: 0` turns the floating bar's spotlight off and `--gl-tab-bar-active-glow: none` the glow on the icon, which reads as a blur on a light capsule. All four are unset. A project that needed the capsule had to put a sheet of its own into `<glk-tab-item>` through `hostStyles`. The capsule is rounded like the item: a pill on the floating bar, 12px on the fixed one, whose items now carry that radius, invisible without a surface. Checked in all three engines for plain markup and GlassKit Elements, fixed and floating, unset and set. ([#13](https://github.com/JUNGHERZ/GlassKit/issues/13))
+
+With the modifiers and tokens unset, docs, showcase and landing pages of GlassKit render pixel-identical to 1.26.0 in Chromium, WebKit and Firefox.
+
+---
+
 ## [1.26.0] – 2026-10-18
 
 ### Added
@@ -1128,6 +1139,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.27.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.27.0
 [1.26.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.26.0
 [1.25.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.25.0
 [1.24.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.24.0

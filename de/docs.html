@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.26.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.27.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -460,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.26.0</span>
+      <span class="docs-hero__badge">v1.27.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Komponenten</span>
@@ -528,6 +528,7 @@
         <tr><td><code>--gl-gloss-modal</code></td><td>linear-gradient(90deg, …)</td><td>Dasselbe an <code>.glass-modal</code></td></tr>
         <tr><td><code>--gl-gloss-progress</code></td><td>linear-gradient(to bottom, …)</td><td>Schimmer auf dem Fortschrittsbalken</td></tr>
         <tr><td><code>--gl-range-thumb-border</code></td><td>2px solid rgba(255,255,255,0.5)</td><td>Rand des Range-Knopfs</td></tr>
+        <tr><td><code>--gl-gloss-droplet</code></td><td>radial-gradient(&hellip;), radial-gradient(&hellip;)</td><td>Glanzlicht und Leuchten im Tropfen der <a href="#droplet"><code>--droplet</code></a>-Zeilen (seit 1.27.0)</td></tr>
       </tbody>
     </table>
     <p>Seit 1.24.0, in beiden Themes gleich. <a href="#surface"><code>data-surface="solid"</code></a> schaltet sie ab, zusammen mit dem Blur und dem Glanz von <code>--gl-inset-*</code>.</p>
@@ -874,8 +875,79 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-tab-bar__accessory--success</code></td><td>Gefüllt mit Success-Farbe</td></tr>
         <tr><td><code>.glass-tab-bar__accessory--error</code></td><td>Gefüllt mit Error-Farbe</td></tr>
         <tr><td><code>.glass-bg--has-tab-bar-floating</code></td><td>Background-Padding-Helper für die Floating-Variante</td></tr>
+        <tr><td><code>.glass-tab-bar--droplet</code></td><td>Modifier: Der aktive Eintrag sitzt auf einem Glastropfen, der zum nächsten gleitet (seit 1.27.0, siehe <a href="#droplet">Droplet</a>)</td></tr>
       </tbody>
     </table>
+
+    <h3 id="tab-bar-active-surface" style="margin-top:var(--gl-space-lg);">Fläche des aktiven Eintrags</h3>
+    <p>Seit 1.27.0 kann der aktive Eintrag auf einer eigenen Fläche stehen, wie der gewählte Tab in iOS 26. Vier Tokens, alle ungesetzt, es ändert sich also nichts, bis ein Projekt sie setzt: <code>--gl-tab-bar-active-bg</code> und <code>--gl-tab-bar-active-shadow</code> legen eine Kapsel hinter den aktiven Eintrag, <code>--gl-tab-bar-spotlight-opacity: 0</code> schaltet das Spotlight der Floating-Bar ab und <code>--gl-tab-bar-active-glow: none</code> das Leuchten am Icon, das auf einer hellen Kapsel wie eine Unschärfe wirkt.</p>
+    <div class="docs-preview" style="position:relative;height:120px;overflow:hidden;">
+      <div class="glass-tab-bar-dock" style="position:absolute;">
+        <nav class="glass-tab-bar glass-tab-bar--floating" data-docs-tabs style="--gl-tab-bar-active-bg: color-mix(in srgb, var(--gl-color-text) 14%, transparent); --gl-tab-bar-active-shadow: 0 2px 8px rgba(0,0,0,0.12), var(--gl-inset-subtle); --gl-tab-bar-spotlight-opacity: 0; --gl-tab-bar-active-glow: none;">
+          <button class="glass-tab-bar__item is-active">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <span class="glass-tab-bar__label">Start</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+            <span class="glass-tab-bar__label">Zuletzt</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            <span class="glass-tab-bar__label">Gemerkt</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">:root</span> {
+  <span class="attr">--gl-tab-bar-active-bg</span>: <span class="val">color-mix(in srgb, var(--gl-color-text) 14%, transparent)</span>;
+  <span class="attr">--gl-tab-bar-active-shadow</span>: <span class="val">0 2px 8px rgba(0, 0, 0, 0.12), var(--gl-inset-subtle)</span>;
+  <span class="attr">--gl-tab-bar-spotlight-opacity</span>: <span class="val">0</span>;
+  <span class="attr">--gl-tab-bar-active-glow</span>: <span class="val">none</span>;
+}</div>
+    </div>
+    <p>Eine fast deckende weiße Kapsel, <code>rgba(255, 255, 255, 0.9)</code>, lässt eine dunkle Markenfarbe auch im dunklen Theme die Farbe des aktiven Tabs bleiben, wo sie auf dem Spotlight unlesbar wäre. Die Kapsel ist der Hintergrund des Eintrags und deshalb gerundet wie er: eine Pille auf der Floating-Bar, 12px auf der festen.</p>
+
+    <h3 id="droplet" style="margin-top:var(--gl-space-lg);">Droplet</h3>
+    <p>Seit 1.27.0 macht <code>.glass-tab-bar--droplet</code> die Auswahl flüssig. Der aktive Eintrag sitzt auf einem Glastropfen, der ein wenig über der Bar schwebt. Ein Tipp auf einen anderen Tab schickt den Tropfen dorthin wie Wasser über eine Scheibe: Die Vorderkante läuft voraus, die Hinterkante folgt, unterwegs wird der Tropfen flacher, am Ziel wippt er kurz nach, und die Icons, über die er läuft, wachsen wie unter einer Lupe. Ein Finger kann ihn auch über die Bar ziehen; beim Loslassen wird der Tab darunter gewählt. Für eine App mit Floating-Bar ist das die deutlichste Aufwertung, die sie übernehmen kann, und sie ändert sonst nichts: Das Markup bleibt, und wo das Skript nicht läuft, behält die Bar ihr Spotlight. Probier es:</p>
+    <div class="docs-preview" style="position:relative;height:120px;overflow:hidden;">
+      <div class="glass-tab-bar-dock" style="position:absolute;">
+        <nav class="glass-tab-bar glass-tab-bar--floating glass-tab-bar--droplet" data-docs-tabs>
+          <button class="glass-tab-bar__item is-active">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <span class="glass-tab-bar__label">Start</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+            <span class="glass-tab-bar__label">Zuletzt</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            <span class="glass-tab-bar__label">Gemerkt</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span>
+            <span class="glass-tab-bar__label">Profil</span>
+          </button>
+        </nav>
+        <button class="glass-tab-bar__accessory" aria-label="Suche">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </div>
+    </div>
+    <p>Den Tropfen zeichnet das Stylesheet. Die Bewegung kommt aus <code>glasskit-droplet.js</code>, einem optionalen Modul im selben Paket ohne Abhängigkeiten, etwa 4&nbsp;KB minifiziert und unter 2&nbsp;KB komprimiert. Es folgt <code>.is-active</code>, das die Seite wie gewohnt selbst setzt, und klickt den Tab an, auf dem ein Ziehen endet; die Wahl trifft also der Klick-Handler der Seite:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar glass-tab-bar--floating glass-tab-bar--droplet"</span><span class="tag">&gt;</span>
+  <span class="cmt">&lt;!-- die Einträge, der aktive mit .is-active --&gt;</span>
+<span class="tag">&lt;/nav&gt;</span>
+
+<span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.27/glasskit-droplet.js'</span>;
+  attachDroplets();   <span class="cmt">// jede --droplet-Zeile der Seite; attachDroplet(row) für eine</span>
+<span class="tag">&lt;/script&gt;</span></div>
+    </div>
+    <p>Der Tropfen nimmt die Fläche des aktiven Eintrags, wo ein Projekt eine gesetzt hat (<code>--gl-tab-bar-active-bg</code>, <code>-shadow</code>), sonst ein eigenes helles Glas; sein Glanz ist <code>--gl-gloss-droplet</code>. <code>data-surface="solid"</code> und <code>"tint"</code> machen ihn deckend wie jede andere Fläche, und mit <code>prefers-reduced-motion</code> springt er, statt zu gleiten. <a href="#segmented">Segmentwahlen</a> bekommen denselben Tropfen. In GlassKit Elements ist es ein Attribut: <code>&lt;glk-tab-bar floating droplet&gt;</code>.</p>
   </section>
 
   <!-- TITLE -->
@@ -1742,8 +1814,41 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>__item</code></td><td>Eine Option; <code>aria-pressed="true"</code> markiert die gew&auml;hlte, <code>disabled</code> d&auml;mpft</td></tr>
         <tr><td><code>__item--success</code> / <code>--warning</code> / <code>--error</code></td><td>Ton: setzt <code>--gl-segmented-tone</code> f&uuml;r den Punkt</td></tr>
         <tr><td><code>__dot</code></td><td>Der Punkt vor der Beschriftung, in der Tonfarbe</td></tr>
+        <tr><td><code>--droplet</code></td><td>Die gewählte Option sitzt auf einem Glastropfen, der zur nächsten gleitet (seit 1.27.0)</td></tr>
       </tbody>
     </table>
+    <h3>Droplet</h3>
+    <p>Seit 1.27.0 gibt <code>.glass-segmented--droplet</code> der gewählten Option den Tropfen der <a href="#droplet">Tab-Bar</a>: Er läuft zur neuen Option, dehnt sich unterwegs und kommt zur Ruhe, die Schrift, über die er läuft, leuchtet auf, und ein Finger kann ihn ziehen. Deaktivierte Optionen werden übersprungen. In einer scrollenden Zeile (<code>--scroll</code>) scrollt ein Wischen weiterhin; gezogen wird nur der Tropfen selbst, und an den Rändern scrollt die Zeile mit. Der Tropfen folgt <code>aria-pressed</code>; <code>attachDroplets()</code> aus <code>glasskit-droplet.js</code> startet ihn, wie oben.</p>
+    <div class="docs-preview docs-preview--compact" style="display:flex;flex-direction:column;gap:10px">
+      <div class="glass-segmented glass-segmented--droplet" role="group" aria-label="Modus" data-docs-segmented style="align-self:flex-start">
+        <button class="glass-segmented__item" aria-pressed="true">Kontextuell</button>
+        <button class="glass-segmented__item" aria-pressed="false">Hilfeseite</button>
+        <button class="glass-segmented__item" aria-pressed="false">Inline</button>
+      </div>
+      <div class="glass-segmented glass-segmented--full glass-segmented--droplet" role="group" aria-label="Status" data-docs-segmented>
+        <button class="glass-segmented__item glass-segmented__item--success" aria-pressed="false"><span class="glass-segmented__dot"></span>Grün</button>
+        <button class="glass-segmented__item glass-segmented__item--warning" aria-pressed="true"><span class="glass-segmented__dot"></span>Gelb</button>
+        <button class="glass-segmented__item glass-segmented__item--error" aria-pressed="false"><span class="glass-segmented__dot"></span>Rot</button>
+        <button class="glass-segmented__item" aria-pressed="false" disabled>Gesperrt</button>
+      </div>
+      <div style="max-width:320px">
+        <div class="glass-segmented glass-segmented--full glass-segmented--scroll glass-segmented--droplet" role="group" aria-label="Bereich" data-docs-segmented>
+          <button class="glass-segmented__item" aria-pressed="true">Allgemein</button>
+          <button class="glass-segmented__item" aria-pressed="false">Zeiten</button>
+          <button class="glass-segmented__item" aria-pressed="false">Hunde</button>
+          <button class="glass-segmented__item" aria-pressed="false">Team</button>
+          <button class="glass-segmented__item" aria-pressed="false">Texte</button>
+          <button class="glass-segmented__item" aria-pressed="false">Benachrichtigungen</button>
+          <button class="glass-segmented__item" aria-pressed="false">Datenschutz</button>
+        </div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-segmented glass-segmented--scroll glass-segmented--droplet"</span> <span class="attr">role=</span><span class="val">"group"</span> <span class="attr">aria-label=</span><span class="val">"Bereich"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-segmented__item"</span> <span class="attr">aria-pressed=</span><span class="val">"true"</span><span class="tag">&gt;</span>Allgemein<span class="tag">&lt;/button&gt;</span>
+  <span class="cmt">&lt;!-- weitere Optionen --&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
     <script>
       for (const group of document.querySelectorAll('[data-docs-segmented]')) group.addEventListener('click', e => {
         const btn = e.target.closest('.glass-segmented__item'); if (!btn || btn.disabled) return;
@@ -2150,7 +2255,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td>Skeleton</td><td><code>.glass-skeleton</code></td><td><code>__line</code>, <code>__line--title</code></td></tr>
         <tr><td>Tabelle</td><td><code>.glass-table</code></td><td><code>-wrap</code>, <code>__num</code>, <code>__muted</code></td></tr>
         <tr><td>Flie&szlig;text</td><td><code>.glass-prose</code></td><td>–</td></tr>
-        <tr><td>Segmentwahl</td><td><code>.glass-segmented</code></td><td><code>--full</code>, <code>--scroll</code>, <code>--wrap</code>, <code>__item</code>, <code>__item--success</code>/<code>--warning</code>/<code>--error</code>, <code>__dot</code>, <code>[aria-pressed]</code></td></tr>
+        <tr><td>Segmentwahl</td><td><code>.glass-segmented</code></td><td><code>--full</code>, <code>--scroll</code>, <code>--wrap</code>, <code>__item</code>, <code>__item--success</code>/<code>--warning</code>/<code>--error</code>, <code>__dot</code>, <code>[aria-pressed]</code>, <code>--droplet</code></td></tr>
         <tr><td>Schrittanzeige</td><td><code>.glass-steps</code></td><td><code>__item</code>, <code>__item--done</code>, <code>__item--current</code>, <code>__num</code>, <code>__label</code>, <code>__line</code></td></tr>
         <tr><td>Bottom-Sheet</td><td><code>.glass-sheet-overlay</code> + <code>.glass-sheet</code></td><td><code>.is-active</code>, <code>--inline</code>, <code>__grip</code>, <code>__title</code>, <code>__body</code>, <code>__actions</code></td></tr>
         <tr><td>Leerzustand</td><td><code>.glass-empty</code></td><td><code>__icon</code>, <code>__title</code>, <code>__text</code>, <code>__action</code></td></tr>
@@ -2238,6 +2343,17 @@ node_modules/@jungherz-de/glasskit/SKILL.md</div>
       document.querySelectorAll('.glass-popover.is-open').forEach(p => p.classList.remove('is-open'));
     }
   });
+</script>
+<script>
+  // Tab-Bar-Vorschauen: ein Klick macht den Tab aktiv
+  for (const bar of document.querySelectorAll('[data-docs-tabs]')) bar.addEventListener('click', e => {
+    const item = e.target.closest('.glass-tab-bar__item'); if (!item) return;
+    for (const it of bar.querySelectorAll('.glass-tab-bar__item')) it.classList.toggle('is-active', it === item);
+  });
+</script>
+<script type="module">
+  import { attachDroplets } from '../glasskit-droplet.js';
+  attachDroplets();
 </script>
 
 </body>

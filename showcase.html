@@ -288,7 +288,7 @@
         </button>
       </nav>
 
-      <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.26.0</h1>
+      <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.27.0</h1>
 
       <!-- DENSITY -->
       <p class="section-label">Density</p>
@@ -303,6 +303,14 @@
         <button class="glass-segmented__item" type="button" aria-pressed="true" onclick="setSurface(this, null)">Glass</button>
         <button class="glass-segmented__item" type="button" aria-pressed="false" onclick="setSurface(this, 'solid')">Solid</button>
         <button class="glass-segmented__item" type="button" aria-pressed="false" onclick="setSurface(this, 'tint')">Tint</button>
+      </div>
+
+      <!-- SELECTION STYLE: the tab bar below; Droplet also every segmented row -->
+      <p class="section-label">Selection</p>
+      <div class="glass-segmented glass-segmented--full gl-mb-md" role="group" aria-label="Selection" id="tab-bar-style">
+        <button class="glass-segmented__item" type="button" aria-pressed="true" onclick="setTabBar(this, null)">Spotlight</button>
+        <button class="glass-segmented__item" type="button" aria-pressed="false" onclick="setTabBar(this, 'capsule')">Capsule</button>
+        <button class="glass-segmented__item" type="button" aria-pressed="false" onclick="setTabBar(this, 'droplet')">Droplet</button>
       </div>
 
       <!-- CARD -->
@@ -1108,6 +1116,39 @@
       t => t.classList.remove('is-active')
     );
     el.classList.add('is-active');
+  }
+
+  // Selection style: the tab bar's spotlight (default), a capsule from the
+  // active item tokens, or the droplet on the tab bar and on every segmented
+  // row. #capsule / #droplet in the URL preselect one.
+  const CAPSULE = {
+    '--gl-tab-bar-active-bg': 'color-mix(in srgb, var(--gl-color-text) 14%, transparent)',
+    '--gl-tab-bar-active-shadow': '0 2px 8px rgba(0, 0, 0, 0.12), var(--gl-inset-subtle)',
+    '--gl-tab-bar-spotlight-opacity': '0',
+    '--gl-tab-bar-active-glow': 'none',
+  };
+  let droplets = [];
+  async function setTabBar(button, style) {
+    const nav = document.querySelector('.glass-tab-bar--floating');
+    for (const [k, v] of Object.entries(CAPSULE)) {
+      if (style === 'capsule') nav.style.setProperty(k, v); else nav.style.removeProperty(k);
+    }
+    for (const b of button.parentElement.children) b.setAttribute('aria-pressed', String(b === button));
+    droplets.forEach(d => d.destroy());
+    droplets = [];
+    const on = style === 'droplet';
+    const rows = [nav, ...document.querySelectorAll('.glass-segmented')];
+    nav.classList.toggle('glass-tab-bar--droplet', on);
+    for (const row of rows.slice(1)) row.classList.toggle('glass-segmented--droplet', on);
+    if (!on) return;
+    // The motion is GlassKit's optional module; the stylesheet draws the drop.
+    const { attachDroplet } = await import('./glasskit-droplet.js');
+    droplets = rows.map(row => attachDroplet(row));
+  }
+
+  {
+    const style = { '#capsule': 'capsule', '#droplet': 'droplet' }[location.hash];
+    if (style) setTabBar(document.querySelector(`#tab-bar-style [onclick*="'${style}'"]`), style);
   }
 </script>
 

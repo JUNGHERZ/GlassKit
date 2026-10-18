@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.26.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.27.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.26.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.27.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -56,6 +56,7 @@ GlassKit is the **CSS foundation** of a three-layer family: [GlassKit Elements](
 - 📱 **Mobile-first** – optimized for touch devices and `safe-area-inset`
 - 🔌 **Framework-agnostic** – works with React, Vue, Svelte, plain HTML, or any other stack
 - 🧩 **Shadow DOM ready** – Constructable Stylesheet for Web Components included
+- 💧 **Fluid selection** – an optional drop of glass that glides between the items of a tab bar or a segmented control (since 1.27.0)
 - 🪶 **Lightweight** – 51 KB raw / 39 KB minified / 6.5 KB gzipped, no external dependencies
 - 🎯 **BEM-like naming convention** – `glass-*` prefix, no conflicts with existing CSS
 - 🤖 **AI-ready** – ships with [`SKILL.md`](SKILL.md), a structured reference for LLMs & AI copilots
@@ -72,16 +73,25 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.26/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.27/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.26/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.27/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.26/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.27/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.26` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.27` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+
+The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
+
+```html
+<script type="module">
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.27/glasskit-droplet.js';
+  attachDroplets();
+</script>
+```
 
 ### npm / yarn / pnpm
 
@@ -172,7 +182,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Nav Bar** | `.glass-nav` | Transparent navigation |
 | **Pill Button** | `.glass-pill` | Round glass icon button (46×46) |
 | **Tab Bar** | `.glass-tab-bar` | Fixed bottom navigation |
-| **Tab Bar – Floating** | `.glass-tab-bar--floating` + `.glass-tab-bar-dock` | Pill-shaped Liquid-Glass tab bar with optional `.glass-tab-bar__accessory` capsule |
+| **Tab Bar – Floating** | `.glass-tab-bar--floating` + `.glass-tab-bar-dock` | Pill-shaped Liquid-Glass tab bar with optional `.glass-tab-bar__accessory` capsule; `--droplet` for a gliding selection |
 | **Accordion** | `.glass-accordion` | Collapsible content sections |
 | **Divider** | `.glass-divider` | Fading separator line |
 
@@ -190,7 +200,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Skeleton** | `.glass-skeleton` | Shimmer lines while content loads |
 | **Table** | `.glass-table` | Plain `<table>` on glass — hairline rows, tabular numbers |
 | **Prose** | `.glass-prose` | Rendered Markdown / running text with one class |
-| **Segmented** | `.glass-segmented` | Small exclusive choice as one control, with tone dots; scrolls or wraps when crowded |
+| **Segmented** | `.glass-segmented` | Small exclusive choice as one control, with tone dots; scrolls or wraps when crowded; `--droplet` for a gliding selection |
 | **Steps** | `.glass-steps` | Progress through a short flow; container-query aware |
 | **Sheet** | `.glass-sheet` | Bottom sheet — the mobile sibling of the modal |
 | **Empty state** | `.glass-empty` | Icon, title, text and one action for empty lists |
@@ -222,6 +232,28 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Date strip** | `.glass-date-strip` | Scrolling row of day chips with tone dots |
 | **Calendar** | `.glass-calendar` | One month of day buttons, up to three dots each |
 | **Image picker** | `.glass-image-picker` | Preview plate, label, hint and actions for choosing one image |
+
+---
+
+## 💧 Droplet: a fluid selection
+
+Since **1.27.0** the tab bar and the segmented control can make their selection fluid, as iOS 26 does. Add `--droplet` and the chosen item sits on a drop of glass that floats a little above the row. A tap sends it to the new item like water on a pane: the leading edge goes first, the trailing one follows, it runs flatter on the way and settles with a small wobble, and what it passes grows or lights up as under a lens. A finger can drag it along the row; let go, and the item below it is chosen. In a segmented row that scrolls, a swipe still scrolls: only the drop itself is dragged, and the row scrolls along at its edges.
+
+```html
+<nav class="glass-tab-bar glass-tab-bar--floating glass-tab-bar--droplet">…</nav>
+<div class="glass-segmented glass-segmented--droplet" role="group">…</div>
+
+<script type="module">
+  import { attachDroplets } from '@jungherz-de/glasskit/glasskit-droplet.js';
+  attachDroplets();   // every --droplet row in the page; attachDroplet(row) for one
+</script>
+```
+
+The stylesheet draws the drop; `glasskit-droplet.js` is an optional module in the package, without dependencies, about 4 KB minified. It follows `.is-active` and `aria-pressed="true"`, which the page keeps setting its own way, and clicks the item a drag ends on, so the page's own click handler makes the choice. Where the script does not run, the row keeps its usual look. `data-surface="solid"` and `"tint"` make the drop opaque, and with `prefers-reduced-motion` it moves without travelling.
+
+**Already on GlassKit?** This is the upgrade to take: one class per row and one import, the markup stays. In GlassKit Elements it is an attribute: `<glk-tab-bar floating droplet>`, `<glk-segmented droplet>`.
+
+The tab bar's active item can also stand on a capsule of its own, without the drop (since 1.27.0): `--gl-tab-bar-active-bg` and `--gl-tab-bar-active-shadow` draw it, `--gl-tab-bar-spotlight-opacity: 0` turns the spotlight off, `--gl-tab-bar-active-glow: none` the glow on the icon. Where they are set, the drop takes the same surface.
 
 ---
 
@@ -440,6 +472,11 @@ All visual values are controlled via CSS Custom Properties:
 --gl-textarea-field-sizing      /* fixed; content lets text areas grow with their text */
 --gl-input-picker-icon          /* none hides Chromium's picker button of date and time fields */
 --gl-tab-bar-active-color       /* icon and label of the active tab; unset: --gl-color-primary-text */
+--gl-tab-bar-active-bg          /* capsule behind the active tab; unset: none (also the drop's surface) */
+--gl-tab-bar-active-shadow      /* its shadow; unset: none */
+--gl-tab-bar-spotlight-opacity  /* 1; 0 turns the floating bar's spotlight off */
+--gl-tab-bar-active-glow        /* glow on the active icon; none turns it off */
+--gl-gloss-droplet              /* highlight in the drop of --droplet rows; off with data-surface */
 ```
 
 The full token reference can be found in the [Documentation](docs.html).
@@ -574,6 +611,7 @@ glasskit/
 ├── glasskit.css            # Core library (all components + tokens)
 ├── glasskit.min.css        # Minified version (auto-generated on release)
 ├── glasskit-styles.js      # Constructable Stylesheet for Shadow DOM (auto-generated)
+├── glasskit-droplet.js     # Optional module: the motion of the --droplet rows
 ├── theme-override.css      # Template for custom themes
 ├── build-styles-js.mjs     # Build script for glasskit-styles.js
 ├── package.json            # npm package definition
@@ -741,6 +779,7 @@ Prose:
 
 Segmented:
   .glass-segmented--full / --scroll / --wrap · __item[aria-pressed] · __item--success / --warning / --error · __dot
+  .glass-segmented--droplet        (gliding selection, with glasskit-droplet.js)
 
 Steps:
   .glass-steps__item--done / --current · __num · __label · __line
@@ -767,8 +806,10 @@ Background Modifiers:
 Tab Bar – Floating:
   .glass-tab-bar-dock
   .glass-tab-bar--floating
+  .glass-tab-bar--droplet          (gliding selection, with glasskit-droplet.js)
   .glass-tab-bar__accessory
   .glass-tab-bar__accessory--accent / --success / --error
+  --gl-tab-bar-active-bg / -shadow · --gl-tab-bar-spotlight-opacity · --gl-tab-bar-active-glow
 
 Right to left:
   dir="rtl" on <html> or a container – the components mirror

@@ -15,7 +15,7 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { posix } from 'node:path';
 
-const REQUIRED = ['package.json', 'README.md', 'LICENSE', 'CHANGELOG.md', 'SKILL.md', 'glasskit.css', 'glasskit.min.css', 'glasskit-styles.js', 'theme-override.css'];
+const REQUIRED = ['package.json', 'README.md', 'LICENSE', 'CHANGELOG.md', 'SKILL.md', 'glasskit.css', 'glasskit.min.css', 'glasskit-styles.js', 'glasskit-droplet.js', 'theme-override.css'];
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf-8'));
 const packed = JSON.parse(execFileSync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], { encoding: 'utf-8' }));

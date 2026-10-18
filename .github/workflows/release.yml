@@ -86,6 +86,7 @@ jobs:
             glasskit.min.css
             glasskit.css
             glasskit-styles.js
+            glasskit-droplet.js
 
       # ---- npm veröffentlichen (OIDC, kein Token) ----
       - name: Publish to npm

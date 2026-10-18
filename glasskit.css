@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.26.0
+   Jungherz GmbH – v1.27.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -199,6 +199,10 @@
                                rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.4) 70%, transparent 100%);
   --gl-gloss-progress:       linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, transparent 100%);
   --gl-range-thumb-border:   2px solid rgba(255,255,255,0.5);
+  /* The light in the drop of the --droplet rows (tab bar, segmented): a
+     highlight at the top, the caustic glow it throws at the bottom. */
+  --gl-gloss-droplet:        radial-gradient(60% 55% at 32% 12%, rgba(255,255,255,0.42) 0%, transparent 70%),
+                             radial-gradient(75% 60% at 50% 112%, rgba(255,255,255,0.18) 0%, transparent 70%);
 
   /* ---- Background Effects ----
      Deliberately *not* derived from --gl-color-primary: the aurora is the scene
@@ -501,6 +505,7 @@
   --gl-gloss-card:           none;
   --gl-gloss-modal:          none;
   --gl-gloss-progress:       none;
+  --gl-gloss-droplet:        none;
   --gl-range-thumb-border:   2px solid transparent;
 }
 /* Solid, light theme — and the tint preset's ground in it. */
@@ -1688,6 +1693,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   gap: var(--gl-space-2xs);
   padding: var(--gl-space-2xs) var(--gl-space-sm);
   background: none; border: none; cursor: pointer;
+  border-radius: var(--gl-radius-sm);
   transition: var(--gl-transition); outline: none;
   -webkit-tap-highlight-color: transparent;
   min-width: 60px;
@@ -1717,9 +1723,19 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
    Glow, dot and spotlight stay in the primary. */
 .glass-tab-bar__item.is-active .glass-tab-bar__icon svg {
   stroke: var(--gl-tab-bar-active-color, var(--gl-color-primary-text));
-  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--gl-color-primary) 35%, transparent));
+  filter: var(--gl-tab-bar-active-glow, drop-shadow(0 0 6px color-mix(in srgb, var(--gl-color-primary) 35%, transparent)));
 }
 .glass-tab-bar__item.is-active .glass-tab-bar__label { color: var(--gl-tab-bar-active-color, var(--gl-color-primary-text)); }
+
+/* The active item's own surface; unset, it has none. A capsule like the
+   selected tab of iOS 26 takes --gl-tab-bar-active-bg and -shadow; on the
+   floating bar --gl-tab-bar-spotlight-opacity: 0 turns the spotlight off,
+   and --gl-tab-bar-active-glow: none the glow above, which reads as a blur
+   on a light capsule. */
+.glass-tab-bar__item.is-active {
+  background: var(--gl-tab-bar-active-bg, none);
+  box-shadow: var(--gl-tab-bar-active-shadow, none);
+}
 
 .glass-tab-bar__item.is-active .glass-tab-bar__icon::after {
   content: '';
@@ -1800,6 +1816,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
     color-mix(in srgb, var(--gl-tab-bar-spotlight-color) 10%, transparent) 55%,
     transparent 100%
   );
+  opacity: var(--gl-tab-bar-spotlight-opacity, 1);
   pointer-events: none; z-index: 0;
 }
 
@@ -1893,6 +1910,143 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 }
 .glass-tab-bar__accessory--error svg,
 .glass-tab-bar__accessory--error ::slotted(svg) { stroke: var(--gl-color-on-error, #ffffff); }
+
+
+/* ============================================================
+   18c. DROPLET – TAB BAR AND SEGMENTED
+   ============================================================ */
+/* --droplet on .glass-tab-bar or .glass-segmented sets the chosen item on
+   a drop of glass that floats a little above the row. On a change it runs
+   to the new item like water on a pane: the leading edge goes first, the
+   trailing one follows and overshoots, the drop runs flatter on the way
+   and settles with a small wobble. A finger can drag it along the row; the
+   item below it lights up as under a lens. In a segmented row that
+   scrolls (--scroll) a swipe still scrolls: there only the drop itself is
+   dragged, and the row follows it at its edges.
+
+   The drop is the row's ::before, and a script places it: it sets
+   data-droplet on the row and --gl-droplet-left, -right, -top and -bottom
+   to the chosen item's box, measured in the row's padding box (in a row
+   that scrolls, in its scrolled content). On a change it sets
+   data-droplet-dir="left" or "right" and data-droplet-lift while the drop
+   travels, data-droplet-drag while a finger holds it, and .is-under-droplet
+   on the item below it. Without the script a row keeps its usual look:
+   the tab bar its spotlight, the segmented row its raised option. GlassKit
+   Elements' <glk-tab-bar droplet> and <glk-segmented droplet> do all of
+   this; for plain markup the docs have the script. */
+.glass-tab-bar--floating.glass-tab-bar--droplet,
+.glass-segmented.glass-segmented--droplet { position: relative; }
+.glass-tab-bar.glass-tab-bar--droplet[data-droplet],
+.glass-segmented.glass-segmented--droplet[data-droplet] { isolation: isolate; touch-action: pan-y; }
+/* A row that scrolls keeps its swipe; the chosen option takes the drag. */
+.glass-segmented--scroll.glass-segmented--droplet[data-droplet] { touch-action: auto; }
+.glass-segmented--scroll.glass-segmented--droplet[data-droplet] .glass-segmented__item[aria-pressed="true"] { touch-action: pan-y; }
+
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet]::before {
+  content: '';
+  position: absolute; z-index: -1;
+  top: var(--gl-droplet-top, 0px);
+  bottom: var(--gl-droplet-bottom, 0px);
+  left: var(--gl-droplet-left, 0px);
+  right: var(--gl-droplet-right, 0px);
+  border-radius: var(--gl-radius-sm);
+  background:
+    var(--gl-gloss-droplet, none),
+    linear-gradient(to bottom, var(--gl-surface-5) 0%, var(--gl-surface-3) 100%);
+  box-shadow:
+    0 4px 14px rgba(0,0,0,0.18), 0 1px 3px rgba(0,0,0,0.12),
+    inset 0 0 0 1px var(--gl-border-subtle),
+    var(--gl-inset-strong);
+  backdrop-filter: blur(var(--gl-blur-light)) saturate(1.6);
+  -webkit-backdrop-filter: blur(var(--gl-blur-light)) saturate(1.6);
+  pointer-events: none;
+  transition:
+    transform 0.55s cubic-bezier(0.34, 1.8, 0.5, 1),
+    box-shadow 0.3s ease;
+}
+/* The tab bar's drop is a capsule, in the active item's surface where a
+   project set one (--gl-tab-bar-active-bg, -shadow). */
+.glass-tab-bar.glass-tab-bar--droplet[data-droplet]::before {
+  border-radius: var(--gl-radius-full);
+  background:
+    var(--gl-gloss-droplet, none),
+    var(--gl-tab-bar-active-bg, linear-gradient(to bottom, var(--gl-surface-5) 0%, var(--gl-surface-3) 100%));
+  box-shadow:
+    var(--gl-tab-bar-active-shadow, 0 4px 14px rgba(0,0,0,0.18), 0 1px 3px rgba(0,0,0,0.12)),
+    inset 0 0 0 1px var(--gl-border-subtle),
+    var(--gl-inset-strong);
+}
+/* On the way: the leading edge runs ahead, the trailing one is pulled
+   after it and overshoots, so the drop stretches and draws together. */
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-dir="right"]::before {
+  transition:
+    right 0.3s cubic-bezier(0.3, 1.2, 0.5, 1),
+    left 0.5s cubic-bezier(0.5, 1.5, 0.45, 0.92) 0.04s,
+    top 0.3s ease, bottom 0.3s ease,
+    transform 0.55s cubic-bezier(0.34, 1.8, 0.5, 1),
+    box-shadow 0.3s ease;
+}
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-dir="left"]::before {
+  transition:
+    left 0.3s cubic-bezier(0.3, 1.2, 0.5, 1),
+    right 0.5s cubic-bezier(0.5, 1.5, 0.45, 0.92) 0.04s,
+    top 0.3s ease, bottom 0.3s ease,
+    transform 0.55s cubic-bezier(0.34, 1.8, 0.5, 1),
+    box-shadow 0.3s ease;
+}
+/* While it travels the drop runs flatter and lifts off the row; it comes
+   back with the overshoot of its transform, the wobble at the end. Held
+   by a finger it grows instead, a lens over the row, and follows the
+   finger closely. */
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-lift]::before,
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-drag]::before {
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.24), 0 2px 6px rgba(0,0,0,0.14),
+    inset 0 0 0 1px var(--gl-border-medium),
+    var(--gl-inset-strong);
+}
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-lift]::before {
+  transform: scale(1, 0.86);
+}
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-drag]::before {
+  transform: scale(1.1, 1.22);
+  transition:
+    left 0.1s ease-out, right 0.1s ease-out,
+    transform 0.25s ease-out, box-shadow 0.25s ease;
+}
+
+/* The drop is the chosen item's surface, so the item draws none; on the
+   tab bar neither spotlight, dot nor glow. */
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active { background: none; box-shadow: none; }
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active::before { display: none; }
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active .glass-tab-bar__icon::after { display: none; }
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active .glass-tab-bar__icon svg { filter: var(--gl-tab-bar-active-glow, none); }
+.glass-segmented--droplet[data-droplet] .glass-segmented__item[aria-pressed="true"] { background: transparent; box-shadow: none; }
+.glass-segmented--droplet[data-droplet] .glass-segmented__item[aria-pressed="true"]:focus-visible { box-shadow: var(--gl-shadow-focus); }
+/* A disabled choice dims its drop as it dims itself. */
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet]:has(:is(.glass-tab-bar__item.is-active, .glass-segmented__item[aria-pressed="true"]):disabled)::before { opacity: 0.45; }
+
+/* Under the drop a tab icon or a tone dot grows as under a lens. While a
+   finger drags the drop, the item below it takes the chosen colour and
+   the chosen item lets it go. */
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon,
+.glass-segmented--droplet[data-droplet] .glass-segmented__dot { transition: transform 0.4s cubic-bezier(0.34, 1.6, 0.5, 1); }
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-under-droplet .glass-tab-bar__icon { transform: scale(1.15); }
+.glass-segmented--droplet[data-droplet] .glass-segmented__item.is-under-droplet .glass-segmented__dot { transform: scale(1.3); }
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-under-droplet .glass-tab-bar__icon svg { stroke: var(--gl-tab-bar-active-color, var(--gl-color-primary-text)); }
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-under-droplet .glass-tab-bar__label { color: var(--gl-tab-bar-active-color, var(--gl-color-primary-text)); }
+.glass-segmented--droplet[data-droplet] .glass-segmented__item.is-under-droplet { color: var(--gl-color-text-heading); }
+.glass-tab-bar--droplet[data-droplet-drag] .glass-tab-bar__item.is-active:not(.is-under-droplet) .glass-tab-bar__icon svg { stroke: var(--gl-icon-muted); }
+.glass-tab-bar--droplet[data-droplet-drag] .glass-tab-bar__item.is-active:not(.is-under-droplet) .glass-tab-bar__label { color: var(--gl-icon-muted); }
+.glass-segmented--droplet[data-droplet-drag] .glass-segmented__item[aria-pressed="true"]:not(.is-under-droplet) { color: var(--gl-color-text-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet]::before,
+  :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-dir]::before,
+  :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-drag]::before { transition: none; }
+  .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon,
+  .glass-segmented--droplet[data-droplet] .glass-segmented__dot { transition: none; }
+}
 
 
 /* ============================================================
