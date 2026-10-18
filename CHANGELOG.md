@@ -7,6 +7,17 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.26.0] – 2026-10-18
+
+### Added
+
+- **`--gl-color-primary-text`, the primary as text.** The primary did two jobs: as a fill under white text — buttons, the checked toggle, the current step, the chosen day — and as text straight on the page or the glass: links in `.glass-prose`, the icon and label of the active tab, `.glass-modal__action--primary`, `.glass-list__item--accent`, `.glass-range-value`, the accordion trigger on hover and the chevron of an open item. A brand that darkens its primary in the dark theme so that white button text passes 4.5:1 got text too dark to read, and could not lighten it without changing every button. These eight rules take `--gl-color-primary-text` now, declared in both themes as `var(--gl-color-primary)`, so nothing changes until a project sets it. Measured on GlassKit's own dark background with `#c25028` as primary at 390 px, with `color-mix(in srgb, var(--gl-color-primary) 18%, #ffffff)` in the dark theme: a link on the page goes from 2.00:1 to 7.37:1, a link on a glass card from 1.37:1 to 5.05:1, the value of a range on a card from 1.78:1 to 6.55:1, the label of the active floating tab from 2.24:1 to 8.28:1. An accent row of a list on a card, the lightest place, goes from 1.06:1 to 3.47:1; white reaches 4.41:1 there. Docs, README, SKILL.md and `theme-override.css` show the recipe, with the light rule after the dark one, because `:root` matches a page in the light theme too. ([#12](https://github.com/JUNGHERZ/GlassKit/issues/12))
+- **`--gl-tab-bar-active-color`** colours the icon and label of the active tab alone, where it is set; unset, they take `--gl-color-primary-text`. The spotlight of the floating bar lightens the active item more than any other surface, so a brand may need a lighter tone there than in running text. Glow and dot stay in the primary, the spotlight in `--gl-tab-bar-spotlight-color`. ([#12](https://github.com/JUNGHERZ/GlassKit/issues/12))
+
+With the tokens unset, docs, showcase and landing pages of GlassKit and GlassKit Elements render pixel-identical to 1.25.0 in Chromium, WebKit and Firefox. Both tokens reach the shadow roots of GlassKit Elements by inheritance, with and without `glasskit.css` on the page. Checked in all three engines for plain markup and for the elements, in both themes, at the top of the page and in a nested `data-theme="light"` scope, which keeps the light primary.
+
+---
+
 ## [1.25.0] – 2026-10-16
 
 ### Added
@@ -1117,6 +1128,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.26.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.26.0
 [1.25.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.25.0
 [1.24.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.24.0
 [1.23.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.23.0

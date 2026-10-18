@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.25.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.26.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -460,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.25.0</span>
+      <span class="docs-hero__badge">v1.26.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Komponenten</span>
@@ -497,6 +497,7 @@
       <tbody>
         <tr><td><code>--gl-color-primary</code></td><td>#f5a623</td><td>Primärfarbe, Buttons, aktive Elemente</td></tr>
         <tr><td><code>--gl-color-primary-dark</code></td><td>#d4692a</td><td>Gradient-Endwert</td></tr>
+        <tr><td><code>--gl-color-primary-text</code></td><td>var(--gl-color-primary)</td><td>Text und Linien-Icons in der Primärfarbe: Links in Prose, der aktive Tab, die primäre Modal-Aktion, Akzent-Listenzeilen, der Wert eines Reglers, das Akkordeon &mdash; seit 1.26.0, siehe <a href="#primary-text">Primärfarbe als Text</a></td></tr>
         <tr><td><code>--gl-color-text</code></td><td>#ffffff</td><td>Standard-Textfarbe</td></tr>
         <tr><td><code>--gl-color-text-muted</code></td><td>rgba(255,255,255,0.60)</td><td>Sekundärer Text</td></tr>
         <tr><td><code>--gl-color-success</code></td><td>#34c759</td><td>Erfolg-Status</td></tr>
@@ -579,6 +580,19 @@ function <span class="cls">toggleTheme</span>() {
   );
 }</div>
     </div>
+    <h3 id="primary-text">Primärfarbe als Text</h3>
+    <p>Die Primärfarbe hat zwei Aufgaben. Als Fläche trägt sie weiße Schrift: Buttons, der eingeschaltete Schalter, der aktuelle Schritt, der gewählte Tag. Als Schrift steht sie selbst auf der Seite oder dem Glas: Links in <code>.glass-prose</code>, Icon und Label des aktiven Tabs, die primäre Modal-Aktion, Akzent-Listenzeilen, der Wert eines Reglers, der Akkordeon-Auslöser unter dem Zeiger und der Chevron eines geöffneten Abschnitts. Seit 1.26.0 hat die zweite Aufgabe ein eigenes Token, <code>--gl-color-primary-text</code>. Setzt ein Projekt es nicht, ist es die Primärfarbe, und es ändert sich nichts.</p>
+    <p>Eine Marke, die ihre Primärfarbe abdunkelt, damit weiße Button-Schrift 4,5:1 erreicht, bekommt einen Ton, der für Schrift auf dunklem Hintergrund zu dunkel ist. Sie hellt die Schrift im dunklen Theme auf, und die Buttons behalten ihre Farbe:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">:root</span>, [data-theme=<span class="val">"dark"</span>] {
+  <span class="attr">--gl-color-primary-text</span>: <span class="val">color-mix(in srgb, var(--gl-color-primary) 18%, #ffffff)</span>;
+}
+[data-theme=<span class="val">"light"</span>] {
+  <span class="attr">--gl-color-primary-text</span>: <span class="val">var(--gl-color-primary)</span>;
+}</div>
+    </div>
+    <p>Die helle Regel steht nach der dunklen: <code>:root</code> trifft auch eine Seite im hellen Theme, und von zwei passenden Regeln gewinnt die spätere. Der richtige Ton hängt vom Hintergrund ab, also dort messen. Auf GlassKits eigenem dunklen Hintergrund mit <code>#c25028</code> als Primärfarbe hebt diese Mischung einen Link auf einer Glas-Card von 1,37:1 auf 5,05:1.</p>
+    <p>Der aktive Tab nimmt für Icon und Label <code>--gl-tab-bar-active-color</code>, wo das gesetzt ist, sonst <code>--gl-color-primary-text</code>. Das Spotlight der Floating-Bar hellt den aktiven Eintrag stärker auf als jede andere Fläche, eine Marke braucht dort also womöglich einen helleren Ton, bis hin zu Weiß. Es wird pro Theme gesetzt wie die Textfarbe; <code>var(--gl-color-primary-text)</code> in der hellen Regel stellt die Vorgabe wieder her. Leuchten und Punkt bleiben in der Primärfarbe, das Spotlight in <code>--gl-tab-bar-spotlight-color</code>.</p>
     <h3>Rechts nach links</h3>
     <p>Seit 1.20.0 folgen die Komponenten der Schreibrichtung. <code>dir="rtl"</code> auf <code>&lt;html&gt;</code> oder einem beliebigen Container genügt: Abstände, Positionen und Rahmen sind logische Eigenschaften, also spiegeln sich Labels und Hinweise, das Such-Icon, die Trennlinien der Liste, die Popover-Anker, die Tab-Badges, die Modal-Aktionen, das &times; des Toasts und die Ausrichtung von Akkordeon, Liste, Tabelle und Prose. Wo zwei Werte gemeinsam wandern müssen &mdash; der Chevron des Selects und der Platz für ihn, der Knopf des Schalters und sein Weg, der Verlauf der Fortschrittsfüllung &mdash; steht die Regel unter <code>:dir(rtl)</code>: Chrome und Edge ab 120, Safari ab 16.4, Firefox ab 49. Ein älterer Browser lässt diese Teile links nach rechts, statt sie auseinanderzureißen.</p>
     <h3>Drucken</h3>
@@ -786,7 +800,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <!-- TAB BAR – FLOATING -->
   <section class="docs-section" id="tab-bar-floating">
     <h2>Tab-Bar – Floating</h2>
-    <p>Pillenförmige, zentrierte, schwebende Variante im iOS-26-Liquid-Glass-Stil. Optional mit einer eigenständigen <code>.glass-tab-bar__accessory</code>-Kapsel daneben (z. B. Suche, Erstellen) – mit eigenem Glasmaterial. Der aktive Tab erhält einen weichen radialen Spotlight-Halo statt des Punkt-Underlines.</p>
+    <p>Pillenförmige, zentrierte, schwebende Variante im iOS-26-Liquid-Glass-Stil. Optional mit einer eigenständigen <code>.glass-tab-bar__accessory</code>-Kapsel daneben (z. B. Suche, Erstellen) – mit eigenem Glasmaterial. Der aktive Tab erhält einen weichen radialen Spotlight-Halo statt des Punkt-Underlines, in <code>--gl-tab-bar-spotlight-color</code> (der Primärfarbe). Icon und Label nehmen <code>--gl-tab-bar-active-color</code>, wo das gesetzt ist, sonst <code>--gl-color-primary-text</code> (seit 1.26.0, siehe <a href="#primary-text">Primärfarbe als Text</a>).</p>
     <div class="docs-preview" style="position:relative;height:120px;overflow:hidden;">
       <div class="glass-tab-bar-dock" style="position:absolute;">
         <nav class="glass-tab-bar glass-tab-bar--floating">

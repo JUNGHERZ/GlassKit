@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.25.0
+   Jungherz GmbH – v1.26.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -93,6 +93,15 @@
   /* Yellow is light already: it takes less white here, and more black in the
      light theme, to read like the others (measured, see CHANGELOG 1.18.0). */
   --gl-color-warning-on-surface:    color-mix(in srgb, var(--gl-color-warning) 80%, #ffffff);
+
+  /* ---- Primary as text ----
+     Text and line icons in the primary colour, straight on the page or the
+     glass: links in .glass-prose, the active tab, the primary modal action,
+     accent list rows, the value of a range, the hovered and the open
+     accordion. It defaults to the primary. A brand that darkens its primary
+     for white button text sets a lighter tone here in its dark theme, and
+     the buttons keep theirs. */
+  --gl-color-primary-text:          var(--gl-color-primary);
 
   /* ---- State Surfaces & Borders (badge, chip) ----
      The scrim sits *behind* the colored tint and makes the chip
@@ -315,6 +324,7 @@
   --gl-color-success-on-surface:    color-mix(in srgb, var(--gl-color-success) 68%, #000000);
   --gl-color-error-on-surface:      color-mix(in srgb, var(--gl-color-error)   82%, #000000);
   --gl-color-warning-on-surface:    color-mix(in srgb, var(--gl-color-warning) 56%, #000000);
+  --gl-color-primary-text:          var(--gl-color-primary);
 
   --gl-state-scrim:            rgba(255, 255, 255, 0.30);
   --gl-color-primary-surface:  color-mix(in srgb, var(--gl-color-primary) 25%, transparent);
@@ -1334,7 +1344,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-range-value {
   font-size: var(--gl-font-size-sm);
   font-weight: var(--gl-font-weight-semibold);
-  color: var(--gl-color-primary);
+  color: var(--gl-color-primary-text);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1527,7 +1537,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-modal__action:disabled { opacity: 0.45; cursor: not-allowed; }
 .glass-modal__action:disabled:hover { background: transparent; }
 .glass-modal__action + .glass-modal__action { border-inline-start: 1px solid var(--gl-border-subtle); }
-.glass-modal__action--primary { color: var(--gl-color-primary); font-weight: var(--gl-font-weight-semibold); }
+.glass-modal__action--primary { color: var(--gl-color-primary-text); font-weight: var(--gl-font-weight-semibold); }
 .glass-modal__action--danger { color: var(--gl-color-error); font-weight: var(--gl-font-weight-semibold); }
 
 
@@ -1702,11 +1712,14 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   letter-spacing: 0.2px;
 }
 
+/* --gl-tab-bar-active-color, where set, colours the active icon and label
+   alone: the spotlight lightens the active item more than any other surface.
+   Glow, dot and spotlight stay in the primary. */
 .glass-tab-bar__item.is-active .glass-tab-bar__icon svg {
-  stroke: var(--gl-color-primary);
+  stroke: var(--gl-tab-bar-active-color, var(--gl-color-primary-text));
   filter: drop-shadow(0 0 6px color-mix(in srgb, var(--gl-color-primary) 35%, transparent));
 }
-.glass-tab-bar__item.is-active .glass-tab-bar__label { color: var(--gl-color-primary); }
+.glass-tab-bar__item.is-active .glass-tab-bar__label { color: var(--gl-tab-bar-active-color, var(--gl-color-primary-text)); }
 
 .glass-tab-bar__item.is-active .glass-tab-bar__icon::after {
   content: '';
@@ -1917,7 +1930,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   -webkit-tap-highlight-color: transparent;
 }
 
-.glass-accordion__trigger:hover { color: var(--gl-color-primary); }
+.glass-accordion__trigger:hover { color: var(--gl-color-primary-text); }
 
 .glass-accordion__trigger-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
@@ -1930,7 +1943,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 
 .glass-accordion__item.is-open .glass-accordion__trigger-icon svg {
   transform: rotate(180deg);
-  stroke: var(--gl-color-primary);
+  stroke: var(--gl-color-primary-text);
 }
 
 .glass-accordion__content {
@@ -2318,7 +2331,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-list__item--danger .glass-list__title,
 .glass-list__item--danger .glass-list__leading { color: inherit; }
 
-.glass-list__item--accent { color: var(--gl-color-primary); }
+.glass-list__item--accent { color: var(--gl-color-primary-text); }
 .glass-list__item--accent .glass-list__title,
 .glass-list__item--accent .glass-list__leading { color: inherit; }
 
@@ -2514,7 +2527,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-prose ul, .glass-prose ol { padding-inline-start: 1.3em; }
 .glass-prose strong { color: var(--gl-color-text-heading); }
 /* Links in running text are underlined: colour alone does not mark them. */
-.glass-prose a { color: var(--gl-color-primary); text-decoration: underline; text-underline-offset: 2px; }
+.glass-prose a { color: var(--gl-color-primary-text); text-decoration: underline; text-underline-offset: 2px; }
 .glass-prose code {
   font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.9em;
   background: var(--gl-surface-2); padding: 1px 5px; border-radius: 4px;

@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.25.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.26.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -163,6 +163,7 @@ All are derived from the state color via `color-mix()`, so overriding
 | `--gl-color-success-on-surface` | Badge text on the success tint | lightened / darkened success |
 | `--gl-color-error-on-surface` | Badge text on the error tint | lightened / darkened error |
 | `--gl-color-warning-on-surface` | Badge text on the warning tint (since 1.18.0) | lightened (dark) / darkened (light) warning |
+| `--gl-color-primary-text` | Text and line icons in the primary straight on the page or the glass: `.glass-prose` links, icon and label of the active tab, `.glass-modal__action--primary`, `.glass-list__item--accent`, `.glass-range-value`, the accordion trigger on hover and the chevron of an open item (since 1.26.0) | `var(--gl-color-primary)` in both themes |
 | `--gl-color-primary-surface` / `-border` | Badge fill / border | `color-mix(… primary 25% / 30%, transparent)` |
 | `--gl-color-success-surface` / `-border` | Badge fill / border | `color-mix(… success 15% / 30%, transparent)` |
 | `--gl-color-error-surface` / `-border` | Badge fill / border | `color-mix(… error 15% / 30%, transparent)` |
@@ -190,6 +191,15 @@ fully-translucent pre-1.7.0 chip.
 > **Do not put text in `--gl-color-success` / `--error` / `--primary` on a tinted
 > surface.** Those values are fills. Use the matching `-on-surface` token, which is what
 > `.glass-badge--*` does.
+
+> **Primary-coloured text on the page or the glass takes `--gl-color-primary-text`** (since 1.26.0), not `--gl-color-primary`. It defaults to the primary, so it looks the same, but a brand that darkens its primary for white button text can lighten the text in its dark theme without touching a button. Write the light rule after the dark one, because `:root` matches a page in the light theme too:
+>
+> ```css
+> :root, [data-theme="dark"] { --gl-color-primary-text: color-mix(in srgb, var(--gl-color-primary) 18%, #ffffff); }
+> [data-theme="light"]       { --gl-color-primary-text: var(--gl-color-primary); }
+> ```
+>
+> Measured on GlassKit's dark background with `#c25028` as primary: a link on a glass card goes from 1.37:1 to 5.05:1, the active tab of the floating bar from 2.24:1 to 8.28:1. The active tab also reads `--gl-tab-bar-active-color` (unset → `--gl-color-primary-text`), for icon and label alone.
 
 ### Glass Surfaces
 
@@ -433,7 +443,7 @@ Fixed bottom navigation with glass background. Requires `glass-bg--has-tab-bar` 
 |---|---|
 | `.glass-tab-bar` | Container: fixed bottom, glass blur |
 | `.glass-tab-bar__item` | Individual tab |
-| `.glass-tab-bar__item.is-active` | Active tab (primary color) |
+| `.glass-tab-bar__item.is-active` | Active tab: icon and label in `--gl-tab-bar-active-color` where set, else `--gl-color-primary-text` (since 1.26.0; both default to the primary); glow and dot in the primary |
 | `.glass-tab-bar__icon` | Icon wrapper |
 | `.glass-tab-bar__badge` | Numeric badge inside icon |
 | `.glass-tab-bar__label` | Text label below icon |
@@ -461,7 +471,7 @@ Pill-shaped, centered, floating bar (iOS 26 Liquid Glass style). Wrap it in `.gl
 |---|---|
 | `.glass-tab-bar-dock` | Wrapper: fixed bottom-center, holds bar + accessory |
 | `.glass-tab-bar-dock--accessory-left` | Modifier: accessory on the left |
-| `.glass-tab-bar--floating` | Pill shape, max-content width, spotlight active state |
+| `.glass-tab-bar--floating` | Pill shape, max-content width, spotlight active state (`--gl-tab-bar-spotlight-color`, the primary) |
 | `.glass-tab-bar__accessory` | Standalone glass capsule next to the bar |
 | `.glass-tab-bar__accessory--accent` / `--success` / `--error` | Filled colored accessory (white icon) |
 | `.glass-bg--has-tab-bar-floating` | Background padding for the floating variant |
@@ -2150,6 +2160,19 @@ Two things worth knowing:
   /* Ink on the primary fill – defaults to #ffffff. Set a dark ink here if your
      brand color is light and you need WCAG AA on filled surfaces. */
   --gl-color-on-primary:   #ffffff;
+}
+```
+
+The opposite case — a primary dark enough for white button text, too dark for text on a dark background — is `--gl-color-primary-text` (since 1.26.0, section 2). It colours prose links, the active tab, the primary modal action, accent list rows, the range value and the accordion, and defaults to the primary. Set it per theme, the light rule after the dark one:
+
+```css
+:root, [data-theme="dark"] {
+  --gl-color-primary-text:   color-mix(in srgb, var(--gl-color-primary) 18%, #ffffff);
+  --gl-tab-bar-active-color: #ffffff;   /* optional: icon and label of the active tab alone */
+}
+[data-theme="light"] {
+  --gl-color-primary-text:   var(--gl-color-primary);
+  --gl-tab-bar-active-color: var(--gl-color-primary-text);
 }
 ```
 

@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.25.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.26.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.25.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.26.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -72,16 +72,16 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.25/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.26/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.25/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.26/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.25/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.26/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.25` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.26` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 ### npm / yarn / pnpm
 
@@ -274,6 +274,20 @@ substituted where it is *declared*, so a brand set on a subtree does not re-deri
 tokens inherited from `:root`. Every derived token is still a plain default and loses to
 a later declaration if you want to bend one.
 
+**Primary as text (since 1.26.0).** Links in `.glass-prose`, the icon and label of the active tab, the primary modal action, accent list rows, the value of a range and the accordion draw text in `--gl-color-primary-text`, which is the primary unless you set it. A brand that darkens its primary for white button text lightens the text in the dark theme instead, and the buttons keep their colour:
+
+```css
+:root, [data-theme="dark"] {
+  --gl-color-primary-text: color-mix(in srgb, var(--gl-color-primary) 18%, #ffffff);
+}
+/* after the dark rule: :root matches a page in the light theme too */
+[data-theme="light"] {
+  --gl-color-primary-text: var(--gl-color-primary);
+}
+```
+
+`--gl-tab-bar-active-color` colours the icon and label of the active tab alone, for a spotlight that needs a lighter tone still; unset, they take `--gl-color-primary-text`.
+
 The `theme-override.css` template comes with **4 example themes**:
 - 🔵 Ocean Blue
 - 🟢 Emerald Green
@@ -373,6 +387,7 @@ All visual values are controlled via CSS Custom Properties:
 ```css
 /* Colors */
 --gl-color-primary        /* Primary color */
+--gl-color-primary-text   /* text and line icons in the primary; defaults to it */
 --gl-color-text           /* Text color */
 --gl-color-text-muted     /* Secondary text */
 
@@ -424,6 +439,7 @@ All visual values are controlled via CSS Custom Properties:
 --gl-radio-dot-color            /* white */
 --gl-textarea-field-sizing      /* fixed; content lets text areas grow with their text */
 --gl-input-picker-icon          /* none hides Chromium's picker button of date and time fields */
+--gl-tab-bar-active-color       /* icon and label of the active tab; unset: --gl-color-primary-text */
 ```
 
 The full token reference can be found in the [Documentation](docs.html).

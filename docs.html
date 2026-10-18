@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.25.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.26.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -460,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.25.0</span>
+      <span class="docs-hero__badge">v1.26.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Components</span>
@@ -497,6 +497,7 @@
       <tbody>
         <tr><td><code>--gl-color-primary</code></td><td>#f5a623</td><td>Primary color, buttons, active elements</td></tr>
         <tr><td><code>--gl-color-primary-dark</code></td><td>#d4692a</td><td>Gradient end value</td></tr>
+        <tr><td><code>--gl-color-primary-text</code></td><td>var(--gl-color-primary)</td><td>Text and line icons in the primary colour: prose links, the active tab, the primary modal action, accent list rows, the range value, the accordion &mdash; since 1.26.0, see <a href="#primary-text">Primary as text</a></td></tr>
         <tr><td><code>--gl-color-text</code></td><td>#ffffff</td><td>Default text color</td></tr>
         <tr><td><code>--gl-color-text-muted</code></td><td>rgba(255,255,255,0.60)</td><td>Secondary text</td></tr>
         <tr><td><code>--gl-color-success</code></td><td>#34c759</td><td>Success status</td></tr>
@@ -579,6 +580,19 @@ function <span class="cls">toggleTheme</span>() {
   );
 }</div>
     </div>
+    <h3 id="primary-text">Primary as text</h3>
+    <p>The primary does two jobs. As a fill it carries white text: buttons, the checked toggle, the current step, the chosen day. As text it stands on the page or the glass itself: links in <code>.glass-prose</code>, the icon and label of the active tab, the primary modal action, accent list rows, the value of a range, the accordion trigger under the pointer and the chevron of an open section. Since 1.26.0 the second job has a token of its own, <code>--gl-color-primary-text</code>. Unset by a project, it is the primary, so nothing changes.</p>
+    <p>A brand that darkens its primary so that white button text passes 4.5:1 gets a tone too dark for text on a dark background. Lighten the text in the dark theme, and the buttons keep their colour:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">:root</span>, [data-theme=<span class="val">"dark"</span>] {
+  <span class="attr">--gl-color-primary-text</span>: <span class="val">color-mix(in srgb, var(--gl-color-primary) 18%, #ffffff)</span>;
+}
+[data-theme=<span class="val">"light"</span>] {
+  <span class="attr">--gl-color-primary-text</span>: <span class="val">var(--gl-color-primary)</span>;
+}</div>
+    </div>
+    <p>Write the light rule after the dark one: <code>:root</code> matches a page in the light theme too, and of two matching rules the later one wins. The right tone depends on the background, so measure it there. On GlassKit&rsquo;s own dark background with <code>#c25028</code> as primary, this mix takes a link on a glass card from 1.37:1 to 5.05:1.</p>
+    <p>The active tab takes <code>--gl-tab-bar-active-color</code> for its icon and label where that is set, else <code>--gl-color-primary-text</code>. The spotlight of the floating bar lightens the active item more than any other surface, so a brand may need a lighter tone there, up to white. Set it per theme like the text colour; <code>var(--gl-color-primary-text)</code> in the light rule gives the default back. Glow and dot stay in the primary, the spotlight in <code>--gl-tab-bar-spotlight-color</code>.</p>
     <h3>Right to left</h3>
     <p>Since 1.20.0 the components follow the writing direction. Set <code>dir="rtl"</code> on <code>&lt;html&gt;</code> or on any container: paddings, insets and borders are logical properties, so labels and hints, the search icon, list dividers, popover anchors, tab badges, modal actions, the toast&rsquo;s close button and the alignment of accordion, list, table and prose all mirror. Where two values have to move together &mdash; the select&rsquo;s chevron and the room kept for it, the toggle&rsquo;s thumb and its travel, the progress fill&rsquo;s gradient &mdash; the rule sits under <code>:dir(rtl)</code>: Chrome and Edge from 120, Safari from 16.4, Firefox from 49. An older browser keeps those parts left to right instead of tearing them apart.</p>
     <h3>Printing</h3>
@@ -786,7 +800,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <!-- TAB BAR – FLOATING -->
   <section class="docs-section" id="tab-bar-floating">
     <h2>Tab-Bar – Floating</h2>
-    <p>Pill-shaped, centered, floating variant inspired by iOS 26 Liquid Glass. Pair with an optional <code>.glass-tab-bar__accessory</code> capsule (e.g. search, compose) — sits next to the bar with its own glass material. The active tab gets a soft radial Spotlight halo instead of the underline dot.</p>
+    <p>Pill-shaped, centered, floating variant inspired by iOS 26 Liquid Glass. Pair with an optional <code>.glass-tab-bar__accessory</code> capsule (e.g. search, compose) — sits next to the bar with its own glass material. The active tab gets a soft radial Spotlight halo instead of the underline dot, in <code>--gl-tab-bar-spotlight-color</code> (the primary). Its icon and label take <code>--gl-tab-bar-active-color</code> where that is set, else <code>--gl-color-primary-text</code> (since 1.26.0, see <a href="#primary-text">Primary as text</a>).</p>
     <div class="docs-preview" style="position:relative;height:120px;overflow:hidden;">
       <div class="glass-tab-bar-dock" style="position:absolute;">
         <nav class="glass-tab-bar glass-tab-bar--floating">

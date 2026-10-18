@@ -64,6 +64,30 @@
 
 
 /* ============================================================
+   BEISPIEL: Primärfarbe als Text (seit 1.26.0)
+
+   Links in .glass-prose, der aktive Tab, die primäre Modal-Aktion,
+   Akzent-Listenzeilen, der Wert eines Reglers und das Akkordeon
+   schreiben in --gl-color-primary-text, ohne eigenen Wert in der
+   Primärfarbe. Eine Marke, die ihre Primärfarbe für weiße
+   Button-Schrift abdunkelt, hellt hier die Schrift im dunklen Theme
+   auf; die Buttons behalten ihre Farbe. Die helle Regel steht nach
+   der dunklen, weil :root auch eine Seite im hellen Theme trifft.
+   --gl-tab-bar-active-color färbt Icon und Label des aktiven Tabs
+   allein, wo das Spotlight einen noch helleren Ton braucht.
+   ============================================================ */
+
+/*
+:root, [data-theme="dark"] {
+  --gl-color-primary-text:   color-mix(in srgb, var(--gl-color-primary) 18%, #ffffff);
+}
+[data-theme="light"] {
+  --gl-color-primary-text:   var(--gl-color-primary);
+}
+*/
+
+
+/* ============================================================
    BEISPIEL: Dunklerer Hintergrund
    ============================================================ */
 
