@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.28.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.29.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -460,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.28.0</span>
+      <span class="docs-hero__badge">v1.29.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Components</span>
@@ -968,7 +968,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.28/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.29/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -1840,6 +1840,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>__item--success</code> / <code>--warning</code> / <code>--error</code></td><td>Tone: sets <code>--gl-segmented-tone</code> for the dot</td></tr>
         <tr><td><code>__dot</code></td><td>The dot before the label, in the tone colour</td></tr>
         <tr><td><code>__icon</code></td><td>An icon before the label, in the option&rsquo;s colour (since 1.28.0)</td></tr>
+        <tr><td><code>__badge</code></td><td>A count after the label, in the tone&rsquo;s colour where one is set; inside <code>__icon</code> at the icon&rsquo;s corner (since 1.29.0)</td></tr>
         <tr><td><code>--icons</code></td><td>Icons alone, square options; the names go into <code>aria-label</code> (since 1.28.0)</td></tr>
         <tr><td><code>--droplet</code></td><td>The chosen option sits on a drop of glass that glides to the next one (since 1.27.0)</td></tr>
       </tbody>
@@ -1882,6 +1883,30 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <span class="attr">--gl-segmented-active-color</span>: <span class="val">var(--gl-color-on-primary)</span>;
 }</div>
     </div>
+    <h3 id="segmented-badge">Counts</h3>
+    <p>Since 1.29.0 an option can say how much waits behind it &mdash; open invoices, new tickets &mdash; with <code>.glass-segmented__badge</code> after its label: a small pill in tabular figures, inline, so a scrolling row and the drop measure the option with it. The tone dot says that something is there, the badge how much. Without a tone it is neutral, a tint of the text colour over the state scrim; with one it takes the state tint of the <a href="#badge">badges</a>. Put inside <code>.glass-segmented__icon</code> it sits at the icon&rsquo;s corner, as on the tab bar &mdash; the place for an <code>--icons</code> row, where it covers the icon and is opaque. Its number is no name: give the option an <code>aria-label</code> that says it, &ldquo;Tickets, 1 open&rdquo;.</p>
+    <div class="docs-preview docs-preview--compact" style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+      <div class="glass-segmented glass-segmented--droplet" role="group" aria-label="Customer" data-docs-segmented>
+        <button class="glass-segmented__item" aria-pressed="false">Payments</button>
+        <button class="glass-segmented__item" aria-pressed="true" aria-label="Invoices, 2">Invoices<span class="glass-segmented__badge">2</span></button>
+        <button class="glass-segmented__item glass-segmented__item--warning" aria-pressed="false" aria-label="Tickets, 1 open"><span class="glass-segmented__dot"></span>Tickets<span class="glass-segmented__badge">1</span></button>
+        <button class="glass-segmented__item glass-segmented__item--error" aria-pressed="false" aria-label="Reminders, 12 overdue"><span class="glass-segmented__dot"></span>Reminders<span class="glass-segmented__badge">12</span></button>
+      </div>
+      <div class="glass-segmented glass-segmented--icons glass-segmented--droplet" role="group" aria-label="Inbox" data-docs-segmented>
+        <button class="glass-segmented__item" aria-pressed="true" aria-label="Mail, 3" title="Mail, 3"><span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span class="glass-segmented__badge">3</span></span></button>
+        <button class="glass-segmented__item" aria-pressed="false" aria-label="Chat, 12" title="Chat, 12"><span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="glass-segmented__badge">12</span></span></button>
+        <button class="glass-segmented__item glass-segmented__item--error" aria-pressed="false" aria-label="Alerts, 1 new" title="Alerts, 1 new"><span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="glass-segmented__badge">1</span></span></button>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-segmented__item glass-segmented__item--warning"</span> <span class="attr">aria-pressed=</span><span class="val">"false"</span> <span class="attr">aria-label=</span><span class="val">"Tickets, 1 open"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-segmented__dot"</span><span class="tag">&gt;&lt;/span&gt;</span>Tickets<span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-segmented__badge"</span><span class="tag">&gt;</span>1<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/button&gt;</span>
+
+<span class="cmt">&lt;!-- In an --icons row: at the icon's corner --&gt;</span>
+<span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-segmented__icon"</span> <span class="attr">aria-hidden=</span><span class="val">"true"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-segmented__badge"</span><span class="tag">&gt;</span>3<span class="tag">&lt;/span&gt;&lt;/span&gt;</span></div>
+    </div>
+    <p>The neutral pill has two tokens, both colours and unset by default: <code>--gl-segmented-badge-bg</code>, the tint over the scrim (unset: 12&nbsp;% of the text colour), and <code>--gl-segmented-badge-color</code> (unset: the text colour). Measured in Chromium, WebKit and Firefox, the figures reach 5.6:1 or more in the dark theme and 4.7:1 or more in the light one, on the chosen option and beside it, neutral and in every tone.</p>
     <h3>Droplet</h3>
     <p>Since 1.27.0 <code>.glass-segmented--droplet</code> gives the chosen option the drop of the <a href="#droplet">tab bar</a>: it runs to a new option, stretches on the way and settles, the text it passes lights up, and a finger can drag it. Disabled options are skipped. In a row that scrolls (<code>--scroll</code>) a swipe still scrolls; only the drop itself is dragged, and the row scrolls along at its edges. The drop follows <code>aria-pressed</code>; <code>attachDroplets()</code> from <code>glasskit-droplet.js</code> starts it, as above.</p>
     <div class="docs-preview docs-preview--compact" style="display:flex;flex-direction:column;gap:10px">
@@ -2320,7 +2345,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td>Skeleton</td><td><code>.glass-skeleton</code></td><td><code>__line</code>, <code>__line--title</code></td></tr>
         <tr><td>Table</td><td><code>.glass-table</code></td><td><code>-wrap</code>, <code>__num</code>, <code>__muted</code></td></tr>
         <tr><td>Prose</td><td><code>.glass-prose</code></td><td>–</td></tr>
-        <tr><td>Segmented</td><td><code>.glass-segmented</code></td><td><code>--full</code>, <code>--scroll</code>, <code>--wrap</code>, <code>--icons</code>, <code>__item</code>, <code>__item--success</code>/<code>--warning</code>/<code>--error</code>, <code>__dot</code>, <code>__icon</code>, <code>[aria-pressed]</code>, <code>--droplet</code></td></tr>
+        <tr><td>Segmented</td><td><code>.glass-segmented</code></td><td><code>--full</code>, <code>--scroll</code>, <code>--wrap</code>, <code>--icons</code>, <code>__item</code>, <code>__item--success</code>/<code>--warning</code>/<code>--error</code>, <code>__dot</code>, <code>__icon</code>, <code>__badge</code>, <code>[aria-pressed]</code>, <code>--droplet</code></td></tr>
         <tr><td>Steps</td><td><code>.glass-steps</code></td><td><code>__item</code>, <code>__item--done</code>, <code>__item--current</code>, <code>__num</code>, <code>__label</code>, <code>__line</code></td></tr>
         <tr><td>Sheet</td><td><code>.glass-sheet-overlay</code> + <code>.glass-sheet</code></td><td><code>.is-active</code>, <code>--inline</code>, <code>__grip</code>, <code>__title</code>, <code>__body</code>, <code>__actions</code></td></tr>
         <tr><td>Empty state</td><td><code>.glass-empty</code></td><td><code>__icon</code>, <code>__title</code>, <code>__text</code>, <code>__action</code></td></tr>

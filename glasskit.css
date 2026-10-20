@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.28.0
+   Jungherz GmbH – v1.29.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -2831,6 +2831,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   display: inline-flex; align-items: center; justify-content: center;
   width: 18px; height: 18px;
   font-size: 18px; line-height: 1;
+  position: relative;
 }
 .glass-segmented__icon[hidden] { display: none; }
 .glass-segmented__icon svg,
@@ -2840,6 +2841,54 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   stroke-linecap: round; stroke-linejoin: round;
 }
 .glass-segmented--icons .glass-segmented__item { padding: 8px; }
+
+/* A count after the label (since 1.29.0): how much waits behind an option,
+   where the dot only says that something does. Inline, so a scrolling row
+   and the drop measure the option with it, and in tabular figures. Without
+   a tone it is neutral, a tint of the text colour over the state scrim,
+   which keeps the small figures readable on the chosen option as well
+   (--gl-segmented-badge-bg, -color, both colours); with a tone it takes the
+   state tint of .glass-badge over a doubled scrim. Inside
+   .glass-segmented__icon it sits at the icon's corner, as on the tab bar —
+   the place for an --icons row. There it covers the icon, so the theme's
+   middle background goes underneath (--gl-segmented-badge-base, the
+   badge's background colour). Its number is no name: give the option an
+   aria-label such as "Tickets, 1 open". */
+.glass-segmented__badge {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 16px; height: 16px; padding: 0 5px;
+  border-radius: var(--gl-radius-full);
+  background-color: var(--gl-segmented-badge-base, var(--gl-state-scrim, transparent));
+  background-image: linear-gradient(var(--gl-segmented-badge-bg, color-mix(in srgb, var(--gl-color-text) 12%, transparent)),
+                                    var(--gl-segmented-badge-bg, color-mix(in srgb, var(--gl-color-text) 12%, transparent)));
+  color: var(--gl-segmented-badge-color, var(--gl-color-text));
+  font-size: 11px; font-weight: var(--gl-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.glass-segmented__item--success .glass-segmented__badge {
+  background-image: linear-gradient(var(--gl-color-success-surface), var(--gl-color-success-surface)),
+                    linear-gradient(var(--gl-state-scrim), var(--gl-state-scrim));
+  box-shadow: inset 0 0 0 1px var(--gl-color-success-border);
+  color: var(--gl-color-success-on-surface, var(--gl-color-success));
+}
+.glass-segmented__item--warning .glass-segmented__badge {
+  background-image: linear-gradient(var(--gl-color-warning-surface), var(--gl-color-warning-surface)),
+                    linear-gradient(var(--gl-state-scrim), var(--gl-state-scrim));
+  box-shadow: inset 0 0 0 1px var(--gl-color-warning-border);
+  color: var(--gl-color-warning-on-surface, var(--gl-color-warning));
+}
+.glass-segmented__item--error .glass-segmented__badge {
+  background-image: linear-gradient(var(--gl-color-error-surface), var(--gl-color-error-surface)),
+                    linear-gradient(var(--gl-state-scrim), var(--gl-state-scrim));
+  box-shadow: inset 0 0 0 1px var(--gl-color-error-border);
+  color: var(--gl-color-error-on-surface, var(--gl-color-error));
+}
+.glass-segmented__icon > .glass-segmented__badge {
+  --gl-segmented-badge-base: var(--gl-color-bg-mid);
+  position: absolute; top: -4px; inset-inline-end: -8px;
+}
 
 
 /* ============================================================

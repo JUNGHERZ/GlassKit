@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.28.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.29.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.28.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.29.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -73,22 +73,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.28/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.29/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.28/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.29/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.28/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.29/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.28` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.29` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.28/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.29/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -200,7 +200,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Skeleton** | `.glass-skeleton` | Shimmer lines while content loads |
 | **Table** | `.glass-table` | Plain `<table>` on glass — hairline rows, tabular numbers |
 | **Prose** | `.glass-prose` | Rendered Markdown / running text with one class |
-| **Segmented** | `.glass-segmented` | Small exclusive choice as one control, with tone dots or icons, icons alone with `--icons`; scrolls or wraps when crowded; `--droplet` for a gliding selection |
+| **Segmented** | `.glass-segmented` | Small exclusive choice as one control, with tone dots, icons or counts, icons alone with `--icons`; scrolls or wraps when crowded; `--droplet` for a gliding selection |
 | **Steps** | `.glass-steps` | Progress through a short flow; container-query aware |
 | **Sheet** | `.glass-sheet` | Bottom sheet — the mobile sibling of the modal |
 | **Empty state** | `.glass-empty` | Icon, title, text and one action for empty lists |
@@ -485,6 +485,8 @@ All visual values are controlled via CSS Custom Properties:
 --gl-segmented-active-bg        /* chosen option and its drop; unset: --gl-surface-5 */
 --gl-segmented-active-shadow    /* their shadow; unset: --gl-shadow-btn */
 --gl-segmented-active-color     /* label and icon of the chosen option; unset: --gl-color-text-heading */
+--gl-segmented-badge-bg         /* tint of a neutral count over the state scrim; unset: 12 % of the text colour */
+--gl-segmented-badge-color      /* its figures; unset: --gl-color-text */
 --gl-gloss-droplet              /* highlight in the drop of --droplet rows; off with data-surface */
 ```
 
@@ -787,7 +789,7 @@ Prose:
   .glass-prose   (styles the rendered content beneath it)
 
 Segmented:
-  .glass-segmented--full / --scroll / --wrap / --icons · __item[aria-pressed] · __item--success / --warning / --error · __dot · __icon
+  .glass-segmented--full / --scroll / --wrap / --icons · __item[aria-pressed] · __item--success / --warning / --error · __dot · __icon · __badge
   .glass-segmented--droplet        (gliding selection, with glasskit-droplet.js)
 
 Steps:

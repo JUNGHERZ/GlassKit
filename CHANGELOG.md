@@ -7,6 +7,16 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.29.0] – 2026-10-21
+
+### Added
+
+- **A count per segmented option: `.glass-segmented__badge`.** A row of tabs in an admin area — payments, subscriptions, invoices, tickets — had no place to say how much waits behind a tab. The tone dot says that something is there, not how much, so the count went into the label ("Tickets (1)"), where it read as part of it and could be neither styled nor announced apart. The badge is a small pill after the label, in tabular figures and inline, so a scrolling row and the drop measure the option with it. Without a tone it is neutral, a tint of the text colour over the state scrim; `--gl-segmented-badge-bg` and `--gl-segmented-badge-color` set it, both colours, both unset. With a tone it takes the state tint of `.glass-badge` over a doubled scrim. Put inside `.glass-segmented__icon` it sits at the icon's corner, as on the tab bar — the place for an `--icons` row — and is opaque there, the theme's middle background under its tint, because it covers the icon; `.glass-segmented__icon` is positioned for that. Measured in Chromium 153, WebKit 26.6 and Firefox 151, the 11px figures reach 5.65:1 or more in the dark theme and 4.71:1 or more in the light one, on the chosen option and beside it, neutral and in every tone, inline and at the corner; with a single scrim the neutral badge on the chosen option stayed at 3.75:1 in the dark theme, and a plain tint without any let the icon show through the figures at the corner. ([GlassKit Elements #19](https://github.com/JUNGHERZ/GlassKit-Elements/issues/19))
+
+Docs (English and German), README and SKILL.md show the badge. Docs, showcase and landing pages render pixel-identical to 1.28.0: in WebKit and Firefox on the whole pages, in Chromium section by section, where the full-page captures of the docs differ by a rasterisation seam in the date strip whose layout is the same to the third decimal.
+
+---
+
 ## [1.28.0] – 2026-10-20
 
 ### Added
@@ -1163,6 +1173,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.29.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.29.0
 [1.28.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.28.0
 [1.27.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.27.0
 [1.26.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.26.0
@@ -1203,4 +1214,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.28.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.29.0...HEAD

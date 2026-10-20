@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.28.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.29.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -1454,6 +1454,7 @@ More options than fit — seven areas on a phone: without a modifier the row sta
 | `.glass-segmented__dot` | The dot before the label, in the tone colour |
 | `.glass-segmented__icon` | An icon before the label (since 1.28.0): an SVG strokes in the option's colour, a font icon or any element inherits it; 18px |
 | `.glass-segmented--icons` | Icons alone, square options; each option's name in `aria-label` and `title` (since 1.28.0) |
+| `.glass-segmented__badge` | A count after the label — neutral, or in the option's tone; inside `__icon` at the icon's corner (since 1.29.0) |
 | `.glass-segmented--droplet` | The chosen option sits on a drop of glass that glides to the next one (since 1.27.0) — recommended |
 
 **Icons (since 1.28.0).** `.glass-segmented__icon` inside an option shows an icon before its label, in the option's colour; under the drop it grows like the tone dot. Mark it `aria-hidden="true"`. `--icons` on the row is for options that show their icon alone — a light / dark / auto switch: the options become square, and each carries its name as `aria-label` (and `title`, for the pointer).
@@ -1467,6 +1468,16 @@ More options than fit — seven areas on a phone: without a modifier the row sta
     <span class="glass-segmented__icon" aria-hidden="true"><span class="material-icons">dark_mode</span></span>
   </button>
 </div>
+```
+
+**Counts (since 1.29.0).** `.glass-segmented__badge` after an option's label shows how much waits behind it — open invoices, new tickets — where the tone dot only says that something does. A small pill in tabular figures, inline, so a scrolling row and the drop measure the option with it. Neutral without a tone (a tint of the text colour over the state scrim; `--gl-segmented-badge-bg` and `--gl-segmented-badge-color`, both colours), the state tint of `.glass-badge` with one. Inside `.glass-segmented__icon` it sits at the icon's corner, as on the tab bar, and is opaque there — the place for an `--icons` row. Never put the count into the label text ("Tickets (1)"): it can then be neither styled nor announced apart. The number is no name, so give the option an `aria-label` that says it.
+
+```html
+<button class="glass-segmented__item glass-segmented__item--warning" aria-pressed="false" aria-label="Tickets, 1 open">
+  <span class="glass-segmented__dot"></span>Tickets<span class="glass-segmented__badge">1</span>
+</button>
+<!-- in an --icons row -->
+<span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24">…</svg><span class="glass-segmented__badge">3</span></span>
 ```
 
 **Chosen option surface (since 1.28.0).** Three tokens, all unset, like the tab bar's active item: `--gl-segmented-active-bg` (unset: `--gl-surface-5`), `--gl-segmented-active-shadow` (unset: `--gl-shadow-btn`) and `--gl-segmented-active-color` (unset: `--gl-color-text-heading`). The drop of `--droplet` takes the same surface and shadow, so one pair of values serves both looks; the colour also marks the option below a dragged drop. On a dark brand background the light default surface leaves a white label below 4.5:1 — there, set a dark surface or a dark label. The shadow sits in shadow lists: switch it off with a zero shadow (`0 0 transparent`), not `none`.
@@ -2112,6 +2123,7 @@ Key points in this composition:
 | Copying the tab bar's state rules onto a font icon, or overriding `stroke` on `.glass-tab-bar__icon svg` | Put the icon into `.glass-tab-bar__icon` as it is; set `--gl-tab-bar-color` / `--gl-tab-bar-hover-color` (since 1.28.0) |
 | Overriding the tab label's `font-size` or the bar's `z-index` | `--gl-tab-bar-label-size`, `--gl-tab-bar-z-index` (since 1.28.0) |
 | Restyling the chosen segmented option for a dark brand | `--gl-segmented-active-bg`, `-color`, `-shadow` (since 1.28.0) |
+| A count in a segmented label, "Tickets (1)" | `.glass-segmented__badge` after the label, the count in the option's `aria-label` (since 1.29.0) |
 | Overriding `height` of `.glass-btn`, `.glass-input` etc. for a denser UI | `data-density="compact"` on `<html>`, or set a density token — toggle thumb and label alignment follow the tokens, not a hand-set `height` |
 
 ---
@@ -2152,7 +2164,7 @@ Key points in this composition:
 | Skeleton | `.glass-skeleton` | `__line`, `__line--title` |
 | Table | `.glass-table` | `-wrap`, `__num`, `__muted` |
 | Prose | `.glass-prose` | – |
-| Segmented | `.glass-segmented` | `--full`, `--scroll`, `--wrap`, `--icons`, `--droplet`, `__item`, `__item--success`/`--warning`/`--error`, `__dot`, `__icon`, `[aria-pressed]` |
+| Segmented | `.glass-segmented` | `--full`, `--scroll`, `--wrap`, `--icons`, `--droplet`, `__item`, `__item--success`/`--warning`/`--error`, `__dot`, `__icon`, `__badge`, `[aria-pressed]` |
 | Steps | `.glass-steps` | `__item`, `__item--done`, `__item--current`, `__num`, `__label`, `__line` |
 | Sheet | `.glass-sheet-overlay` + `.glass-sheet` | `.is-active`, `--inline`, `__grip`, `__title`, `__body`, `__actions` |
 | Empty state | `.glass-empty` | `__icon`, `__title`, `__text`, `__action` |
