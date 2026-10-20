@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.27.0
+   Jungherz GmbH – v1.28.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -1681,10 +1681,18 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   -webkit-backdrop-filter: blur(var(--gl-blur));
   border-top: 1px solid var(--gl-border-subtle);
   display: flex; justify-content: space-around;
+  /* The items sit in the middle of the room the home indicator leaves.
+     Where its inset leaves less than they need (an iPhone with
+     viewport-fit=cover), they overflow the content box and `safe` keeps
+     them at the top, as before 1.28.0. Without one — Android, the desktop —
+     the inset is 0px, not the fallback, and the items sat 9px below the
+     top edge with 26px empty below them. A browser without `safe` keeps
+     flex-start. */
   align-items: flex-start;
+  align-items: safe center;
   padding-top: var(--gl-space-xs);
-  padding-bottom: env(safe-area-inset-bottom, 8px);
-  z-index: 900;
+  padding-bottom: max(var(--gl-space-xs), env(safe-area-inset-bottom, 0px));
+  z-index: var(--gl-tab-bar-z-index, 900);
   box-shadow: 0 -4px 20px rgba(0,0,0,0.08), var(--gl-inset-subtle);
 }
 
@@ -1699,30 +1707,44 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   min-width: 60px;
 }
 
+/* Every state colours the icon box, and the SVG strokes in currentColor
+   (since 1.28.0): an icon font, an <img> mask or an element slotted in
+   takes the colour as well, with the lens of the drop and the drag state.
+   A font icon takes the box's size unless it sets its own. Unset, the
+   inactive colour is --gl-icon-muted and the hovered one --gl-icon-default;
+   --gl-tab-bar-color and --gl-tab-bar-hover-color set them, for icon and
+   label alike. */
 .glass-tab-bar__icon {
   width: 24px; height: 24px;
   display: flex; align-items: center; justify-content: center;
   position: relative;
+  color: var(--gl-tab-bar-color, var(--gl-icon-muted));
+  font-size: 24px;
+  transition: var(--gl-transition);
 }
 
-.glass-tab-bar__icon svg {
+.glass-tab-bar__icon svg,
+.glass-tab-bar__icon ::slotted(svg) {
   width: 24px; height: 24px; fill: none;
-  stroke: var(--gl-icon-muted); stroke-width: 1.8;
+  stroke: currentColor; stroke-width: 1.8;
   stroke-linecap: round; stroke-linejoin: round;
   transition: var(--gl-transition);
 }
 
 .glass-tab-bar__label {
-  font-size: 10px; font-weight: var(--gl-font-weight-medium);
-  color: var(--gl-icon-muted); transition: var(--gl-transition);
+  font-size: var(--gl-tab-bar-label-size, 10px); font-weight: var(--gl-font-weight-medium);
+  color: var(--gl-tab-bar-color, var(--gl-icon-muted)); transition: var(--gl-transition);
   letter-spacing: 0.2px;
 }
 
 /* --gl-tab-bar-active-color, where set, colours the active icon and label
    alone: the spotlight lightens the active item more than any other surface.
-   Glow, dot and spotlight stay in the primary. */
-.glass-tab-bar__item.is-active .glass-tab-bar__icon svg {
-  stroke: var(--gl-tab-bar-active-color, var(--gl-color-primary-text));
+   Glow, dot and spotlight stay in the primary. The glow lies on the icon
+   itself, not on the badge beside it; :where() keeps the rule as specific
+   as it was when it named the svg. */
+.glass-tab-bar__item.is-active .glass-tab-bar__icon { color: var(--gl-tab-bar-active-color, var(--gl-color-primary-text)); }
+.glass-tab-bar__item.is-active .glass-tab-bar__icon > :where(:not(.glass-tab-bar__badge)),
+.glass-tab-bar__item.is-active .glass-tab-bar__icon ::slotted(*) {
   filter: var(--gl-tab-bar-active-glow, drop-shadow(0 0 6px color-mix(in srgb, var(--gl-color-primary) 35%, transparent)));
 }
 .glass-tab-bar__item.is-active .glass-tab-bar__label { color: var(--gl-tab-bar-active-color, var(--gl-color-primary-text)); }
@@ -1746,8 +1768,8 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   box-shadow: 0 0 6px color-mix(in srgb, var(--gl-color-primary) 50%, transparent);
 }
 
-.glass-tab-bar__item:not(.is-active):hover .glass-tab-bar__icon svg { stroke: var(--gl-icon-default); }
-.glass-tab-bar__item:not(.is-active):hover .glass-tab-bar__label { color: var(--gl-icon-default); }
+.glass-tab-bar__item:not(.is-active):hover .glass-tab-bar__icon,
+.glass-tab-bar__item:not(.is-active):hover .glass-tab-bar__label { color: var(--gl-tab-bar-hover-color, var(--gl-icon-default)); }
 
 .glass-tab-bar__badge {
   position: absolute; top: -4px; inset-inline-end: -8px;
@@ -1771,7 +1793,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   transform: translateX(-50%);
   display: flex; align-items: center;
   gap: var(--gl-tab-bar-floating-gap);
-  z-index: 900;
+  z-index: var(--gl-tab-bar-z-index, 900);
   max-width: calc(100vw - 2 * var(--gl-space-md));
 }
 
@@ -1843,22 +1865,26 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   outline: none; padding: 0;
   -webkit-tap-highlight-color: transparent;
   flex-shrink: 0;
+  /* The icon colour sits on the button, the SVG strokes in currentColor
+     (since 1.28.0), so a font icon follows hover and the colour variants. */
+  color: var(--gl-icon-default);
 }
 
 .glass-tab-bar__accessory svg,
 .glass-tab-bar__accessory ::slotted(svg) {
   width: 22px; height: 22px; fill: none;
-  stroke: var(--gl-icon-default); stroke-width: 1.8;
+  stroke: currentColor; stroke-width: 1.8;
   stroke-linecap: round; stroke-linejoin: round;
   transition: var(--gl-transition);
 }
 
-/* :where() keeps the hover rules at their specificity while leaving a
-   disabled accessory out of them — a reset could not restore the icon
+/* :where() keeps the hover rule at its specificity while leaving a
+   disabled accessory out of it — a reset could not restore the icon
    colour, which each tone variant sets on its own. */
-.glass-tab-bar__accessory:where(:not(:disabled, [aria-disabled="true"])):hover { transform: translateY(-1px); }
-.glass-tab-bar__accessory:where(:not(:disabled, [aria-disabled="true"])):hover svg,
-.glass-tab-bar__accessory:where(:not(:disabled, [aria-disabled="true"])):hover ::slotted(svg) { stroke: var(--gl-icon-strong); }
+.glass-tab-bar__accessory:where(:not(:disabled, [aria-disabled="true"])):hover {
+  transform: translateY(-1px);
+  color: var(--gl-icon-strong);
+}
 .glass-tab-bar__accessory:disabled,
 .glass-tab-bar__accessory[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
 
@@ -1869,7 +1895,10 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
     var(--gl-inset-subtle);
 }
 
-/* Accent variants – use existing color tokens */
+/* Accent variants – use existing color tokens. Each keeps its ink on
+   hover; until 1.28.0 only the accent one did, and the success and error
+   capsules turned their icon --gl-icon-strong, dark grey in the light
+   theme. */
 .glass-tab-bar__accessory--accent {
   background: linear-gradient(135deg,
     var(--gl-color-primary) 0%,
@@ -1880,10 +1909,8 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
     0 8px 32px color-mix(in srgb, var(--gl-color-primary) 35%, transparent),
     var(--gl-inset-medium);
 }
-.glass-tab-bar__accessory--accent svg,
-.glass-tab-bar__accessory--accent ::slotted(svg) { stroke: var(--gl-color-on-primary, #ffffff); }
-.glass-tab-bar__accessory--accent:hover svg,
-.glass-tab-bar__accessory--accent:hover ::slotted(svg) { stroke: var(--gl-color-on-primary, #ffffff); }
+.glass-tab-bar__accessory--accent,
+.glass-tab-bar__accessory--accent:hover { color: var(--gl-color-on-primary, #ffffff); }
 
 .glass-tab-bar__accessory--success {
   background: linear-gradient(135deg,
@@ -1895,8 +1922,8 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
     0 8px 32px color-mix(in srgb, var(--gl-color-success) 35%, transparent),
     var(--gl-inset-medium);
 }
-.glass-tab-bar__accessory--success svg,
-.glass-tab-bar__accessory--success ::slotted(svg) { stroke: var(--gl-color-on-success, #ffffff); }
+.glass-tab-bar__accessory--success,
+.glass-tab-bar__accessory--success:hover { color: var(--gl-color-on-success, #ffffff); }
 
 .glass-tab-bar__accessory--error {
   background: linear-gradient(135deg,
@@ -1908,8 +1935,8 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
     0 8px 32px color-mix(in srgb, var(--gl-color-error) 35%, transparent),
     var(--gl-inset-medium);
 }
-.glass-tab-bar__accessory--error svg,
-.glass-tab-bar__accessory--error ::slotted(svg) { stroke: var(--gl-color-on-error, #ffffff); }
+.glass-tab-bar__accessory--error,
+.glass-tab-bar__accessory--error:hover { color: var(--gl-color-on-error, #ffffff); }
 
 
 /* ============================================================
@@ -1976,6 +2003,17 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
     inset 0 0 0 1px var(--gl-border-subtle),
     var(--gl-inset-strong);
 }
+/* The segmented drop likewise, in the chosen option's surface where a
+   project set one (--gl-segmented-active-bg, -shadow; since 1.28.0). */
+.glass-segmented.glass-segmented--droplet[data-droplet]::before {
+  background:
+    var(--gl-gloss-droplet, none),
+    var(--gl-segmented-active-bg, linear-gradient(to bottom, var(--gl-surface-5) 0%, var(--gl-surface-3) 100%));
+  box-shadow:
+    var(--gl-segmented-active-shadow, 0 4px 14px rgba(0,0,0,0.18), 0 1px 3px rgba(0,0,0,0.12)),
+    inset 0 0 0 1px var(--gl-border-subtle),
+    var(--gl-inset-strong);
+}
 /* On the way: the leading edge runs ahead, the trailing one is pulled
    after it and overshoots, so the drop stretches and draws together. */
 :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-dir="right"]::before {
@@ -2020,32 +2058,35 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active { background: none; box-shadow: none; }
 .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active::before { display: none; }
 .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active .glass-tab-bar__icon::after { display: none; }
-.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active .glass-tab-bar__icon svg { filter: var(--gl-tab-bar-active-glow, none); }
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active .glass-tab-bar__icon > :where(:not(.glass-tab-bar__badge)),
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active .glass-tab-bar__icon ::slotted(*) { filter: var(--gl-tab-bar-active-glow, none); }
 .glass-segmented--droplet[data-droplet] .glass-segmented__item[aria-pressed="true"] { background: transparent; box-shadow: none; }
 .glass-segmented--droplet[data-droplet] .glass-segmented__item[aria-pressed="true"]:focus-visible { box-shadow: var(--gl-shadow-focus); }
 /* A disabled choice dims its drop as it dims itself. */
 :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet]:has(:is(.glass-tab-bar__item.is-active, .glass-segmented__item[aria-pressed="true"]):disabled)::before { opacity: 0.45; }
 
-/* Under the drop a tab icon or a tone dot grows as under a lens. While a
-   finger drags the drop, the item below it takes the chosen colour and
-   the chosen item lets it go. */
-.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon,
-.glass-segmented--droplet[data-droplet] .glass-segmented__dot { transition: transform 0.4s cubic-bezier(0.34, 1.6, 0.5, 1); }
+/* Under the drop a tab icon, a segmented icon or a tone dot grows as under
+   a lens. While a finger drags the drop, the item below it takes the
+   chosen colour and the chosen item lets it go. The tab icon keeps the
+   fade of its colour next to the lens. */
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon { transition: var(--gl-transition), transform 0.4s cubic-bezier(0.34, 1.6, 0.5, 1); }
+.glass-segmented--droplet[data-droplet] .glass-segmented__dot,
+.glass-segmented--droplet[data-droplet] .glass-segmented__icon { transition: transform 0.4s cubic-bezier(0.34, 1.6, 0.5, 1); }
 .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-under-droplet .glass-tab-bar__icon { transform: scale(1.15); }
 .glass-segmented--droplet[data-droplet] .glass-segmented__item.is-under-droplet .glass-segmented__dot { transform: scale(1.3); }
-.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-under-droplet .glass-tab-bar__icon svg { stroke: var(--gl-tab-bar-active-color, var(--gl-color-primary-text)); }
-.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-under-droplet .glass-tab-bar__label { color: var(--gl-tab-bar-active-color, var(--gl-color-primary-text)); }
-.glass-segmented--droplet[data-droplet] .glass-segmented__item.is-under-droplet { color: var(--gl-color-text-heading); }
-.glass-tab-bar--droplet[data-droplet-drag] .glass-tab-bar__item.is-active:not(.is-under-droplet) .glass-tab-bar__icon svg { stroke: var(--gl-icon-muted); }
-.glass-tab-bar--droplet[data-droplet-drag] .glass-tab-bar__item.is-active:not(.is-under-droplet) .glass-tab-bar__label { color: var(--gl-icon-muted); }
+.glass-segmented--droplet[data-droplet] .glass-segmented__item.is-under-droplet .glass-segmented__icon { transform: scale(1.15); }
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-under-droplet :is(.glass-tab-bar__icon, .glass-tab-bar__label) { color: var(--gl-tab-bar-active-color, var(--gl-color-primary-text)); }
+.glass-segmented--droplet[data-droplet] .glass-segmented__item.is-under-droplet { color: var(--gl-segmented-active-color, var(--gl-color-text-heading)); }
+.glass-tab-bar--droplet[data-droplet-drag] .glass-tab-bar__item.is-active:not(.is-under-droplet) :is(.glass-tab-bar__icon, .glass-tab-bar__label) { color: var(--gl-tab-bar-color, var(--gl-icon-muted)); }
 .glass-segmented--droplet[data-droplet-drag] .glass-segmented__item[aria-pressed="true"]:not(.is-under-droplet) { color: var(--gl-color-text-muted); }
 
 @media (prefers-reduced-motion: reduce) {
   :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet]::before,
   :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-dir]::before,
   :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-drag]::before { transition: none; }
-  .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon,
-  .glass-segmented--droplet[data-droplet] .glass-segmented__dot { transition: none; }
+  .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon { transition: var(--gl-transition), transform 0s; }
+  .glass-segmented--droplet[data-droplet] .glass-segmented__dot,
+  .glass-segmented--droplet[data-droplet] .glass-segmented__icon { transition: none; }
 }
 
 
@@ -2757,13 +2798,18 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   outline: none; -webkit-tap-highlight-color: transparent;
 }
 .glass-segmented__item:hover { color: var(--gl-color-text); }
+/* The chosen option's surface, shadow and text colour can be set
+   (since 1.28.0), like the tab bar's active item: on a dark brand the
+   light surface left a white label below 4.5:1. Unset, they keep their
+   values; the drop of --droplet takes the same surface (18c). The shadow
+   sits in shadow lists: switch it off with a zero shadow, not none. */
 .glass-segmented__item[aria-pressed="true"] {
-  background: var(--gl-surface-5);
-  color: var(--gl-color-text-heading);
-  box-shadow: var(--gl-shadow-btn);
+  background: var(--gl-segmented-active-bg, var(--gl-surface-5));
+  color: var(--gl-segmented-active-color, var(--gl-color-text-heading));
+  box-shadow: var(--gl-segmented-active-shadow, var(--gl-shadow-btn));
 }
 .glass-segmented__item:focus-visible { box-shadow: var(--gl-shadow-focus); }
-.glass-segmented__item[aria-pressed="true"]:focus-visible { box-shadow: var(--gl-shadow-focus), var(--gl-shadow-btn); }
+.glass-segmented__item[aria-pressed="true"]:focus-visible { box-shadow: var(--gl-shadow-focus), var(--gl-segmented-active-shadow, var(--gl-shadow-btn)); }
 .glass-segmented__item:disabled { opacity: 0.45; cursor: not-allowed; }
 
 .glass-segmented__dot {
@@ -2773,6 +2819,27 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-segmented__item--success { --gl-segmented-tone: var(--gl-color-success); }
 .glass-segmented__item--warning { --gl-segmented-tone: var(--gl-color-warning); }
 .glass-segmented__item--error   { --gl-segmented-tone: var(--gl-color-error); }
+
+/* An icon before the label (since 1.28.0): an SVG strokes in the text
+   colour; any other element — a font icon, an <img>, a mask — takes the
+   colour, and a font icon the size, from the box. Under the drop it grows
+   like the dot. Hidden by script while empty: the display below beats the
+   hidden attribute's own rule. --icons makes a row of icons alone, square,
+   each option's name in its aria-label (and title, for the pointer). */
+.glass-segmented__icon {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px;
+  font-size: 18px; line-height: 1;
+}
+.glass-segmented__icon[hidden] { display: none; }
+.glass-segmented__icon svg,
+.glass-segmented__icon ::slotted(svg) {
+  width: 18px; height: 18px; fill: none;
+  stroke: currentColor; stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.glass-segmented--icons .glass-segmented__item { padding: 8px; }
 
 
 /* ============================================================
@@ -2819,9 +2886,19 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   color: var(--gl-color-on-primary);
 }
 .glass-steps__line { flex: 1 1 8px; min-width: 8px; height: 1px; background: var(--gl-border-subtle); }
+/* Narrow, the current label comes first (since 1.28.0). The circles keep
+   their size and the lines take only the room that is left, down to 2px
+   at 4px from their neighbours: the gap belongs to the list, which is the
+   container itself and out of its own query's reach, so the lines take a
+   negative margin. Only then does the label shorten. Until 1.28.0 every
+   part gave way at once — seven steps cut the current label in a 350px
+   column and pushed the circles past its edge. */
 @container (max-width: 360px) {
   .glass-steps__label { display: none; }
   .glass-steps__item--current .glass-steps__label { display: inline; }
+  .glass-steps__item { flex-shrink: 0; }
+  .glass-steps__item--current { flex-shrink: 1; }
+  .glass-steps__line { flex-basis: 0; min-width: 2px; margin-inline: -2px; }
 }
 
 

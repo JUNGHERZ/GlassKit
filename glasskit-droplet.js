@@ -52,13 +52,32 @@ export function attachDroplet(row, options = {}) {
   let chosen = null, left = 0, placed = null, liftTimer = 0, lensFrame = 0, edgeFrame = 0;
   let drag = null, eatClick = false, under = null;
 
+  // The row on screen and its scale there. Rects are viewport pixels, scaled
+  // by every transform on an ancestor — an app that zooms in on start, a
+  // popover that opens from scale(0.96) — while the drop's lengths are the
+  // row's own. So distances on screen are divided by the scale: the drop
+  // sits right at rest and while such a transform runs, and nothing needs
+  // measuring again when it ends (before 1.28.0 it stayed beside the item).
+  // The layout size is the computed one under GlassKit's border-box,
+  // unscaled and nearly unrounded, else the offset size, rounded to whole
+  // pixels. A difference within that rounding is no transform: the rects
+  // are then taken as they are, as before.
+  const frame = () => {
+    const n = row.getBoundingClientRect(), cs = getComputedStyle(row);
+    const exact = cs.boxSizing === 'border-box', tolerance = exact ? 0.05 : 0.5;
+    const w = exact ? parseFloat(cs.width) : row.offsetWidth;
+    const h = exact ? parseFloat(cs.height) : row.offsetHeight;
+    const scale = (onScreen, own) => onScreen > 0 && own > 0 && Math.abs(onScreen - own) > tolerance ? onScreen / own : 1;
+    return { n, sx: scale(n.width, w), sy: scale(n.height, h) };
+  };
   // An item's box in the row's padding box; in a row that scrolls, in its
   // scrolled content, where the drop scrolls along with the items.
-  const boxOf = it => {
-    const n = row.getBoundingClientRect(), r = it.getBoundingClientRect();
-    const l = r.left - n.left - row.clientLeft + row.scrollLeft;
-    const t = r.top - n.top - row.clientTop + row.scrollTop;
-    return { left: l, width: r.width, top: t, bottom: row.clientHeight - t - r.height };
+  const boxOf = (it, f = frame()) => {
+    const r = it.getBoundingClientRect();
+    const l = (r.left - f.n.left) / f.sx - row.clientLeft + row.scrollLeft;
+    const t = (r.top - f.n.top) / f.sy - row.clientTop + row.scrollTop;
+    const height = r.height / f.sy;
+    return { left: l, width: r.width / f.sx, top: t, bottom: row.clientHeight - t - height };
   };
   const put = (l, width, b) => {
     left = l;
@@ -69,9 +88,10 @@ export function attachDroplet(row, options = {}) {
   // The usable item nearest a point of the row lights up as under a lens.
   const lens = centre => {
     let below = null, best = Infinity;
-    if (centre != null) for (const it of items()) {
+    const f = centre == null ? null : frame();
+    if (f) for (const it of items()) {
       if (!usable(it)) continue;
-      const b = boxOf(it), d = Math.abs(b.left + b.width / 2 - centre);
+      const b = boxOf(it, f), d = Math.abs(b.left + b.width / 2 - centre);
       if (d < best) { best = d; below = it; }
     }
     if (below !== under) {
@@ -136,9 +156,9 @@ export function attachDroplet(row, options = {}) {
   // Dragging: past 8px the drop slides under the finger and grows into a
   // lens; let go, the item below it is chosen and the drop settles on it.
   const at = clientX => {
-    const n = row.getBoundingClientRect();
-    const x = clientX - n.left - row.clientLeft + row.scrollLeft;
-    const boxes = items().map(boxOf);
+    const f = frame();
+    const x = (clientX - f.n.left) / f.sx - row.clientLeft + row.scrollLeft;
+    const boxes = items().map(it => boxOf(it, f));
     const min = Math.min(...boxes.map(b => b.left));
     const max = Math.max(...boxes.map(b => b.left + b.width)) - drag.width;
     return Math.min(max, Math.max(min, x - drag.width / 2));

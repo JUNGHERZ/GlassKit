@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.27.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.28.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.27.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.28.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -73,22 +73,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.27/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.28/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.27/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.28/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.27/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.28/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.27` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.28` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.27/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.28/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -181,7 +181,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Background** | `.glass-bg` | Aurora gradient with light effects |
 | **Nav Bar** | `.glass-nav` | Transparent navigation |
 | **Pill Button** | `.glass-pill` | Round glass icon button (46×46) |
-| **Tab Bar** | `.glass-tab-bar` | Fixed bottom navigation |
+| **Tab Bar** | `.glass-tab-bar` | Fixed bottom navigation; any icon — SVG, icon font, image — follows its states |
 | **Tab Bar – Floating** | `.glass-tab-bar--floating` + `.glass-tab-bar-dock` | Pill-shaped Liquid-Glass tab bar with optional `.glass-tab-bar__accessory` capsule; `--droplet` for a gliding selection |
 | **Accordion** | `.glass-accordion` | Collapsible content sections |
 | **Divider** | `.glass-divider` | Fading separator line |
@@ -200,7 +200,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Skeleton** | `.glass-skeleton` | Shimmer lines while content loads |
 | **Table** | `.glass-table` | Plain `<table>` on glass — hairline rows, tabular numbers |
 | **Prose** | `.glass-prose` | Rendered Markdown / running text with one class |
-| **Segmented** | `.glass-segmented` | Small exclusive choice as one control, with tone dots; scrolls or wraps when crowded; `--droplet` for a gliding selection |
+| **Segmented** | `.glass-segmented` | Small exclusive choice as one control, with tone dots or icons, icons alone with `--icons`; scrolls or wraps when crowded; `--droplet` for a gliding selection |
 | **Steps** | `.glass-steps` | Progress through a short flow; container-query aware |
 | **Sheet** | `.glass-sheet` | Bottom sheet — the mobile sibling of the modal |
 | **Empty state** | `.glass-empty` | Icon, title, text and one action for empty lists |
@@ -249,11 +249,13 @@ Since **1.27.0** the tab bar and the segmented control can make their selection 
 </script>
 ```
 
-The stylesheet draws the drop; `glasskit-droplet.js` is an optional module in the package, without dependencies, about 4 KB minified. It follows `.is-active` and `aria-pressed="true"`, which the page keeps setting its own way, and clicks the item a drag ends on, so the page's own click handler makes the choice. Where the script does not run, the row keeps its usual look. `data-surface="solid"` and `"tint"` make the drop opaque, and with `prefers-reduced-motion` it moves without travelling.
+The stylesheet draws the drop; `glasskit-droplet.js` is an optional module in the package, without dependencies, about 4 KB minified. It follows `.is-active` and `aria-pressed="true"`, which the page keeps setting its own way, and clicks the item a drag ends on, so the page's own click handler makes the choice. Where the script does not run, the row keeps its usual look. `data-surface="solid"` and `"tint"` make the drop opaque, and with `prefers-reduced-motion` it moves without travelling. Since 1.28.0 a transform on an ancestor — a zoom on start, a popover that opens from `scale(0.96)` — no longer moves the drop beside its item.
 
 **Already on GlassKit?** This is the upgrade to take: one class per row and one import, the markup stays. In GlassKit Elements it is an attribute: `<glk-tab-bar floating droplet>`, `<glk-segmented droplet>`.
 
-The tab bar's active item can also stand on a capsule of its own, without the drop (since 1.27.0): `--gl-tab-bar-active-bg` and `--gl-tab-bar-active-shadow` draw it, `--gl-tab-bar-spotlight-opacity: 0` turns the spotlight off, `--gl-tab-bar-active-glow: none` the glow on the icon. Where they are set, the drop takes the same surface.
+The tab bar's active item can also stand on a capsule of its own, without the drop (since 1.27.0): `--gl-tab-bar-active-bg` and `--gl-tab-bar-active-shadow` draw it, `--gl-tab-bar-spotlight-opacity: 0` turns the spotlight off, `--gl-tab-bar-active-glow: none` the glow on the icon. Where they are set, the drop takes the same surface. The chosen segmented option has the same hooks since 1.28.0: `--gl-segmented-active-bg`, `--gl-segmented-active-shadow` and `--gl-segmented-active-color`, for the option and its drop alike.
+
+**Icons of any kind (since 1.28.0).** Tab bar, accessory and segmented control colour their icon box, and an SVG strokes in `currentColor`: an icon font such as Material Icons, an `<img>` mask or a custom element in `.glass-tab-bar__icon` or `.glass-segmented__icon` follows every state, the lens of the drop and the drag. `.glass-segmented--icons` makes a row of icons alone, a light / dark / auto switch for instance.
 
 ---
 
@@ -476,6 +478,13 @@ All visual values are controlled via CSS Custom Properties:
 --gl-tab-bar-active-shadow      /* its shadow; unset: none */
 --gl-tab-bar-spotlight-opacity  /* 1; 0 turns the floating bar's spotlight off */
 --gl-tab-bar-active-glow        /* glow on the active icon; none turns it off */
+--gl-tab-bar-color              /* icon and label of the inactive tabs; unset: --gl-icon-muted */
+--gl-tab-bar-hover-color        /* … of a hovered tab; unset: --gl-icon-default */
+--gl-tab-bar-label-size         /* 10px */
+--gl-tab-bar-z-index            /* 900; fixed bar and floating dock */
+--gl-segmented-active-bg        /* chosen option and its drop; unset: --gl-surface-5 */
+--gl-segmented-active-shadow    /* their shadow; unset: --gl-shadow-btn */
+--gl-segmented-active-color     /* label and icon of the chosen option; unset: --gl-color-text-heading */
 --gl-gloss-droplet              /* highlight in the drop of --droplet rows; off with data-surface */
 ```
 
@@ -778,7 +787,7 @@ Prose:
   .glass-prose   (styles the rendered content beneath it)
 
 Segmented:
-  .glass-segmented--full / --scroll / --wrap · __item[aria-pressed] · __item--success / --warning / --error · __dot
+  .glass-segmented--full / --scroll / --wrap / --icons · __item[aria-pressed] · __item--success / --warning / --error · __dot · __icon
   .glass-segmented--droplet        (gliding selection, with glasskit-droplet.js)
 
 Steps:
@@ -810,6 +819,7 @@ Tab Bar – Floating:
   .glass-tab-bar__accessory
   .glass-tab-bar__accessory--accent / --success / --error
   --gl-tab-bar-active-bg / -shadow · --gl-tab-bar-spotlight-opacity · --gl-tab-bar-active-glow
+  --gl-tab-bar-color / -hover-color · --gl-tab-bar-label-size · --gl-tab-bar-z-index
 
 Right to left:
   dir="rtl" on <html> or a container – the components mirror

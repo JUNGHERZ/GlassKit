@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.27.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.28.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -460,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.27.0</span>
+      <span class="docs-hero__badge">v1.28.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Components</span>
@@ -751,7 +751,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <!-- TAB BAR -->
   <section class="docs-section" id="tab-bar">
     <h2>Tab-Bar</h2>
-    <p>Fixed bottom navigation with glass background and optional badge.</p>
+    <p>Fixed bottom navigation with glass background and optional badge. The items sit in the middle of the bar; on an iPhone with <code>viewport-fit=cover</code> they keep to the top, above the home indicator (since 1.28.0; before, they sat at the top everywhere, with 26&nbsp;px empty below them on Android and the desktop).</p>
     <div class="docs-preview" style="position:relative;height:82px;overflow:hidden;">
       <nav class="glass-tab-bar" style="position:absolute;bottom:0;left:0;right:0;">
         <button class="glass-tab-bar__item is-active">
@@ -795,6 +795,31 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
     <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__label"</span><span class="tag">&gt;</span>Contracts<span class="tag">&lt;/span&gt;</span>
   <span class="tag">&lt;/button&gt;</span>
 <span class="tag">&lt;/nav&gt;</span></div>
+    </div>
+    <h3 id="tab-bar-icons" style="margin-top:var(--gl-space-lg);">Icons and tokens</h3>
+    <p>Since 1.28.0 every state colours the icon box, and an SVG strokes in <code>currentColor</code>. So the icon can be anything that takes a colour &mdash; a font icon such as Material Icons, an <code>&lt;img&gt;</code> drawn as a mask, an element of your own &mdash; and it follows active and hover, the lens of the <a href="#droplet">drop</a> and the drag. A font icon takes the box&rsquo;s 24&nbsp;px unless its own class sets a size. Give it <code>aria-hidden="true"</code>: its text would join the tab&rsquo;s name. Four tokens, all unset, so nothing changes until a project sets them:</p>
+    <table class="docs-table">
+      <thead><tr><th>Token</th><th>Unset</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gl-tab-bar-color</code></td><td><code>--gl-icon-muted</code></td><td>Icon and label of the inactive tabs</td></tr>
+        <tr><td><code>--gl-tab-bar-hover-color</code></td><td><code>--gl-icon-default</code></td><td>Icon and label of a hovered tab; set it as well when the colour above is lighter</td></tr>
+        <tr><td><code>--gl-tab-bar-label-size</code></td><td><code>10px</code></td><td>Size of the labels</td></tr>
+        <tr><td><code>--gl-tab-bar-z-index</code></td><td><code>900</code></td><td>Stacking of the fixed bar and of the floating dock</td></tr>
+      </tbody>
+    </table>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__item"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__icon"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"material-icons"</span> <span class="attr">aria-hidden=</span><span class="val">"true"</span><span class="tag">&gt;</span>home<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__label"</span><span class="tag">&gt;</span>Home<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/button&gt;</span>
+
+<span class="cls">:root</span> {
+  <span class="attr">--gl-tab-bar-color</span>: <span class="val">var(--gl-icon-strong)</span>;
+  <span class="attr">--gl-tab-bar-hover-color</span>: <span class="val">var(--gl-color-text)</span>;
+  <span class="attr">--gl-tab-bar-label-size</span>: <span class="val">12px</span>;
+}</div>
     </div>
   </section>
 
@@ -842,7 +867,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
     <h3 style="margin-top:var(--gl-space-lg);">Accessory accent variants</h3>
-    <p>Add <code>--accent</code>, <code>--success</code>, or <code>--error</code> to highlight the accessory with a colored capsule (filled background, white icon).</p>
+    <p>Add <code>--accent</code>, <code>--success</code>, or <code>--error</code> to highlight the accessory with a colored capsule (filled background, white icon). Since 1.28.0 the icon colour sits on the button, so a font icon in the accessory follows hover and the variants like an SVG, and every variant keeps its icon colour on hover.</p>
     <div class="docs-preview" style="position:relative;height:120px;overflow:hidden;">
       <div class="glass-tab-bar-dock" style="position:absolute;">
         <nav class="glass-tab-bar glass-tab-bar--floating">
@@ -943,11 +968,11 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.27/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.28/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
-    <p>The drop takes the active item&rsquo;s surface where a project set one (<code>--gl-tab-bar-active-bg</code>, <code>-shadow</code>), else a light glass of its own; its highlight is <code>--gl-gloss-droplet</code>. <code>data-surface="solid"</code> and <code>"tint"</code> make it opaque like every other surface, and with <code>prefers-reduced-motion</code> it moves without travelling. <a href="#segmented">Segmented controls</a> take the same drop. In GlassKit Elements it is one attribute: <code>&lt;glk-tab-bar floating droplet&gt;</code>.</p>
+    <p>The drop takes the active item&rsquo;s surface where a project set one (<code>--gl-tab-bar-active-bg</code>, <code>-shadow</code>), else a light glass of its own; its highlight is <code>--gl-gloss-droplet</code>. <code>data-surface="solid"</code> and <code>"tint"</code> make it opaque like every other surface, and with <code>prefers-reduced-motion</code> it moves without travelling. A transform on an ancestor &mdash; an app that zooms in on start, a popover that opens from <code>scale(0.96)</code> &mdash; leaves it on its item, at rest and while the transform runs (since 1.28.0). <a href="#segmented">Segmented controls</a> take the same drop. In GlassKit Elements it is one attribute: <code>&lt;glk-tab-bar floating droplet&gt;</code>.</p>
   </section>
 
   <!-- TITLE -->
@@ -1814,9 +1839,49 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>__item</code></td><td>One option; <code>aria-pressed="true"</code> marks the chosen one, <code>disabled</code> dims it</td></tr>
         <tr><td><code>__item--success</code> / <code>--warning</code> / <code>--error</code></td><td>Tone: sets <code>--gl-segmented-tone</code> for the dot</td></tr>
         <tr><td><code>__dot</code></td><td>The dot before the label, in the tone colour</td></tr>
+        <tr><td><code>__icon</code></td><td>An icon before the label, in the option&rsquo;s colour (since 1.28.0)</td></tr>
+        <tr><td><code>--icons</code></td><td>Icons alone, square options; the names go into <code>aria-label</code> (since 1.28.0)</td></tr>
         <tr><td><code>--droplet</code></td><td>The chosen option sits on a drop of glass that glides to the next one (since 1.27.0)</td></tr>
       </tbody>
     </table>
+    <h3 id="segmented-icons">Icons</h3>
+    <p>Since 1.28.0 an option can show an icon in <code>.glass-segmented__icon</code>, before its label: an SVG strokes in the option&rsquo;s colour, any other element &mdash; a font icon, an <code>&lt;img&gt;</code> mask &mdash; takes that colour, and a font icon the box&rsquo;s 18&nbsp;px. Under the <a href="#droplet">drop</a> the icon grows like the tone dot. <code>--icons</code> makes a row of icons alone, a light / dark / auto switch for instance: the options become square, and each takes its name as <code>aria-label</code>, and as <code>title</code> for a tooltip. Mark the icon box <code>aria-hidden="true"</code>, so a font icon&rsquo;s text does not join the name.</p>
+    <div class="docs-preview docs-preview--compact" style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+      <div class="glass-segmented" role="group" aria-label="View" data-docs-segmented>
+        <button class="glass-segmented__item" aria-pressed="true"><span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span>List</button>
+        <button class="glass-segmented__item" aria-pressed="false"><span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Grid</button>
+        <button class="glass-segmented__item" aria-pressed="false"><span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Calendar</button>
+      </div>
+      <div class="glass-segmented glass-segmented--icons glass-segmented--droplet" role="group" aria-label="Theme" data-docs-segmented>
+        <button class="glass-segmented__item" aria-pressed="false" aria-label="Light" title="Light"><span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span></button>
+        <button class="glass-segmented__item" aria-pressed="true" aria-label="Dark" title="Dark"><span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span></button>
+        <button class="glass-segmented__item" aria-pressed="false" aria-label="Auto" title="Auto"><span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span></button>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-segmented glass-segmented--icons glass-segmented--droplet"</span> <span class="attr">role=</span><span class="val">"group"</span> <span class="attr">aria-label=</span><span class="val">"Theme"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-segmented__item"</span> <span class="attr">aria-pressed=</span><span class="val">"true"</span> <span class="attr">aria-label=</span><span class="val">"Light"</span> <span class="attr">title=</span><span class="val">"Light"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-segmented__icon"</span> <span class="attr">aria-hidden=</span><span class="val">"true"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG or font icon --&gt;</span><span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;/button&gt;</span>
+  <span class="cmt">&lt;!-- Dark, Auto --&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+    <h3 id="segmented-active">Chosen option surface</h3>
+    <p>Since 1.28.0 the chosen option&rsquo;s surface, shadow and text colour are tokens, like the tab bar&rsquo;s active item: on a dark brand background the light surface left a white label below 4.5:1. All three are unset; the <a href="#droplet">drop</a> takes the same surface and shadow, so one pair of values serves both looks. The shadow sits in shadow lists: turn it off with a zero shadow, not <code>none</code>.</p>
+    <table class="docs-table">
+      <thead><tr><th>Token</th><th>Unset</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gl-segmented-active-bg</code></td><td><code>--gl-surface-5</code> (the drop: a light glass gradient)</td><td>Surface of the chosen option and of the drop</td></tr>
+        <tr><td><code>--gl-segmented-active-shadow</code></td><td><code>--gl-shadow-btn</code> (the drop: its own)</td><td>Their shadow</td></tr>
+        <tr><td><code>--gl-segmented-active-color</code></td><td><code>--gl-color-text-heading</code></td><td>Label and icon of the chosen option, and of the option below a dragged drop</td></tr>
+      </tbody>
+    </table>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">:root</span> {
+  <span class="attr">--gl-segmented-active-bg</span>: <span class="val">var(--gl-color-primary)</span>;
+  <span class="attr">--gl-segmented-active-color</span>: <span class="val">var(--gl-color-on-primary)</span>;
+}</div>
+    </div>
     <h3>Droplet</h3>
     <p>Since 1.27.0 <code>.glass-segmented--droplet</code> gives the chosen option the drop of the <a href="#droplet">tab bar</a>: it runs to a new option, stretches on the way and settles, the text it passes lights up, and a finger can drag it. Disabled options are skipped. In a row that scrolls (<code>--scroll</code>) a swipe still scrolls; only the drop itself is dragged, and the row scrolls along at its edges. The drop follows <code>aria-pressed</code>; <code>attachDroplets()</code> from <code>glasskit-droplet.js</code> starts it, as above.</p>
     <div class="docs-preview docs-preview--compact" style="display:flex;flex-direction:column;gap:10px">
@@ -1872,7 +1937,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <li class="glass-steps__item"><span class="glass-steps__num">4</span><span class="glass-steps__label">Confirm</span></li>
 </ol>
     </div>
-    <p>The list is a size container: narrower than 360 px only the current step keeps its label, the others show their number; before that, labels shorten with an ellipsis. Keyed to the block's own width, not the viewport &mdash; here in a 300 px frame:</p>
+    <p>The list is a size container: narrower than 360 px only the current step keeps its label, the others show their number; before that, labels shorten with an ellipsis. In the narrow layout the circles keep their size and the lines give way first, down to 2&nbsp;px, before the current label shortens (since 1.28.0): seven steps keep a current label of 88&nbsp;px whole from a 310&nbsp;px column on, and the row never runs past its edge. Keyed to the block's own width, not the viewport &mdash; here in a 300 px frame:</p>
     <div class="docs-preview">
       <div style="width:300px;padding:8px;border:1px dashed var(--gl-border-medium);border-radius:var(--gl-radius-sm)">
       <ol class="glass-steps">
@@ -2255,7 +2320,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td>Skeleton</td><td><code>.glass-skeleton</code></td><td><code>__line</code>, <code>__line--title</code></td></tr>
         <tr><td>Table</td><td><code>.glass-table</code></td><td><code>-wrap</code>, <code>__num</code>, <code>__muted</code></td></tr>
         <tr><td>Prose</td><td><code>.glass-prose</code></td><td>–</td></tr>
-        <tr><td>Segmented</td><td><code>.glass-segmented</code></td><td><code>--full</code>, <code>--scroll</code>, <code>--wrap</code>, <code>__item</code>, <code>__item--success</code>/<code>--warning</code>/<code>--error</code>, <code>__dot</code>, <code>[aria-pressed]</code>, <code>--droplet</code></td></tr>
+        <tr><td>Segmented</td><td><code>.glass-segmented</code></td><td><code>--full</code>, <code>--scroll</code>, <code>--wrap</code>, <code>--icons</code>, <code>__item</code>, <code>__item--success</code>/<code>--warning</code>/<code>--error</code>, <code>__dot</code>, <code>__icon</code>, <code>[aria-pressed]</code>, <code>--droplet</code></td></tr>
         <tr><td>Steps</td><td><code>.glass-steps</code></td><td><code>__item</code>, <code>__item--done</code>, <code>__item--current</code>, <code>__num</code>, <code>__label</code>, <code>__line</code></td></tr>
         <tr><td>Sheet</td><td><code>.glass-sheet-overlay</code> + <code>.glass-sheet</code></td><td><code>.is-active</code>, <code>--inline</code>, <code>__grip</code>, <code>__title</code>, <code>__body</code>, <code>__actions</code></td></tr>
         <tr><td>Empty state</td><td><code>.glass-empty</code></td><td><code>__icon</code>, <code>__title</code>, <code>__text</code>, <code>__action</code></td></tr>
@@ -2274,7 +2339,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td>Progress</td><td><code>.glass-progress</code></td><td><code>--sm</code>, <code>--lg</code>, <code>--success</code>, <code>--error</code></td></tr>
         <tr><td>Modal</td><td><code>.glass-modal-overlay</code></td><td><code>.is-active</code></td></tr>
         <tr><td>Toast</td><td><code>.glass-toast</code></td><td><code>--success</code>, <code>--error</code>, <code>--warning</code>, <code>.is-visible</code>, <code>__action</code>, <code>__close</code></td></tr>
-        <tr><td>Tab-Bar</td><td><code>.glass-tab-bar</code></td><td><code>.is-active</code> auf Items</td></tr>
+        <tr><td>Tab-Bar</td><td><code>.glass-tab-bar</code></td><td><code>__item</code> with <code>.is-active</code>, <code>__icon</code>, <code>__label</code>, <code>__badge</code>, <code>--droplet</code></td></tr>
         <tr><td>Tab-Bar Floating</td><td><code>.glass-tab-bar-dock</code> + <code>.glass-tab-bar--floating</code></td><td><code>__accessory</code>, <code>__accessory--accent</code>/<code>--success</code>/<code>--error</code>, <code>--accessory-left</code></td></tr>
         <tr><td>Accordion</td><td><code>.glass-accordion</code></td><td><code>.is-open</code> auf Items</td></tr>
       </tbody>

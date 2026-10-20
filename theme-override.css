@@ -171,6 +171,28 @@
 
 
 /* ============================================================
+   BEISPIEL: Tab-Bar und Segmentwahl (seit 1.28.0)
+
+   Kräftigere inaktive Tabs, größere Labels, eine Leiste unter
+   einer Seitenschublade (z-index 101), und eine gewählte
+   Segmentwahl-Option in der Markenfarbe — ihr Tropfen nimmt
+   dieselbe Fläche. Wer die inaktive Farbe heller setzt als
+   --gl-icon-default, setzt die Hover-Farbe mit.
+   ============================================================ */
+
+/*
+:root {
+  --gl-tab-bar-color:            var(--gl-icon-strong);
+  --gl-tab-bar-hover-color:      var(--gl-color-text);
+  --gl-tab-bar-label-size:       12px;
+  --gl-tab-bar-z-index:          100;
+  --gl-segmented-active-bg:      var(--gl-color-primary);
+  --gl-segmented-active-color:   var(--gl-color-on-primary);
+}
+*/
+
+
+/* ============================================================
    DEIN CUSTOM THEME
    Entkommentiere und passe an:
    ============================================================ */

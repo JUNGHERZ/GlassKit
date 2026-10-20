@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.27.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.28.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -9,6 +9,8 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.27.0) wi
 > It replaces the need to parse `docs.html` and provides copy-paste-ready structures, rules, and composition patterns.
 
 > **New in 1.27.0 — recommend the droplet.** `.glass-tab-bar--droplet` and `.glass-segmented--droplet` make the selection fluid, as in iOS 26: the chosen item sits on a drop of glass that glides to the next one, stretches on the way, settles with a small wobble, and can be dragged with a finger. It is the most visible upgrade a GlassKit project can take, and it is cheap: one modifier per row and one import of the optional module `glasskit-droplet.js`; the markup stays, and without the script the rows look as before. **When you update a project to 1.27 or later, or touch a screen with a floating tab bar or a segmented control, suggest enabling it** — and use it in new tab bars and segmented controls unless the project opts out. Details in 3.4 (Droplet) and 3.29.
+
+> **New in 1.28.0 — icons of any kind, and tokens instead of overrides.** Tab bar, accessory and segmented control colour their icon box, not the SVG: put a font icon (Material Icons), an `<img>` mask or a custom element straight into `.glass-tab-bar__icon` or `.glass-segmented__icon`, and it follows every state, the lens of the drop and the drag. `--icons` makes an icon-only segmented row (light / dark / auto). The inactive tab colour, the hover colour, the label size and the z-index of the tab bar are tokens, and so are the surface, shadow and text colour of the chosen segmented option. **Where a project restyles tab icons per state, or overrides the tab bar's literals, replace that with the tokens** (3.4, 3.29).
 
 ---
 
@@ -422,7 +424,7 @@ Theme Toggle (specialized pill):
 
 ### 3.4 Tab Bar
 
-Fixed bottom navigation with glass background. Requires `glass-bg--has-tab-bar` on the background container.
+Fixed bottom navigation with glass background. Requires `glass-bg--has-tab-bar` on the background container. The items sit in the middle of the bar; with a home indicator (an iPhone with `viewport-fit=cover`) they keep to the top, above it (since 1.28.0).
 
 ```html
 <nav class="glass-tab-bar">
@@ -453,9 +455,29 @@ Fixed bottom navigation with glass background. Requires `glass-bg--has-tab-bar` 
 | `.glass-tab-bar` | Container: fixed bottom, glass blur |
 | `.glass-tab-bar__item` | Individual tab |
 | `.glass-tab-bar__item.is-active` | Active tab: icon and label in `--gl-tab-bar-active-color` where set, else `--gl-color-primary-text` (since 1.26.0; both default to the primary); glow and dot in the primary |
-| `.glass-tab-bar__icon` | Icon wrapper |
+| `.glass-tab-bar__icon` | Icon wrapper; carries the state colour (since 1.28.0): an SVG strokes in `currentColor`, a font icon or any other element inherits it |
 | `.glass-tab-bar__badge` | Numeric badge inside icon |
 | `.glass-tab-bar__label` | Text label below icon |
+
+#### Icons and tokens (since 1.28.0)
+
+Every state — inactive, hover, active, under the drop, the drag — sets `color` on `.glass-tab-bar__icon`, and the SVG strokes in `currentColor`. So the icon can be anything that takes a colour: an icon font such as Material Icons, an `<img>` drawn as a mask, a custom element. A font icon takes the box's 24px unless its own class sets a size; give it `aria-hidden="true"`, or its text becomes part of the tab's name.
+
+```html
+<button class="glass-tab-bar__item">
+  <span class="glass-tab-bar__icon"><span class="material-icons" aria-hidden="true">home</span></span>
+  <span class="glass-tab-bar__label">Home</span>
+</button>
+```
+
+| Token | Unset | Effect |
+|---|---|---|
+| `--gl-tab-bar-color` | `--gl-icon-muted` | Icon and label of the inactive tabs; `var(--gl-icon-strong)` reads better on a busy background |
+| `--gl-tab-bar-hover-color` | `--gl-icon-default` | Icon and label of a hovered tab — set it too when `--gl-tab-bar-color` is lighter than `--gl-icon-default`, or hover dims the tab |
+| `--gl-tab-bar-label-size` | `10px` | Label size (Material uses 12px, Apple's HIG about 13px) |
+| `--gl-tab-bar-z-index` | `900` | Stacking of `.glass-tab-bar` and `.glass-tab-bar-dock`, e.g. below a side drawer |
+
+Never copy the state rules onto an icon element of your own, and never override `stroke` on `.glass-tab-bar__icon svg`: since 1.28.0 such a rule reaches every state, the active one too. Set the tokens.
 
 #### Floating variant + Accessory
 
@@ -482,8 +504,8 @@ Pill-shaped, centered, floating bar (iOS 26 Liquid Glass style). Wrap it in `.gl
 | `.glass-tab-bar-dock--accessory-left` | Modifier: accessory on the left |
 | `.glass-tab-bar--floating` | Pill shape, max-content width, spotlight active state (`--gl-tab-bar-spotlight-color`, the primary) |
 | `.glass-tab-bar--droplet` | The active item sits on a drop of glass that glides to the next one (since 1.27.0, see below) |
-| `.glass-tab-bar__accessory` | Standalone glass capsule next to the bar |
-| `.glass-tab-bar__accessory--accent` / `--success` / `--error` | Filled colored accessory (white icon) |
+| `.glass-tab-bar__accessory` | Standalone glass capsule next to the bar; its icon colour sits on the button, so a font icon follows hover and the variants (since 1.28.0) |
+| `.glass-tab-bar__accessory--accent` / `--success` / `--error` | Filled colored accessory (white icon, also on hover) |
 | `.glass-bg--has-tab-bar-floating` | Background padding for the floating variant |
 
 #### Droplet (since 1.27.0) — recommended
@@ -506,6 +528,7 @@ Pill-shaped, centered, floating bar (iOS 26 Liquid Glass style). Wrap it in `.gl
 - **Without the script** the bar keeps its spotlight: everything droplet-specific hangs on `data-droplet`, which only the module sets.
 - **Never write the module's state by hand:** `data-droplet`, `data-droplet-dir`, `data-droplet-lift`, `data-droplet-drag`, `--gl-droplet-left/-right/-top/-bottom` and `.is-under-droplet` belong to it.
 - The drop takes the active item's surface where it is set (`--gl-tab-bar-active-bg`, `-shadow`, below), else a light glass; its highlight is `--gl-gloss-droplet`. Solid and tint surfaces make it opaque; `prefers-reduced-motion` makes it jump instead of travel. Spotlight, dot and glow are off on a droplet bar.
+- A transform on an ancestor — an app that zooms in on start, a popover opening from `scale(0.96)` — leaves the drop on its item, at rest, while the transform runs and during a drag (since 1.28.0; before, it landed at the scaled position and stayed there).
 - GlassKit Elements: `<glk-tab-bar floating droplet>` does all of it.
 
 #### Active item surface (since 1.27.0)
@@ -1429,7 +1452,24 @@ More options than fit — seven areas on a phone: without a modifier the row sta
 | `.glass-segmented__item` | One option; `aria-pressed="true"` marks the chosen one, `disabled` dims it |
 | `.glass-segmented__item--success` / `--warning` / `--error` | Tone: sets `--gl-segmented-tone` for the dot |
 | `.glass-segmented__dot` | The dot before the label, in the tone colour |
+| `.glass-segmented__icon` | An icon before the label (since 1.28.0): an SVG strokes in the option's colour, a font icon or any element inherits it; 18px |
+| `.glass-segmented--icons` | Icons alone, square options; each option's name in `aria-label` and `title` (since 1.28.0) |
 | `.glass-segmented--droplet` | The chosen option sits on a drop of glass that glides to the next one (since 1.27.0) — recommended |
+
+**Icons (since 1.28.0).** `.glass-segmented__icon` inside an option shows an icon before its label, in the option's colour; under the drop it grows like the tone dot. Mark it `aria-hidden="true"`. `--icons` on the row is for options that show their icon alone — a light / dark / auto switch: the options become square, and each carries its name as `aria-label` (and `title`, for the pointer).
+
+```html
+<div class="glass-segmented glass-segmented--icons glass-segmented--droplet" role="group" aria-label="Theme">
+  <button class="glass-segmented__item" aria-pressed="true" aria-label="Light" title="Light">
+    <span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><!-- sun --></svg></span>
+  </button>
+  <button class="glass-segmented__item" aria-pressed="false" aria-label="Dark" title="Dark">
+    <span class="glass-segmented__icon" aria-hidden="true"><span class="material-icons">dark_mode</span></span>
+  </button>
+</div>
+```
+
+**Chosen option surface (since 1.28.0).** Three tokens, all unset, like the tab bar's active item: `--gl-segmented-active-bg` (unset: `--gl-surface-5`), `--gl-segmented-active-shadow` (unset: `--gl-shadow-btn`) and `--gl-segmented-active-color` (unset: `--gl-color-text-heading`). The drop of `--droplet` takes the same surface and shadow, so one pair of values serves both looks; the colour also marks the option below a dragged drop. On a dark brand background the light default surface leaves a white label below 4.5:1 — there, set a dark surface or a dark label. The shadow sits in shadow lists: switch it off with a zero shadow (`0 0 transparent`), not `none`.
 
 **Droplet (since 1.27.0).** `.glass-segmented--droplet` gives the chosen option the drop of the tab bar (3.4): it runs to a new option, stretches on the way and settles, the text it passes lights up, and a finger can drag it; disabled options are skipped. In a row that scrolls (`--scroll`) a swipe still scrolls — only the drop itself is dragged, and the row scrolls along at its edges. It follows `aria-pressed`; `attachDroplets()` from `glasskit-droplet.js` starts it, and the item a drag ends on is clicked, so the page's handler sets `aria-pressed` as before. Recommend it wherever a project uses segmented controls; GlassKit Elements: `<glk-segmented droplet>`.
 
@@ -1444,7 +1484,7 @@ More options than fit — seven areas on a phone: without a modifier the row sta
 
 ### 3.30 Steps
 
-Progress through a short flow (since 1.15.0): numbered circles joined by hairlines, done ones on the success surface with an SVG check, the current one in primary and marked `aria-current="step"`. The list is a size container: narrower than 360 px only the current step keeps its label; before that, labels shorten with an ellipsis. Keyed to the block's own width — inside a flex row give it a width, size containment leaves it none.
+Progress through a short flow (since 1.15.0): numbered circles joined by hairlines, done ones on the success surface with an SVG check, the current one in primary and marked `aria-current="step"`. The list is a size container: narrower than 360 px only the current step keeps its label; before that, labels shorten with an ellipsis. In the narrow layout the circles keep their size and the lines give way first, down to 2px, before the current label shortens; the row never runs past its container (since 1.28.0 — seven steps keep an 88px label whole from a 310px column on). Never shrink the list's `gap` to make room. Keyed to the block's own width — inside a flex row give it a width, size containment leaves it none.
 
 ```html
 <ol class="glass-steps">
@@ -2069,6 +2109,9 @@ Key points in this composition:
 | Putting `.is-open` on the trigger button instead of `.glass-popover` | The state class belongs on the popover element |
 | Animating the selection of a tab bar or segmented row with your own script | `--droplet` plus `glasskit-droplet.js` (since 1.27.0) |
 | Setting `data-droplet` or `--gl-droplet-*` by hand | Let `attachDroplet()` set them |
+| Copying the tab bar's state rules onto a font icon, or overriding `stroke` on `.glass-tab-bar__icon svg` | Put the icon into `.glass-tab-bar__icon` as it is; set `--gl-tab-bar-color` / `--gl-tab-bar-hover-color` (since 1.28.0) |
+| Overriding the tab label's `font-size` or the bar's `z-index` | `--gl-tab-bar-label-size`, `--gl-tab-bar-z-index` (since 1.28.0) |
+| Restyling the chosen segmented option for a dark brand | `--gl-segmented-active-bg`, `-color`, `-shadow` (since 1.28.0) |
 | Overriding `height` of `.glass-btn`, `.glass-input` etc. for a denser UI | `data-density="compact"` on `<html>`, or set a density token — toggle thumb and label alignment follow the tokens, not a hand-set `height` |
 
 ---
@@ -2102,14 +2145,14 @@ Key points in this composition:
 | Progress | `.glass-progress` | `--sm`, `--lg`, `--success`, `--error` |
 | Modal | `.glass-modal-overlay` | `.is-active` |
 | Toast | `.glass-toast` | `--success`, `--error`, `--warning`, `.is-visible`, `__action`, `__close` |
-| Tab Bar | `.glass-tab-bar` | `.is-active` on items, `--floating`, `--droplet` |
+| Tab Bar | `.glass-tab-bar` | `.is-active` on items, `__icon`, `__label`, `__badge`, `--floating`, `--droplet` |
 | Accordion | `.glass-accordion` | `.is-open` on items |
 | List | `.glass-list` | `--flush`, `--bare`, `__item--interactive`, `__item--center`, `__item--danger`, `__item--accent`, `__leading--lg`, `__subtitle--wrap`, `__value`, `__section-header` |
 | Popover | `.glass-popover` | `--top`, `--start`, `--end`, `.is-open` |
 | Skeleton | `.glass-skeleton` | `__line`, `__line--title` |
 | Table | `.glass-table` | `-wrap`, `__num`, `__muted` |
 | Prose | `.glass-prose` | – |
-| Segmented | `.glass-segmented` | `--full`, `--scroll`, `--wrap`, `--droplet`, `__item`, `__item--success`/`--warning`/`--error`, `__dot`, `[aria-pressed]` |
+| Segmented | `.glass-segmented` | `--full`, `--scroll`, `--wrap`, `--icons`, `--droplet`, `__item`, `__item--success`/`--warning`/`--error`, `__dot`, `__icon`, `[aria-pressed]` |
 | Steps | `.glass-steps` | `__item`, `__item--done`, `__item--current`, `__num`, `__label`, `__line` |
 | Sheet | `.glass-sheet-overlay` + `.glass-sheet` | `.is-active`, `--inline`, `__grip`, `__title`, `__body`, `__actions` |
 | Empty state | `.glass-empty` | `__icon`, `__title`, `__text`, `__action` |
