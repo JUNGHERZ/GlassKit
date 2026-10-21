@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.29.0
+   Jungherz GmbH – v1.29.1
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -715,6 +715,8 @@
   border-radius: var(--gl-radius-card);
   padding: var(--gl-space-3xl) var(--gl-space-xl) var(--gl-space-2xl);
   box-shadow: var(--gl-shadow-card), var(--gl-inset-strong);
+  /* A .glass-list--flush inside reaches the card's edges (since 1.29.1). */
+  --gl-list-flush-inset: var(--gl-space-xl);
 }
 
 .glass-card--glow {
@@ -1525,7 +1527,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 
 .glass-modal__header { padding: var(--gl-space-xl) var(--gl-space-xl) var(--gl-space-sm); text-align: center; }
 .glass-modal__title { font-size: var(--gl-font-size-modal); font-weight: var(--gl-font-weight-semibold); color: var(--gl-color-text); }
-.glass-modal__body { padding: var(--gl-space-sm) var(--gl-space-xl) var(--gl-space-xl); text-align: center; }
+.glass-modal__body { padding: var(--gl-space-sm) var(--gl-space-xl) var(--gl-space-xl); text-align: center; --gl-list-flush-inset: var(--gl-space-xl); }
 .glass-modal__body p { color: var(--gl-color-text-muted); font-size: var(--gl-font-size-base); line-height: 1.55; }
 .glass-modal__footer { display: flex; border-top: 1px solid var(--gl-border-subtle); }
 
@@ -2424,12 +2426,21 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   list-style: none;
 }
 
+/* Edge to edge in its container: as wide as the container's content plus
+   its padding on both sides, pulled out by that padding. Until 1.29.1 the
+   list kept width: 100% and only moved to the start, ending twice the
+   padding short of the other edge. The inset is the container's padding,
+   --gl-list-flush-inset: 20px (--gl-space-lg) unless the container sets
+   it — the card and the modal body do, from the same token as their own
+   padding. An explicit width, not auto, so a flex or grid container that
+   does not stretch its items gives the same result. */
 .glass-list--flush {
   border-radius: 0;
   border-left: none;
   border-right: none;
-  margin-left: calc(var(--gl-space-lg) * -1);
-  margin-right: calc(var(--gl-space-lg) * -1);
+  width: calc(100% + 2 * var(--gl-list-flush-inset, var(--gl-space-lg)));
+  margin-left: calc(var(--gl-list-flush-inset, var(--gl-space-lg)) * -1);
+  margin-right: calc(var(--gl-list-flush-inset, var(--gl-space-lg)) * -1);
 }
 
 /* Bare: no own glass surface — for lists that live inside a container

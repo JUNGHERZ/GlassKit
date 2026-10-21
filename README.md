@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.29.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.29.1-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.29.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.29.1-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -487,6 +487,7 @@ All visual values are controlled via CSS Custom Properties:
 --gl-segmented-active-color     /* label and icon of the chosen option; unset: --gl-color-text-heading */
 --gl-segmented-badge-bg         /* tint of a neutral count over the state scrim; unset: 12 % of the text colour */
 --gl-segmented-badge-color      /* its figures; unset: --gl-color-text */
+--gl-list-flush-inset           /* how far a --flush list reaches out; set by the card and the modal body, else 20px */
 --gl-gloss-droplet              /* highlight in the drop of --droplet rows; off with data-surface */
 ```
 

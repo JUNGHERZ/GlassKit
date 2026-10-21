@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.29.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.29.1 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -460,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.29.0</span>
+      <span class="docs-hero__badge">v1.29.1</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Components</span>
@@ -1250,7 +1250,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       <thead><tr><th>Class</th><th>Description</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-list</code></td><td>Grouped surface container</td></tr>
-        <tr><td><code>.glass-list--flush</code></td><td>Edge-to-edge variant (no side margin / radius). Assumes parent has <code>--gl-space-lg</code> horizontal padding.</td></tr>
+        <tr><td><code>.glass-list--flush</code></td><td>Edge-to-edge variant (no side borders / radius): reaches both edges of its container, pulled out by <code>--gl-list-flush-inset</code> &mdash; the card&rsquo;s and the modal body&rsquo;s padding inside them, else 20&nbsp;px (since 1.29.1)</td></tr>
         <tr><td><code>.glass-list--bare</code></td><td>Strips background, border &amp; shadow &mdash; for embedding inside <code>.glass-popover</code> or <code>.glass-card</code>.</td></tr>
         <tr><td><code>.glass-list__item</code></td><td>List row (use <code>&lt;li&gt;</code>, <code>&lt;a&gt;</code>, or <code>&lt;button&gt;</code>)</td></tr>
         <tr><td><code>.glass-list__section-header</code></td><td>Section label above a <code>.glass-list</code> &mdash; uppercase, small, muted</td></tr>
@@ -1269,6 +1269,22 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       </tbody>
     </table>
     <p style="margin-top:12px;"><strong>Dividers</strong> between rows are rendered automatically via <code>::after</code>. Items <em>with</em> a leading icon get an icon-aligned inset; items <em>without</em> &mdash; no <code>__leading</code>, or one carrying the <code>hidden</code> attribute (since 1.20.0) &mdash; get the standard padding inset. A hidden <code>__leading</code> or <code>__trailing</code> takes no room. The last item never has a divider. SVG icon convention: <code>24px</code> for leading, <code>18px</code> for trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
+    <h3 id="list-flush">Flush</h3>
+    <p><code>--flush</code> takes the list from edge to edge of its container, without side borders and radius. The list grows by the container&rsquo;s padding on both sides, <code>--gl-list-flush-inset</code>: <code>.glass-card</code> and <code>.glass-modal__body</code> set it to their own padding, elsewhere it is 20&nbsp;px (<code>--gl-space-lg</code>) unless the container sets it. Since 1.29.1 &mdash; before, the list kept its width and only moved to the start.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <div class="glass-card" style="padding-bottom:0;overflow:hidden">
+        <p style="margin:0 0 var(--gl-space-md);color:var(--gl-color-text-muted);font-size:var(--gl-font-size-sm)">Customer</p>
+        <ul class="glass-list glass-list--flush" style="border-bottom:none"><li class="glass-list__item glass-list__item--interactive" tabindex="0"><div class="glass-list__content"><div class="glass-list__title">Payments</div></div><div class="glass-list__trailing"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></div></li><li class="glass-list__item glass-list__item--interactive" tabindex="0"><div class="glass-list__content"><div class="glass-list__title">Invoices</div></div><div class="glass-list__trailing"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></div></li><li class="glass-list__item glass-list__item--interactive" tabindex="0"><div class="glass-list__content"><div class="glass-list__title">Tickets</div></div><div class="glass-list__trailing"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></div></li></ul>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-card"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;ul</span> <span class="attr">class=</span><span class="val">"glass-list glass-list--flush"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/ul&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">/* In a container of your own with 16px padding */</span>
+<span class="cls">.my-panel</span> { <span class="attr">padding</span>: <span class="val">16px</span>; <span class="attr">--gl-list-flush-inset</span>: <span class="val">16px</span>; }</div>
+    </div>
     <h3>Wrapping text</h3>
     <p>Title and subtitle keep to one line, cut with an ellipsis, and <code>--wrap</code> clamps the subtitle at three lines. Since 1.23.0 a project decides otherwise once, on <code>:root</code>, or for one list or one row: <code>--gl-list-title-white-space</code> and <code>--gl-list-subtitle-white-space</code> take <code>nowrap</code> (the default) or <code>normal</code>, and <code>--gl-list-subtitle-lines</code> sets the clamp of <code>--wrap</code> &mdash; <code>3</code> unless set, <code>none</code> shows every line. The tokens are inherited, so they reach <code>&lt;glk-list-item&gt;</code> in GlassKit Elements as well. A word wider than the column, such as an e-mail address, breaks where it has to instead of running out of the row; text still breaks at spaces. For breaks at syllables, set <code>hyphens</code> on the list or the page: it is inherited too and follows the page&rsquo;s <code>lang</code>.</p>
     <div class="docs-code-wrapper">

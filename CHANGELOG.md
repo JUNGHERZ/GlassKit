@@ -7,6 +7,16 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.29.1] – 2026-10-21
+
+### Fixed
+
+- **`.glass-list--flush` reaches both edges of its container.** It pulled the list out with negative margins of `--gl-space-lg` on both sides, but `.glass-list` kept `width: 100%`: with a fixed width the right margin does nothing, so the list only moved to the start — in a 600px card it ended 4px from the left inner edge and 44px from the right. In a flex column that centres its items it did not reach out at all, and right to left it moved the other way. The list is now as wide as its container's content plus the padding on both sides, an explicit width, so a flex or grid container that does not stretch its items gives the same result as a block. The second point of the issue: the inset was 20px while a card pads 24px, so even a list that stretched stopped short. The inset is now `--gl-list-flush-inset`; `.glass-card` and `.glass-modal__body` set it from the token of their own padding, `--gl-space-xl`, and elsewhere it stays 20px (`--gl-space-lg`), as documented, unless a container sets it. Being a custom property, it also reaches a list inside the shadow roots of GlassKit Elements. Measured in Chromium 153, WebKit 26.6 and Firefox 151: in a card, a modal body, a sheet, a page with 20px padding, a centring flex column, a grid cell and right to left, the list ends 0.0px from both inner edges; GlassKit Elements' `<glk-list flush>` in `<glk-card>`, `<glk-modal>` and `<glk-sheet>` the same. ([#18](https://github.com/JUNGHERZ/GlassKit/issues/18))
+
+No page used `--flush`, so docs, showcase and landing pages render pixel-identical to 1.29.0 in WebKit and Firefox; the docs show a flush list in a card now (English and German), and README and SKILL.md name `--gl-list-flush-inset`.
+
+---
+
 ## [1.29.0] – 2026-10-21
 
 ### Added
@@ -1173,6 +1183,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.29.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.29.1
 [1.29.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.29.0
 [1.28.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.28.0
 [1.27.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.27.0
@@ -1214,4 +1225,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.29.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.29.1...HEAD

@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.29.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.29.1) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -1255,7 +1255,7 @@ iOS-style grouped settings list. Items can carry a leading icon, a title with op
 | Class | Description |
 |---|---|
 | `.glass-list` | Grouped surface container |
-| `.glass-list--flush` | Edge-to-edge variant (no side margin / radius). Assumes parent has `--gl-space-lg` horizontal padding. |
+| `.glass-list--flush` | Edge-to-edge variant (no side borders / radius): reaches both edges of its container, pulled out by the container's horizontal padding, `--gl-list-flush-inset`. `.glass-card` and `.glass-modal__body` set it to their padding (`--gl-space-xl`); elsewhere it is `--gl-space-lg` (20px) unless the container sets it. Since 1.29.1 — before, the list kept `width: 100%` and only moved to the start. |
 | `.glass-list--bare` | Strips background, border & shadow &mdash; for embedding inside `.glass-popover` or `.glass-card`. |
 | `.glass-list__section-header` | Section label above a `.glass-list` — uppercase, small, muted |
 | `.glass-list__item` | List row (use `<li>`, `<a>`, or `<button>`) |

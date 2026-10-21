@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.29.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.29.1 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -460,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.29.0</span>
+      <span class="docs-hero__badge">v1.29.1</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Komponenten</span>
@@ -1250,7 +1250,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-list</code></td><td>Gruppierter Surface-Container</td></tr>
-        <tr><td><code>.glass-list--flush</code></td><td>Edge-to-Edge-Variante (kein seitlicher Margin / Radius). Setzt voraus, dass der Eltern-Container <code>--gl-space-lg</code> Padding hat.</td></tr>
+        <tr><td><code>.glass-list--flush</code></td><td>Edge-to-Edge-Variante (kein seitlicher Rand / Radius): reicht bis an beide Kanten ihres Containers, hinausgezogen um <code>--gl-list-flush-inset</code> &mdash; in Card und Modal-Inhalt deren Innenabstand, sonst 20&nbsp;px (seit 1.29.1)</td></tr>
         <tr><td><code>.glass-list--bare</code></td><td>Entfernt Hintergrund, Border &amp; Shadow &mdash; für die Einbettung in <code>.glass-popover</code> oder <code>.glass-card</code>.</td></tr>
         <tr><td><code>.glass-list__item</code></td><td>Listenzeile (als <code>&lt;li&gt;</code>, <code>&lt;a&gt;</code> oder <code>&lt;button&gt;</code>)</td></tr>
         <tr><td><code>.glass-list__section-header</code></td><td>Sektionslabel oberhalb einer <code>.glass-list</code> &mdash; Uppercase, klein, gedämpft</td></tr>
@@ -1269,6 +1269,22 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       </tbody>
     </table>
     <p style="margin-top:12px;"><strong>Trennlinien</strong> zwischen Zeilen werden automatisch via <code>::after</code> gerendert. Items <em>mit</em> Leading-Icon erhalten einen icon-aligned Inset; Items <em>ohne</em> &mdash; kein <code>__leading</code>, oder eines mit dem Attribut <code>hidden</code> (seit 1.20.0) &mdash; bekommen das normale Padding-Inset. Ein verstecktes <code>__leading</code> oder <code>__trailing</code> nimmt keinen Platz ein. Das letzte Item hat nie eine Trennlinie. SVG-Icon-Konvention: <code>24px</code> für Leading, <code>18px</code> für Trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
+    <h3 id="list-flush">Bündig</h3>
+    <p><code>--flush</code> führt die Liste von Kante zu Kante ihres Containers, ohne seitlichen Rand und Radius. Die Liste wächst auf beiden Seiten um den Innenabstand des Containers, <code>--gl-list-flush-inset</code>: <code>.glass-card</code> und <code>.glass-modal__body</code> setzen ihn auf ihren eigenen Innenabstand, anderswo sind es 20&nbsp;px (<code>--gl-space-lg</code>), solange der Container ihn nicht setzt. Seit 1.29.1 &mdash; vorher behielt die Liste ihre Breite und rückte nur zum Anfang.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <div class="glass-card" style="padding-bottom:0;overflow:hidden">
+        <p style="margin:0 0 var(--gl-space-md);color:var(--gl-color-text-muted);font-size:var(--gl-font-size-sm)">Kunde</p>
+        <ul class="glass-list glass-list--flush" style="border-bottom:none"><li class="glass-list__item glass-list__item--interactive" tabindex="0"><div class="glass-list__content"><div class="glass-list__title">Zahlungen</div></div><div class="glass-list__trailing"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></div></li><li class="glass-list__item glass-list__item--interactive" tabindex="0"><div class="glass-list__content"><div class="glass-list__title">Rechnungen</div></div><div class="glass-list__trailing"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></div></li><li class="glass-list__item glass-list__item--interactive" tabindex="0"><div class="glass-list__content"><div class="glass-list__title">Tickets</div></div><div class="glass-list__trailing"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></div></li></ul>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-card"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;ul</span> <span class="attr">class=</span><span class="val">"glass-list glass-list--flush"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/ul&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">/* In einem eigenen Container mit 16px Innenabstand */</span>
+<span class="cls">.my-panel</span> { <span class="attr">padding</span>: <span class="val">16px</span>; <span class="attr">--gl-list-flush-inset</span>: <span class="val">16px</span>; }</div>
+    </div>
     <h3>Umbrechender Text</h3>
     <p>Titel und Subtitle bleiben einzeilig und werden mit Ellipsis gekürzt, <code>--wrap</code> begrenzt den Subtitle auf drei Zeilen. Seit 1.23.0 entscheidet ein Projekt das einmal anders, auf <code>:root</code>, oder für eine Liste oder eine Zeile: <code>--gl-list-title-white-space</code> und <code>--gl-list-subtitle-white-space</code> nehmen <code>nowrap</code> (Standard) oder <code>normal</code>, und <code>--gl-list-subtitle-lines</code> setzt die Grenze von <code>--wrap</code> &mdash; <code>3</code>, wenn nicht gesetzt, <code>none</code> zeigt alle Zeilen. Die Tokens werden vererbt und erreichen so auch <code>&lt;glk-list-item&gt;</code> aus GlassKit Elements. Ein Wort, das breiter ist als die Spalte, etwa eine E-Mail-Adresse, bricht dort, wo es muss, statt aus der Zeile zu laufen; Text bricht weiter an Leerzeichen. Für Trennung nach Silben <code>hyphens</code> auf der Liste oder der Seite setzen: Es wird ebenfalls vererbt und folgt dem <code>lang</code> der Seite.</p>
     <div class="docs-code-wrapper">
