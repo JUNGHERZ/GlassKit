@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.29.1
+   Jungherz GmbH – v1.30.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -1494,10 +1494,12 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
    the top layer, the page behind it is inert, focus moves in and Escape
    closes it. These rules undo the dialog's own box and backdrop; the
    overlay above paints the dimmed, blurred layer. GlassKit Elements'
-   <glk-modal> uses exactly this. */
+   <glk-modal> uses exactly this. With nothing to focus inside, showModal()
+   focuses the dialog itself, and its focus ring traced the edges of the
+   screen; no outline since 1.30.0, Tab still goes to the first control. */
 dialog.glass-modal-overlay {
   width: auto; height: auto; max-width: none; max-height: none;
-  margin: 0; border: 0; color: inherit;
+  margin: 0; border: 0; color: inherit; outline: none;
 }
 dialog.glass-modal-overlay:not([open]) { display: none; }
 dialog.glass-modal-overlay::backdrop { background: transparent; }
@@ -2143,11 +2145,23 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   stroke: var(--gl-color-primary-text);
 }
 
+/* Open, the content takes its own height, however long (since 1.30.0): a
+   grid of one row that slides from 0fr to 1fr, clipped while it does.
+   Until then max-height capped an open item at 500px and cut off the
+   rest. Both tracks start at 0: the row, so the body's padding cannot hold
+   a closed item open; the column, so a long word or a URL cannot make the
+   body wider than the item, as it could not in a block. */
 .glass-accordion__content {
-  max-height: 0; overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  display: grid;
+  grid-template-rows: minmax(0, 0fr);
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.glass-accordion__item.is-open .glass-accordion__content { max-height: 500px; }
+.glass-accordion__item.is-open .glass-accordion__content { grid-template-rows: minmax(0, 1fr); }
+@media (prefers-reduced-motion: reduce) {
+  .glass-accordion__content { transition: none; }
+}
 
 .glass-accordion__body {
   padding: 0 var(--gl-space-lg) var(--gl-space-lg);
@@ -2987,6 +3001,22 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 }
 .glass-sheet-overlay[hidden] { display: none; }
 .glass-sheet-overlay.is-active { opacity: 1; }
+/* The overlay may be a native <dialog>, as the modal's (since 1.30.0):
+   opened with showModal() it lies in the top layer, above every fixed or
+   transformed element of the page whatever its z-index, and the page
+   behind it is inert. These rules undo the dialog's own box and backdrop;
+   overflow stays hidden, so the panel rising from below the edge does not
+   make the overlay scroll. Show with showModal(), then .is-active; hide by
+   removing .is-active, then close() after transitionend. GlassKit
+   Elements' <glk-sheet> does this. No outline, as on the modal's: with
+   nothing to focus inside, the dialog itself takes the focus. */
+dialog.glass-sheet-overlay {
+  width: auto; height: auto; max-width: none; max-height: none;
+  margin: 0; padding: 0; border: 0; color: inherit; outline: none;
+  overflow: hidden;
+}
+dialog.glass-sheet-overlay:not([open]) { display: none; }
+dialog.glass-sheet-overlay::backdrop { background: transparent; }
 
 .glass-sheet {
   width: min(100%, 560px); max-height: 88dvh; overflow: auto;

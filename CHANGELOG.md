@@ -7,6 +7,21 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.30.0] – 2026-10-22
+
+### Added
+
+- **The sheet's overlay can be a native `<dialog>`, in the top layer.** `.glass-sheet-overlay` was made for a fixed `div` with `z-index: 1000`, so whether an open sheet covered the page depended on stacking contexts and on compositing: on an iPhone a fixed tab bar with a `backdrop-filter`, sliding in and out with a transform, now and then landed above it, and the page behind it stayed within reach. As `<dialog class="glass-sheet-overlay">` opened with `showModal()`, as the modal's has been since 1.20.0, the overlay lies in the top layer, above every fixed or transformed element of the page whatever its `z-index`; the page behind it is inert for the pointer, the keyboard and screen readers, and Escape arrives as the dialog's `cancel` event. `dialog.glass-sheet-overlay` undoes the dialog's own box — the size limits, margin, padding, border, colour and outline of the user agent — and its backdrop, and keeps its overflow hidden, so the panel rising from below the edge does not make the overlay scroll. Show with `showModal()`, then `.is-active` on the next frame; hide by removing `.is-active` and calling `close()` after the panel's `transitionend`. A `div` overlay works as before. GlassKit Elements' `<glk-sheet>` uses the dialog from 1.30.0 on. Measured in Chromium 153, WebKit 26.6 and Firefox 151: the open dialog matches `:modal` and covers the viewport, and an open sheet renders pixel-identical to the `div` of 1.29.1, light and dark, 390 and 800px wide. ([GlassKit Elements #21](https://github.com/JUNGHERZ/GlassKit-Elements/issues/21))
+
+### Fixed
+
+- **An open accordion item takes the height of its content, however long.** `.glass-accordion__content` slid its `max-height` from 0 to 500px under `overflow: hidden`, so an item ended at 500px and cut off everything below, a "show more" row at its end included, and `<glk-accordion-item>` in GlassKit Elements had no part through which a page could lift the cap. The content is now a grid of one row that slides from `0fr` to `1fr`: the row is as high as the body, whatever that is, and follows content that grows while the item is open. Both tracks start at 0, the row so that the body's padding cannot hold a closed item open, the column so that a long word or a URL cannot make the body wider than the item. The slide keeps pace with the content now; with the cap it ran over 500px whatever the height, so a short item was fully open after 150 of 350 ms and a long one began to close only after a pause. Under `prefers-reduced-motion` the item opens and closes without sliding, which it did not before. The issue proposed measuring the content in script, `max-height` from `scrollHeight`; the grid does that in the stylesheet, for plain markup and GlassKit Elements alike. Measured with the issue's 40 rows of 30px in Chromium 153, WebKit 26.6 and Firefox 151: 1,220 of 1,220px visible, before 500; a closed item 0px high; 150 ms into opening, an item of 42px stands at 28px, before already at 42; 150 ms into closing, one of 192px at 61 to 71px, before still at 166 to 191; five rows added while it is open show at once; a long URL in the body lies exactly as in 1.29.1. ([GlassKit Elements #20](https://github.com/JUNGHERZ/GlassKit-Elements/issues/20))
+- **A modal with nothing to focus no longer rings the screen.** `showModal()` then focuses the dialog itself, and Chromium and WebKit drew its focus ring along the edges of the viewport, which the dialog covers. `dialog.glass-modal-overlay` sets no outline now, nor does the sheet's dialog; Tab still goes to the first control. Found while comparing the sheet's dialog with the `div` it replaces.
+
+Docs (English and German), README and SKILL.md describe the accordion's height and the sheet's dialog. With the new stylesheet, docs, showcase and landing pages render pixel-identical to 1.29.1: in WebKit and Firefox on the whole pages, in Chromium section by section, where the full-page captures of the docs differ by rasterisation in sections this release does not touch (badge, buttons, toggle, date strip).
+
+---
+
 ## [1.29.1] – 2026-10-21
 
 ### Fixed
@@ -1183,6 +1198,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.30.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.30.0
 [1.29.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.29.1
 [1.29.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.29.0
 [1.28.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.28.0
@@ -1225,4 +1241,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.29.1...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.30.0...HEAD

@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.29.1 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.30.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -460,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.29.1</span>
+      <span class="docs-hero__badge">v1.30.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Komponenten</span>
@@ -968,7 +968,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.29/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.30/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// jede --droplet-Zeile der Seite; attachDroplet(row) für eine</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -1707,6 +1707,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         </div>
       </div>
     </div>
+    <p>Ein offener Eintrag nimmt die H&ouml;he seines Inhalts an, gleich wie lang, und gleitet dorthin: <code>__content</code> ist ein Grid mit einer Zeile, die von <code>0fr</code> auf <code>1fr</code> geht (seit 1.30.0). Bis dahin endete er bei 500&nbsp;px und schnitt den Rest ab, und das Gleiten lief im Tempo dieser Grenze statt in dem des Inhalts. Inhalt, der w&auml;hrend des offenen Zustands w&auml;chst, w&auml;chst mit. Unter <code>prefers-reduced-motion</code> &ouml;ffnet er ohne Gleiten.</p>
   </section>
 
   <!-- SKELETON -->
@@ -2018,7 +2019,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <!-- SHEET -->
   <section class="docs-section" id="sheet">
     <h2>Bottom-Sheet</h2>
-    <p>Das Bottom-Sheet ist das mobile Geschwister des Modals: ein Overlay, das einblendet, und ein Panel, das von der Unterkante hochf&auml;hrt, nur oben gerundet, mit Griff und Safe-Area-Abstand. Eigener Block statt Modal-Modifier, weil Layout, Einfahrbewegung und Geste verschieden sind. <code>--inline</code> bettet das Panel ohne Overlay in den Fluss ein; die Overlay-Form braucht ein wenig JavaScript, unten gezeigt und in GlassKit Elements als <code>&lt;glk-sheet&gt;</code> umgesetzt.</p>
+    <p>Das Bottom-Sheet ist das mobile Geschwister des Modals: ein Overlay, das einblendet, und ein Panel, das von der Unterkante hochf&auml;hrt, nur oben gerundet, mit Griff und Safe-Area-Abstand. Eigener Block statt Modal-Modifier, weil Layout, Einfahrbewegung und Geste verschieden sind. <code>--inline</code> bettet das Panel ohne Overlay in den Fluss ein; die Overlay-Form braucht ein wenig JavaScript, unten gezeigt und in GlassKit Elements als <code>&lt;glk-sheet&gt;</code> umgesetzt. Seit 1.30.0 darf das Overlay ein natives <code>&lt;dialog&gt;</code> sein, wie beim Modal: Mit <code>showModal()</code> ge&ouml;ffnet liegt es im Top Layer, &uuml;ber jedem fixierten oder transformierten Element der Seite, gleich welcher <code>z-index</code>, und die Seite dahinter ist inert. <code>dialog.glass-sheet-overlay</code> nimmt dem Dialog seine eigene Box und seinen Backdrop; einblenden mit <code>showModal()</code> und dann <code>.is-active</code>, ausblenden durch Entfernen von <code>.is-active</code> und <code>close()</code> nach <code>transitionend</code>. <code>&lt;glk-sheet&gt;</code> macht es so.</p>
     <div class="docs-preview">
       <div class="glass-sheet glass-sheet--inline">
         <div class="glass-sheet__grip" aria-hidden="true"></div>

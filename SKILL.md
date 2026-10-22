@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.29.1) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.30.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -1171,7 +1171,7 @@ Collapsible content sections. Controlled via `is-open` on items.
 | `.glass-accordion__item.is-open` | Expanded item |
 | `.glass-accordion__trigger` | Clickable header button |
 | `.glass-accordion__trigger-icon` | Chevron icon (rotates on open) |
-| `.glass-accordion__content` | Wrapper for animated height |
+| `.glass-accordion__content` | Wrapper for the animated height: a one-row grid from `0fr` to `1fr`, so an open item takes its content's height however long (since 1.30.0; before, it ended at 500px). Never add a `max-height` of your own |
 | `.glass-accordion__body` | Actual content |
 
 ---
@@ -1533,6 +1533,8 @@ The bottom sheet (since 1.15.0) — the mobile sibling of the modal: `.glass-she
 ```
 
 Show: remove `hidden`, force a reflow (`void overlay.offsetHeight`), add `.is-active` on the next animation frame. Hide: remove `.is-active`, set `hidden` after `transitionend` on the panel (fallback 400 ms), immediately under reduced motion. Close on scrim click and Escape. `<glk-sheet>` in GlassKit Elements does all of this.
+
+**As a `<dialog>` (since 1.30.0) — prefer it.** The overlay may be a native `<dialog class="glass-sheet-overlay">`, as the modal's: opened with `showModal()` it lies in the top layer, above every fixed or transformed element of the page whatever its `z-index` (a fixed tab bar with a backdrop filter could land above a fixed `div` on iOS), the page behind it is inert, and Escape arrives as the `cancel` event. `dialog.glass-sheet-overlay` undoes the dialog's box and backdrop and keeps its overflow hidden. Show with `showModal()`, then `.is-active` on the next frame; hide by removing `.is-active` and calling `close()` after the panel's `transitionend`. The panel then needs no `role` of its own; name the dialog with `aria-labelledby`. Lock the page's scrolling while it is open (`overflow: hidden` on `<html>`), or a wheel over the scrim still scrolls the page.
 
 | Class | Description |
 |---|---|

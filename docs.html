@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.29.1 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.30.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -460,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.29.1</span>
+      <span class="docs-hero__badge">v1.30.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Components</span>
@@ -968,7 +968,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.29/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.30/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -1707,6 +1707,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         </div>
       </div>
     </div>
+    <p>An open item takes the height of its content, however long, and slides to it: <code>__content</code> is a grid of one row that goes from <code>0fr</code> to <code>1fr</code> (since 1.30.0). Until then it ended at 500&nbsp;px and cut off the rest, and the slide ran at the speed of that cap rather than of the content. Content that grows while the item is open grows with it. Under <code>prefers-reduced-motion</code> it opens without the slide.</p>
   </section>
 
   <!-- SKELETON -->
@@ -2018,7 +2019,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <!-- SHEET -->
   <section class="docs-section" id="sheet">
     <h2>Sheet</h2>
-    <p>The bottom sheet is the mobile sibling of the modal: an overlay that fades and a panel that rises from the bottom edge, only the top corners rounded, a grip, safe-area padding. Its own block, not a modal modifier, because layout, entry motion and gesture differ. <code>--inline</code> embeds the panel in the flow without an overlay; the overlay form needs a little JavaScript, shown below and mirrored by <code>&lt;glk-sheet&gt;</code> in GlassKit Elements.</p>
+    <p>The bottom sheet is the mobile sibling of the modal: an overlay that fades and a panel that rises from the bottom edge, only the top corners rounded, a grip, safe-area padding. Its own block, not a modal modifier, because layout, entry motion and gesture differ. <code>--inline</code> embeds the panel in the flow without an overlay; the overlay form needs a little JavaScript, shown below and mirrored by <code>&lt;glk-sheet&gt;</code> in GlassKit Elements. Since 1.30.0 the overlay may be a native <code>&lt;dialog&gt;</code>, as the modal&rsquo;s: opened with <code>showModal()</code> it lies in the top layer, above every fixed or transformed element of the page whatever its <code>z-index</code>, and the page behind it is inert. <code>dialog.glass-sheet-overlay</code> undoes the dialog&rsquo;s own box and backdrop; show with <code>showModal()</code> and then <code>.is-active</code>, hide by removing <code>.is-active</code> and calling <code>close()</code> after <code>transitionend</code>. <code>&lt;glk-sheet&gt;</code> does this.</p>
     <div class="docs-preview">
       <div class="glass-sheet glass-sheet--inline">
         <div class="glass-sheet__grip" aria-hidden="true"></div>
