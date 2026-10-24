@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.30.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.31.0) with 34 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -148,7 +148,7 @@ All visual values are controlled via CSS Custom Properties. For custom theming, 
 | `--gl-color-primary-dark` | `#d4692a` | `#c96a1e` | Gradient end value |
 | `--gl-color-primary-mid` | derived → `#e07a24` | derived → `#d97826` | Gradient midpoint, mixed from primary + primary-dark |
 | `--gl-color-text` | `#ffffff` | `#1a2a36` | Default text color |
-| `--gl-color-text-muted` | `rgba(255,255,255,0.60)` | `rgba(26,42,54,0.55)` | Secondary text |
+| `--gl-color-text-muted` | `rgba(255,255,255,0.65)` | `rgba(26,42,54,0.68)` | Secondary text — 4.5:1 on the page and on glass since 1.31.0 (before 60 % / 55 %) |
 | `--gl-color-text-heading` | `#ffffff` | `#0f1f2a` | Headings |
 | `--gl-color-success` | `#34c759` | `#28a745` | Success |
 | `--gl-color-error` | `#ff3b30` | `#dc3545` | Error |
@@ -197,6 +197,8 @@ fully-translucent pre-1.7.0 chip.
 > ```
 >
 > That reaches 4,62:1. Badges are unaffected — they already pass by default.
+
+> **AA by default since 1.31.0** for muted text (`--gl-color-text-muted` 65 % dark / 68 % light), card text (68 % light) and icons (light: muted 55 %, default 65 %, strong 80 %) — text 4.5:1, icons with a meaning 3:1, on the page and on glass. Not for `--gl-color-primary-text`: the light orange reads 2.43:1 as text, but a fixed mix would darken every brand alike. Where a light theme keeps the orange, set `[data-theme="light"] { --gl-color-primary-text: var(--gl-color-primary-on-surface); }` (5.8:1). Never lower the muted tokens again for a lighter look; the inactive tab labels (10px, `--gl-icon-muted`) stay below 4.5:1 — `--gl-tab-bar-color` raises them.
 
 > **Do not put text in `--gl-color-success` / `--error` / `--primary` on a tinted
 > surface.** Those values are fills. Use the matching `-on-surface` token, which is what
@@ -265,7 +267,7 @@ The same in both themes; `data-surface="solid"` sets them to `none` (the thumb's
 | `--gl-radius-xs` | `8px` | Small elements |
 | `--gl-radius-sm` | `12px` | Badges, small containers |
 | `--gl-radius-input` | `14px` | Inputs, textareas |
-| `--gl-radius-btn` | `16px` | Buttons |
+| `--gl-radius-btn` | `16px` | Buttons (since 1.31.0 through `--gl-btn-radius`), lists, status card, toasts, accordion, segmented control |
 | `--gl-radius-card` | `24px` | Cards |
 | `--gl-radius-full` | `9999px` | Fully rounded |
 | `--gl-radius-pill` | `50%` | Circle shape |
@@ -629,6 +631,8 @@ Full-width buttons (56px height) with three variants and size modifiers.
 **Disabled (since 1.21.2):** `disabled` — or `aria-disabled="true"` on `a.glass-btn`, which cannot be disabled — dims the button to 0.45, shows the not-allowed cursor and stops the hover lift. The link still navigates unless the page stops it. Never fake a disabled look with your own opacity: pill, tab-bar accessory, modal actions, interactive list rows, calendar arrows, toggle, checkbox, radio, select, textarea and range all have the state too.
 
 **Heights** are density tokens: `--gl-btn-height`, `-sm`, `-lg` — 56 / 44 / 64px, or 40 / 32 / 48px with `data-density="compact"` on `<html>` (since 1.21.0).
+
+**Shape and room (since 1.31.0)** are button hooks: `--gl-btn-radius` (unset `--gl-radius-btn`, which lists, the status card, toasts, the accordion and the segmented control share — so `--gl-btn-radius: 9999px` gives pill buttons and nothing else changes; never set `--gl-radius-btn` for that) and `--gl-btn-padding-x`, the room beside the label (unset 24px; before, only `--auto` had it and every other button the browser's 6px, so a small button sized by its text touched it). `--sm` reads `--gl-btn-radius-sm` and `--gl-btn-padding-x-sm` first, then those, and keeps its 12px radius while none is set.
 
 **Icons:** Button SVGs need **no inline `fill`/`stroke` attributes** – GlassKit styles them automatically: outline style (`fill: none; stroke: currentColor; stroke-width: 2`, round caps/joins) as the default, `--secondary`/`--tertiary` use their icon tokens, `--primary` renders icons filled. For deliberately filled icons (e.g. brand logos like the GitHub mark) add `glass-icon--fill` to the `<svg>`.
 
@@ -1455,6 +1459,7 @@ More options than fit — seven areas on a phone: without a modifier the row sta
 | `.glass-segmented__icon` | An icon before the label (since 1.28.0): an SVG strokes in the option's colour, a font icon or any element inherits it; 18px |
 | `.glass-segmented--icons` | Icons alone, square options; each option's name in `aria-label` and `title` (since 1.28.0) |
 | `.glass-segmented__badge` | A count after the label — neutral, or in the option's tone; inside `__icon` at the icon's corner (since 1.29.0) |
+| `.glass-segmented__badge--primary` / `--success` / `--warning` / `--error` | The count in a colour of its own, whatever the option's tone, without the dot (since 1.31.0) |
 | `.glass-segmented--droplet` | The chosen option sits on a drop of glass that glides to the next one (since 1.27.0) — recommended |
 
 **Icons (since 1.28.0).** `.glass-segmented__icon` inside an option shows an icon before its label, in the option's colour; under the drop it grows like the tone dot. Mark it `aria-hidden="true"`. `--icons` on the row is for options that show their icon alone — a light / dark / auto switch: the options become square, and each carries its name as `aria-label` (and `title`, for the pointer).
@@ -1470,7 +1475,7 @@ More options than fit — seven areas on a phone: without a modifier the row sta
 </div>
 ```
 
-**Counts (since 1.29.0).** `.glass-segmented__badge` after an option's label shows how much waits behind it — open invoices, new tickets — where the tone dot only says that something does. A small pill in tabular figures, inline, so a scrolling row and the drop measure the option with it. Neutral without a tone (a tint of the text colour over the state scrim; `--gl-segmented-badge-bg` and `--gl-segmented-badge-color`, both colours), the state tint of `.glass-badge` with one. Inside `.glass-segmented__icon` it sits at the icon's corner, as on the tab bar, and is opaque there — the place for an `--icons` row. Never put the count into the label text ("Tickets (1)"): it can then be neither styled nor announced apart. The number is no name, so give the option an `aria-label` that says it.
+**Counts (since 1.29.0).** `.glass-segmented__badge` after an option's label shows how much waits behind it — open invoices, new tickets — where the tone dot only says that something does. A small pill in tabular figures, inline, so a scrolling row and the drop measure the option with it. Neutral without a tone (a tint of the text colour over the state scrim; `--gl-segmented-badge-bg` and `--gl-segmented-badge-color`, both colours), the state tint of `.glass-badge` with one. Inside `.glass-segmented__icon` it sits at the icon's corner, as on the tab bar, and is opaque there — the place for an `--icons` row. Never put the count into the label text ("Tickets (1)"): it can then be neither styled nor announced apart. The number is no name, so give the option an `aria-label` that says it. **Colours and size (since 1.31.0):** `.glass-segmented__badge--primary`, `--success`, `--warning` and `--error` colour the count alone — the look of the badge variants, without the dot a tone puts before the label; where the option has a tone too, the count's own colour wins. `--gl-segmented-badge-height` (16px, also its least width), `--gl-segmented-badge-font-size` (11px) and `--gl-segmented-badge-border` (a colour: a hairline drawn inside the neutral count, unset none). All four colours reach 4.7:1 or more in both themes, inline and at the corner, chosen or not.
 
 ```html
 <button class="glass-segmented__item glass-segmented__item--warning" aria-pressed="false" aria-label="Tickets, 1 open">
@@ -2126,6 +2131,8 @@ Key points in this composition:
 | Overriding the tab label's `font-size` or the bar's `z-index` | `--gl-tab-bar-label-size`, `--gl-tab-bar-z-index` (since 1.28.0) |
 | Restyling the chosen segmented option for a dark brand | `--gl-segmented-active-bg`, `-color`, `-shadow` (since 1.28.0) |
 | A count in a segmented label, "Tickets (1)" | `.glass-segmented__badge` after the label, the count in the option's `aria-label` (since 1.29.0) |
+| A tone on the option only to colour its count, or `--gl-segmented-badge-bg` / `-color` set to a state colour | `.glass-segmented__badge--error` (or `--primary`, `--success`, `--warning`) — no dot (since 1.31.0) |
+| `--gl-radius-btn` set for pill-shaped buttons | `--gl-btn-radius: 9999px` — lists, toasts and the segmented control keep theirs (since 1.31.0) |
 | Overriding `height` of `.glass-btn`, `.glass-input` etc. for a denser UI | `data-density="compact"` on `<html>`, or set a density token — toggle thumb and label alignment follow the tokens, not a hand-set `height` |
 
 ---

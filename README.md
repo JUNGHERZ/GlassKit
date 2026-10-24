@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.30.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.31.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.30.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.31.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -73,22 +73,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.30/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.31/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.30/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.31/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.30/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.31/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.30` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.31` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.30/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.31/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -322,6 +322,8 @@ a later declaration if you want to bend one.
 
 `--gl-tab-bar-active-color` colours the icon and label of the active tab alone, for a spotlight that needs a lighter tone still; unset, they take `--gl-color-primary-text`.
 
+**Contrast (since 1.31.0).** Muted text, card text and icons reach WCAG AA by default in both themes — text 4.5:1, icons with a meaning 3:1, on the page and on glass. The primary as text keeps the primary: GlassKit's light orange reads 2.43:1 as text, but a fixed mix would darken every brand alike, so a light theme that keeps the orange sets `[data-theme="light"] { --gl-color-primary-text: var(--gl-color-primary-on-surface); }` (5.8:1). White on the primary button stays part of the look; `--gl-color-on-primary: color-mix(in srgb, var(--gl-color-primary) 17%, #000)` switches it to a dark ink with 4.6:1 or more.
+
 The `theme-override.css` template comes with **4 example themes**:
 - 🔵 Ocean Blue
 - 🟢 Emerald Green
@@ -459,6 +461,10 @@ All visual values are controlled via CSS Custom Properties:
 
 /* Component hooks */
 --gl-modal-max-width      /* 340px */
+--gl-btn-radius            /* buttons alone; unset: --gl-radius-btn, shared with lists, toasts, the segmented control */
+--gl-btn-radius-sm         /* --sm; unset: --gl-btn-radius, then --gl-radius-sm */
+--gl-btn-padding-x         /* room beside the label; unset: 24px */
+--gl-btn-padding-x-sm      /* --sm; unset: --gl-btn-padding-x */
 --gl-select-chevron       /* url(…) per theme */
 --gl-toast-top            /* distance of the toast from the top */
 --gl-input-prefix-size    /* room for an input prefix, 18px */
@@ -487,6 +493,9 @@ All visual values are controlled via CSS Custom Properties:
 --gl-segmented-active-color     /* label and icon of the chosen option; unset: --gl-color-text-heading */
 --gl-segmented-badge-bg         /* tint of a neutral count over the state scrim; unset: 12 % of the text colour */
 --gl-segmented-badge-color      /* its figures; unset: --gl-color-text */
+--gl-segmented-badge-height     /* 16px, also its least width */
+--gl-segmented-badge-font-size  /* 11px */
+--gl-segmented-badge-border     /* hairline inside a neutral count; unset: none */
 --gl-list-flush-inset           /* how far a --flush list reaches out; set by the card and the modal body, else 20px */
 --gl-gloss-droplet              /* highlight in the drop of --droplet rows; off with data-surface */
 ```
@@ -790,7 +799,7 @@ Prose:
   .glass-prose   (styles the rendered content beneath it)
 
 Segmented:
-  .glass-segmented--full / --scroll / --wrap / --icons · __item[aria-pressed] · __item--success / --warning / --error · __dot · __icon · __badge
+  .glass-segmented--full / --scroll / --wrap / --icons · __item[aria-pressed] · __item--success / --warning / --error · __dot · __icon · __badge (--primary / --success / --warning / --error)
   .glass-segmented--droplet        (gliding selection, with glasskit-droplet.js)
 
 Steps:

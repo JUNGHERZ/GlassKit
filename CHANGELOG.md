@@ -7,6 +7,27 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.31.0] – 2026-10-25
+
+### Added
+
+- **Hooks of the button's own: `--gl-btn-radius`.** `.glass-btn` took its corners from `--gl-radius-btn`, which `.glass-list`, `.glass-status`, `.glass-toast`, `.glass-accordion__item` and `.glass-segmented` share, so a project that wanted pill-shaped buttons turned lists, toasts and the segmented control into capsules as well; the height had a hook of its own, the radius none. `--gl-btn-radius` rounds the buttons alone, unset `--gl-radius-btn`; `--sm` reads `--gl-btn-radius-sm`, then `--gl-btn-radius`, and keeps its 12px while neither is set. The issue proposed the small size falling back to `--gl-radius-sm` directly; through `--gl-btn-radius` one value shapes every size, which an app builder that lets each app choose the shape of its buttons needs. Measured in Chromium 153, WebKit 26.6 and Firefox 151 with the issue's page: with `--gl-btn-radius: 9999px` on `:root` the buttons are round, while the list, the segmented control, the status card, the toast and the accordion item stay at 16px; `--gl-btn-radius-sm: 4px` changes the small buttons alone. ([#20](https://github.com/JUNGHERZ/GlassKit/issues/20))
+- **Room beside the label for every button: `--gl-btn-padding-x`.** Only `--auto` had a horizontal padding, 24px; every other button kept the browser's, 6px in Chromium and WebKit and 4px in Firefox. A small button whose width came from its text — in a row of actions, in an empty state, a GlassKit Elements `<glk-button size="sm">` in a flex row — touched the text with its edges, pill-shaped ones even more visibly. Every button now has `padding-inline: var(--gl-btn-padding-x, 24px)`, the padding of `--auto`, and `--sm` reads `--gl-btn-padding-x-sm` first. The vertical padding stays as it was, so a full-width button keeps its label where it was and an `--auto` button its width to the tenth of a pixel. The issue proposed 0 as the default with values of their own for `--sm` and `--auto`; one value for every size keeps `--sm --auto` buttons — the image picker's, the empty state's — as they were, and a small button in a row now looks like one of them. Measured with the issue's page: the text of the small button starts 25px from its edge, before 7px (Firefox 5px). ([#22](https://github.com/JUNGHERZ/GlassKit/issues/22))
+- **A colour of the count's own in the segmented control: `.glass-segmented__badge--primary`, `--success`, `--warning`, `--error`**, and tokens for its size and hairline. The count could be coloured only through the option's tone, which also puts the dot before the label, or through its three colour tokens; its height (16px), its font size (11px) and the missing hairline were fixed. So a red count of new calls on an "Open" option without a dot, or a count as large as a `.glass-badge`, could not be had. The four classes give the count the look of the badge variants — the state tint over a doubled scrim, a hairline in the state colour, the readable text colour — without the dot; where the option has a tone too, the count's own colour wins. `--gl-segmented-badge-height` (16px, also its least width), `--gl-segmented-badge-font-size` (11px) and `--gl-segmented-badge-border` (a colour, drawn inside the neutral count, unset none) size and outline it. Measured in all three engines, the four colours reach 4.71:1 or more in both themes, inline, under the drop and at the icon's corner, on the chosen option and beside it; the new `--primary` 4.79:1 in the light theme and 5.10:1 in the dark one. ([#21](https://github.com/JUNGHERZ/GlassKit/issues/21))
+
+### Changed
+
+- **Muted text, card text and icons reach WCAG AA by default.** In the light theme `--gl-color-text-muted` read 3.41:1 on the page and 3.47:1 on glass, `--gl-card-text-color` 4.00:1 and `--gl-icon-muted` 2.05:1 — below the 4.5:1 text needs and the 3:1 of icons that carry a meaning; in the dark theme muted text read 4.45:1 on glass. Light: muted text 55 → 68 %, card text 60 → 68 %, icons muted 35 → 55 %, default 50 → 65 %, strong 70 → 80 % (the card icon and the tertiary icon follow the default), so the three steps keep their order; dark: muted text 60 → 65 %. The select's chevron follows the muted text in both. Measured with the issue's page in Chromium 153, WebKit 26.6 and Firefox 151: in the light theme muted text 4.97:1 on the page and 5.09:1 on glass, card text 5.09:1, icons 3.41, 4.54 and 7.23:1; in the dark theme muted text 5.88:1 and 4.92:1. Two points of the issue were decided otherwise. `--gl-color-primary-text` stays the primary: GlassKit's light orange reads 2.43:1 as text, but a fixed mix with black would darken every brand alike and a darker one far more than it needs, a pink at 4.33:1 to 8.79:1; docs, README and SKILL.md show the recipe for a light theme that keeps the orange (`--gl-color-primary-on-surface`, 5.8:1). White on the primary button stays part of the look, as decided in 1.7.0 (2.68:1 light, 2.03:1 dark on the lightest stop of the gradient); the docs now show the dark ink as well, 4.6:1 or more on every stop. ([#19](https://github.com/JUNGHERZ/GlassKit/issues/19))
+
+### Compatibility
+
+- Small buttons that take their width from their text grow by 36px: in the docs and the showcase of GlassKit Elements "Small" from 51 to 87px and "Book" from 48 to 84px, and a row of three that fit the showcase's narrow column in one line now breaks into two. Plain markup changes only where a container shrinks a `.glass-btn` without `--auto` to its text. `--gl-btn-padding-x-sm` or `--gl-btn-padding-x` set another value.
+- The light theme reads firmer: muted text, card text and icons are darker; in the dark theme muted text is a little brighter. A page that copies GlassKit's light tokens — the no-JS `prefers-color-scheme` mirror of GlassKit Web — updates its copies of these seven tokens and the chevron.
+
+Docs (English and German), README, SKILL.md and `theme-override.css` describe the hooks, the colours of the count and the contrast. With the raised tokens and the chevron set back to their 1.30.0 values, docs, showcase and landing pages render pixel-identical to 1.30.0 in Chromium 153, WebKit 26.6 and Firefox 151 — in Chromium section by section, where full-page captures differ by rasterisation — apart from the new docs example of the coloured count.
+
+---
+
 ## [1.30.0] – 2026-10-22
 
 ### Added
@@ -1198,6 +1219,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.31.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.31.0
 [1.30.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.30.0
 [1.29.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.29.1
 [1.29.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.29.0
@@ -1241,4 +1263,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.30.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.31.0...HEAD

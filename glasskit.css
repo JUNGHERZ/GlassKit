@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.30.0
+   Jungherz GmbH – v1.31.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -66,11 +66,13 @@
   --gl-color-bg-mid:         #1a3d4e;
   --gl-color-bg-light:       #1b3e50;
   --gl-color-text:           #ffffff;
-  --gl-color-text-muted:     rgba(255, 255, 255, 0.60);
+  /* Muted text keeps 4.5:1 on the page and on glass: 65 % since 1.31.0,
+     before 60 % (4.45:1 on glass). The select's chevron below follows. */
+  --gl-color-text-muted:     rgba(255, 255, 255, 0.65);
   --gl-color-text-on-light:  #1a3a4a;
   --gl-color-text-heading:   #ffffff;
   /* The select's chevron, drawn in the muted text colour of each theme. */
-  --gl-select-chevron:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  --gl-select-chevron:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.65)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   --gl-color-success:        #34c759;
   --gl-color-error:          #ff3b30;
   --gl-color-warning:        #ffcc00;
@@ -311,10 +313,14 @@
   --gl-color-bg-mid:         #f0f4f8;
   --gl-color-bg-light:       #f5f7fa;
   --gl-color-text:           #1a2a36;
-  --gl-color-text-muted:     rgba(26, 42, 54, 0.55);
+  /* Muted text, card text and the icons reach WCAG AA on the page and on
+     glass since 1.31.0: text 4.5:1 (before 3.4:1, card text 4.0:1), icons
+     that carry a meaning 3:1 (before 2.0:1). The icon steps, muted, default
+     and strong, stay in their order. */
+  --gl-color-text-muted:     rgba(26, 42, 54, 0.68);
   --gl-color-text-on-light:  #1a3a4a;
   --gl-color-text-heading:   #0f1f2a;
-  --gl-select-chevron:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(26,42,54,0.55)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  --gl-select-chevron:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(26,42,54,0.68)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   --gl-color-success:        #28a745;
   --gl-color-error:          #dc3545;
   --gl-color-warning:        #e6a800;
@@ -354,8 +360,8 @@
   --gl-card-glow-low:        rgba(255, 255, 255, 0.65);
   --gl-card-glow-bottom:     rgba(255, 255, 255, 0.50);
 
-  --gl-card-icon-color:      rgba(26, 42, 54, 0.5);
-  --gl-card-text-color:      rgba(26, 42, 54, 0.6);
+  --gl-card-icon-color:      rgba(26, 42, 54, 0.65);
+  --gl-card-text-color:      rgba(26, 42, 54, 0.68);
 
   --gl-border-subtle:        rgba(0, 0, 0, 0.08);
   --gl-border-medium:        rgba(0, 0, 0, 0.12);
@@ -364,12 +370,12 @@
   --gl-border-warm:          color-mix(in srgb, var(--gl-color-primary) 30%, transparent);
   --gl-border-focus:         color-mix(in srgb, var(--gl-color-primary) 50%, transparent);
 
-  --gl-icon-default:         rgba(26, 42, 54, 0.50);
-  --gl-icon-muted:           rgba(26, 42, 54, 0.35);
-  --gl-icon-strong:          rgba(26, 42, 54, 0.70);
+  --gl-icon-default:         rgba(26, 42, 54, 0.65);
+  --gl-icon-muted:           rgba(26, 42, 54, 0.55);
+  --gl-icon-strong:          rgba(26, 42, 54, 0.80);
   --gl-icon-on-primary:      var(--gl-color-on-primary, #ffffff);
   --gl-icon-on-secondary:    #1a3a4a;
-  --gl-icon-on-tertiary:     rgba(26, 42, 54, 0.50);
+  --gl-icon-on-tertiary:     rgba(26, 42, 54, 0.65);
 
   --gl-shadow-card:          0 4px 20px rgba(0, 0, 0, 0.06);
   --gl-shadow-btn:           0 2px 10px rgba(0, 0, 0, 0.06);
@@ -757,10 +763,20 @@
 /* ============================================================
    6. BUTTONS
    ============================================================ */
+/* Hooks of their own (since 1.31.0), as the height has --gl-btn-height:
+   --gl-btn-radius, unset --gl-radius-btn, which lists, the status card,
+   toasts, the accordion and the segmented control share, so pill-shaped
+   buttons no longer turn those into capsules; and --gl-btn-padding-x, the
+   room beside the label, unset 24px. That was the padding of --auto alone;
+   any other button had the browser's 6px, so a small one in a row of
+   actions, its width taken from its text, touched the text with its edges.
+   A full-width button keeps its label where it was. --sm takes
+   --gl-btn-radius-sm and --gl-btn-padding-x-sm, each unset the one above. */
 .glass-btn {
   display: flex; align-items: center; justify-content: center;
   gap: 10px; width: 100%; height: var(--gl-btn-height, 56px);
-  border: none; border-radius: var(--gl-radius-btn);
+  padding-inline: var(--gl-btn-padding-x, var(--gl-space-xl));
+  border: none; border-radius: var(--gl-btn-radius, var(--gl-radius-btn));
   font-family: var(--gl-font-family);
   font-size: var(--gl-font-size-btn);
   font-weight: var(--gl-font-weight-semibold);
@@ -853,9 +869,13 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 /* Sizes */
-.glass-btn--sm { height: var(--gl-btn-height-sm, 44px); font-size: var(--gl-font-size-sm); border-radius: var(--gl-radius-sm); }
+.glass-btn--sm {
+  height: var(--gl-btn-height-sm, 44px); font-size: var(--gl-font-size-sm);
+  padding-inline: var(--gl-btn-padding-x-sm, var(--gl-btn-padding-x, var(--gl-space-xl)));
+  border-radius: var(--gl-btn-radius-sm, var(--gl-btn-radius, var(--gl-radius-sm)));
+}
 .glass-btn--lg { height: var(--gl-btn-height-lg, 64px); font-size: var(--gl-font-size-lg); }
-.glass-btn--auto { width: auto; padding: 0 var(--gl-space-xl); }
+.glass-btn--auto { width: auto; padding-block: 0; }
 
 
 /* ============================================================
@@ -1074,7 +1094,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   box-shadow: var(--gl-inset-subtle);
   cursor: pointer;
   appearance: none; -webkit-appearance: none;
-  background-image: var(--gl-select-chevron, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"));
+  background-image: var(--gl-select-chevron, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.65)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"));
   background-repeat: no-repeat;
   background-position: right 16px center;
 }
@@ -2878,17 +2898,22 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
    the place for an --icons row. There it covers the icon, so the theme's
    middle background goes underneath (--gl-segmented-badge-base, the
    badge's background colour). Its number is no name: give the option an
-   aria-label such as "Tickets, 1 open". */
+   aria-label such as "Tickets, 1 open". Since 1.31.0 its size and the
+   hairline of the neutral count are tokens: --gl-segmented-badge-height
+   (unset 16px, also the least width), --gl-segmented-badge-font-size
+   (unset 11px) and --gl-segmented-badge-border (a colour, unset none,
+   drawn inside, so the count keeps its size). */
 .glass-segmented__badge {
   flex: none;
   display: inline-flex; align-items: center; justify-content: center;
-  min-width: 16px; height: 16px; padding: 0 5px;
+  min-width: var(--gl-segmented-badge-height, 16px); height: var(--gl-segmented-badge-height, 16px); padding: 0 5px;
   border-radius: var(--gl-radius-full);
   background-color: var(--gl-segmented-badge-base, var(--gl-state-scrim, transparent));
   background-image: linear-gradient(var(--gl-segmented-badge-bg, color-mix(in srgb, var(--gl-color-text) 12%, transparent)),
                                     var(--gl-segmented-badge-bg, color-mix(in srgb, var(--gl-color-text) 12%, transparent)));
+  box-shadow: inset 0 0 0 1px var(--gl-segmented-badge-border, transparent);
   color: var(--gl-segmented-badge-color, var(--gl-color-text));
-  font-size: 11px; font-weight: var(--gl-font-weight-semibold);
+  font-size: var(--gl-segmented-badge-font-size, 11px); font-weight: var(--gl-font-weight-semibold);
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
@@ -2905,6 +2930,36 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   color: var(--gl-color-warning-on-surface, var(--gl-color-warning));
 }
 .glass-segmented__item--error .glass-segmented__badge {
+  background-image: linear-gradient(var(--gl-color-error-surface), var(--gl-color-error-surface)),
+                    linear-gradient(var(--gl-state-scrim), var(--gl-state-scrim));
+  box-shadow: inset 0 0 0 1px var(--gl-color-error-border);
+  color: var(--gl-color-error-on-surface, var(--gl-color-error));
+}
+/* A colour of the count's own (since 1.31.0), whatever the option's tone:
+   --primary, --success, --warning and --error give it the look of
+   .glass-badge's variants (the state tint over a doubled scrim, a hairline,
+   the readable text colour), without the dot a tone puts before the label.
+   After the tones of the option, so the count's own colour wins where both
+   are set. */
+.glass-segmented__badge.glass-segmented__badge--primary {
+  background-image: linear-gradient(var(--gl-color-primary-surface), var(--gl-color-primary-surface)),
+                    linear-gradient(var(--gl-state-scrim), var(--gl-state-scrim));
+  box-shadow: inset 0 0 0 1px var(--gl-color-primary-border);
+  color: var(--gl-color-primary-on-surface, var(--gl-color-primary));
+}
+.glass-segmented__badge.glass-segmented__badge--success {
+  background-image: linear-gradient(var(--gl-color-success-surface), var(--gl-color-success-surface)),
+                    linear-gradient(var(--gl-state-scrim), var(--gl-state-scrim));
+  box-shadow: inset 0 0 0 1px var(--gl-color-success-border);
+  color: var(--gl-color-success-on-surface, var(--gl-color-success));
+}
+.glass-segmented__badge.glass-segmented__badge--warning {
+  background-image: linear-gradient(var(--gl-color-warning-surface), var(--gl-color-warning-surface)),
+                    linear-gradient(var(--gl-state-scrim), var(--gl-state-scrim));
+  box-shadow: inset 0 0 0 1px var(--gl-color-warning-border);
+  color: var(--gl-color-warning-on-surface, var(--gl-color-warning));
+}
+.glass-segmented__badge.glass-segmented__badge--error {
   background-image: linear-gradient(var(--gl-color-error-surface), var(--gl-color-error-surface)),
                     linear-gradient(var(--gl-state-scrim), var(--gl-state-scrim));
   box-shadow: inset 0 0 0 1px var(--gl-color-error-border);

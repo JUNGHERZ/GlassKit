@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.30.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.31.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -460,7 +460,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.30.0</span>
+      <span class="docs-hero__badge">v1.31.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">34 Components</span>
@@ -499,7 +499,7 @@
         <tr><td><code>--gl-color-primary-dark</code></td><td>#d4692a</td><td>Gradient end value</td></tr>
         <tr><td><code>--gl-color-primary-text</code></td><td>var(--gl-color-primary)</td><td>Text and line icons in the primary colour: prose links, the active tab, the primary modal action, accent list rows, the range value, the accordion &mdash; since 1.26.0, see <a href="#primary-text">Primary as text</a></td></tr>
         <tr><td><code>--gl-color-text</code></td><td>#ffffff</td><td>Default text color</td></tr>
-        <tr><td><code>--gl-color-text-muted</code></td><td>rgba(255,255,255,0.60)</td><td>Secondary text</td></tr>
+        <tr><td><code>--gl-color-text-muted</code></td><td>rgba(255,255,255,0.65)</td><td>Secondary text</td></tr>
         <tr><td><code>--gl-color-success</code></td><td>#34c759</td><td>Success status</td></tr>
         <tr><td><code>--gl-color-error</code></td><td>#ff3b30</td><td>Error status</td></tr>
         <tr><td><code>--gl-color-warning</code></td><td>#ffcc00</td><td>Warning status</td></tr>
@@ -594,6 +594,16 @@ function <span class="cls">toggleTheme</span>() {
     </div>
     <p>Write the light rule after the dark one: <code>:root</code> matches a page in the light theme too, and of two matching rules the later one wins. The right tone depends on the background, so measure it there. On GlassKit&rsquo;s own dark background with <code>#c25028</code> as primary, this mix takes a link on a glass card from 1.37:1 to 5.05:1.</p>
     <p>The active tab takes <code>--gl-tab-bar-active-color</code> for its icon and label where that is set, else <code>--gl-color-primary-text</code>. The spotlight of the floating bar lightens the active item more than any other surface, so a brand may need a lighter tone there, up to white. Set it per theme like the text colour; <code>var(--gl-color-primary-text)</code> in the light rule gives the default back. Glow and dot stay in the primary, the spotlight in <code>--gl-tab-bar-spotlight-color</code>.</p>
+    <p>Since 1.31.0 muted text, card text and icons reach WCAG AA by default, in both themes. The primary as text does not, on purpose: GlassKit&rsquo;s own orange reads 2.43:1 as text on the light page, but a darker brand may pass already or need far less, and a fixed mix with black would darken every brand alike. Where the light theme keeps the orange, darken it there; <code>--gl-color-primary-on-surface</code>, the ink of the primary badge, reaches 5.8:1. White on the primary button is part of the look as well, 2.7:1 in the light theme and 2.0:1 in the dark one on the lightest stop of the gradient; <code>--gl-color-on-primary</code> switches it to a dark ink that reaches 4.6:1 or more on every stop:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code">[data-theme=<span class="val">"light"</span>] {
+  <span class="attr">--gl-color-primary-text</span>: <span class="val">var(--gl-color-primary-on-surface)</span>;
+}
+<span class="cmt">/* Dark text on the primary button, in both themes */</span>
+<span class="cls">:root</span>, [data-theme=<span class="val">"dark"</span>], [data-theme=<span class="val">"light"</span>] {
+  <span class="attr">--gl-color-on-primary</span>: <span class="val">color-mix(in srgb, var(--gl-color-primary) 17%, #000)</span>;
+}</div>
+    </div>
     <h3>Right to left</h3>
     <p>Since 1.20.0 the components follow the writing direction. Set <code>dir="rtl"</code> on <code>&lt;html&gt;</code> or on any container: paddings, insets and borders are logical properties, so labels and hints, the search icon, list dividers, popover anchors, tab badges, modal actions, the toast&rsquo;s close button and the alignment of accordion, list, table and prose all mirror. Where two values have to move together &mdash; the select&rsquo;s chevron and the room kept for it, the toggle&rsquo;s thumb and its travel, the progress fill&rsquo;s gradient &mdash; the rule sits under <code>:dir(rtl)</code>: Chrome and Edge from 120, Safari from 16.4, Firefox from 49. An older browser keeps those parts left to right instead of tearing them apart.</p>
     <h3>Printing</h3>
@@ -968,7 +978,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.30/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.31/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -1038,6 +1048,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       </tbody>
     </table>
     <p>A disabled button &mdash; <code>disabled</code>, or <code>aria-disabled="true"</code> on an <code>a.glass-btn</code>, which cannot be disabled &mdash; is dimmed, shows the not-allowed cursor and no longer lifts on hover (since 1.21.2; before, it looked exactly like an enabled one). The link still navigates unless the page stops it. The same holds for pill, tab-bar accessory, modal actions, interactive list rows and the calendar&rsquo;s month arrows; toggle, checkbox and radio dim their control and label, select, textarea and range dim like the input.</p>
+    <p>Buttons have hooks of their own since 1.31.0. <code>--gl-btn-radius</code> rounds them, unset <code>--gl-radius-btn</code>, which lists, the status card, toasts, the accordion and the segmented control share: <code>--gl-btn-radius: 9999px</code> on <code>:root</code> gives pill-shaped buttons and leaves those as they are. <code>--gl-btn-padding-x</code> is the room beside the label, unset 24&nbsp;px, the padding <code>--auto</code> had alone; any other button had the browser&rsquo;s 6&nbsp;px, so a small one that took its width from its text, in a row of actions, touched the text with its edges. <code>--sm</code> reads <code>--gl-btn-radius-sm</code> and <code>--gl-btn-padding-x-sm</code> first, then the hooks above, and keeps its 12&nbsp;px radius while none is set, so one value can shape every size.</p>
   </section>
 
   <!-- BADGE -->
@@ -1858,6 +1869,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>__dot</code></td><td>The dot before the label, in the tone colour</td></tr>
         <tr><td><code>__icon</code></td><td>An icon before the label, in the option&rsquo;s colour (since 1.28.0)</td></tr>
         <tr><td><code>__badge</code></td><td>A count after the label, in the tone&rsquo;s colour where one is set; inside <code>__icon</code> at the icon&rsquo;s corner (since 1.29.0)</td></tr>
+        <tr><td><code>__badge--primary</code>, <code>--success</code>, <code>--warning</code>, <code>--error</code></td><td>The count in a colour of its own, whatever the option&rsquo;s tone, without the dot (since 1.31.0)</td></tr>
         <tr><td><code>--icons</code></td><td>Icons alone, square options; the names go into <code>aria-label</code> (since 1.28.0)</td></tr>
         <tr><td><code>--droplet</code></td><td>The chosen option sits on a drop of glass that glides to the next one (since 1.27.0)</td></tr>
       </tbody>
@@ -1924,6 +1936,19 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-segmented__icon"</span> <span class="attr">aria-hidden=</span><span class="val">"true"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-segmented__badge"</span><span class="tag">&gt;</span>3<span class="tag">&lt;/span&gt;&lt;/span&gt;</span></div>
     </div>
     <p>The neutral pill has two tokens, both colours and unset by default: <code>--gl-segmented-badge-bg</code>, the tint over the scrim (unset: 12&nbsp;% of the text colour), and <code>--gl-segmented-badge-color</code> (unset: the text colour). Measured in Chromium, WebKit and Firefox, the figures reach 5.6:1 or more in the dark theme and 4.7:1 or more in the light one, on the chosen option and beside it, neutral and in every tone.</p>
+    <p>Since 1.31.0 a count can carry a colour of its own, whatever the option&rsquo;s tone: <code>.glass-segmented__badge--primary</code>, <code>--success</code>, <code>--warning</code> and <code>--error</code> give it the look of the <a href="#badge">badge</a> variants &mdash; the state tint over a doubled scrim, a hairline, the readable text colour &mdash; without the dot a tone puts before the label. Where the option has a tone as well, the count&rsquo;s own colour wins. Its size is a token too: <code>--gl-segmented-badge-height</code> (unset 16&nbsp;px, also its least width) and <code>--gl-segmented-badge-font-size</code> (unset 11&nbsp;px). <code>--gl-segmented-badge-border</code> draws a hairline in that colour around the neutral count, inside, so the count keeps its size. Measured in Chromium, WebKit and Firefox, the four colours reach 4.7:1 or more in both themes, inline and at the icon&rsquo;s corner, on the chosen option and beside it.</p>
+    <div class="docs-preview docs-preview--compact">
+      <div class="glass-segmented glass-segmented--droplet" role="group" aria-label="Calls" data-docs-segmented>
+        <button class="glass-segmented__item" aria-pressed="true" aria-label="Open, 4 new">Open<span class="glass-segmented__badge glass-segmented__badge--error">4</span></button>
+        <button class="glass-segmented__item" aria-pressed="false" aria-label="Callbacks, 2">Callbacks<span class="glass-segmented__badge glass-segmented__badge--primary">2</span></button>
+        <button class="glass-segmented__item" aria-pressed="false">Done</button>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-segmented__item"</span> <span class="attr">aria-pressed=</span><span class="val">"true"</span> <span class="attr">aria-label=</span><span class="val">"Open, 4 new"</span><span class="tag">&gt;</span>
+  Open<span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-segmented__badge glass-segmented__badge--error"</span><span class="tag">&gt;</span>4<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/button&gt;</span></div>
+    </div>
     <h3>Droplet</h3>
     <p>Since 1.27.0 <code>.glass-segmented--droplet</code> gives the chosen option the drop of the <a href="#droplet">tab bar</a>: it runs to a new option, stretches on the way and settles, the text it passes lights up, and a finger can drag it. Disabled options are skipped. In a row that scrolls (<code>--scroll</code>) a swipe still scrolls; only the drop itself is dragged, and the row scrolls along at its edges. The drop follows <code>aria-pressed</code>; <code>attachDroplets()</code> from <code>glasskit-droplet.js</code> starts it, as above.</p>
     <div class="docs-preview docs-preview--compact" style="display:flex;flex-direction:column;gap:10px">

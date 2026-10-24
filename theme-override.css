@@ -193,6 +193,24 @@
 
 
 /* ============================================================
+   BEISPIEL: Buttons und Zähler (seit 1.31.0)
+
+   Buttons in Pillenform, ohne Listen, Toasts und Segmentwahl
+   mitzurunden, ein knapperer Innenabstand für kleine Buttons,
+   und Zähler der Segmentwahl in der Größe eines Badges.
+   ============================================================ */
+
+/*
+:root {
+  --gl-btn-radius:                 9999px;
+  --gl-btn-padding-x-sm:           16px;
+  --gl-segmented-badge-height:     20px;
+  --gl-segmented-badge-font-size:  12px;
+}
+*/
+
+
+/* ============================================================
    DEIN CUSTOM THEME
    Entkommentiere und passe an:
    ============================================================ */
