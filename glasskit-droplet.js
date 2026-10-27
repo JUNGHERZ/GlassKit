@@ -25,6 +25,13 @@
 // and data-droplet-lift while the drop travels, data-droplet-drag while a
 // finger holds it, and .is-under-droplet on the item below it.
 //
+// A row laid out as a column — a vertical tab bar, a sidebar — runs the drop
+// along y (since 1.32.0): data-droplet-axis="y" on the row, the directions
+// "down" and "up", the drag on the vertical. The axis comes from the row's
+// aria-orientation="vertical" or its flex-direction. The timing comes from
+// the --gl-droplet-* tokens, which the module reads as well: the lift and how
+// long the lens follows the drop.
+//
 // Options of attachDroplet, for rows whose items live elsewhere (GlassKit
 // Elements uses them): items() returns the items, isChosen(item) tells the
 // chosen one, choose(item) picks one, lens(item, on) marks the item below
@@ -36,6 +43,13 @@ const ROWS = '.glass-tab-bar--droplet, .glass-segmented--droplet';
 const ITEMS = '.glass-tab-bar__item, .glass-segmented__item';
 const attached = new WeakMap();
 
+// A duration token as the browser hands it over, "0.3s" or "280ms".
+const ms = (value, fallback) => {
+  const v = String(value).trim(), n = parseFloat(v);
+  if (Number.isNaN(n)) return fallback;
+  return v.endsWith('ms') ? n : v.endsWith('s') ? n * 1000 : fallback;
+};
+
 export function attachDroplet(row, options = {}) {
   if (attached.has(row)) return attached.get(row);
 
@@ -45,12 +59,17 @@ export function attachDroplet(row, options = {}) {
   const choose = options.choose || (it => it.click());
   const mark = options.lens || ((it, on) => it.classList.toggle('is-under-droplet', on));
   const usable = it => !it.disabled && it.getAttribute('aria-disabled') !== 'true';
-  const scrolls = () => row.scrollWidth > row.clientWidth + 1;
   const motion = matchMedia('(prefers-reduced-motion: no-preference)');
   const set = (k, px) => row.style.setProperty(`--gl-droplet-${k}`, `${px}px`);
+  const token = (name, fallback) => ms(getComputedStyle(row).getPropertyValue(`--gl-droplet-${name}`), fallback);
 
-  let chosen = null, left = 0, placed = null, liftTimer = 0, lensFrame = 0, edgeFrame = 0;
-  let drag = null, eatClick = false, under = null;
+  // pos is where the drop starts along the axis: left in a row, top in a
+  // column. The axis is read again whenever the drop is placed.
+  let chosen = null, pos = 0, placed = null, liftTimer = 0, lensFrame = 0, edgeFrame = 0;
+  let drag = null, eatClick = false, under = null, axisY = false;
+  const vertical = () => row.getAttribute('aria-orientation') === 'vertical'
+    || getComputedStyle(row).flexDirection.startsWith('column');
+  const scrolls = () => axisY ? row.scrollHeight > row.clientHeight + 1 : row.scrollWidth > row.clientWidth + 1;
 
   // The row on screen and its scale there. Rects are viewport pixels, scaled
   // by every transform on an ancestor — an app that zooms in on start, a
@@ -77,13 +96,14 @@ export function attachDroplet(row, options = {}) {
     const l = (r.left - f.n.left) / f.sx - row.clientLeft + row.scrollLeft;
     const t = (r.top - f.n.top) / f.sy - row.clientTop + row.scrollTop;
     const height = r.height / f.sy;
-    return { left: l, width: r.width / f.sx, top: t, bottom: row.clientHeight - t - height };
+    return { left: l, width: r.width / f.sx, top: t, height, bottom: row.clientHeight - t - height };
   };
-  const put = (l, width, b) => {
-    left = l;
-    set('left', l); set('right', row.clientWidth - l - width);
-    set('top', b.top); set('bottom', b.bottom);
+  const put = b => {
+    pos = axisY ? b.top : b.left;
+    set('left', b.left); set('right', row.clientWidth - b.left - b.width);
+    set('top', b.top); set('bottom', row.clientHeight - b.top - b.height);
   };
+  const centreOf = b => axisY ? b.top + b.height / 2 : b.left + b.width / 2;
 
   // The usable item nearest a point of the row lights up as under a lens.
   const lens = centre => {
@@ -91,7 +111,7 @@ export function attachDroplet(row, options = {}) {
     const f = centre == null ? null : frame();
     if (f) for (const it of items()) {
       if (!usable(it)) continue;
-      const b = boxOf(it, f), d = Math.abs(b.left + b.width / 2 - centre);
+      const d = Math.abs(centreOf(boxOf(it, f)) - centre);
       if (d < best) { best = d; below = it; }
     }
     if (below !== under) {
@@ -101,33 +121,43 @@ export function attachDroplet(row, options = {}) {
     }
     return below;
   };
-  // While the drop travels, the lens follows its centre.
+  // While the drop travels, the lens follows its centre — as long as its
+  // edges travel by the tokens, the trailing one the longer (620 ms unset).
   const follow = () => {
     cancelAnimationFrame(lensFrame);
     const start = performance.now();
+    const length = Math.max(token('duration', 300), token('trail-delay', 40) + token('trail-duration', 500)) + 80;
     const step = now => {
-      if (now - start > 620) { lens(null); return; }
+      if (now - start > length) { lens(null); return; }
       const cs = getComputedStyle(row, '::before');
-      const l = parseFloat(cs.left), r = parseFloat(cs.right);
-      lens(l + (row.clientWidth - l - r) / 2);
+      if (axisY) {
+        const t = parseFloat(cs.top), b = parseFloat(cs.bottom);
+        lens(t + (row.clientHeight - t - b) / 2);
+      } else {
+        const l = parseFloat(cs.left), r = parseFloat(cs.right);
+        lens(l + (row.clientWidth - l - r) / 2);
+      }
       lensFrame = requestAnimationFrame(step);
     };
     lensFrame = requestAnimationFrame(step);
   };
 
   const place = (it, travel) => {
-    const b = boxOf(it);
+    axisY = vertical();
+    if (axisY) row.dataset.dropletAxis = 'y';
+    else delete row.dataset.dropletAxis;
+    const b = boxOf(it), to = axisY ? b.top : b.left;
     row.dataset.droplet = '';
-    if (travel && motion.matches && Math.abs(b.left - left) > 1) {
-      row.dataset.dropletDir = b.left > left ? 'right' : 'left';
+    if (travel && motion.matches && Math.abs(to - pos) > 1) {
+      row.dataset.dropletDir = axisY ? (to > pos ? 'down' : 'up') : (to > pos ? 'right' : 'left');
       row.dataset.dropletLift = '';
       clearTimeout(liftTimer);
-      liftTimer = setTimeout(() => { delete row.dataset.dropletLift; }, 280);
+      liftTimer = setTimeout(() => { delete row.dataset.dropletLift; }, token('lift-duration', 280));
       follow();
     } else {
       delete row.dataset.dropletDir;
     }
-    put(b.left, b.width, b);
+    put(b);
     placed = { ...b, rowWidth: row.clientWidth, rowHeight: row.clientHeight };
     chosen = it;
   };
@@ -155,34 +185,42 @@ export function attachDroplet(row, options = {}) {
 
   // Dragging: past 8px the drop slides under the finger and grows into a
   // lens; let go, the item below it is chosen and the drop settles on it.
-  const at = clientX => {
+  // Along the row's axis: x in a row, y in a column.
+  const at = client => {
     const f = frame();
-    const x = (clientX - f.n.left) / f.sx - row.clientLeft + row.scrollLeft;
+    const p = axisY
+      ? (client - f.n.top) / f.sy - row.clientTop + row.scrollTop
+      : (client - f.n.left) / f.sx - row.clientLeft + row.scrollLeft;
     const boxes = items().map(it => boxOf(it, f));
-    const min = Math.min(...boxes.map(b => b.left));
-    const max = Math.max(...boxes.map(b => b.left + b.width)) - drag.width;
-    return Math.min(max, Math.max(min, x - drag.width / 2));
+    const min = Math.min(...boxes.map(b => axisY ? b.top : b.left));
+    const max = Math.max(...boxes.map(b => axisY ? b.top + b.height : b.left + b.width)) - drag.size;
+    return Math.min(max, Math.max(min, p - drag.size / 2));
   };
   const track = () => {
-    const l = at(drag.clientX);
-    put(l, drag.width, boxOf(chosen));
-    drag.below = lens(l + drag.width / 2);
+    const p = at(drag.client), b = boxOf(chosen);
+    put(axisY ? { ...b, top: p, height: drag.size } : { ...b, left: p, width: drag.size });
+    drag.below = lens(p + drag.size / 2);
     cancelAnimationFrame(edgeFrame);
     if (!scrolls()) return;
     const n = row.getBoundingClientRect(), zone = 32;
-    const v = drag.clientX < n.left + zone ? -1 : drag.clientX > n.right - zone ? 1 : 0;
-    if (v) edgeFrame = requestAnimationFrame(() => { row.scrollLeft += v * 6; if (drag?.moved) track(); });
+    const lo = axisY ? n.top : n.left, hi = axisY ? n.bottom : n.right;
+    const v = drag.client < lo + zone ? -1 : drag.client > hi - zone ? 1 : 0;
+    if (v) edgeFrame = requestAnimationFrame(() => {
+      if (axisY) row.scrollTop += v * 6; else row.scrollLeft += v * 6;
+      if (drag?.moved) track();
+    });
   };
   const down = e => {
     if (!chosen || drag || !usable(chosen) || (e.pointerType === 'mouse' && e.button !== 0)) return;
     if (scrolls() && !e.composedPath().includes(chosen)) return;
-    drag = { id: e.pointerId, x: e.clientX, clientX: e.clientX, width: boxOf(chosen).width, moved: false, below: null };
+    const b = boxOf(chosen), client = axisY ? e.clientY : e.clientX;
+    drag = { id: e.pointerId, start: client, client, size: axisY ? b.height : b.width, moved: false, below: null };
   };
   const move = e => {
     if (!drag || e.pointerId !== drag.id) return;
-    drag.clientX = e.clientX;
+    drag.client = axisY ? e.clientY : e.clientX;
     if (!drag.moved) {
-      if (Math.abs(e.clientX - drag.x) < 8) return;
+      if (Math.abs(drag.client - drag.start) < 8) return;
       drag.moved = true;
       row.setPointerCapture(e.pointerId);
       delete row.dataset.dropletDir;
@@ -226,7 +264,7 @@ export function attachDroplet(row, options = {}) {
       row.removeEventListener('pointercancel', up);
       row.removeEventListener('click', click, true);
       lens(null);
-      for (const k of ['droplet', 'dropletDir', 'dropletLift', 'dropletDrag']) delete row.dataset[k];
+      for (const k of ['droplet', 'dropletDir', 'dropletLift', 'dropletDrag', 'dropletAxis']) delete row.dataset[k];
       for (const k of ['left', 'right', 'top', 'bottom']) row.style.removeProperty(`--gl-droplet-${k}`);
       attached.delete(row);
     },

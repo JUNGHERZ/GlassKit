@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.31.0
+   Jungherz GmbH – v1.32.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -799,12 +799,15 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
 }
 
-/* Primary */
+/* Primary. --gl-btn-primary-bg (since 1.32.0) replaces the whole
+   background, as the toggle and the radio have theirs: a product that keeps
+   white text starts the gradient darker without touching the brand colour,
+   which also draws focus rings, borders and the accent as text. */
 .glass-btn--primary {
-  background: linear-gradient(135deg,
+  background: var(--gl-btn-primary-bg, linear-gradient(135deg,
     var(--gl-color-primary) 0%, var(--gl-color-primary-mid) 50%,
     var(--gl-color-primary-dark) 100%
-  );
+  ));
   color: var(--gl-color-on-primary, #ffffff);
   border: 1px solid var(--gl-border-warm);
   box-shadow: var(--gl-shadow-btn-primary), var(--gl-inset-strong);
@@ -1336,7 +1339,9 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-radio__dot {
   width: var(--gl-radio-dot-size, 10px); height: var(--gl-radio-dot-size, 10px);
   border-radius: var(--gl-radius-pill);
-  background: var(--gl-radio-dot-color, white);
+  /* Unset, the ink on the primary (since 1.32.0), so the dot turns dark
+     with the checkbox tick where a project switches the ink. */
+  background: var(--gl-radio-dot-color, var(--gl-color-on-primary, white));
   opacity: 0; transform: scale(0);
   transition: var(--gl-transition-fast);
 }
@@ -1984,7 +1989,16 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
    on the item below it. Without the script a row keeps its usual look:
    the tab bar its spotlight, the segmented row its raised option. GlassKit
    Elements' <glk-tab-bar droplet> and <glk-segmented droplet> do all of
-   this; for plain markup the docs have the script. */
+   this; for plain markup the docs have the script.
+
+   The motion is tokens (since 1.32.0), unset today's values, read by the
+   stylesheet and the script alike: --gl-droplet-duration and -easing for
+   the leading edge, -trail-duration, -trail-delay and -trail-easing for the
+   trailing one, -lift (0.86; 1 squashes nothing), -lift-duration (280ms),
+   -settle-duration and -settle-easing for the spring back, -lens-duration
+   and -lens-easing for the item below the drop. In a column — a vertical
+   tab bar, a sidebar — the script sets data-droplet-axis="y" and the
+   directions "down" and "up", and the drop runs along y. */
 .glass-tab-bar--floating.glass-tab-bar--droplet,
 .glass-segmented.glass-segmented--droplet { position: relative; }
 .glass-tab-bar.glass-tab-bar--droplet[data-droplet],
@@ -2012,9 +2026,11 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   -webkit-backdrop-filter: blur(var(--gl-blur-light)) saturate(1.6);
   pointer-events: none;
   transition:
-    transform 0.55s cubic-bezier(0.34, 1.8, 0.5, 1),
+    transform var(--gl-droplet-settle-duration, 0.55s) var(--gl-droplet-settle-easing, cubic-bezier(0.34, 1.8, 0.5, 1)),
     box-shadow 0.3s ease;
 }
+/* A column hands sideways swipes to the page and keeps the vertical drag. */
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-axis="y"] { touch-action: pan-x; }
 /* The tab bar's drop is a capsule, in the active item's surface where a
    project set one (--gl-tab-bar-active-bg, -shadow). */
 .glass-tab-bar.glass-tab-bar--droplet[data-droplet]::before {
@@ -2042,18 +2058,35 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
    after it and overshoots, so the drop stretches and draws together. */
 :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-dir="right"]::before {
   transition:
-    right 0.3s cubic-bezier(0.3, 1.2, 0.5, 1),
-    left 0.5s cubic-bezier(0.5, 1.5, 0.45, 0.92) 0.04s,
-    top 0.3s ease, bottom 0.3s ease,
-    transform 0.55s cubic-bezier(0.34, 1.8, 0.5, 1),
+    right var(--gl-droplet-duration, 0.3s) var(--gl-droplet-easing, cubic-bezier(0.3, 1.2, 0.5, 1)),
+    left var(--gl-droplet-trail-duration, 0.5s) var(--gl-droplet-trail-easing, cubic-bezier(0.5, 1.5, 0.45, 0.92)) var(--gl-droplet-trail-delay, 0.04s),
+    top var(--gl-droplet-duration, 0.3s) ease, bottom var(--gl-droplet-duration, 0.3s) ease,
+    transform var(--gl-droplet-settle-duration, 0.55s) var(--gl-droplet-settle-easing, cubic-bezier(0.34, 1.8, 0.5, 1)),
     box-shadow 0.3s ease;
 }
 :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-dir="left"]::before {
   transition:
-    left 0.3s cubic-bezier(0.3, 1.2, 0.5, 1),
-    right 0.5s cubic-bezier(0.5, 1.5, 0.45, 0.92) 0.04s,
-    top 0.3s ease, bottom 0.3s ease,
-    transform 0.55s cubic-bezier(0.34, 1.8, 0.5, 1),
+    left var(--gl-droplet-duration, 0.3s) var(--gl-droplet-easing, cubic-bezier(0.3, 1.2, 0.5, 1)),
+    right var(--gl-droplet-trail-duration, 0.5s) var(--gl-droplet-trail-easing, cubic-bezier(0.5, 1.5, 0.45, 0.92)) var(--gl-droplet-trail-delay, 0.04s),
+    top var(--gl-droplet-duration, 0.3s) ease, bottom var(--gl-droplet-duration, 0.3s) ease,
+    transform var(--gl-droplet-settle-duration, 0.55s) var(--gl-droplet-settle-easing, cubic-bezier(0.34, 1.8, 0.5, 1)),
+    box-shadow 0.3s ease;
+}
+/* In a column the same journey runs along y (since 1.32.0). */
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-dir="down"]::before {
+  transition:
+    bottom var(--gl-droplet-duration, 0.3s) var(--gl-droplet-easing, cubic-bezier(0.3, 1.2, 0.5, 1)),
+    top var(--gl-droplet-trail-duration, 0.5s) var(--gl-droplet-trail-easing, cubic-bezier(0.5, 1.5, 0.45, 0.92)) var(--gl-droplet-trail-delay, 0.04s),
+    left var(--gl-droplet-duration, 0.3s) ease, right var(--gl-droplet-duration, 0.3s) ease,
+    transform var(--gl-droplet-settle-duration, 0.55s) var(--gl-droplet-settle-easing, cubic-bezier(0.34, 1.8, 0.5, 1)),
+    box-shadow 0.3s ease;
+}
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-dir="up"]::before {
+  transition:
+    top var(--gl-droplet-duration, 0.3s) var(--gl-droplet-easing, cubic-bezier(0.3, 1.2, 0.5, 1)),
+    bottom var(--gl-droplet-trail-duration, 0.5s) var(--gl-droplet-trail-easing, cubic-bezier(0.5, 1.5, 0.45, 0.92)) var(--gl-droplet-trail-delay, 0.04s),
+    left var(--gl-droplet-duration, 0.3s) ease, right var(--gl-droplet-duration, 0.3s) ease,
+    transform var(--gl-droplet-settle-duration, 0.55s) var(--gl-droplet-settle-easing, cubic-bezier(0.34, 1.8, 0.5, 1)),
     box-shadow 0.3s ease;
 }
 /* While it travels the drop runs flatter and lifts off the row; it comes
@@ -2068,7 +2101,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
     var(--gl-inset-strong);
 }
 :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-lift]::before {
-  transform: scale(1, 0.86);
+  transform: scale(1, var(--gl-droplet-lift, 0.86));
 }
 :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-drag]::before {
   transform: scale(1.1, 1.22);
@@ -2076,10 +2109,22 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
     left 0.1s ease-out, right 0.1s ease-out,
     transform 0.25s ease-out, box-shadow 0.25s ease;
 }
+/* Along y the drop runs narrower instead, and grows less across its long
+   side when held: a sidebar's item is wide. */
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-axis="y"][data-droplet-lift]::before {
+  transform: scale(var(--gl-droplet-lift, 0.86), 1);
+}
+:is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-axis="y"][data-droplet-drag]::before {
+  transform: scale(1.04, 1.18);
+  transition:
+    top 0.1s ease-out, bottom 0.1s ease-out,
+    transform 0.25s ease-out, box-shadow 0.25s ease;
+}
 
 /* The drop is the chosen item's surface, so the item draws none; on the
    tab bar neither spotlight, dot nor glow. */
 .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active { background: none; box-shadow: none; }
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active:focus-visible { box-shadow: var(--gl-shadow-focus); }
 .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active::before { display: none; }
 .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active .glass-tab-bar__icon::after { display: none; }
 .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-active .glass-tab-bar__icon > :where(:not(.glass-tab-bar__badge)),
@@ -2093,9 +2138,9 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
    a lens. While a finger drags the drop, the item below it takes the
    chosen colour and the chosen item lets it go. The tab icon keeps the
    fade of its colour next to the lens. */
-.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon { transition: var(--gl-transition), transform 0.4s cubic-bezier(0.34, 1.6, 0.5, 1); }
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon { transition: var(--gl-transition), transform var(--gl-droplet-lens-duration, 0.4s) var(--gl-droplet-lens-easing, cubic-bezier(0.34, 1.6, 0.5, 1)); }
 .glass-segmented--droplet[data-droplet] .glass-segmented__dot,
-.glass-segmented--droplet[data-droplet] .glass-segmented__icon { transition: transform 0.4s cubic-bezier(0.34, 1.6, 0.5, 1); }
+.glass-segmented--droplet[data-droplet] .glass-segmented__icon { transition: transform var(--gl-droplet-lens-duration, 0.4s) var(--gl-droplet-lens-easing, cubic-bezier(0.34, 1.6, 0.5, 1)); }
 .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-under-droplet .glass-tab-bar__icon { transform: scale(1.15); }
 .glass-segmented--droplet[data-droplet] .glass-segmented__item.is-under-droplet .glass-segmented__dot { transform: scale(1.3); }
 .glass-segmented--droplet[data-droplet] .glass-segmented__item.is-under-droplet .glass-segmented__icon { transform: scale(1.15); }
@@ -2107,10 +2152,181 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 @media (prefers-reduced-motion: reduce) {
   :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet]::before,
   :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-dir]::before,
-  :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-drag]::before { transition: none; }
+  :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-drag]::before,
+  :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-axis="y"][data-droplet-drag]::before { transition: none; }
   .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon { transition: var(--gl-transition), transform 0s; }
   .glass-segmented--droplet[data-droplet] .glass-segmented__dot,
   .glass-segmented--droplet[data-droplet] .glass-segmented__icon { transition: none; }
+}
+
+
+/* ============================================================
+   18d. TAB BAR – SIDEBAR, RAIL, TOP BAR, SIDE DOCK
+   ============================================================ */
+/* One navigation in more places than the bottom edge (since 1.32.0). The
+   items stay the same — icon, label, badge, the active state, the drop —
+   and only the bar's layout changes:
+
+   --vertical  a column for a sidebar: placed by the page's layout (a grid
+               column) and as high as its container, one item per row with
+               the icon before the label at body size and the badge at the
+               row's end. With --start or --end it is fixed to that edge of
+               the viewport instead, full height and clear of the edge's
+               safe area — the side a phone's thumb reaches when the system
+               moves its own controls there. Start and end follow the
+               writing direction.
+   --rail      with --vertical: icons alone, --gl-tab-bar-rail-width wide
+               (72px). The label stays the item's name for assistive
+               technology, hidden from view — show it in a tooltip — and the
+               badge goes back to the icon's corner.
+   --top       a horizontal bar at the top: in the flow (put it in a sticky
+               header), its border at the bottom, no room for the home
+               indicator, and from 640px the icon beside the label.
+
+   The floating bar stands upright in a dock with --vertical and --start or
+   --end: its items stacked as on the bottom edge, the accessory below them,
+   above with --accessory-left. In a column the drop runs along y; the
+   droplet script reads the flex direction. */
+
+/* Every bar: a ring for the keyboard, which the items had none of. An
+   item may be a link, to open a view in a new tab. */
+.glass-tab-bar__item:focus-visible { box-shadow: var(--gl-shadow-focus); }
+a.glass-tab-bar__item { text-decoration: none; color: inherit; }
+
+/* ---- Sidebar ---- */
+.glass-tab-bar.glass-tab-bar--vertical {
+  position: relative; inset: auto;
+  height: 100%; width: auto;
+  flex-direction: column; justify-content: flex-start; align-items: stretch;
+  gap: var(--gl-space-2xs);
+  padding: var(--gl-space-sm);
+  border-top: none;
+  border-inline-end: 1px solid var(--gl-border-subtle);
+  overflow-y: auto; overscroll-behavior: contain;
+  box-shadow: var(--gl-inset-subtle);
+}
+.glass-tab-bar--vertical .glass-tab-bar__item {
+  position: relative;
+  flex-direction: row; justify-content: flex-start;
+  gap: var(--gl-space-sm);
+  width: 100%; min-width: 0; min-height: 44px;
+  padding: var(--gl-space-xs) var(--gl-space-md);
+  text-align: start; text-decoration: none;
+}
+.glass-tab-bar--vertical .glass-tab-bar__label {
+  flex: 1 1 auto; min-width: 0;
+  font-size: var(--gl-font-size-base);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.glass-tab-bar--vertical .glass-tab-bar__item:not(.is-active):hover { background: var(--gl-surface-1); }
+/* The active row stands on a surface of its own, unset --gl-surface-3,
+   where the bottom bar has its dot. */
+.glass-tab-bar--vertical .glass-tab-bar__item.is-active { background: var(--gl-tab-bar-active-bg, var(--gl-surface-3)); }
+.glass-tab-bar--vertical .glass-tab-bar__item.is-active .glass-tab-bar__icon::after { display: none; }
+/* The badge at the row's end: positioned on the item, not the icon. */
+.glass-tab-bar--vertical:not(.glass-tab-bar--rail, .glass-tab-bar--floating) .glass-tab-bar__icon { position: static; }
+.glass-tab-bar--vertical:not(.glass-tab-bar--rail, .glass-tab-bar--floating) .glass-tab-bar__badge {
+  top: 50%; inset-inline-end: var(--gl-space-md);
+  transform: translateY(-50%);
+}
+/* A long label ends before the badge. */
+.glass-tab-bar--vertical:not(.glass-tab-bar--rail, .glass-tab-bar--floating) .glass-tab-bar__item:has(.glass-tab-bar__badge:not([hidden])) .glass-tab-bar__label {
+  padding-inline-end: var(--gl-tab-bar-badge-room, 32px);
+}
+
+/* Fixed to an edge, full height, clear of that edge's safe area. */
+.glass-tab-bar.glass-tab-bar--vertical:is(.glass-tab-bar--start, .glass-tab-bar--end) {
+  position: fixed; top: 0; bottom: 0; height: auto;
+  padding-top: max(var(--gl-space-sm), env(safe-area-inset-top, 0px));
+  padding-bottom: max(var(--gl-space-sm), env(safe-area-inset-bottom, 0px));
+  z-index: var(--gl-tab-bar-z-index, 900);
+}
+.glass-tab-bar.glass-tab-bar--vertical.glass-tab-bar--start { inset-inline-start: 0; inset-inline-end: auto; }
+.glass-tab-bar.glass-tab-bar--vertical.glass-tab-bar--end {
+  inset-inline-end: 0; inset-inline-start: auto;
+  border-inline-end: none; border-inline-start: 1px solid var(--gl-border-subtle);
+}
+.glass-tab-bar.glass-tab-bar--vertical:is(.glass-tab-bar--start:dir(ltr), .glass-tab-bar--end:dir(rtl)) {
+  padding-left: max(var(--gl-space-sm), env(safe-area-inset-left, 0px));
+}
+.glass-tab-bar.glass-tab-bar--vertical:is(.glass-tab-bar--end:dir(ltr), .glass-tab-bar--start:dir(rtl)) {
+  padding-right: max(var(--gl-space-sm), env(safe-area-inset-right, 0px));
+}
+
+/* ---- Rail ---- */
+.glass-tab-bar.glass-tab-bar--vertical.glass-tab-bar--rail {
+  width: var(--gl-tab-bar-rail-width, 72px);
+  align-items: center;
+  padding-inline: var(--gl-space-xs);
+}
+.glass-tab-bar--rail .glass-tab-bar__item {
+  justify-content: center;
+  width: auto; min-width: 48px; min-height: 48px;
+  padding: var(--gl-space-sm);
+}
+.glass-tab-bar--rail .glass-tab-bar__label {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+/* ---- Floating, upright ---- */
+.glass-tab-bar.glass-tab-bar--floating.glass-tab-bar--vertical {
+  flex-direction: column; align-items: center;
+  width: auto; height: auto; max-height: 100%;
+  padding: 10px 6px;
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-tab-bar-floating-radius);
+}
+.glass-tab-bar--floating.glass-tab-bar--vertical .glass-tab-bar__item {
+  flex-direction: column; gap: var(--gl-space-2xs);
+  width: auto; min-height: 0;
+  padding: var(--gl-space-2xs) var(--gl-space-sm);
+}
+.glass-tab-bar--floating.glass-tab-bar--vertical .glass-tab-bar__label {
+  flex: none; font-size: var(--gl-tab-bar-label-size, 10px);
+}
+.glass-tab-bar--floating.glass-tab-bar--vertical .glass-tab-bar__item.is-active { background: var(--gl-tab-bar-active-bg, none); }
+
+.glass-tab-bar-dock.glass-tab-bar-dock--vertical {
+  flex-direction: column;
+  top: 50%; bottom: auto;
+  transform: translateY(-50%);
+  max-width: none; max-height: calc(100dvh - 2 * var(--gl-space-md));
+  /* The edge by the writing direction, for browsers without :dir(); the
+     rules below add the safe area of the physical side. */
+  left: auto; right: auto;
+  inset-inline-end: calc(var(--gl-tab-bar-floating-bottom) + env(safe-area-inset-right, 0px));
+}
+.glass-tab-bar-dock.glass-tab-bar-dock--vertical.glass-tab-bar-dock--start {
+  inset-inline-end: auto;
+  inset-inline-start: calc(var(--gl-tab-bar-floating-bottom) + env(safe-area-inset-left, 0px));
+}
+.glass-tab-bar-dock.glass-tab-bar-dock--vertical.glass-tab-bar-dock--accessory-left { flex-direction: column-reverse; }
+/* Unset or --end, at the end edge; --start at the other. */
+.glass-tab-bar-dock.glass-tab-bar-dock--vertical:is(:not(.glass-tab-bar-dock--start):dir(ltr), .glass-tab-bar-dock--start:dir(rtl)) {
+  left: auto; right: calc(var(--gl-tab-bar-floating-bottom) + env(safe-area-inset-right, 0px));
+}
+.glass-tab-bar-dock.glass-tab-bar-dock--vertical:is(.glass-tab-bar-dock--start:dir(ltr), :not(.glass-tab-bar-dock--start):dir(rtl)) {
+  right: auto; left: calc(var(--gl-tab-bar-floating-bottom) + env(safe-area-inset-left, 0px));
+}
+
+/* ---- Top bar ---- */
+.glass-tab-bar.glass-tab-bar--top {
+  position: relative; inset: auto;
+  height: auto;
+  align-items: center;
+  padding-bottom: var(--gl-space-xs);
+  border-top: none; border-bottom: 1px solid var(--gl-border-subtle);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08), var(--gl-inset-subtle);
+}
+@media (min-width: 640px) {
+  .glass-tab-bar--top .glass-tab-bar__item {
+    flex-direction: row; gap: var(--gl-space-xs);
+    padding-inline: var(--gl-space-md);
+  }
+  .glass-tab-bar--top .glass-tab-bar__label { font-size: var(--gl-font-size-sm); }
+  /* Clear of the badge at the icon's corner. */
+  .glass-tab-bar--top .glass-tab-bar__item:has(.glass-tab-bar__badge:not([hidden])) .glass-tab-bar__label { margin-inline-start: 8px; }
 }
 
 
@@ -2440,6 +2656,171 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-popover--end:dir(rtl) { transform-origin: top left; }
 .glass-popover--end.is-open { transform: translateY(0) scale(1); }
 
+/* In the top layer (since 1.32.0): with the popover attribute the panel is
+   shown with showPopover() and placed by script, fixed at the coordinates
+   it writes. It is no longer cut off by a box with overflow: hidden around
+   it, does not leave the screen at its edges, and closed it takes no room.
+   GlassKit Elements' <glk-popover> does this. */
+/* It fades out with transitions that keep it in the top layer until they
+   end (transition-behavior: allow-discrete), and in with an animation —
+   written in longhands and keyframes, which the minifier keeps. */
+.glass-popover[popover] {
+  position: fixed; inset: auto; margin: 0;
+  transform: translateY(-4px) scale(0.96);
+  transition-property: opacity, transform, overlay, display;
+  transition-duration: .18s;
+  transition-timing-function: ease;
+  transition-behavior: allow-discrete;
+}
+.glass-popover[popover]:popover-open {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: none;
+  animation: glass-popover-in .22s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes glass-popover-in { from { opacity: 0; transform: translateY(-4px) scale(0.96); } }
+.glass-popover[popover][data-side="top"] { transform-origin: bottom center; }
+
+
+/* ============================================================
+   24b. TOOLTIP
+   ============================================================ */
+/* A short name or hint for a control on hover and focus (since 1.32.0):
+   an icon-only button, the items of a rail, a row action. Small text on an
+   opaque surface of the theme, readable over any glass, at most
+   --gl-tooltip-max-width (240px) wide; --gl-tooltip-bg and
+   --gl-tooltip-color recolour it. role="tooltip"; the control points to it
+   with aria-describedby, or aria-labelledby where it is the control's only
+   name. Opened in the top layer (popover="hint") and placed by script next
+   to its control, flipped and shifted to stay in the viewport; the pointer
+   can move onto it without it closing (WCAG 1.4.13). GlassKit Elements'
+   <glk-tooltip> does all of this. */
+.glass-tooltip {
+  max-width: var(--gl-tooltip-max-width, 240px);
+  padding: 6px 12px;
+  border: 1px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-sm);
+  /* The popover's glass, tinted far enough to keep the text readable over
+     whatever lies below it. */
+  background: var(--gl-tooltip-bg, color-mix(in srgb, var(--gl-color-bg-mid) 80%, transparent));
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  box-shadow: var(--gl-shadow-card), var(--gl-inset-strong);
+  color: var(--gl-tooltip-color, var(--gl-color-text));
+  font-family: var(--gl-font-family);
+  font-size: var(--gl-font-size-xs); font-weight: var(--gl-font-weight-medium);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.glass-tooltip[popover] {
+  inset: auto; margin: 0; overflow: visible;
+  opacity: 0;
+  transition-property: opacity, overlay, display;
+  transition-duration: .12s;
+  transition-behavior: allow-discrete;
+}
+.glass-tooltip[popover]:popover-open { opacity: 1; animation: glass-fade-in .12s ease; }
+@keyframes glass-fade-in { from { opacity: 0; } }
+
+
+/* ============================================================
+   24c. MENU
+   ============================================================ */
+/* A list of actions behind a button (since 1.32.0): the overflow menu of a
+   header, the actions of a table row. On the popover's surface, in the top
+   layer and placed like the tooltip. Items are buttons with
+   role="menuitem" — or menuitemcheckbox and menuitemradio with aria-checked
+   (or .is-checked), which shows the check mark — with an icon before the
+   label and a hint at the end, such as a shortcut. --danger takes the error
+   colour for something destructive, aria-disabled="true" leaves an item
+   announced but inert; __separator and __group-label part the list. The
+   keyboard — arrows, Home and End, typing to jump, Escape back to the
+   button — is GlassKit Elements' <glk-menu>. */
+.glass-menu {
+  min-width: 180px; max-width: min(320px, calc(100vw - 16px));
+  max-height: min(70vh, 480px);
+  overflow-y: auto; overscroll-behavior: contain;
+  padding: 6px;
+  background: var(--gl-surface-3);
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-card);
+  box-shadow: var(--gl-shadow-card), var(--gl-inset-strong);
+  color: var(--gl-color-text);
+  font-family: var(--gl-font-family);
+}
+.glass-menu[popover] {
+  inset: auto; margin: 0;
+  opacity: 0; transform: scale(0.97);
+  transition-property: opacity, transform, overlay, display;
+  transition-duration: .14s;
+  transition-behavior: allow-discrete;
+}
+.glass-menu[popover]:popover-open { opacity: 1; transform: none; animation: glass-menu-in .14s ease; }
+@keyframes glass-menu-in { from { opacity: 0; transform: scale(0.97); } }
+.glass-menu__item {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; min-height: 40px;
+  padding: 8px 12px;
+  /* Concentric with the panel's corners. */
+  border: 0; border-radius: calc(var(--gl-radius-card) - 6px);
+  background: none;
+  color: var(--gl-color-text);
+  font: inherit; font-size: var(--gl-font-size-sm); text-align: start;
+  cursor: pointer; outline: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.glass-menu__item:hover,
+.glass-menu__item:focus,
+.glass-menu__item.is-focused { background: var(--gl-surface-2); }
+.glass-menu__item:focus-visible,
+.glass-menu__item.is-focus-visible { box-shadow: inset 0 0 0 2px var(--gl-border-focus); }
+.glass-menu__item--danger { color: var(--gl-color-error-on-surface, var(--gl-color-error)); }
+.glass-menu__item[aria-disabled="true"],
+.glass-menu__item.is-disabled { opacity: 0.45; cursor: not-allowed; }
+.glass-menu__icon {
+  flex: none; width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gl-icon-default);
+}
+.glass-menu__item--danger .glass-menu__icon { color: inherit; }
+.glass-menu__icon:empty, .glass-menu__icon[hidden] { display: none; }
+.glass-menu__icon svg,
+.glass-menu__icon ::slotted(svg) {
+  width: 18px; height: 18px; fill: none;
+  stroke: currentColor; stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.glass-menu__check {
+  flex: none; width: 16px; height: 16px;
+  color: var(--gl-color-primary-text);
+  visibility: hidden;
+}
+.glass-menu__check svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.glass-menu__item:is([aria-checked="true"], .is-checked) .glass-menu__check { visibility: visible; }
+.glass-menu__label {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.glass-menu__trailing {
+  flex: none; margin-inline-start: auto; padding-inline-start: var(--gl-space-sm);
+  color: var(--gl-color-text-muted); font-size: var(--gl-font-size-xs);
+}
+.glass-menu__separator {
+  height: 1px; margin: var(--gl-space-2xs) var(--gl-space-xs);
+  border: 0; background: var(--gl-border-subtle);
+}
+.glass-menu__group-label {
+  padding: 6px 12px 2px;
+  color: var(--gl-color-text-muted);
+  font-size: var(--gl-font-size-xs); font-weight: var(--gl-font-weight-semibold);
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-popover[popover], .glass-popover[popover]:popover-open,
+  .glass-tooltip[popover], .glass-tooltip[popover]:popover-open,
+  .glass-menu[popover], .glass-menu[popover]:popover-open { transition: none; animation: none; }
+}
+
 
 /* ============================================================
    25. LIST
@@ -2558,6 +2939,9 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   background: var(--gl-surface-2);
   outline: none;
 }
+/* A ring for the keyboard (since 1.32.0), inside the row: the list clips
+   what lies outside it. The tint alone was too faint to find the focus. */
+.glass-list__item--interactive:focus-visible { box-shadow: inset 0 0 0 2px var(--gl-border-focus); }
 .glass-list__item--interactive:active {
   background: var(--gl-surface-3);
 }
@@ -2690,6 +3074,249 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 
 
 /* ============================================================
+   25b. TREE
+   ============================================================ */
+/* Levels that open and close (since 1.32.0): the structure of an app, menus
+   with submenus. A row per item — a twisty that turns when the item opens,
+   an icon, the label, something at the end (a badge, a status, an action) —
+   indented by --gl-tree-indent (20px) per level, with the item's children
+   in a __group below it. role="tree" on the container, "treeitem" on each
+   item with aria-level, aria-expanded on the ones with children and
+   aria-selected; one tab stop and the arrow keys of the WAI-ARIA tree view,
+   which GlassKit Elements' <glk-tree> brings. No surface of its own: put it
+   in a card or a sidebar. */
+.glass-tree {
+  display: flex; flex-direction: column; gap: 1px;
+  margin: 0; padding: 0; list-style: none;
+  font-family: var(--gl-font-family);
+  font-size: var(--gl-font-size-sm);
+  color: var(--gl-color-text);
+}
+.glass-tree__row {
+  position: relative;
+  display: flex; align-items: center; gap: var(--gl-space-xs);
+  min-height: var(--gl-tree-row-height, 36px);
+  padding-block: 4px;
+  padding-inline: calc(var(--gl-space-xs) + (var(--gl-tree-level, 1) - 1) * var(--gl-tree-indent, 20px)) var(--gl-space-sm);
+  border-radius: var(--gl-radius-sm);
+  cursor: pointer; user-select: none;
+  transition: background .15s ease;
+}
+.glass-tree__row:hover { background: var(--gl-surface-1); }
+/* The chosen row stands on raised glass, as the active row of a sidebar
+   does, its icon in the accent. */
+.glass-tree__row.is-selected {
+  background: var(--gl-tree-selected-bg, var(--gl-surface-4));
+  box-shadow: var(--gl-inset-strong), var(--gl-shadow-btn);
+  color: var(--gl-color-text-heading);
+  font-weight: var(--gl-font-weight-semibold);
+}
+.glass-tree__row.is-selected .glass-tree__icon { color: var(--gl-color-primary-text); }
+.glass-tree__row.is-focus-visible,
+.glass-tree__row:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--gl-border-focus); }
+/* In plain markup the treeitem takes the focus, its row shows it. */
+.glass-tree [role="treeitem"]:focus-visible { outline: none; }
+.glass-tree [role="treeitem"]:focus-visible > .glass-tree__row { box-shadow: inset 0 0 0 2px var(--gl-border-focus); }
+.glass-tree__row.is-disabled { opacity: 0.45; cursor: not-allowed; }
+.glass-tree__twisty {
+  flex: none; width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gl-icon-default);
+  border-radius: var(--gl-radius-xs);
+  transition: transform .15s ease;
+}
+.glass-tree__twisty svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.glass-tree__twisty:dir(rtl) { transform: scaleX(-1); }
+.glass-tree__row.is-expanded .glass-tree__twisty { transform: rotate(90deg); }
+.glass-tree__row.is-leaf .glass-tree__twisty { visibility: hidden; }
+/* Children on their way: the twisty turns into a small spinner. */
+.glass-tree__row.is-loading .glass-tree__twisty svg { display: none; }
+.glass-tree__row.is-loading .glass-tree__twisty::after {
+  content: ''; width: 12px; height: 12px;
+  border: 2px solid var(--gl-border-medium); border-top-color: var(--gl-color-primary);
+  border-radius: 50%;
+  animation: glass-tree-spin .8s linear infinite;
+}
+@keyframes glass-tree-spin { to { transform: rotate(360deg); } }
+.glass-tree__icon {
+  flex: none; width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gl-icon-default);
+}
+.glass-tree__icon:empty, .glass-tree__icon[hidden] { display: none; }
+.glass-tree__icon svg,
+.glass-tree__icon ::slotted(svg) {
+  width: 18px; height: 18px; fill: none;
+  stroke: currentColor; stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.glass-tree__label {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.glass-tree__trailing {
+  flex: none; display: flex; align-items: center; gap: var(--gl-space-2xs);
+  margin-inline-start: auto;
+  color: var(--gl-color-text-muted); font-size: var(--gl-font-size-xs);
+}
+.glass-tree__trailing[hidden] { display: none; }
+.glass-tree__group { display: flex; flex-direction: column; gap: 1px; margin: 0; padding: 0; list-style: none; }
+.glass-tree__group[hidden] { display: none; }
+/* Children that could not load: the twisty turns into a mark in the error
+   colour, and opening the item again tries once more. */
+.glass-tree__row.is-error .glass-tree__twisty { color: var(--gl-color-error-on-surface, var(--gl-color-error)); }
+.glass-tree__row.is-error .glass-tree__twisty svg { display: none; }
+.glass-tree__row.is-error .glass-tree__twisty::after {
+  content: '!';
+  display: flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px; box-sizing: border-box;
+  border: 1.5px solid currentColor; border-radius: 50%;
+  font-size: 10px; font-weight: var(--gl-font-weight-semibold); line-height: 1;
+}
+
+/* A short flash on an item that changed elsewhere — on another device, by
+   an undo — so the eye finds it among the others (since 1.32.0), on a tree
+   row or a list item; --gl-flash-color tints it. */
+.glass-tree__row.is-flash,
+.glass-list__item.is-flash { animation: glass-flash 1.2s ease-out; }
+@keyframes glass-flash { from { background-color: var(--gl-flash-color, color-mix(in srgb, var(--gl-color-primary) 30%, transparent)); } }
+@media (prefers-reduced-motion: reduce) {
+  .glass-tree__twisty, .glass-tree__row { transition: none; }
+  .glass-tree__row.is-loading .glass-tree__twisty::after { animation-duration: 2.4s; }
+  .glass-tree__row.is-flash, .glass-list__item.is-flash { animation: none; }
+}
+
+
+/* ============================================================
+   25c. BREADCRUMBS
+   ============================================================ */
+/* The path through nested levels (since 1.32.0): My app › Main menu ›
+   Services › Online booking. A <nav aria-label="Breadcrumb"> around an
+   <ol>; each crumb a link (or a button), the current level plain text with
+   aria-current="page". The separators are drawn by CSS, hidden from
+   assistive technology and mirrored right to left. A crumb longer than
+   --gl-breadcrumbs-crumb-width (200px) is cut with an ellipsis. Where the
+   path does not fit, __overflow stands for the middle levels — a button
+   that opens them as a menu; GlassKit Elements' <glk-breadcrumbs> folds
+   them by itself and makes the crumbs drop targets for a sortable list. */
+.glass-breadcrumbs { min-width: 0; font-family: var(--gl-font-family); }
+.glass-breadcrumbs__list {
+  display: flex; align-items: center; flex-wrap: nowrap;
+  min-width: 0; margin: 0; padding: 0; list-style: none;
+  font-size: var(--gl-font-size-sm);
+}
+.glass-breadcrumbs__item { display: flex; align-items: center; min-width: 0; }
+.glass-breadcrumbs__item[hidden] { display: none; }
+.glass-breadcrumbs__item + .glass-breadcrumbs__item::before {
+  content: ''; flex: none;
+  width: 6px; height: 6px; margin-inline: 4px 8px;
+  border-top: 1.5px solid var(--gl-icon-muted);
+  border-right: 1.5px solid var(--gl-icon-muted);
+  transform: rotate(45deg);
+}
+.glass-breadcrumbs__item + .glass-breadcrumbs__item:dir(rtl)::before { transform: rotate(-135deg); }
+.glass-breadcrumbs__crumb,
+.glass-breadcrumbs__current {
+  display: block; min-width: 0;
+  max-width: var(--gl-breadcrumbs-crumb-width, 200px);
+  padding: 4px 8px;
+  border-radius: var(--gl-radius-full);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.glass-breadcrumbs__crumb {
+  border: 0; background: none;
+  color: var(--gl-color-text-muted);
+  font: inherit; text-decoration: none;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.glass-breadcrumbs__crumb:hover { color: var(--gl-color-text); background: var(--gl-surface-1); }
+.glass-breadcrumbs__crumb:focus-visible { outline: none; box-shadow: var(--gl-shadow-focus); }
+.glass-breadcrumbs__current { color: var(--gl-color-text-heading); font-weight: var(--gl-font-weight-semibold); }
+.glass-breadcrumbs__overflow { min-width: 32px; text-align: center; letter-spacing: 1px; }
+/* The "…" crumb keeps its width where the path still does not fit. */
+.glass-breadcrumbs__item--overflow { flex: none; }
+/* A crumb as the target of a dragged item: it stands for its level. */
+.glass-breadcrumbs__crumb.is-drop-target,
+.glass-breadcrumbs__current.is-drop-target {
+  color: var(--gl-color-text);
+  background: color-mix(in srgb, var(--gl-color-primary) 18%, transparent);
+  box-shadow: inset 0 0 0 1.5px var(--gl-border-focus);
+}
+.glass-breadcrumbs__crumb.is-drop-refused { box-shadow: inset 0 0 0 1.5px var(--gl-color-error-border); background: var(--gl-color-error-surface); }
+
+
+/* ============================================================
+   25d. SORTING
+   ============================================================ */
+/* The states of a drag that reorders a list or a tree (since 1.32.0). The
+   dragged item stays where it was, faded (.is-sort-source); a raised copy,
+   __ghost, follows the pointer in the top layer. A line shows where it
+   lands before or after an item — .is-sort-before / .is-sort-after on the
+   target, indented to the level it lands on (--gl-tree-level) — and an
+   item that takes it inside lights up (.is-sort-inside); one that refuses
+   it shows the error colour (.is-sort-refused). The motion of the items
+   that make room and of the drop gliding into place is GlassKit
+   Elements'; --gl-sort-duration (180ms) and --gl-sort-easing (ease-out)
+   time it. None of it moves under prefers-reduced-motion. */
+.is-sort-source { opacity: 0.4; }
+.is-sort-before, .is-sort-after { position: relative; }
+.is-sort-before::before,
+.is-sort-after::before {
+  content: ''; position: absolute; z-index: 2;
+  inset-inline-start: calc(var(--gl-space-xs) + (var(--gl-tree-level, 1) - 1) * var(--gl-tree-indent, 20px));
+  inset-inline-end: var(--gl-space-xs);
+  height: 2px; border-radius: 1px;
+  background: var(--gl-color-primary);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--gl-color-primary) 50%, transparent);
+  pointer-events: none;
+}
+.is-sort-before::before { top: -1px; }
+.is-sort-after::before { bottom: -1px; }
+.is-sort-inside {
+  background: color-mix(in srgb, var(--gl-color-primary) 16%, transparent);
+  box-shadow: inset 0 0 0 1.5px var(--gl-border-focus);
+}
+.is-sort-refused {
+  background: var(--gl-color-error-surface);
+  box-shadow: inset 0 0 0 1.5px var(--gl-color-error-border);
+}
+.is-sort-refused::before { background: var(--gl-color-error); box-shadow: none; }
+.glass-sort__ghost {
+  display: flex; align-items: center; gap: var(--gl-space-xs);
+  max-width: min(360px, calc(100vw - 16px));
+  padding: 10px 14px;
+  border: 1px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-sm);
+  background: var(--gl-surface-4);
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  box-shadow: 0 12px 32px rgba(0,0,0,0.28), 0 2px 8px rgba(0,0,0,0.14), var(--gl-inset-strong);
+  color: var(--gl-color-text);
+  font-family: var(--gl-font-family); font-size: var(--gl-font-size-sm);
+  font-weight: var(--gl-font-weight-medium);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  pointer-events: none;
+}
+.glass-sort__ghost[popover] { inset: auto; margin: 0; overflow: hidden; }
+/* Closed, out of the page: its own display would keep it on screen. */
+.glass-sort__ghost[popover]:not(:popover-open) { display: none; }
+/* A handle: with one, only the handle starts a drag, so a tap on the item
+   still chooses it; a finger on it drags at once, without the long press. */
+.glass-sort__handle {
+  flex: none; display: flex; align-items: center; justify-content: center;
+  color: var(--gl-icon-muted);
+  cursor: grab; touch-action: none;
+}
+.glass-sort__handle[hidden] { display: none; }
+.glass-sort__handle svg,
+.glass-sort__handle ::slotted(svg) {
+  width: 18px; height: 18px; fill: none;
+  stroke: currentColor; stroke-width: 1.8; stroke-linecap: round;
+}
+
+
+/* ============================================================
    26. SKELETON
    ============================================================ */
 /* Loading placeholder: shimmer lines standing in for text that has not
@@ -2728,18 +3355,143 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   font-size: var(--gl-font-size-sm); color: var(--gl-color-text);
 }
 .glass-table th {
-  text-align: start; padding: 8px 10px; white-space: nowrap;
+  text-align: start; padding: var(--gl-table-header-padding, 8px 10px); white-space: nowrap;
   font-weight: var(--gl-font-weight-medium); color: var(--gl-color-text-muted);
   border-bottom: 1px solid var(--gl-border-medium);
 }
 .glass-table td {
-  padding: 9px 10px; vertical-align: top;
+  padding: var(--gl-table-cell-padding, 9px 10px); vertical-align: top;
   border-bottom: 1px solid var(--gl-border-subtle);
 }
 .glass-table tbody tr:last-child td { border-bottom: 0; }
 .glass-table tbody tr:hover td { background: var(--gl-surface-1); }
 .glass-table__num { text-align: end; font-variant-numeric: tabular-nums; }
 .glass-table__muted { color: var(--gl-color-text-muted); }
+
+/* More since 1.32.0, mostly brought by GlassKit Elements' <glk-table>
+   around the table, which keeps it a native table in the page:
+
+   __sort        a button filling a header cell that sorts by its column;
+                 the th carries aria-sort and the arrow shows it.
+   --sticky      the header cells stick to the top of a wrap that scrolls
+                 both ways (.glass-table-wrap--sticky, as high as
+                 --gl-table-max-height, 60vh), on --gl-table-header-bg.
+   __actions     a cell for row actions — a menu, icon buttons — at the
+                 row's end, kept there while the table scrolls sideways
+                 (on a surface of its own once it does: --scrolls).
+   --list        each row a card with the column's name before each value
+                 (data-label on the cells), the actions at its top end —
+                 for narrow places.
+
+   --gl-table-cell-padding and --gl-table-header-padding set the cells'
+   room. */
+.glass-table__sort {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin: -4px -6px; padding: 4px 6px;
+  border: 0; border-radius: var(--gl-radius-xs);
+  background: none; color: inherit;
+  font: inherit; font-weight: inherit; white-space: nowrap;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.glass-table__sort:hover { color: var(--gl-color-text); background: var(--gl-surface-1); }
+.glass-table__sort:focus-visible { outline: none; box-shadow: var(--gl-shadow-focus); }
+.glass-table__sort-icon {
+  flex: none; width: 12px; height: 12px;
+  fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+  opacity: 0.35;
+  transition: transform .15s ease, opacity .15s ease;
+}
+.glass-table th:is([aria-sort="ascending"], [aria-sort="descending"]) .glass-table__sort { color: var(--gl-color-text); }
+.glass-table th:is([aria-sort="ascending"], [aria-sort="descending"]) .glass-table__sort-icon { opacity: 1; }
+.glass-table th[aria-sort="descending"] .glass-table__sort-icon { transform: rotate(180deg); }
+
+.glass-table-wrap--sticky { overflow: auto; max-height: var(--gl-table-max-height, 60vh); overscroll-behavior: contain; }
+.glass-table--sticky thead th {
+  position: sticky; top: 0; z-index: 2;
+  /* The line goes with the cell: a collapsed border stays with the table. */
+  border-bottom: 0;
+  box-shadow: inset 0 -1px 0 var(--gl-border-medium);
+  background: var(--gl-table-header-bg, color-mix(in srgb, var(--gl-color-bg-mid) 94%, transparent));
+  backdrop-filter: blur(var(--gl-blur-light));
+  -webkit-backdrop-filter: blur(var(--gl-blur-light));
+}
+
+.glass-table__actions {
+  position: sticky; inset-inline-end: 0; z-index: 1;
+  width: 1%; text-align: end; white-space: nowrap;
+}
+.glass-table--sticky thead th.glass-table__actions { z-index: 3; }
+.glass-table--scrolls .glass-table__actions {
+  background: var(--gl-table-header-bg, color-mix(in srgb, var(--gl-color-bg-mid) 94%, transparent));
+  box-shadow: -8px 0 8px -8px rgba(0,0,0,0.3);
+}
+.glass-table--scrolls .glass-table__actions:dir(rtl) { box-shadow: 8px 0 8px -8px rgba(0,0,0,0.3); }
+
+/* The edges of a wrap that scrolls sideways shade where more columns wait
+   (data-more-start, data-more-end on the frame, set by <glk-table>). */
+.glass-table-frame { position: relative; min-width: 0; }
+.glass-table-frame::before,
+.glass-table-frame::after {
+  content: ''; position: absolute; top: 0; bottom: 0; z-index: 4;
+  width: 16px; pointer-events: none;
+  opacity: 0; transition: opacity .15s ease;
+}
+.glass-table-frame::before { inset-inline-start: 0; background: linear-gradient(to right, rgba(0,0,0,0.22), transparent); }
+.glass-table-frame::after { inset-inline-end: 0; background: linear-gradient(to left, rgba(0,0,0,0.22), transparent); }
+.glass-table-frame:dir(rtl)::before { background: linear-gradient(to left, rgba(0,0,0,0.22), transparent); }
+.glass-table-frame:dir(rtl)::after { background: linear-gradient(to right, rgba(0,0,0,0.22), transparent); }
+.glass-table-frame[data-more-start]::before,
+.glass-table-frame[data-more-end]::after { opacity: 1; }
+.glass-table__empty { padding: var(--gl-space-lg) var(--gl-space-md); }
+.glass-table__empty[hidden] { display: none; }
+
+/* As cards. The header stays for assistive technology, hidden from view;
+   the labels are generated content without a text of their own, so a
+   screen reader does not hear the column twice. */
+.glass-table--list thead {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.glass-table--list,
+.glass-table--list tbody,
+.glass-table--list tr,
+.glass-table--list td { display: block; width: 100%; box-sizing: border-box; }
+.glass-table--list tbody { display: flex; flex-direction: column; gap: var(--gl-space-sm); }
+.glass-table--list tr {
+  position: relative;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--gl-space-sm);
+  padding: var(--gl-space-sm) var(--gl-space-md);
+  border: 1px solid var(--gl-border-subtle);
+  /* Glass like the list's and the accordion's items. */
+  border-radius: var(--gl-radius-btn);
+  background: var(--gl-surface-1);
+  box-shadow: var(--gl-inset-subtle);
+}
+.glass-table--list td {
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--gl-space-md);
+  grid-column: 1 / -1;
+  padding: 4px 0; border: 0;
+  text-align: end; overflow-wrap: anywhere;
+}
+/* The actions at the card's top end, beside its first two values. */
+.glass-table--list tr:has(> .glass-table__actions) > td:nth-child(-n+2):not(.glass-table__actions) { grid-column: 1; }
+.glass-table--list td::before {
+  content: attr(data-label);
+  content: attr(data-label) / "";
+  flex: none; max-width: 50%;
+  color: var(--gl-color-text-muted); font-weight: var(--gl-font-weight-medium);
+  text-align: start;
+}
+.glass-table--list td:is(:not([data-label]), [data-label=""])::before { content: none; }
+.glass-table--list tbody tr:hover td { background: none; }
+.glass-table--list .glass-table__actions {
+  position: static; grid-column: 2; grid-row: 1 / span 2; align-self: start;
+  width: auto; padding: 0; background: none; box-shadow: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-table__sort, .glass-table__sort-icon, .glass-table-frame::before, .glass-table-frame::after { transition: none; }
+}
 
 
 /* ============================================================
@@ -3010,8 +3762,11 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   color: var(--gl-color-success-on-surface);
 }
 .glass-steps__item--current { color: var(--gl-color-text-heading); }
+/* The flat accent fills that carry text — this number, the chosen day of
+   the date strip and of the calendar — take --gl-color-primary-fill where
+   it is set (since 1.32.0), else the primary. */
 .glass-steps__item--current .glass-steps__num {
-  background: var(--gl-color-primary); border-color: transparent;
+  background: var(--gl-color-primary-fill, var(--gl-color-primary)); border-color: transparent;
   color: var(--gl-color-on-primary);
 }
 .glass-steps__line { flex: 1 1 8px; min-width: 8px; height: 1px; background: var(--gl-border-subtle); }
@@ -3184,7 +3939,7 @@ dialog.glass-sheet-overlay::backdrop { background: transparent; }
 .glass-date-strip__day:hover { background: var(--gl-surface-3); }
 .glass-date-strip__day[aria-pressed="true"] {
   --gl-date-strip-ink: var(--gl-color-on-primary);
-  background: var(--gl-color-primary);
+  background: var(--gl-color-primary-fill, var(--gl-color-primary));
   color: var(--gl-color-on-primary);
   border-color: transparent;
   box-shadow: var(--gl-shadow-btn-primary);
@@ -3201,6 +3956,10 @@ dialog.glass-sheet-overlay::backdrop { background: transparent; }
   font-size: var(--gl-font-size-xs); opacity: 0.75;
   text-transform: uppercase; letter-spacing: 0.04em;
 }
+/* On the chosen chip the weekday is as strong as the number (since
+   1.32.0): faded, it stayed below 4.5:1 even on a fill that the number
+   reaches it on. */
+.glass-date-strip__day[aria-pressed="true"] .glass-date-strip__wd { opacity: 1; }
 .glass-date-strip__num {
   font-size: var(--gl-font-size-lg); font-weight: var(--gl-font-weight-semibold);
   line-height: 1.1;
@@ -3290,7 +4049,7 @@ dialog.glass-sheet-overlay::backdrop { background: transparent; }
 .glass-calendar__day--today { border-color: var(--gl-border-warm); }
 .glass-calendar__day[aria-pressed="true"] {
   --gl-calendar-ink: var(--gl-color-on-primary);
-  background: var(--gl-color-primary);
+  background: var(--gl-color-primary-fill, var(--gl-color-primary));
   color: var(--gl-color-on-primary);
 }
 .glass-calendar__day:focus-visible { box-shadow: var(--gl-shadow-focus); }

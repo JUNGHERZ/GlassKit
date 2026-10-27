@@ -7,6 +7,111 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.32.0] – 2026-10-27
+
+### Added
+
+- **The tab bar beyond the bottom edge: a sidebar, an icon rail, a bar docked at a side, a top bar.** `.glass-tab-bar` was a row fixed to the bottom of the viewport. A sidebar on the desktop, a rail of icons in a narrower window or a bar in the header meant a second navigation in the project's own markup, kept in step with the bar by hand. On phones whose system moves its own controls to a side, an unfolded iPhone Duo for one, the thumb rests at that edge and a bottom bar is out of reach. The items stay the same in every layout (icon, label, badge, active state, drop), and modifiers change only the bar:
+  - `--vertical` makes it a column for a sidebar. The page's layout places it, and it is as high as its container. Each item is a row: the icon before the label at body size, the badge at the row's end. The active row stands on a surface of its own, `--gl-tab-bar-active-bg`, unset `--gl-surface-3`.
+  - With `--start` or `--end` the column is fixed to that edge of the viewport instead, at full height and clear of the edge's safe area. Start and end follow the writing direction.
+  - `--rail` shows the icons alone, `--gl-tab-bar-rail-width` wide (72px). The label is hidden from view but stays the item's name, and the badge goes back to the icon's corner.
+  - `--top` puts a horizontal bar into the flow, for a sticky header: its border is at the bottom, there is no room for the home indicator, and from 640px the icon sits beside the label.
+  - `.glass-tab-bar-dock--vertical` stands the floating bar upright at the end edge, or the start edge with `--start`. The accessory goes below the items, or above them with `--accessory-left`.
+
+  Every bar's items now show a focus ring on keyboard focus, which they lacked, including the active item under the drop. An item may be a link, `a.glass-tab-bar__item`, so a view can open in a new tab. A long label in a sidebar row ends before the badge, `--gl-tab-bar-badge-room` (32px) from the row's end, and in the top bar the label keeps clear of the badge at the icon's corner. Without `:dir()`, the upright dock finds its edge through logical properties; only the safe area of that side needs `:dir()`. Measured in Chromium 153, WebKit 26.6 and Firefox 151 through GlassKit Elements:
+  - A sidebar fills its grid row, and a rail is 72px wide with 48px items.
+  - A rail docked at the end runs the full height at the right edge, or at the left edge right to left. The upright dock at the start sits at the left edge, or at the right edge right to left.
+  - The top bar keeps its border at the bottom and puts the icon beside the label at 1100px.
+
+  ([GlassKit Elements #25](https://github.com/JUNGHERZ/GlassKit-Elements/issues/25))
+- **The drop's motion is tokens, and it runs along y in a column.** Durations and curves were literals in the stylesheet and in `glasskit-droplet.js`. A product that keeps its UI motion within about 240ms ease-out could not shorten the one motion that springs on for 850ms. In a column the drop jumped, because the script measured only `left` and `right` and dragged only along x. The motion now reads tokens, unset today's values, in the stylesheet and the script alike:
+
+  | Token | Moves | Unset |
+  |---|---|---|
+  | `--gl-droplet-duration`, `--gl-droplet-easing` | the leading edge | 0.3s, `cubic-bezier(.3, 1.2, .5, 1)` |
+  | `--gl-droplet-trail-duration`, `-trail-delay`, `-trail-easing` | the trailing edge | 0.5s, 40ms, `cubic-bezier(.5, 1.5, .45, .92)` |
+  | `--gl-droplet-lift` | the squash while travelling | 0.86 (1 squashes nothing) |
+  | `--gl-droplet-lift-duration` | how long the squash holds | 280ms |
+  | `--gl-droplet-settle-duration`, `-settle-easing` | the spring back | 0.55s, `cubic-bezier(.34, 1.8, .5, 1)` |
+  | `--gl-droplet-lens-duration`, `-lens-easing` | the item under the drop | 0.4s, `cubic-bezier(.34, 1.6, .5, 1)` |
+
+  The script follows the drop for as long as the tokens say: the trail's delay and duration, or the leading edge's if that is longer, plus 80ms, which is 620ms as before. The issue proposed waiting for the last `transitionend`. A duration of 0 ends no transition, so the tokens are the safer clock.
+
+  In a column the script reads the axis from `aria-orientation="vertical"` or the row's flex direction. It sets `data-droplet-axis="y"` and the directions `down` and `up`, and the drop runs along `top` and `bottom` on the same tokens. Its centre picks the item under the lens, a drag follows the pointer along y and scrolls at the top and bottom edges, and the row hands sideways swipes to the page (`touch-action: pan-x`). A drop in a horizontal bar at the top of a page, static or floating, worked before and is kept in the docs.
+
+  Measured with the issue's journey in all three engines, from a tap to the last frame in which a value changed:
+  - Unset, the drop moves as in 1.31.0. In a top bar the leading edge settles after 303 to 316ms, the trailing edge after 551 to 560ms and the spring after 842 to 847ms. A sidebar and a plain column run the same journey along y, with `bottom` at 297 to 308ms, `top` at 540 to 553ms and the spring at 841 to 851ms.
+  - With the issue's 240ms ease-out and one line more, `--gl-droplet-lift-duration: 0ms`, every edge stops after 242 to 254ms in the top bar, the sidebar and the column alike, and the shadow settles within 40ms. Without that line, the lift's deeper shadow still fades back until about 600ms.
+
+  ([#23](https://github.com/JUNGHERZ/GlassKit/issues/23))
+- **A fill of its own for white text on the accent: `--gl-btn-primary-bg` and `--gl-color-primary-fill`.** White text on the primary button, the chosen day of `.glass-calendar` and `.glass-date-strip` and the current step's number reads 2.03 to 3.77:1 on the default orange. The same token also draws focus rings, borders and the accent as text, so it could not be darkened for the fill alone. `--gl-btn-primary-bg` replaces the whole background of `.glass-btn--primary`, with today's gradient as the fallback, as the toggle and the radio already allow. `--gl-color-primary-fill` fills the chosen days and the current step, unset `--gl-color-primary`.
+
+  With `color-mix(in srgb, var(--gl-color-primary) 75%, #000)` as the fill in the light theme and 65% in the dark one, measured in all three engines, white reads:
+  - 4.53:1 on the chosen days and the current step
+  - 4.53 to 4.99:1 (light) and 4.53 to 5.82:1 (dark) on a button gradient from these mixes
+
+  The docs show the other way as well, a dark ink: the 17% ink, and as an opt-in `contrast-color()` behind `@supports`, which resolves to black on the default orange in Chromium 153, WebKit 26.6 and Firefox 151. That gives 7.82 / 6.67 / 5.56:1 (light) and 10.36 / 7.06 / 5.85:1 (dark) on the three stops of the gradient. ([#24](https://github.com/JUNGHERZ/GlassKit/issues/24))
+- **`.glass-tooltip`**: a short name or hint for a control on hover and focus, such as an icon-only button, a rail item or a row action. It is small text on the popover's glass with its edge light, tinted far enough to read over anything: 6.31:1 or more in both themes, white under a dark tooltip included, in all three engines. It is at most `--gl-tooltip-max-width` (240px) wide. `--gl-tooltip-bg` and `--gl-tooltip-color` recolour it. With the `popover` attribute it sits in the top layer and fades in and out, without fading under `prefers-reduced-motion`. GlassKit Elements' `<glk-tooltip>` places it, shows and hides it and names the control. ([GlassKit Elements #29](https://github.com/JUNGHERZ/GlassKit-Elements/issues/29))
+- **`.glass-menu`**: a list of actions behind a button, on the popover's glass with the card's corners, the focused item rounded concentrically within them, and in the top layer like the tooltip.
+  - Items are buttons with `role="menuitem"`, or `menuitemcheckbox` and `menuitemradio`, whose `aria-checked` (or `.is-checked`) shows the check mark.
+  - Each item can have an icon before its label and a hint such as a shortcut at its end.
+  - `--danger` takes the error colour for destructive actions. `aria-disabled="true"` leaves an item announced but inert.
+  - `__separator` and `__group-label` divide the list.
+
+  The keyboard of the WAI-ARIA menu button is GlassKit Elements' `<glk-menu>`. ([GlassKit Elements #30](https://github.com/JUNGHERZ/GlassKit-Elements/issues/30))
+- **`.glass-tree`**: levels that open and close, such as the structure of an app or menus with submenus. Each item is a row: a twisty that turns when the item opens (mirrored right to left), an icon, the label, and something at the end. Rows are indented by `--gl-tree-indent` (20px) per level, read from `--gl-tree-level`, at least `--gl-tree-row-height` (36px) high, with the children in a `__group` below. The states are:
+  - `.is-selected`, on raised glass like the active row of a sidebar, and `.is-expanded`
+  - `.is-leaf`, which has no twisty
+  - `.is-loading`, whose twisty becomes a small spinner while children load
+  - `.is-error`, whose twisty becomes a "!" in the error colour when they could not load
+  - `.is-disabled`
+
+  In plain markup the focused `[role="treeitem"]` shows its focus on its row instead of the browser's outline around it and its children. GlassKit Elements' `<glk-tree>` brings the roles and the keyboard of the WAI-ARIA tree view. ([GlassKit Elements #26](https://github.com/JUNGHERZ/GlassKit-Elements/issues/26))
+- **`.glass-breadcrumbs`**: the path through nested levels, as a `<nav>` around an `<ol>`.
+  - Crumbs are links or buttons. The current level is plain text with `aria-current="page"`.
+  - The separators are drawn by CSS, so assistive technology does not read them, and they mirror right to left.
+  - A crumb longer than `--gl-breadcrumbs-crumb-width` (200px) ends in an ellipsis.
+  - `__overflow` stands for the middle levels where the path does not fit. Its item, `__item--overflow`, keeps its width where the path still does not fit.
+  - `.is-drop-target` and `.is-drop-refused` show a crumb under a dragged item.
+
+  ([GlassKit Elements #27](https://github.com/JUNGHERZ/GlassKit-Elements/issues/27))
+- **The states of a drag that reorders a list or a tree.**
+  - The dragged item stays in place, faded (`.is-sort-source`), while a raised copy, `.glass-sort__ghost`, follows the pointer in the top layer.
+  - A line shows where the item lands before or after another (`.is-sort-before`, `.is-sort-after`), indented to the level it lands on.
+  - An item that takes it inside lights up (`.is-sort-inside`), and one that refuses it shows the error colour (`.is-sort-refused`).
+  - `.glass-sort__handle` holds a drag handle that starts a drag at once, even by touch.
+
+  `--gl-sort-duration` (180ms) and `--gl-sort-easing` (ease-out) time the glide of GlassKit Elements' sortable lists and trees. ([GlassKit Elements #28](https://github.com/JUNGHERZ/GlassKit-Elements/issues/28))
+- **`.is-flash` on a tree row or a list item**: a 1.2s flash for an item that changed elsewhere, on another device or by an undo, so the eye finds it among the others. `--gl-flash-color` tints it, unset 30% of the primary, and there is no flash under `prefers-reduced-motion`. GlassKit Elements' `highlight()` sets it. ([GlassKit Elements #26](https://github.com/JUNGHERZ/GlassKit-Elements/issues/26))
+- **More for `.glass-table`: sorting, a sticky header, row actions, an empty state, cards on narrow screens.**
+  - A header cell can hold a `__sort` button, whose arrow follows `aria-sort` on the `th`.
+  - A sticky header with sideways scrolling did not combine before: a wrap with `overflow-x: auto` scrolls on both axes, so a sticky header stuck to the wrap, which never scrolled vertically. `.glass-table-wrap--sticky` now makes the wrap the scroller in both directions, at most `--gl-table-max-height` (60vh) high, and `--sticky` keeps the header cells at its top on `--gl-table-header-bg`, with the line below them as an inset shadow, which a collapsed border would leave behind. Of the two ways the issue offered, this is the first; the second would keep the header in step with the body's `scrollLeft` while the page scrolls.
+  - `__actions` cells stay at the row's end while the table scrolls sideways, on a surface of their own once it does (`--scrolls`).
+  - `.glass-table-frame` shades an edge where more columns wait, and `__empty` holds an empty state.
+  - `--list` makes each row a card, with the column's name before each value. The names come from `data-label` and are shown as generated content without alternative text, so a screen reader, which still has the hidden header, does not hear a column twice.
+  - `--gl-table-cell-padding` and `--gl-table-header-padding` set the room in the cells.
+
+  GlassKit Elements' `<glk-table>` brings it all to a native table. ([GlassKit Elements #31](https://github.com/JUNGHERZ/GlassKit-Elements/issues/31))
+- **`.glass-popover` in the top layer.** With the `popover` attribute, the panel is shown with `showPopover()` and placed by script at fixed coordinates. A box with `overflow: hidden` around it no longer cuts it off, and closed it takes no room, where before it still widened the page by its box. The fade keeps it in the top layer until it ends, and a popover without the attribute works as before. GlassKit Elements' `<glk-popover>` does this, flipped and shifted at the viewport's edges. ([GlassKit Elements #29](https://github.com/JUNGHERZ/GlassKit-Elements/issues/29))
+
+### Changed
+
+- **The radio's dot follows the ink on the primary.** `.glass-radio__dot` was white unless `--gl-radio-dot-color` was set. With a dark ink in `--gl-color-on-primary`, the checkbox tick turned dark and the radio dot stayed white on the same orange. It now falls back to `--gl-color-on-primary`, and white only after that. ([#24](https://github.com/JUNGHERZ/GlassKit/issues/24))
+- **The weekday on the chosen day of `.glass-date-strip` is as strong as the number.** At `opacity: .75` it stayed at 3.28:1 even on the fill above, where the number reaches 4.53:1, and now it reaches 4.53:1 as well. On the default orange it reads a little brighter. ([#24](https://github.com/JUNGHERZ/GlassKit/issues/24))
+- **An interactive list row shows a ring on keyboard focus**, inside the row, since the list clips what lies outside it. The tint alone was too faint to find the focus. ([GlassKit Elements #28](https://github.com/JUNGHERZ/GlassKit-Elements/issues/28))
+
+### Compatibility
+
+- Nothing changes for a project that sets none of the new tokens or classes, apart from three things:
+  - Keyboard focus is visible on tab bar items and on interactive list rows.
+  - The weekday on a chosen date strip day is fully opaque.
+  - The radio dot is dark where a project has set a dark `--gl-color-on-primary`, which is the point. `--gl-radio-dot-color: #fff` keeps it white.
+- Products that copy GlassKit's tokens, such as the no-JS mirror of GlassKit Web, have nothing to update: no existing token changed its value.
+
+Docs (English and German), README, SKILL.md and `theme-override.css` describe the new components, the tab bar's layouts, the drop's tokens and axis, the fill tokens and the dark ink. The showcases show the menu, the tooltip, the breadcrumbs, the tree and a sidebar. With the new stylesheet and script, the existing docs, showcase and landing pages render pixel-identical to 1.31.0, apart from the weekday on the chosen date strip day: in WebKit and Firefox on whole pages, in Chromium section by section, where full-page captures differ by rasterisation.
+
+---
+
 ## [1.31.0] – 2026-10-25
 
 ### Added
@@ -1219,6 +1324,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.32.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.32.0
 [1.31.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.31.0
 [1.30.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.30.0
 [1.29.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.29.1
@@ -1263,4 +1369,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.31.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.32.0...HEAD

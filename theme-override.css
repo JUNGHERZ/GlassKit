@@ -211,6 +211,93 @@
 
 
 /* ============================================================
+   BEISPIEL: Weiße Schrift auf Akzentflächen mit AA (seit 1.32.0)
+
+   Primärknopf, gewählter Tag in Datumsleiste und Kalender und die
+   Nummer des aktuellen Schritts liegen auf der Primärfarbe; Weiß
+   erreicht auf GlassKits Orange dort nur 2 bis 3,8:1. Statt
+   --gl-color-primary abzudunkeln — sie zeichnet auch Fokusringe,
+   Ränder und Akzenttext — dunkeln diese beiden Haken nur die
+   Flächen ab. 75 % der Primärfarbe mit Schwarz im hellen Theme,
+   65 % im dunklen geben 4,53:1, der Verlauf bleibt überall darüber;
+   der Wochentag des gewählten Tags ist seit 1.32.0 so kräftig wie
+   die Zahl. Die helle Regel steht nach der dunklen.
+
+   Der andere Weg ist eine dunkle Schrift: --gl-color-on-primary
+   (siehe glasskit.css). Der Punkt des Radios folgt ihr seit 1.32.0
+   wie das Häkchen der Checkbox.
+   ============================================================ */
+
+/*
+:root, [data-theme="dark"] {
+  --gl-color-primary-fill:   color-mix(in srgb, var(--gl-color-primary) 65%, #000);
+}
+[data-theme="light"] {
+  --gl-color-primary-fill:   color-mix(in srgb, var(--gl-color-primary) 75%, #000);
+}
+:root, [data-theme="dark"], [data-theme="light"] {
+  --gl-btn-primary-bg:       linear-gradient(135deg, var(--gl-color-primary-fill), color-mix(in srgb, var(--gl-color-primary-dark) 80%, #000));
+}
+*/
+
+
+/* ============================================================
+   BEISPIEL: Ein kurzer Tropfen (seit 1.32.0)
+
+   Die Bewegung des Tropfens in Tab-Bar und Segmentwahl ist aus
+   Tokens; ungesetzt gelten die bisherigen Werte. Für ein Produkt,
+   dessen Bewegungen höchstens etwa 240 ms dauern: beide Kanten
+   zugleich, ohne Stauchen und ohne Nachfedern. Die Zeile
+   --gl-droplet-lift-duration: 0ms gehört dazu — ohne sie klingt der
+   tiefere Schatten des Anhebens noch bis etwa 600 ms nach; mit ihr
+   steht jede Kante nach rund 250 ms still. Unter
+   prefers-reduced-motion springt der Tropfen weiterhin.
+   ============================================================ */
+
+/*
+:root {
+  --gl-droplet-duration:         240ms;
+  --gl-droplet-easing:           ease-out;
+  --gl-droplet-trail-duration:   240ms;
+  --gl-droplet-trail-delay:      0ms;
+  --gl-droplet-trail-easing:     ease-out;
+  --gl-droplet-lift:             1;
+  --gl-droplet-lift-duration:    0ms;
+  --gl-droplet-settle-duration:  0ms;
+  --gl-droplet-lens-duration:    240ms;
+  --gl-droplet-lens-easing:      ease-out;
+}
+*/
+
+
+/* ============================================================
+   BEISPIEL: Seitenleiste, Tooltip, Baum und Tabelle (seit 1.32.0)
+
+   Eine breitere Icon-Leiste (--rail), mehr Platz für breite Zähler
+   in der Seitenleiste, Tooltips in beiden Themes dunkel, ein
+   tieferer Einzug im Baum, ein grünes Aufleuchten geänderter
+   Einträge, längere Breadcrumbs und eine dichtere Tabelle, deren
+   Kopf unter einer 64px hohen Kopfleiste im sichtbaren Teil der
+   Seite bleibt.
+   ============================================================ */
+
+/*
+:root {
+  --gl-tab-bar-rail-width:       80px;
+  --gl-tab-bar-badge-room:       44px;
+  --gl-tooltip-bg:               rgba(10, 20, 28, 0.94);
+  --gl-tooltip-color:            #ffffff;
+  --gl-tree-indent:              24px;
+  --gl-flash-color:              color-mix(in srgb, var(--gl-color-success) 30%, transparent);
+  --gl-breadcrumbs-crumb-width:  260px;
+  --gl-table-cell-padding:       6px 8px;
+  --gl-table-header-padding:     6px 8px;
+  --gl-table-max-height:         calc(100dvh - 64px - 96px);
+}
+*/
+
+
+/* ============================================================
    DEIN CUSTOM THEME
    Entkommentiere und passe an:
    ============================================================ */

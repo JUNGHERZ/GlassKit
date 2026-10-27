@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.31.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.32.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -398,6 +398,7 @@
     <a class="docs-sidebar__link" href="#pill">Pill-Buttons</a>
     <a class="docs-sidebar__link" href="#tab-bar">Tab-Bar</a>
     <a class="docs-sidebar__link" href="#tab-bar-floating">Tab-Bar – Floating</a>
+    <a class="docs-sidebar__link" href="#breadcrumbs">Breadcrumbs</a>
   </div>
 
   <div class="docs-sidebar__group">
@@ -409,6 +410,8 @@
     <a class="docs-sidebar__link" href="#divider">Divider</a>
     <a class="docs-sidebar__link" href="#status">Status Notice</a>
     <a class="docs-sidebar__link" href="#list">List</a>
+    <a class="docs-sidebar__link" href="#tree">Tree</a>
+    <a class="docs-sidebar__link" href="#sorting">Sorting</a>
     <a class="docs-sidebar__link" href="#skeleton">Skeleton</a>
     <a class="docs-sidebar__link" href="#table">Table</a>
     <a class="docs-sidebar__link" href="#prose">Prose</a>
@@ -427,6 +430,8 @@
     <a class="docs-sidebar__link" href="#modal">Modal</a>
     <a class="docs-sidebar__link" href="#toast">Toast</a>
     <a class="docs-sidebar__link" href="#popover">Popover</a>
+    <a class="docs-sidebar__link" href="#tooltip">Tooltip</a>
+    <a class="docs-sidebar__link" href="#menu">Menu</a>
   </div>
 
   <div class="docs-sidebar__group">
@@ -460,10 +465,10 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.31.0</span>
+      <span class="docs-hero__badge">v1.32.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
-      <span class="docs-hero__badge">34 Components</span>
+      <span class="docs-hero__badge">38 Components</span>
     </div>
   </header>
 
@@ -604,6 +609,32 @@ function <span class="cls">toggleTheme</span>() {
   <span class="attr">--gl-color-on-primary</span>: <span class="val">color-mix(in srgb, var(--gl-color-primary) 17%, #000)</span>;
 }</div>
     </div>
+    <p>Since 1.32.0 both ways have tokens of their own. To keep white text, darken the fill and leave the brand colour alone, which also draws focus rings, borders, the tab bar&rsquo;s spotlight and the accent as text. <code>--gl-btn-primary-bg</code> is the whole background of the primary button, unset today&rsquo;s gradient; <code>--gl-color-primary-fill</code> is the flat accent fill that carries text &mdash; the chosen day of <a href="#date-strip">date strip</a> and <a href="#calendar">calendar</a>, the number of the <a href="#steps">current step</a> &mdash;, unset the primary. On GlassKit&rsquo;s own orange, white reaches 4.5:1 from 75&nbsp;% primary in the light theme and from 65&nbsp;% in the dark one, and the gradient below stays at or above that on every point:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cmt">/* White text on a darker fill: the button, the chosen days, the current step */</span>
+<span class="cls">:root</span>, [data-theme=<span class="val">"dark"</span>] {
+  <span class="attr">--gl-color-primary-fill</span>: <span class="val">color-mix(in srgb, var(--gl-color-primary) 65%, #000)</span>;
+}
+[data-theme=<span class="val">"light"</span>] {
+  <span class="attr">--gl-color-primary-fill</span>: <span class="val">color-mix(in srgb, var(--gl-color-primary) 75%, #000)</span>;
+}
+<span class="cls">:root</span>, [data-theme=<span class="val">"dark"</span>], [data-theme=<span class="val">"light"</span>] {
+  <span class="attr">--gl-btn-primary-bg</span>: <span class="val">linear-gradient(135deg, var(--gl-color-primary-fill), color-mix(in srgb, var(--gl-color-primary-dark) 80%, #000))</span>;
+}</div>
+    </div>
+    <p>On the chosen day of the date strip the weekday is now as strong as the number (since 1.32.0); faded, it stayed below 4.5:1 even on a fill the number reaches it on.</p>
+    <p>The dark ink reaches the radio now as well: its dot follows <code>--gl-color-on-primary</code> unless <code>--gl-radio-dot-color</code> is set, as the checkbox tick does (since 1.32.0). Where the brand colour is set at run time, the browser can pick the ink: <code>contrast-color()</code> gives black or white, whichever stands out more against the primary &mdash; black for GlassKit&rsquo;s orange in both themes, 5.5:1 or more on every stop of the button. The 17&nbsp;% ink stays the fallback where a browser does not know it yet:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">:root</span>, [data-theme=<span class="val">"dark"</span>], [data-theme=<span class="val">"light"</span>] {
+  <span class="attr">--gl-color-on-primary</span>: <span class="val">color-mix(in srgb, var(--gl-color-primary) 17%, #000)</span>;
+}
+<span class="cls">@supports</span> (color: contrast-color(red)) {
+  <span class="cls">:root</span>, [data-theme=<span class="val">"dark"</span>], [data-theme=<span class="val">"light"</span>] {
+    <span class="attr">--gl-color-on-primary</span>: <span class="val">contrast-color(var(--gl-color-primary))</span>;
+  }
+}</div>
+    </div>
+    <p><code>contrast-color()</code> looks at the primary alone. With a fill of your own, or a gradient that ends much darker, measure the other end as well.</p>
     <h3>Right to left</h3>
     <p>Since 1.20.0 the components follow the writing direction. Set <code>dir="rtl"</code> on <code>&lt;html&gt;</code> or on any container: paddings, insets and borders are logical properties, so labels and hints, the search icon, list dividers, popover anchors, tab badges, modal actions, the toast&rsquo;s close button and the alignment of accordion, list, table and prose all mirror. Where two values have to move together &mdash; the select&rsquo;s chevron and the room kept for it, the toggle&rsquo;s thumb and its travel, the progress fill&rsquo;s gradient &mdash; the rule sits under <code>:dir(rtl)</code>: Chrome and Edge from 120, Safari from 16.4, Firefox from 49. An older browser keeps those parts left to right instead of tearing them apart.</p>
     <h3>Printing</h3>
@@ -831,6 +862,135 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <span class="attr">--gl-tab-bar-label-size</span>: <span class="val">12px</span>;
 }</div>
     </div>
+
+    <h3 id="tab-bar-layouts" style="margin-top:var(--gl-space-lg);">Sidebar, rail and top bar</h3>
+    <p>Since 1.32.0 the same navigation goes where the layout needs it, not only along the bottom edge. The items stay as they are &mdash; icon, label, badge, the active state, the <a href="#droplet">drop</a> &mdash; and only the bar&rsquo;s layout changes. <code>--vertical</code> makes it a column for a sidebar: placed by the page&rsquo;s layout, a grid column for example, and as high as its container, one item per row with the icon before the label at body size and the badge at the row&rsquo;s end. The active row stands on a surface of its own, <code>--gl-tab-bar-active-bg</code> where that is set, else <code>--gl-surface-3</code>. With <code>--rail</code> as well, the column shows the icons alone, <code>--gl-tab-bar-rail-width</code> (72&nbsp;px) wide: the label stays the item&rsquo;s name for assistive technology, hidden from view, so show it in a <a href="#tooltip">tooltip</a>.</p>
+    <div class="docs-preview docs-preview--row" style="align-items:stretch;">
+      <div style="flex:1 1 280px;display:grid;grid-template-columns:210px minmax(0,1fr);height:260px;border:1px solid var(--gl-border-subtle);border-radius:var(--gl-radius-sm);overflow:hidden;">
+        <nav class="glass-tab-bar glass-tab-bar--vertical" aria-label="Sections" data-docs-tabs>
+          <button class="glass-tab-bar__item is-active">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <span class="glass-tab-bar__label">Home</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg><span class="glass-tab-bar__badge">3</span></span>
+            <span class="glass-tab-bar__label">Invoices</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <span class="glass-tab-bar__label">Customers</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span>
+            <span class="glass-tab-bar__label">Settings</span>
+          </button>
+        </nav>
+        <div aria-hidden="true" style="padding:20px;"><div class="glass-skeleton"><div class="glass-skeleton__line glass-skeleton__line--title" style="width:60%"></div><div class="glass-skeleton__line"></div><div class="glass-skeleton__line" style="width:80%"></div></div></div>
+      </div>
+      <div style="flex:1 1 200px;display:grid;grid-template-columns:auto minmax(0,1fr);height:260px;border:1px solid var(--gl-border-subtle);border-radius:var(--gl-radius-sm);overflow:hidden;">
+        <nav class="glass-tab-bar glass-tab-bar--vertical glass-tab-bar--rail" aria-label="Sections" data-docs-tabs>
+          <button class="glass-tab-bar__item is-active">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <span class="glass-tab-bar__label">Home</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg><span class="glass-tab-bar__badge">3</span></span>
+            <span class="glass-tab-bar__label">Invoices</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <span class="glass-tab-bar__label">Customers</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span>
+            <span class="glass-tab-bar__label">Settings</span>
+          </button>
+        </nav>
+        <div aria-hidden="true" style="padding:20px;"><div class="glass-skeleton"><div class="glass-skeleton__line glass-skeleton__line--title" style="width:60%"></div><div class="glass-skeleton__line"></div><div class="glass-skeleton__line" style="width:80%"></div></div></div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"app"</span><span class="tag">&gt;</span>   <span class="cmt">&lt;!-- display: grid; grid-template-columns: 220px 1fr; height: 100dvh --&gt;</span>
+  <span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar glass-tab-bar--vertical"</span> <span class="attr">aria-label=</span><span class="val">"Sections"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;a</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__item is-active"</span> <span class="attr">href=</span><span class="val">"/"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__icon"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__label"</span><span class="tag">&gt;</span>Home<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/a&gt;</span>
+    <span class="tag">&lt;a</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__item"</span> <span class="attr">href=</span><span class="val">"/invoices"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__icon"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__badge"</span><span class="tag">&gt;</span>3<span class="tag">&lt;/span&gt;&lt;/span&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__label"</span><span class="tag">&gt;</span>Invoices<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;/nav&gt;</span>
+  <span class="tag">&lt;main&gt;</span>…<span class="tag">&lt;/main&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">&lt;!-- Icons alone --&gt;</span>
+<span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar glass-tab-bar--vertical glass-tab-bar--rail"</span> <span class="attr">aria-label=</span><span class="val">"Sections"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/nav&gt;</span></div>
+    </div>
+    <p>With <code>--start</code> or <code>--end</code> the column is fixed to that edge of the viewport instead, full height and clear of that edge&rsquo;s safe area; start and end follow the writing direction. That is the side the thumbs reach on a large phone held sideways or a foldable held open, where the system moves its own controls to the edge as well. The page keeps that side free, as it keeps the bottom free for the bar there. The items stay when the layout changes, so the page switches the classes &mdash; on a media query, or by the user&rsquo;s choice:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar"</span> <span class="attr">id=</span><span class="val">"tabs"</span> <span class="attr">aria-label=</span><span class="val">"Sections"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/nav&gt;</span>
+
+<span class="tag">&lt;script&gt;</span>
+  const tabs = document.getElementById(<span class="val">'tabs'</span>);
+  const side = matchMedia(<span class="val">'(orientation: landscape) and (min-width: 700px)'</span>);
+  const layout = () =&gt; {
+    tabs.classList.toggle(<span class="val">'glass-tab-bar--vertical'</span>, side.matches);
+    tabs.classList.toggle(<span class="val">'glass-tab-bar--start'</span>, side.matches);
+    <span class="cmt">// the page keeps the bar's side free</span>
+    document.body.style.paddingInlineStart = side.matches ? <span class="val">`${tabs.offsetWidth}px`</span> : <span class="val">''</span>;
+  };
+  side.addEventListener(<span class="val">'change'</span>, layout);
+  layout();
+<span class="tag">&lt;/script&gt;</span></div>
+    </div>
+    <p><code>--top</code> lays a horizontal bar out for the top of a page: in the flow &mdash; put it in a sticky header &mdash;, its border at the bottom, no room for the home indicator, and from a viewport of 640&nbsp;px the icon beside the label.</p>
+    <div class="docs-preview" style="padding:0;">
+      <nav class="glass-tab-bar glass-tab-bar--top" aria-label="Sections" data-docs-tabs>
+        <button class="glass-tab-bar__item is-active">
+          <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+          <span class="glass-tab-bar__label">Home</span>
+        </button>
+        <button class="glass-tab-bar__item">
+          <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg><span class="glass-tab-bar__badge">3</span></span>
+          <span class="glass-tab-bar__label">Invoices</span>
+        </button>
+        <button class="glass-tab-bar__item">
+          <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span class="glass-tab-bar__label">Customers</span>
+        </button>
+        <button class="glass-tab-bar__item">
+          <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span>
+          <span class="glass-tab-bar__label">Settings</span>
+        </button>
+      </nav>
+      <div aria-hidden="true" style="padding:20px 24px;"><div class="glass-skeleton"><div class="glass-skeleton__line glass-skeleton__line--title" style="width:40%"></div><div class="glass-skeleton__line"></div><div class="glass-skeleton__line" style="width:70%"></div></div></div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;header</span> <span class="attr">style=</span><span class="val">"position: sticky; top: 0; z-index: 10"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar glass-tab-bar--top"</span> <span class="attr">aria-label=</span><span class="val">"Sections"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/nav&gt;</span>
+<span class="tag">&lt;/header&gt;</span></div>
+    </div>
+    <p>Every bar shows a ring for the keyboard now, <code>--gl-shadow-focus</code> on the focused item; until 1.32.0 the items had none. An item may also be a link, <code>&lt;a class="glass-tab-bar__item" href="…"&gt;</code>, so a view opens in a new tab as well; it looks like the button. In GlassKit Elements the layouts are attributes: <code>&lt;glk-tab-bar orientation="vertical"&gt;</code> with <code>rail</code> and <code>dock="start"</code> or <code>"end"</code>, and <code>placement="top"</code>.</p>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-tab-bar--vertical</code></td><td>Column for a sidebar, placed by the page&rsquo;s layout and as high as its container; scrolls on its own where the items do not fit</td></tr>
+        <tr><td><code>.glass-tab-bar--rail</code></td><td>With <code>--vertical</code>: icons alone, <code>--gl-tab-bar-rail-width</code> (72&nbsp;px) wide, the label hidden from view, the badge at the icon&rsquo;s corner</td></tr>
+        <tr><td><code>.glass-tab-bar--start</code>, <code>--end</code></td><td>With <code>--vertical</code>: fixed to that edge of the viewport, full height, clear of the safe area; mirrored right to left</td></tr>
+        <tr><td><code>.glass-tab-bar--top</code></td><td>Horizontal bar for the top of a page, in the flow, its border at the bottom; the icon beside the label from 640&nbsp;px</td></tr>
+        <tr><td><code>a.glass-tab-bar__item</code></td><td>An item as a link, without underline</td></tr>
+      </tbody>
+    </table>
+    <p>In the column a long label is cut with an ellipsis and ends before the badge: while a badge shows, the row keeps <code>--gl-tab-bar-badge-room</code> free at its end.</p>
+    <table class="docs-table">
+      <thead><tr><th>Token</th><th>Unset</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gl-tab-bar-rail-width</code></td><td><code>72px</code></td><td>Width of the rail</td></tr>
+        <tr><td><code>--gl-tab-bar-badge-room</code></td><td><code>32px</code></td><td>Room kept at the end of a sidebar row while it shows a badge, so the label ends before it</td></tr>
+        <tr><td><code>--gl-tab-bar-active-bg</code></td><td><code>--gl-surface-3</code> in a column</td><td>The active row&rsquo;s surface; on the bottom bar unset means none</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <!-- TAB BAR – FLOATING -->
@@ -911,8 +1071,46 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-tab-bar__accessory--error</code></td><td>Filled with error color</td></tr>
         <tr><td><code>.glass-bg--has-tab-bar-floating</code></td><td>Background padding helper for the floating variant</td></tr>
         <tr><td><code>.glass-tab-bar--droplet</code></td><td>Modifier: the active item sits on a drop of glass that glides to the next one (since 1.27.0, see <a href="#droplet">Droplet</a>)</td></tr>
+        <tr><td><code>.glass-tab-bar-dock--vertical</code></td><td>Modifier: the dock upright at the end edge, vertically centred; the bar inside takes <code>--vertical</code> (since 1.32.0)</td></tr>
+        <tr><td><code>.glass-tab-bar-dock--start</code></td><td>With <code>--vertical</code>: at the start edge instead</td></tr>
       </tbody>
     </table>
+
+    <h3 id="tab-bar-floating-vertical" style="margin-top:var(--gl-space-lg);">Upright at a side</h3>
+    <p>Since 1.32.0 the floating bar also stands upright at a side, where a thumb rests on a phone held sideways. <code>.glass-tab-bar-dock--vertical</code> on the dock and <code>--vertical</code> on the bar stack the items as they stand on the bottom edge, icon over label, with the accessory below them (above with <code>--accessory-left</code>), vertically centred at the end edge; <code>.glass-tab-bar-dock--start</code> moves it to the other one. Both keep clear of the safe area and follow the writing direction. With <code>--droplet</code> the drop runs up and down:</p>
+    <div class="docs-preview" style="position:relative;height:340px;overflow:hidden;">
+      <div class="glass-tab-bar-dock glass-tab-bar-dock--vertical" style="position:absolute;">
+        <nav class="glass-tab-bar glass-tab-bar--floating glass-tab-bar--vertical glass-tab-bar--droplet" aria-label="Sections" data-docs-tabs>
+          <button class="glass-tab-bar__item is-active">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <span class="glass-tab-bar__label">Home</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+            <span class="glass-tab-bar__label">Recent</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            <span class="glass-tab-bar__label">Saved</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span>
+            <span class="glass-tab-bar__label">Profile</span>
+          </button>
+        </nav>
+        <button class="glass-tab-bar__accessory" aria-label="Search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tab-bar-dock glass-tab-bar-dock--vertical"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar glass-tab-bar--floating glass-tab-bar--vertical"</span><span class="tag">&gt;</span>
+    <span class="cmt">&lt;!-- the items --&gt;</span>
+  <span class="tag">&lt;/nav&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__accessory"</span> <span class="attr">aria-label=</span><span class="val">"Search"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
 
     <h3 id="tab-bar-active-surface" style="margin-top:var(--gl-space-lg);">Active item surface</h3>
     <p>Since 1.27.0 the active item can stand on a surface of its own, like the selected tab of iOS 26. Four tokens, all unset, so nothing changes until a project sets them: <code>--gl-tab-bar-active-bg</code> and <code>--gl-tab-bar-active-shadow</code> draw a capsule behind the active item, <code>--gl-tab-bar-spotlight-opacity: 0</code> turns the floating bar&rsquo;s spotlight off, and <code>--gl-tab-bar-active-glow: none</code> the glow on the icon, which reads as a blur on a light capsule.</p>
@@ -978,11 +1176,142 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.31/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.32/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
     <p>The drop takes the active item&rsquo;s surface where a project set one (<code>--gl-tab-bar-active-bg</code>, <code>-shadow</code>), else a light glass of its own; its highlight is <code>--gl-gloss-droplet</code>. <code>data-surface="solid"</code> and <code>"tint"</code> make it opaque like every other surface, and with <code>prefers-reduced-motion</code> it moves without travelling. A transform on an ancestor &mdash; an app that zooms in on start, a popover that opens from <code>scale(0.96)</code> &mdash; leaves it on its item, at rest and while the transform runs (since 1.28.0). <a href="#segmented">Segmented controls</a> take the same drop. In GlassKit Elements it is one attribute: <code>&lt;glk-tab-bar floating droplet&gt;</code>.</p>
+    <p>In a column &mdash; a <a href="#tab-bar-layouts">sidebar</a>, the <a href="#tab-bar-floating-vertical">upright floating bar</a> &mdash; the drop runs along y (since 1.32.0). The script reads the row&rsquo;s <code>flex-direction</code> or its <code>aria-orientation="vertical"</code>, sets <code>data-droplet-axis="y"</code> and the directions <code>"down"</code> and <code>"up"</code>, and a finger drags the drop up and down while a sideways swipe goes to the page. A horizontal bar at the top of a page, static or floating, runs it as the bottom bar does. Try the sidebar:</p>
+    <div class="docs-preview docs-preview--constrained" style="padding:0;height:260px;display:grid;grid-template-columns:210px minmax(0,1fr);">
+      <nav class="glass-tab-bar glass-tab-bar--vertical glass-tab-bar--droplet" aria-label="Sections" data-docs-tabs>
+        <button class="glass-tab-bar__item is-active">
+          <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+          <span class="glass-tab-bar__label">Home</span>
+        </button>
+        <button class="glass-tab-bar__item">
+          <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg><span class="glass-tab-bar__badge">3</span></span>
+          <span class="glass-tab-bar__label">Invoices</span>
+        </button>
+        <button class="glass-tab-bar__item">
+          <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span class="glass-tab-bar__label">Customers</span>
+        </button>
+        <button class="glass-tab-bar__item">
+          <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span>
+          <span class="glass-tab-bar__label">Settings</span>
+        </button>
+      </nav>
+      <div aria-hidden="true" style="padding:20px;"><div class="glass-skeleton"><div class="glass-skeleton__line glass-skeleton__line--title" style="width:60%"></div><div class="glass-skeleton__line"></div><div class="glass-skeleton__line" style="width:80%"></div></div></div>
+    </div>
+
+    <h3 id="droplet-timing" style="margin-top:var(--gl-space-lg);">Droplet timing</h3>
+    <p>Since 1.32.0 the motion is tokens, read by the stylesheet and by <code>glasskit-droplet.js</code> alike. They are inherited, so they reach <code>&lt;glk-tab-bar droplet&gt;</code> and <code>&lt;glk-segmented droplet&gt;</code> in GlassKit Elements too. Unset, they keep the drop as it was: it comes to rest about 830&nbsp;ms after a tap.</p>
+    <table class="docs-table">
+      <thead><tr><th>Token</th><th>Unset</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gl-droplet-duration</code></td><td><code>0.3s</code></td><td>The leading edge, and the edges across the way</td></tr>
+        <tr><td><code>--gl-droplet-easing</code></td><td><code>cubic-bezier(0.3, 1.2, 0.5, 1)</code></td><td>Its curve</td></tr>
+        <tr><td><code>--gl-droplet-trail-duration</code></td><td><code>0.5s</code></td><td>The trailing edge, pulled after it</td></tr>
+        <tr><td><code>--gl-droplet-trail-delay</code></td><td><code>40ms</code></td><td>How long the trailing edge waits</td></tr>
+        <tr><td><code>--gl-droplet-trail-easing</code></td><td><code>cubic-bezier(0.5, 1.5, 0.45, 0.92)</code></td><td>Its curve, with the overshoot</td></tr>
+        <tr><td><code>--gl-droplet-lift</code></td><td><code>0.86</code></td><td>How flat the drop runs on the way; <code>1</code> squashes nothing</td></tr>
+        <tr><td><code>--gl-droplet-lift-duration</code></td><td><code>280ms</code></td><td>How long it runs flat</td></tr>
+        <tr><td><code>--gl-droplet-settle-duration</code></td><td><code>0.55s</code></td><td>The spring back into shape</td></tr>
+        <tr><td><code>--gl-droplet-settle-easing</code></td><td><code>cubic-bezier(0.34, 1.8, 0.5, 1)</code></td><td>Its curve, the wobble at the end</td></tr>
+        <tr><td><code>--gl-droplet-lens-duration</code></td><td><code>0.4s</code></td><td>The item below the drop growing as under a lens</td></tr>
+        <tr><td><code>--gl-droplet-lens-easing</code></td><td><code>cubic-bezier(0.34, 1.6, 0.5, 1)</code></td><td>Its curve</td></tr>
+      </tbody>
+    </table>
+    <p>A product that keeps its motion within 240&nbsp;ms ease-out lets the drop arrive in 240&nbsp;ms without a tail, in the tab bar and the segmented control alike. With the lift&rsquo;s duration at <code>0ms</code> the drop does not deepen its shadow on the way either, which would otherwise settle only after about 600&nbsp;ms:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">:root</span> {
+  <span class="attr">--gl-droplet-duration</span>: <span class="val">240ms</span>;
+  <span class="attr">--gl-droplet-easing</span>: <span class="val">ease-out</span>;
+  <span class="attr">--gl-droplet-trail-duration</span>: <span class="val">240ms</span>;
+  <span class="attr">--gl-droplet-trail-delay</span>: <span class="val">0ms</span>;
+  <span class="attr">--gl-droplet-trail-easing</span>: <span class="val">ease-out</span>;
+  <span class="attr">--gl-droplet-lift</span>: <span class="val">1</span>;
+  <span class="attr">--gl-droplet-lift-duration</span>: <span class="val">0ms</span>;
+  <span class="attr">--gl-droplet-settle-duration</span>: <span class="val">0ms</span>;
+  <span class="attr">--gl-droplet-lens-duration</span>: <span class="val">240ms</span>;
+  <span class="attr">--gl-droplet-lens-easing</span>: <span class="val">ease-out</span>;
+}</div>
+    </div>
+    <p>A finger dragging the drop keeps its own short timing, and with <code>prefers-reduced-motion</code> the drop still moves without travelling.</p>
+  </section>
+
+  <!-- BREADCRUMBS -->
+  <section class="docs-section" id="breadcrumbs">
+    <h2>Breadcrumbs</h2>
+    <p>The path through nested levels (since 1.32.0): My app &rsaquo; Main menu &rsaquo; Services &rsaquo; Online booking. A <code>&lt;nav aria-label="Breadcrumb"&gt;</code> around an <code>&lt;ol&gt;</code>; each crumb is a link, or a button, and the current level is plain text with <code>aria-current="page"</code>. The separators are drawn by CSS, so assistive technology does not read them, and they turn around right to left. A crumb longer than <code>--gl-breadcrumbs-crumb-width</code> (200&nbsp;px) is cut with an ellipsis, and where the row runs out of room every crumb gives way.</p>
+    <div class="docs-preview">
+      <div class="gl-stack gl-stack--md">
+        <nav class="glass-breadcrumbs" aria-label="Breadcrumb">
+          <ol class="glass-breadcrumbs__list">
+            <li class="glass-breadcrumbs__item"><a class="glass-breadcrumbs__crumb" href="#breadcrumbs">My app</a></li>
+            <li class="glass-breadcrumbs__item"><a class="glass-breadcrumbs__crumb" href="#breadcrumbs">Main menu</a></li>
+            <li class="glass-breadcrumbs__item"><a class="glass-breadcrumbs__crumb" href="#breadcrumbs">Services</a></li>
+            <li class="glass-breadcrumbs__item"><span class="glass-breadcrumbs__current" aria-current="page">Online booking</span></li>
+          </ol>
+        </nav>
+        <nav class="glass-breadcrumbs" aria-label="Breadcrumb, folded">
+          <ol class="glass-breadcrumbs__list">
+            <li class="glass-breadcrumbs__item"><a class="glass-breadcrumbs__crumb" href="#breadcrumbs">My app</a></li>
+            <li class="glass-breadcrumbs__item glass-breadcrumbs__item--overflow"><button class="glass-breadcrumbs__crumb glass-breadcrumbs__overflow" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="2 more levels">&hellip;</button></li>
+            <li class="glass-breadcrumbs__item"><a class="glass-breadcrumbs__crumb" href="#breadcrumbs">Services</a></li>
+            <li class="glass-breadcrumbs__item"><span class="glass-breadcrumbs__current" aria-current="page">Online booking for groups of more than twelve guests</span></li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-breadcrumbs"</span> <span class="attr">aria-label=</span><span class="val">"Breadcrumb"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;ol</span> <span class="attr">class=</span><span class="val">"glass-breadcrumbs__list"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-breadcrumbs__item"</span><span class="tag">&gt;&lt;a</span> <span class="attr">class=</span><span class="val">"glass-breadcrumbs__crumb"</span> <span class="attr">href=</span><span class="val">"/app"</span><span class="tag">&gt;</span>My app<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-breadcrumbs__item glass-breadcrumbs__item--overflow"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-breadcrumbs__crumb glass-breadcrumbs__overflow"</span> <span class="attr">type=</span><span class="val">"button"</span>
+              <span class="attr">aria-haspopup=</span><span class="val">"menu"</span> <span class="attr">aria-expanded=</span><span class="val">"false"</span> <span class="attr">aria-label=</span><span class="val">"2 more levels"</span><span class="tag">&gt;</span>&hellip;<span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-breadcrumbs__item"</span><span class="tag">&gt;&lt;a</span> <span class="attr">class=</span><span class="val">"glass-breadcrumbs__crumb"</span> <span class="attr">href=</span><span class="val">"/app/menu/services"</span><span class="tag">&gt;</span>Services<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-breadcrumbs__item"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-breadcrumbs__current"</span> <span class="attr">aria-current=</span><span class="val">"page"</span><span class="tag">&gt;</span>Online booking<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;/ol&gt;</span>
+<span class="tag">&lt;/nav&gt;</span></div>
+    </div>
+    <p>Where the path does not fit, <code>__overflow</code> stands for the middle levels: a button named like &ldquo;2 more levels&rdquo; that lists them in a <a href="#menu">menu</a>, while the first crumb and the last two stay. Its <code>&lt;li&gt;</code> carries <code>__item--overflow</code> and keeps its width where the crumbs around it give way. GlassKit Elements&rsquo; <code>&lt;glk-breadcrumbs&gt;</code> folds and unfolds them by itself, measured on its own width, and shows a label that was cut in full in a tooltip.</p>
+    <p>A crumb can also take a dragged item into its level, for a <a href="#sorting">sortable</a> list or tree: <code>.is-drop-target</code> lights it up while the item is over it, <code>.is-drop-refused</code> shows that the level does not take it.</p>
+    <div class="docs-preview">
+      <div class="gl-stack gl-stack--md">
+        <nav class="glass-breadcrumbs" aria-label="Breadcrumb, a drop target">
+          <ol class="glass-breadcrumbs__list">
+            <li class="glass-breadcrumbs__item"><a class="glass-breadcrumbs__crumb" href="#breadcrumbs">My app</a></li>
+            <li class="glass-breadcrumbs__item"><a class="glass-breadcrumbs__crumb is-drop-target" href="#breadcrumbs">Main menu</a></li>
+            <li class="glass-breadcrumbs__item"><span class="glass-breadcrumbs__current" aria-current="page">Services</span></li>
+          </ol>
+        </nav>
+        <nav class="glass-breadcrumbs" aria-label="Breadcrumb, a refused drop">
+          <ol class="glass-breadcrumbs__list">
+            <li class="glass-breadcrumbs__item"><a class="glass-breadcrumbs__crumb is-drop-refused" href="#breadcrumbs">My app</a></li>
+            <li class="glass-breadcrumbs__item"><a class="glass-breadcrumbs__crumb" href="#breadcrumbs">Main menu</a></li>
+            <li class="glass-breadcrumbs__item"><span class="glass-breadcrumbs__current" aria-current="page">Services</span></li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-breadcrumbs</code></td><td>On the <code>&lt;nav&gt;</code>; gives way in a tight row (<code>min-width: 0</code>)</td></tr>
+        <tr><td><code>__list</code></td><td>The <code>&lt;ol&gt;</code>: one row that does not wrap</td></tr>
+        <tr><td><code>__item</code></td><td>The <code>&lt;li&gt;</code>; from the second on a chevron before it, mirrored right to left</td></tr>
+        <tr><td><code>__crumb</code></td><td>Link or button to a level, muted, cut with an ellipsis beyond <code>--gl-breadcrumbs-crumb-width</code> (200&nbsp;px)</td></tr>
+        <tr><td><code>__current</code></td><td>The current level, plain text with <code>aria-current="page"</code>, in the heading colour</td></tr>
+        <tr><td><code>__overflow</code></td><td>With <code>__crumb</code>: the &ldquo;&hellip;&rdquo; button that stands for the folded levels</td></tr>
+        <tr><td><code>__item--overflow</code></td><td>On the <code>&lt;li&gt;</code> of that button: keeps its width while the other crumbs give way</td></tr>
+        <tr><td><code>.is-drop-target</code>, <code>.is-drop-refused</code></td><td>On a crumb while a dragged item is over it: it takes the item, or does not</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <!-- TITLE -->
@@ -1049,6 +1378,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
     </table>
     <p>A disabled button &mdash; <code>disabled</code>, or <code>aria-disabled="true"</code> on an <code>a.glass-btn</code>, which cannot be disabled &mdash; is dimmed, shows the not-allowed cursor and no longer lifts on hover (since 1.21.2; before, it looked exactly like an enabled one). The link still navigates unless the page stops it. The same holds for pill, tab-bar accessory, modal actions, interactive list rows and the calendar&rsquo;s month arrows; toggle, checkbox and radio dim their control and label, select, textarea and range dim like the input.</p>
     <p>Buttons have hooks of their own since 1.31.0. <code>--gl-btn-radius</code> rounds them, unset <code>--gl-radius-btn</code>, which lists, the status card, toasts, the accordion and the segmented control share: <code>--gl-btn-radius: 9999px</code> on <code>:root</code> gives pill-shaped buttons and leaves those as they are. <code>--gl-btn-padding-x</code> is the room beside the label, unset 24&nbsp;px, the padding <code>--auto</code> had alone; any other button had the browser&rsquo;s 6&nbsp;px, so a small one that took its width from its text, in a row of actions, touched the text with its edges. <code>--sm</code> reads <code>--gl-btn-radius-sm</code> and <code>--gl-btn-padding-x-sm</code> first, then the hooks above, and keeps its 12&nbsp;px radius while none is set, so one value can shape every size.</p>
+    <p>Since 1.32.0 <code>--gl-btn-primary-bg</code> replaces the whole background of <code>--primary</code>, as the toggle and the radio have theirs; unset, it is the gradient from <code>--gl-color-primary</code> over <code>-mid</code> to <code>-dark</code>. A product that keeps white text starts the gradient darker this way and leaves the brand colour alone; the recipe is under <a href="#primary-text">Primary as text</a>.</p>
   </section>
 
   <!-- BADGE -->
@@ -1265,7 +1595,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-list--bare</code></td><td>Strips background, border &amp; shadow &mdash; for embedding inside <code>.glass-popover</code> or <code>.glass-card</code>.</td></tr>
         <tr><td><code>.glass-list__item</code></td><td>List row (use <code>&lt;li&gt;</code>, <code>&lt;a&gt;</code>, or <code>&lt;button&gt;</code>)</td></tr>
         <tr><td><code>.glass-list__section-header</code></td><td>Section label above a <code>.glass-list</code> &mdash; uppercase, small, muted</td></tr>
-        <tr><td><code>.glass-list__item--interactive</code></td><td>Adds hover / focus / active states</td></tr>
+        <tr><td><code>.glass-list__item--interactive</code></td><td>Adds hover / focus / active states; for the keyboard a 2&nbsp;px ring in <code>--gl-border-focus</code> inside the row (since 1.32.0; before, only a tint showed the focus)</td></tr>
         <tr><td><code>.glass-list__item--center</code></td><td>Centered single-text variant with ellipsis truncation</td></tr>
         <tr><td><code>.glass-list__item--danger</code></td><td>Red text for destructive actions</td></tr>
         <tr><td><code>.glass-list__item--accent</code></td><td>Primary-colored text for accent actions</td></tr>
@@ -1277,9 +1607,14 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-list__subtitle--wrap</code></td><td>Multi-line subtitle (up to 3 lines, clamped with ellipsis; <code>--gl-list-subtitle-lines</code> sets the limit)</td></tr>
         <tr><td><code>.glass-list__trailing</code></td><td>Trailing slot &mdash; chevron, value, button, badge</td></tr>
         <tr><td><code>.glass-list__value</code></td><td>Muted text inside <code>.glass-list__trailing</code> (e.g. file size)</td></tr>
+        <tr><td><code>.glass-list__item.is-flash</code></td><td>Flashes once, 1.2&nbsp;s in <code>--gl-flash-color</code>, for an item that changed elsewhere (since 1.32.0)</td></tr>
       </tbody>
     </table>
     <p style="margin-top:12px;"><strong>Dividers</strong> between rows are rendered automatically via <code>::after</code>. Items <em>with</em> a leading icon get an icon-aligned inset; items <em>without</em> &mdash; no <code>__leading</code>, or one carrying the <code>hidden</code> attribute (since 1.20.0) &mdash; get the standard padding inset. A hidden <code>__leading</code> or <code>__trailing</code> takes no room. The last item never has a divider. SVG icon convention: <code>24px</code> for leading, <code>18px</code> for trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
+    <p>Since 1.32.0 an item that changed elsewhere &mdash; on another device, by an undo &mdash; can flash once, so the eye finds it among the others: <code>.is-flash</code> tints it for 1.2&nbsp;s in <code>--gl-flash-color</code>, unset 30&nbsp;% of the primary, and under <code>prefers-reduced-motion</code> nothing flashes. Take the class away on <code>animationend</code>, so the next change flashes again.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item is-flash"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/li&gt;</span>   <span class="cmt">&lt;!-- changed elsewhere, flashes once --&gt;</span></div>
+    </div>
     <h3 id="list-flush">Flush</h3>
     <p><code>--flush</code> takes the list from edge to edge of its container, without side borders and radius. The list grows by the container&rsquo;s padding on both sides, <code>--gl-list-flush-inset</code>: <code>.glass-card</code> and <code>.glass-modal__body</code> set it to their own padding, elsewhere it is 20&nbsp;px (<code>--gl-space-lg</code>) unless the container sets it. Since 1.29.1 &mdash; before, the list kept its width and only moved to the start.</p>
     <div class="docs-preview docs-preview--constrained">
@@ -1307,6 +1642,197 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="cmt">/* Breaks at syllables; short words stay whole */</span>
 <span class="cls">.glass-list, glk-list</span> { <span class="attr">hyphens</span>: <span class="val">auto</span>; <span class="attr">-webkit-hyphens</span>: <span class="val">auto</span>; <span class="attr">hyphenate-limit-chars</span>: <span class="val">10 4 4</span>; }</div>
     </div>
+  </section>
+
+  <!-- TREE -->
+  <section class="docs-section" id="tree">
+    <h2>Tree</h2>
+    <p>Levels that open and close (since 1.32.0): the structure of an app, menus with submenus, folders. A row per item &mdash; a twisty that turns when the item opens, an icon, the label, something at the end such as a badge &mdash;, indented by <code>--gl-tree-indent</code> (20&nbsp;px) per level; the level is <code>--gl-tree-level</code> on the row. The item&rsquo;s children follow in a <code>__group</code>. The tree has no surface of its own: put it in a card or a sidebar.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <div class="glass-card" style="padding:8px;">
+        <ul class="glass-tree" role="tree" aria-label="App structure">
+          <li role="treeitem" aria-level="1" aria-expanded="true" aria-selected="false">
+            <div class="glass-tree__row is-expanded" style="--gl-tree-level:1">
+              <span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+              <span class="glass-tree__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+              <span class="glass-tree__label">My app</span>
+            </div>
+            <ul class="glass-tree__group" role="group">
+              <li role="treeitem" aria-level="2" aria-expanded="true" aria-selected="false">
+                <div class="glass-tree__row is-expanded" style="--gl-tree-level:2">
+                  <span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+                  <span class="glass-tree__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span>
+                  <span class="glass-tree__label">Main menu</span>
+                  <span class="glass-tree__trailing"><span class="glass-badge">3</span></span>
+                </div>
+                <ul class="glass-tree__group" role="group">
+                  <li role="treeitem" aria-level="3" aria-selected="false">
+                    <div class="glass-tree__row is-leaf" style="--gl-tree-level:3">
+                      <span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+                      <span class="glass-tree__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+                      <span class="glass-tree__label">Home</span>
+                    </div>
+                  </li>
+                  <li role="treeitem" aria-level="3" aria-selected="true">
+                    <div class="glass-tree__row is-leaf is-selected" style="--gl-tree-level:3">
+                      <span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+                      <span class="glass-tree__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+                      <span class="glass-tree__label">Services</span>
+                    </div>
+                  </li>
+                  <li role="treeitem" aria-level="3" aria-expanded="false" aria-selected="false">
+                    <div class="glass-tree__row" style="--gl-tree-level:3">
+                      <span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+                      <span class="glass-tree__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+                      <span class="glass-tree__label">About us</span>
+                    </div>
+                    <ul class="glass-tree__group" role="group" hidden>
+                      <li role="treeitem" aria-level="4" aria-selected="false"><div class="glass-tree__row is-leaf" style="--gl-tree-level:4"><span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span><span class="glass-tree__label">Team</span></div></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li role="treeitem" aria-level="2" aria-expanded="true" aria-selected="false" aria-busy="true">
+                <div class="glass-tree__row is-expanded is-loading" style="--gl-tree-level:2">
+                  <span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+                  <span class="glass-tree__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span>
+                  <span class="glass-tree__label">Archive</span>
+                </div>
+              </li>
+              <li role="treeitem" aria-level="2" aria-expanded="false" aria-selected="false">
+                <div class="glass-tree__row is-error" style="--gl-tree-level:2">
+                  <span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+                  <span class="glass-tree__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+                  <span class="glass-tree__label">Gallery</span>
+                  <span class="glass-tree__trailing">Could not load</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;ul</span> <span class="attr">class=</span><span class="val">"glass-tree"</span> <span class="attr">role=</span><span class="val">"tree"</span> <span class="attr">aria-label=</span><span class="val">"App structure"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">role=</span><span class="val">"treeitem"</span> <span class="attr">aria-level=</span><span class="val">"1"</span> <span class="attr">aria-expanded=</span><span class="val">"true"</span> <span class="attr">aria-selected=</span><span class="val">"false"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tree__row is-expanded"</span> <span class="attr">style=</span><span class="val">"--gl-tree-level: 1"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tree__twisty"</span> <span class="attr">aria-hidden=</span><span class="val">"true"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- chevron SVG --&gt;</span><span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tree__icon"</span> <span class="attr">aria-hidden=</span><span class="val">"true"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tree__label"</span><span class="tag">&gt;</span>Main menu<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tree__trailing"</span><span class="tag">&gt;&lt;span</span> <span class="attr">class=</span><span class="val">"glass-badge"</span><span class="tag">&gt;</span>3<span class="tag">&lt;/span&gt;&lt;/span&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;ul</span> <span class="attr">class=</span><span class="val">"glass-tree__group"</span> <span class="attr">role=</span><span class="val">"group"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;li</span> <span class="attr">role=</span><span class="val">"treeitem"</span> <span class="attr">aria-level=</span><span class="val">"2"</span> <span class="attr">aria-selected=</span><span class="val">"true"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tree__row is-leaf is-selected"</span> <span class="attr">style=</span><span class="val">"--gl-tree-level: 2"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tree__twisty"</span> <span class="attr">aria-hidden=</span><span class="val">"true"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- chevron SVG --&gt;</span><span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tree__label"</span><span class="tag">&gt;</span>Services<span class="tag">&lt;/span&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+      <span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;/ul&gt;</span>
+  <span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></div>
+    </div>
+    <p>The roles are those of the WAI-ARIA tree view: <code>role="tree"</code> with a name on the list, <code>"treeitem"</code> on each item with <code>aria-level</code>, <code>aria-expanded</code> on the items with children and <code>aria-selected</code>, <code>"group"</code> on each <code>__group</code>; <code>hidden</code> on a closed one. The states are classes on the row. The tree is one tab stop: the arrow keys move between the items &mdash; Down and Up, Right opens an item or goes to its first child, Left closes it or goes to its parent &mdash; and the row of the item that has the focus takes <code>.is-focus-visible</code>, or <code>:focus-visible</code> where the row itself is focused. That keyboard is GlassKit Elements&rsquo; <code>&lt;glk-tree&gt;</code>, mirrored right to left like the twisty here, with events before an item opens, closes or is chosen, and children loaded when an item first opens.</p>
+    <p>Two states come from outside the tree. <code>.is-error</code> marks an item whose children could not load: the twisty turns into a &ldquo;!&rdquo; in the error colour, and opening the item again tries once more; GlassKit Elements sets it with <code>load-error</code>. <code>.is-flash</code> lights a row up for 1.2&nbsp;s when it changed elsewhere &mdash; on another device, by an undo &mdash;, so the eye finds it among the others; <code>--gl-flash-color</code> tints it, unset 30&nbsp;% of the primary, and under <code>prefers-reduced-motion</code> nothing flashes. Take the class away on <code>animationend</code>, so the next change flashes again:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tree__row is-error"</span> <span class="attr">style=</span><span class="val">"--gl-tree-level: 2"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>   <span class="cmt">&lt;!-- the children could not load --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tree__row is-flash"</span> <span class="attr">style=</span><span class="val">"--gl-tree-level: 2"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>   <span class="cmt">&lt;!-- changed elsewhere, flashes once --&gt;</span>
+
+row.classList.add(<span class="val">'is-flash'</span>);
+row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.classList.remove(<span class="val">'is-flash'</span>), { once: true });</div>
+    </div>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-tree</code></td><td>The list; no surface of its own</td></tr>
+        <tr><td><code>__row</code></td><td>One item&rsquo;s row, <code>--gl-tree-row-height</code> (36&nbsp;px) high, indented by <code>--gl-tree-indent</code> (20&nbsp;px) for each level of <code>--gl-tree-level</code> past the first</td></tr>
+        <tr><td><code>__twisty</code></td><td>The chevron; turns with <code>.is-expanded</code>, keeps its room but hides with <code>.is-leaf</code>, mirrored right to left</td></tr>
+        <tr><td><code>__icon</code></td><td>18&nbsp;px icon before the label; an empty one takes no room</td></tr>
+        <tr><td><code>__label</code></td><td>The label, one line with ellipsis</td></tr>
+        <tr><td><code>__trailing</code></td><td>At the row&rsquo;s end: a badge, a status, an action</td></tr>
+        <tr><td><code>__group</code></td><td>The item&rsquo;s children, below its row; <code>hidden</code> while closed</td></tr>
+        <tr><td><code>.is-expanded</code>, <code>.is-leaf</code></td><td>On the row: open, or without children</td></tr>
+        <tr><td><code>.is-selected</code></td><td>The chosen row: raised glass like the active row of a sidebar, semibold, its icon in the accent</td></tr>
+        <tr><td><code>.is-loading</code></td><td>Children on their way: the twisty turns into a small spinner (with <code>aria-busy="true"</code> on the item)</td></tr>
+        <tr><td><code>.is-error</code></td><td>The children could not load: the twisty turns into a &ldquo;!&rdquo; in the error colour; opening the item again tries once more</td></tr>
+        <tr><td><code>.is-flash</code></td><td>A flash of 1.2&nbsp;s in <code>--gl-flash-color</code> (unset 30&nbsp;% of the primary) on a row that changed elsewhere; none under <code>prefers-reduced-motion</code></td></tr>
+        <tr><td><code>.is-disabled</code></td><td>Dimmed, not-allowed cursor</td></tr>
+        <tr><td><code>.is-focus-visible</code></td><td>The keyboard ring inside the row, for a script that moves the focus</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SORTING -->
+  <section class="docs-section" id="sorting">
+    <h2>Sorting</h2>
+    <p>The states of a drag that reorders a <a href="#list">list</a> or a <a href="#tree">tree</a> (since 1.32.0). The dragged item stays where it was, faded (<code>.is-sort-source</code>), while a raised copy, <code>.glass-sort__ghost</code>, follows the pointer in the top layer. A line shows where the item lands, before or after another one (<code>.is-sort-before</code>, <code>.is-sort-after</code> on that one), indented in a tree to the level it lands on; an item that takes it inside lights up (<code>.is-sort-inside</code>), and one that refuses it shows the error colour (<code>.is-sort-refused</code>).</p>
+    <div class="docs-preview docs-preview--constrained" style="position:relative;">
+      <ul class="glass-list" aria-label="Main menu">
+        <li class="glass-list__item"><div class="glass-list__content"><div class="glass-list__title">Home</div></div><div class="glass-list__trailing"><span class="glass-sort__handle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="16" x2="20" y2="16"/></svg></span></div></li>
+        <li class="glass-list__item is-sort-source"><div class="glass-list__content"><div class="glass-list__title">Services</div></div><div class="glass-list__trailing"><span class="glass-sort__handle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="16" x2="20" y2="16"/></svg></span></div></li>
+        <li class="glass-list__item is-sort-after"><div class="glass-list__content"><div class="glass-list__title">About us</div></div><div class="glass-list__trailing"><span class="glass-sort__handle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="16" x2="20" y2="16"/></svg></span></div></li>
+        <li class="glass-list__item"><div class="glass-list__content"><div class="glass-list__title">Contact</div></div><div class="glass-list__trailing"><span class="glass-sort__handle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="16" x2="20" y2="16"/></svg></span></div></li>
+      </ul>
+      <div class="glass-sort__ghost" aria-hidden="true" style="position:absolute;top:206px;inset-inline-start:56px;"><span class="glass-sort__handle"><svg viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="16" x2="20" y2="16"/></svg></span>Services</div>
+    </div>
+    <p>In a tree the line is indented to the level the item lands on. Here all three states show at once; a drag shows one at a time.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <div class="glass-card" style="padding:8px;">
+        <ul class="glass-tree" role="tree" aria-label="Pages">
+          <li role="treeitem" aria-level="1" aria-expanded="true" aria-selected="false">
+            <div class="glass-tree__row is-expanded" style="--gl-tree-level:1">
+              <span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+              <span class="glass-tree__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+              <span class="glass-tree__label">Main menu</span>
+            </div>
+            <ul class="glass-tree__group" role="group">
+              <li role="treeitem" aria-level="2" aria-selected="false">
+                <div class="glass-tree__row is-leaf is-sort-before" style="--gl-tree-level:2">
+                  <span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+                  <span class="glass-tree__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+                  <span class="glass-tree__label">Home</span>
+                </div>
+              </li>
+              <li role="treeitem" aria-level="2" aria-expanded="false" aria-selected="false">
+                <div class="glass-tree__row is-sort-inside" style="--gl-tree-level:2">
+                  <span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+                  <span class="glass-tree__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+                  <span class="glass-tree__label">About us</span>
+                </div>
+              </li>
+              <li role="treeitem" aria-level="2" aria-selected="false">
+                <div class="glass-tree__row is-leaf is-sort-refused" style="--gl-tree-level:2">
+                  <span class="glass-tree__twisty" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+                  <span class="glass-tree__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+                  <span class="glass-tree__label">Legal notice</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item is-sort-source"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/li&gt;</span>   <span class="cmt">&lt;!-- the dragged item --&gt;</span>
+<span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item is-sort-after"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/li&gt;</span>    <span class="cmt">&lt;!-- it lands after this one --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tree__row is-sort-inside"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>  <span class="cmt">&lt;!-- or inside this one --&gt;</span>
+
+<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-sort__ghost"</span> <span class="attr">popover=</span><span class="val">"manual"</span><span class="tag">&gt;</span>       <span class="cmt">&lt;!-- follows the pointer --&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-sort__handle"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;/span&gt;</span>Services
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+    <p>With a <code>.glass-sort__handle</code> in the item only the handle starts a drag, so a tap on the item still chooses it, and a finger on the handle drags at once, without the long press. The drag itself is GlassKit Elements&rsquo;: <code>&lt;glk-list sortable&gt;</code> and <code>&lt;glk-tree sortable&gt;</code> reorder by mouse, by touch after a long press and by keyboard &mdash; Space picks an item up, the arrow keys move it, Space drops it, Escape cancels &mdash;, announce each step, take <a href="#breadcrumbs">breadcrumbs</a> as drop targets and let the items glide into place over <code>--gl-sort-duration</code> (180&nbsp;ms) with <code>--gl-sort-easing</code> (ease-out). Under <code>prefers-reduced-motion</code> nothing glides.</p>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>.is-sort-source</code></td><td>The dragged item where it was, faded to 40&nbsp;%</td></tr>
+        <tr><td><code>.is-sort-before</code>, <code>.is-sort-after</code></td><td>A 2&nbsp;px line in the primary above or below the item, indented to <code>--gl-tree-level</code></td></tr>
+        <tr><td><code>.is-sort-inside</code></td><td>The item takes the dragged one inside: tinted, with a ring</td></tr>
+        <tr><td><code>.is-sort-refused</code></td><td>The item does not take it: the error surface and ring; a line turns red</td></tr>
+        <tr><td><code>.glass-sort__ghost</code></td><td>The raised copy that follows the pointer; <code>[popover]</code> in the top layer</td></tr>
+        <tr><td><code>.glass-sort__handle</code></td><td>The grip: only it starts a drag, and a finger on it drags at once</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <!-- MODAL -->
@@ -1500,6 +2026,31 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
 
+    <h3 id="popover-top-layer">In the top layer</h3>
+    <p>Since 1.32.0 a popover can open in the top layer. Give it the <code>popover</code> attribute and open it with <code>showPopover()</code>: it stands above every stacking context, a box with <code>overflow: hidden</code> around it no longer cuts it off, and while closed it takes no room, where the class version still widened the page by its box. The browser does not place it next to the trigger, though. In the top layer the popover is <code>position: fixed</code>: a script measures the trigger, writes <code>left</code> and <code>top</code> in viewport pixels, flips the popover to the other side where the viewport leaves no room and keeps it there while the page scrolls; <code>data-side="top"</code> makes it grow from its bottom edge when it opens above the trigger. GlassKit Elements&rsquo; <code>&lt;glk-popover&gt;</code> does all of this, and the <a href="#tooltip">tooltip</a> and the <a href="#menu">menu</a> open the same way. Try it: the preview cuts off whatever leaves its box, but not the popover in the top layer; a click outside or Escape closes it.</p>
+    <div class="docs-preview docs-preview--compact" style="display:flex;justify-content:center;">
+      <button class="glass-btn glass-btn--secondary glass-btn--auto" type="button" popovertarget="docs-popover-top">Open in the top layer</button>
+      <div class="glass-popover" id="docs-popover-top" popover>
+        <p style="margin:0;max-width:260px;font-size:var(--gl-font-size-sm);line-height:1.5;color:var(--gl-color-text);">Above every stacking context: the preview&rsquo;s <code>overflow: hidden</code> does not cut it off.</p>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-btn glass-btn--secondary glass-btn--auto"</span> <span class="attr">id=</span><span class="val">"filter-button"</span><span class="tag">&gt;</span>Filter<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-popover"</span> <span class="attr">id=</span><span class="val">"filters"</span> <span class="attr">popover=</span><span class="val">"manual"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>
+
+<span class="tag">&lt;script&gt;</span>
+  const button = document.getElementById(<span class="val">'filter-button'</span>);
+  const pop = document.getElementById(<span class="val">'filters'</span>);
+  button.addEventListener(<span class="val">'click'</span>, () =&gt; {
+    if (pop.matches(<span class="val">':popover-open'</span>)) return pop.hidePopover();
+    pop.showPopover();
+    const r = button.getBoundingClientRect();
+    pop.style.left = <span class="val">`${r.left}px`</span>;
+    pop.style.top = <span class="val">`${r.bottom + 8}px`</span>;
+  });
+<span class="tag">&lt;/script&gt;</span></div>
+    </div>
+
     <h3>Class reference</h3>
     <table class="docs-table">
       <thead><tr><th>Class</th><th>Description</th></tr></thead>
@@ -1510,9 +2061,110 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-popover--top</code></td><td>Opens upward (above the trigger)</td></tr>
         <tr><td><code>.glass-popover--start</code></td><td>Aligns left edge with trigger</td></tr>
         <tr><td><code>.glass-popover--end</code></td><td>Aligns right edge with trigger</td></tr>
+        <tr><td><code>.glass-popover[popover]</code></td><td>In the top layer, <code>position: fixed</code>: opened with <code>showPopover()</code>, placed by script at viewport coordinates, no room while closed (since 1.32.0)</td></tr>
+        <tr><td><code>[data-side="top"]</code></td><td>With <code>[popover]</code>: grows from its bottom edge, for a popover above its trigger</td></tr>
       </tbody>
     </table>
     <p style="margin-top:12px;"><strong>Note:</strong> name your toggle function anything except <code>togglePopover</code> &mdash; that name collides with the native <code>HTMLElement.togglePopover()</code> method from the HTML Popover API and inline <code>onclick</code> handlers will throw a <code>NotSupportedError</code>.</p>
+  </section>
+
+  <!-- TOOLTIP -->
+  <section class="docs-section" id="tooltip">
+    <h2>Tooltip</h2>
+    <p>A short name or hint for a control, on hover and on keyboard focus (since 1.32.0): an icon-only button, the items of a <a href="#tab-bar-layouts">rail</a>, a row action. Small text on the popover&rsquo;s glass with its edge light, tinted far enough to read over anything (6.3:1 or more, white under a dark tooltip included), at most <code>--gl-tooltip-max-width</code> (240&nbsp;px) wide; longer text wraps. Give it <code>role="tooltip"</code>; the control points to it with <code>aria-describedby</code>, or with <code>aria-labelledby</code> where the tooltip is the control&rsquo;s only name.</p>
+    <div class="docs-preview docs-preview--row" style="gap:32px;align-items:flex-start;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div class="glass-tooltip" id="docs-tip-archive" role="tooltip">Archive</div>
+        <button class="glass-pill" type="button" aria-labelledby="docs-tip-archive"><svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></button>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;">
+        <button class="glass-btn glass-btn--secondary glass-btn--sm glass-btn--auto" type="button" aria-describedby="docs-tip-share">Share link</button>
+        <div class="glass-tooltip" id="docs-tip-share" role="tooltip">Anyone with the link can open this invoice, until you turn the link off.</div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-pill"</span> <span class="attr">aria-labelledby=</span><span class="val">"tip-archive"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tooltip"</span> <span class="attr">id=</span><span class="val">"tip-archive"</span> <span class="attr">role=</span><span class="val">"tooltip"</span> <span class="attr">popover=</span><span class="val">"hint"</span><span class="tag">&gt;</span>Archive<span class="tag">&lt;/div&gt;</span>
+
+<span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-btn glass-btn--secondary glass-btn--sm glass-btn--auto"</span> <span class="attr">aria-describedby=</span><span class="val">"tip-share"</span><span class="tag">&gt;</span>Share link<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tooltip"</span> <span class="attr">id=</span><span class="val">"tip-share"</span> <span class="attr">role=</span><span class="val">"tooltip"</span> <span class="attr">popover=</span><span class="val">"hint"</span><span class="tag">&gt;</span>Anyone with the link …<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+    <p>It opens in the top layer like the <a href="#popover-top-layer">popover</a>, with <code>popover="hint"</code> (a browser without <code>hint</code> takes it as <code>manual</code>), placed by script next to its control and flipped or shifted to stay in the viewport. Without the attribute it is a plain block, as in the preview. WCAG 1.4.13 asks three things of a tooltip: the pointer can move onto it without it closing, Escape closes it without moving the focus, and it stays while the control is hovered or focused. GlassKit Elements&rsquo; <code>&lt;glk-tooltip&gt;</code> brings that behaviour: it shows after 400&nbsp;ms on hover, at once on keyboard focus and on a long press by touch, while a tap never shows it.</p>
+    <table class="docs-table">
+      <thead><tr><th>Token</th><th>Unset</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gl-tooltip-max-width</code></td><td><code>240px</code></td><td>The widest it gets before the text wraps</td></tr>
+        <tr><td><code>--gl-tooltip-bg</code></td><td><code>--gl-color-bg-dark</code> at 94&nbsp;%</td><td>Its surface: the theme&rsquo;s darkest background, light in the light theme</td></tr>
+        <tr><td><code>--gl-tooltip-color</code></td><td><code>--gl-color-text</code></td><td>Its text</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- MENU -->
+  <section class="docs-section" id="menu">
+    <h2>Menu</h2>
+    <p>A list of actions behind a button (since 1.32.0): the overflow menu of a header, the actions of a table row. It has the popover&rsquo;s surface and opens in the top layer, placed like the <a href="#tooltip">tooltip</a>. The items are buttons with <code>role="menuitem"</code>, with an icon before the label and a hint at the end, such as a shortcut; <code>menuitemcheckbox</code> and <code>menuitemradio</code> with <code>aria-checked</code> show the check mark. <code>--danger</code> takes the error colour for something destructive, <code>aria-disabled="true"</code> leaves an item announced but inert, and <code>__separator</code> and <code>__group-label</code> part the list.</p>
+    <div class="docs-preview docs-preview--row" style="gap:24px;align-items:flex-start;">
+      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;">
+        <button class="glass-pill" type="button" id="docs-menu-actions-button" aria-label="Actions" aria-haspopup="menu" aria-expanded="true" aria-controls="docs-menu-actions"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button>
+        <div class="glass-menu" id="docs-menu-actions" role="menu" aria-labelledby="docs-menu-actions-button">
+          <button class="glass-menu__item" type="button" role="menuitem" tabindex="-1"><span class="glass-menu__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><span class="glass-menu__label">Rename</span><span class="glass-menu__trailing">F2</span></button>
+          <button class="glass-menu__item" type="button" role="menuitem" tabindex="-1"><span class="glass-menu__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span><span class="glass-menu__label">Duplicate</span><span class="glass-menu__trailing">&#8984;D</span></button>
+          <button class="glass-menu__item" type="button" role="menuitem" tabindex="-1" aria-disabled="true"><span class="glass-menu__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="12 10 15 13 12 16"/><line x1="8" y1="13" x2="15" y2="13"/></svg></span><span class="glass-menu__label">Move to&hellip;</span></button>
+          <div class="glass-menu__separator" role="separator"></div>
+          <button class="glass-menu__item glass-menu__item--danger" type="button" role="menuitem" tabindex="-1"><span class="glass-menu__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></span><span class="glass-menu__label">Delete</span></button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;">
+        <button class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" type="button" id="docs-menu-view-button" aria-haspopup="menu" aria-expanded="true" aria-controls="docs-menu-view">View</button>
+        <div class="glass-menu" id="docs-menu-view" role="menu" aria-labelledby="docs-menu-view-button">
+          <div role="group" aria-label="Sort by">
+            <div class="glass-menu__group-label" aria-hidden="true">Sort by</div>
+            <button class="glass-menu__item" type="button" role="menuitemradio" aria-checked="true" tabindex="-1"><span class="glass-menu__check" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="5 12 10 17 19 7"/></svg></span><span class="glass-menu__label">Name</span></button>
+            <button class="glass-menu__item" type="button" role="menuitemradio" aria-checked="false" tabindex="-1"><span class="glass-menu__check" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="5 12 10 17 19 7"/></svg></span><span class="glass-menu__label">Date modified</span></button>
+          </div>
+          <div class="glass-menu__separator" role="separator"></div>
+          <button class="glass-menu__item" type="button" role="menuitemcheckbox" aria-checked="true" tabindex="-1"><span class="glass-menu__check" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="5 12 10 17 19 7"/></svg></span><span class="glass-menu__label">Show drafts</span></button>
+          <button class="glass-menu__item" type="button" role="menuitemcheckbox" aria-checked="false" tabindex="-1"><span class="glass-menu__check" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="5 12 10 17 19 7"/></svg></span><span class="glass-menu__label">Show archived</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-pill"</span> <span class="attr">id=</span><span class="val">"actions-button"</span> <span class="attr">aria-label=</span><span class="val">"Actions"</span>
+        <span class="attr">aria-haspopup=</span><span class="val">"menu"</span> <span class="attr">aria-expanded=</span><span class="val">"false"</span> <span class="attr">aria-controls=</span><span class="val">"actions"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-menu"</span> <span class="attr">id=</span><span class="val">"actions"</span> <span class="attr">role=</span><span class="val">"menu"</span> <span class="attr">aria-labelledby=</span><span class="val">"actions-button"</span> <span class="attr">popover=</span><span class="val">"manual"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-menu__item"</span> <span class="attr">role=</span><span class="val">"menuitem"</span> <span class="attr">tabindex=</span><span class="val">"-1"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-menu__icon"</span> <span class="attr">aria-hidden=</span><span class="val">"true"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-menu__label"</span><span class="tag">&gt;</span>Rename<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-menu__trailing"</span><span class="tag">&gt;</span>F2<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;/button&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-menu__separator"</span> <span class="attr">role=</span><span class="val">"separator"</span><span class="tag">&gt;&lt;/div&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-menu__item glass-menu__item--danger"</span> <span class="attr">role=</span><span class="val">"menuitem"</span> <span class="attr">tabindex=</span><span class="val">"-1"</span><span class="tag">&gt;</span>…Delete<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">&lt;!-- A checkable item; in such a menu every item takes the __check, so the labels line up --&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-menu__item"</span> <span class="attr">role=</span><span class="val">"menuitemcheckbox"</span> <span class="attr">aria-checked=</span><span class="val">"true"</span> <span class="attr">tabindex=</span><span class="val">"-1"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-menu__check"</span> <span class="attr">aria-hidden=</span><span class="val">"true"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- check SVG --&gt;</span><span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-menu__label"</span><span class="tag">&gt;</span>Show drafts<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/button&gt;</span></div>
+    </div>
+    <p>The keyboard is that of the WAI-ARIA menu button: Enter, Space or Down on the button open the menu at its first item, Up at its last; in the menu Down and Up move and wrap, Home and End go to the ends, typing jumps to the next item that starts with the letters, Escape closes it and gives the focus back to the button, and Tab closes it and moves on. GlassKit Elements&rsquo; <code>&lt;glk-menu&gt;</code> brings it, with <code>&lt;glk-menu-item&gt;</code>, <code>&lt;glk-menu-separator&gt;</code> and <code>&lt;glk-menu-group&gt;</code>. A script of your own that keeps the focus elsewhere marks the current item with <code>.is-focused</code> and <code>.is-focus-visible</code>.</p>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>.glass-menu</code></td><td>The panel on the popover&rsquo;s surface, 180 to 320&nbsp;px wide, scrolling beyond 70vh or 480&nbsp;px; <code>[popover]</code> opens it in the top layer</td></tr>
+        <tr><td><code>__item</code></td><td>A row, at least 40&nbsp;px high; hover and focus tint it, <code>:focus-visible</code> adds a ring inside</td></tr>
+        <tr><td><code>__item--danger</code></td><td>In the error colour, for something destructive</td></tr>
+        <tr><td><code>[aria-disabled="true"]</code>, <code>.is-disabled</code></td><td>Dimmed, not-allowed cursor; still announced</td></tr>
+        <tr><td><code>__check</code></td><td>The 16&nbsp;px check mark, shown with <code>[aria-checked="true"]</code> or <code>.is-checked</code>; keeps its room while hidden</td></tr>
+        <tr><td><code>__icon</code></td><td>18&nbsp;px icon before the label; an empty one takes no room</td></tr>
+        <tr><td><code>__label</code></td><td>The label, one line with ellipsis</td></tr>
+        <tr><td><code>__trailing</code></td><td>A hint at the end, such as a shortcut</td></tr>
+        <tr><td><code>__separator</code></td><td>A hairline between groups (<code>role="separator"</code>)</td></tr>
+        <tr><td><code>__group-label</code></td><td>The small muted heading of a group</td></tr>
+        <tr><td><code>.is-focused</code>, <code>.is-focus-visible</code></td><td>Focus states for a script that keeps the focus elsewhere</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <!-- INPUT -->
@@ -1651,7 +2303,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       </div>
     </div>
     <p>As with the toggle, the input lies on top of the circle and an empty <code>__label</code> takes no room (since 1.20.0).</p>
-    <p>Fill, rim and dot are tokens (since 1.25.0): <code>--gl-radio-bg</code> and <code>--gl-radio-bg-checked</code>, <code>--gl-radio-border</code> and <code>--gl-radio-border-checked</code> (whole border values, so give both the same width), <code>--gl-radio-dot-size</code> (10px) and <code>--gl-radio-dot-color</code> (white). A ring in the text colour that turns the accent colour when checked:</p>
+    <p>Fill, rim and dot are tokens (since 1.25.0): <code>--gl-radio-bg</code> and <code>--gl-radio-bg-checked</code>, <code>--gl-radio-border</code> and <code>--gl-radio-border-checked</code> (whole border values, so give both the same width), <code>--gl-radio-dot-size</code> (10px) and <code>--gl-radio-dot-color</code> (unset the ink on the primary, <code>--gl-color-on-primary</code>, white unless a project switches it &mdash; since 1.32.0; before, always white). A ring in the text colour that turns the accent colour when checked:</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="cls">:root</span> {
   <span class="attr">--gl-radio-bg</span>: <span class="val">transparent</span>;
@@ -1780,6 +2432,137 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-table</code></td><td>The table: hairline rows, hover highlight</td></tr>
         <tr><td><code>.glass-table__num</code></td><td>Right-aligned, tabular figures &mdash; on <code>th</code> and <code>td</code></td></tr>
         <tr><td><code>.glass-table__muted</code></td><td>Secondary text colour on a cell</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="table-sorting" style="margin-top:var(--gl-space-lg);">Sorting, a sticky header, row actions</h3>
+    <p>Since 1.32.0 the table brings what a list of invoices or users needs. A header cell that sorts holds a <code>__sort</code> button with the arrow and carries <code>aria-sort</code>: <code>"ascending"</code>, <code>"descending"</code> or <code>"none"</code>. The page sorts the rows, often on the server; the classes only show the state. <code>--sticky</code> on the table and <code>.glass-table-wrap--sticky</code> on its wrap keep the header in view: the wrap scrolls both ways, at most <code>--gl-table-max-height</code> (60vh) high, and the header cells stick to its top on <code>--gl-table-header-bg</code>. Cells with <code>__actions</code> hold the row&rsquo;s actions &mdash; a <a href="#menu">menu</a>, icon buttons with <a href="#tooltip">tooltips</a> &mdash; and stay at the row&rsquo;s end while the table scrolls sideways; once it does, <code>--scrolls</code> on the table gives them a surface of their own, and a <code>.glass-table-frame</code> around the wrap shades each edge where more columns wait (<code>data-more-start</code>, <code>data-more-end</code>). Sort the columns, scroll the table, make the window narrow:</p>
+    <div class="docs-preview" data-docs-table style="--gl-table-max-height:280px;--gl-btn-padding-x-sm:8px;--gl-btn-height-sm:32px;">
+      <div class="glass-table-frame">
+        <div class="glass-table-wrap glass-table-wrap--sticky">
+          <table class="glass-table glass-table--sticky">
+            <thead>
+              <tr>
+                <th aria-sort="descending"><button class="glass-table__sort" type="button">Invoice<svg class="glass-table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button></th>
+                <th aria-sort="none"><button class="glass-table__sort" type="button">Customer<svg class="glass-table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button></th>
+                <th aria-sort="none"><button class="glass-table__sort" type="button">Date<svg class="glass-table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button></th>
+                <th class="glass-table__num" aria-sort="none"><button class="glass-table__sort" type="button">Amount<svg class="glass-table__sort-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button></th>
+                <th>Status</th>
+                <th>Plan</th>
+                <th class="glass-table__actions" aria-label="Actions"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>2026-1048</td><td>Northwind Bakery</td><td>2026-10-27</td><td class="glass-table__num" data-value="1240">1,240.00</td><td><span class="glass-badge glass-badge--warning">Open</span></td><td>Business yearly</td><td class="glass-table__actions"><button class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" type="button" aria-label="Actions for 2026-1048" aria-haspopup="menu"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button></td></tr>
+              <tr><td>2026-1047</td><td>Harbor Dental</td><td>2026-10-26</td><td class="glass-table__num" data-value="89">89.00</td><td><span class="glass-badge glass-badge--success">Paid</span></td><td>Starter monthly</td><td class="glass-table__actions"><button class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" type="button" aria-label="Actions for 2026-1047" aria-haspopup="menu"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button></td></tr>
+              <tr><td>2026-1046</td><td>Bluebell Florist</td><td>2026-10-25</td><td class="glass-table__num" data-value="2310.5">2,310.50</td><td><span class="glass-badge glass-badge--success">Paid</span></td><td>Business monthly</td><td class="glass-table__actions"><button class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" type="button" aria-label="Actions for 2026-1046" aria-haspopup="menu"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button></td></tr>
+              <tr><td>2026-1045</td><td>Kestrel Studio</td><td>2026-10-24</td><td class="glass-table__num" data-value="412.8">412.80</td><td><span class="glass-badge glass-badge--error">Overdue</span></td><td>Starter yearly</td><td class="glass-table__actions"><button class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" type="button" aria-label="Actions for 2026-1045" aria-haspopup="menu"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button></td></tr>
+              <tr><td>2026-1044</td><td>Morning Light Yoga</td><td>2026-10-23</td><td class="glass-table__num" data-value="75">75.00</td><td><span class="glass-badge glass-badge--success">Paid</span></td><td>Starter monthly</td><td class="glass-table__actions"><button class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" type="button" aria-label="Actions for 2026-1044" aria-haspopup="menu"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button></td></tr>
+              <tr><td>2026-1043</td><td>North Bike Works</td><td>2026-10-22</td><td class="glass-table__num" data-value="640">640.00</td><td><span class="glass-badge glass-badge--warning">Open</span></td><td>Business yearly</td><td class="glass-table__actions"><button class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" type="button" aria-label="Actions for 2026-1043" aria-haspopup="menu"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button></td></tr>
+              <tr><td>2026-1042</td><td>Weber &amp; Roth Law</td><td>2026-10-21</td><td class="glass-table__num" data-value="3480">3,480.00</td><td><span class="glass-badge glass-badge--success">Paid</span></td><td>Business yearly</td><td class="glass-table__actions"><button class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" type="button" aria-label="Actions for 2026-1042" aria-haspopup="menu"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-table-frame"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-table-wrap glass-table-wrap--sticky"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;table</span> <span class="attr">class=</span><span class="val">"glass-table glass-table--sticky"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;thead&gt;&lt;tr&gt;</span>
+        <span class="tag">&lt;th</span> <span class="attr">aria-sort=</span><span class="val">"descending"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-table__sort"</span> <span class="attr">type=</span><span class="val">"button"</span><span class="tag">&gt;</span>Invoice
+            <span class="tag">&lt;svg</span> <span class="attr">class=</span><span class="val">"glass-table__sort-icon"</span> <span class="attr">viewBox=</span><span class="val">"0 0 24 24"</span> <span class="attr">aria-hidden=</span><span class="val">"true"</span><span class="tag">&gt;&lt;path</span> <span class="attr">d=</span><span class="val">"M12 19V5M6 11l6-6 6 6"</span><span class="tag">/&gt;&lt;/svg&gt;</span>
+          <span class="tag">&lt;/button&gt;</span>
+        <span class="tag">&lt;/th&gt;</span>
+        <span class="tag">&lt;th</span> <span class="attr">class=</span><span class="val">"glass-table__num"</span> <span class="attr">aria-sort=</span><span class="val">"none"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- button as above --&gt;</span><span class="tag">&lt;/th&gt;</span>
+        <span class="tag">&lt;th</span> <span class="attr">class=</span><span class="val">"glass-table__actions"</span> <span class="attr">aria-label=</span><span class="val">"Actions"</span><span class="tag">&gt;&lt;/th&gt;</span>
+      <span class="tag">&lt;/tr&gt;&lt;/thead&gt;</span>
+      <span class="tag">&lt;tbody&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+          <span class="tag">&lt;td&gt;</span>2026-1048<span class="tag">&lt;/td&gt;</span>
+          <span class="tag">&lt;td</span> <span class="attr">class=</span><span class="val">"glass-table__num"</span><span class="tag">&gt;</span>1,240.00<span class="tag">&lt;/td&gt;</span>
+          <span class="tag">&lt;td</span> <span class="attr">class=</span><span class="val">"glass-table__actions"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- a menu button --&gt;</span><span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;/tr&gt;</span>
+      <span class="tag">&lt;/tbody&gt;</span>
+    <span class="tag">&lt;/table&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">/* Compact icon buttons in the action cells */</span>
+<span class="cls">.glass-table__actions</span> { <span class="attr">--gl-btn-padding-x-sm</span>: <span class="val">8px</span>; <span class="attr">--gl-btn-height-sm</span>: <span class="val">32px</span>; }</div>
+    </div>
+    <p>A few lines of script set <code>--scrolls</code> and the frame&rsquo;s attributes from the wrap&rsquo;s scroll position, as in the preview. GlassKit Elements&rsquo; <code>&lt;glk-table&gt;</code> does all of it around a native table in its light DOM, which keeps its semantics, copy and paste, find in page and markup rendered on the server: <code>data-sort</code> on a header cell adds the button and <code>aria-sort</code>, a click emits a cancelable <code>glk-table-sort</code>, and <code>sticky-header</code> and <code>list-below</code> switch the layouts.</p>
+
+    <h3 id="table-list">As cards</h3>
+    <p><code>--list</code> turns each row into a card for narrow places, with the column&rsquo;s name before each value from <code>data-label</code> on the cells. The actions move to the card&rsquo;s top end, numbers keep their tabular figures. The header stays for assistive technology, hidden from view, and the labels are generated content without a text of their own, so a screen reader does not hear the column twice. A table that no longer lays out as a table can lose its semantics, so set its roles explicitly. <code>&lt;glk-table list-below="640px"&gt;</code> switches by its own width, not the viewport&rsquo;s, and writes labels and roles itself.</p>
+    <div class="docs-preview docs-preview--constrained" style="--gl-btn-padding-x-sm:8px;--gl-btn-height-sm:32px;">
+      <table class="glass-table glass-table--list" role="table" aria-label="Invoices">
+        <thead role="rowgroup"><tr role="row"><th role="columnheader">Invoice</th><th role="columnheader">Customer</th><th class="glass-table__num" role="columnheader">Amount</th><th role="columnheader">Status</th><th class="glass-table__actions" role="columnheader" aria-label="Actions"></th></tr></thead>
+        <tbody role="rowgroup">
+          <tr role="row"><td role="cell" data-label="Invoice">2026-1048</td><td role="cell" data-label="Customer">Northwind Bakery</td><td class="glass-table__num" role="cell" data-label="Amount">1,240.00</td><td role="cell" data-label="Status"><span class="glass-badge glass-badge--warning">Open</span></td><td class="glass-table__actions" role="cell"><button class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" type="button" aria-label="Actions for 2026-1048" aria-haspopup="menu"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button></td></tr>
+          <tr role="row"><td role="cell" data-label="Invoice">2026-1047</td><td role="cell" data-label="Customer">Harbor Dental</td><td class="glass-table__num" role="cell" data-label="Amount">89.00</td><td role="cell" data-label="Status"><span class="glass-badge glass-badge--success">Paid</span></td><td class="glass-table__actions" role="cell"><button class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" type="button" aria-label="Actions for 2026-1047" aria-haspopup="menu"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;table</span> <span class="attr">class=</span><span class="val">"glass-table glass-table--list"</span> <span class="attr">role=</span><span class="val">"table"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;thead</span> <span class="attr">role=</span><span class="val">"rowgroup"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/thead&gt;</span>   <span class="cmt">&lt;!-- th role="columnheader" --&gt;</span>
+  <span class="tag">&lt;tbody</span> <span class="attr">role=</span><span class="val">"rowgroup"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;tr</span> <span class="attr">role=</span><span class="val">"row"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;td</span> <span class="attr">role=</span><span class="val">"cell"</span> <span class="attr">data-label=</span><span class="val">"Invoice"</span><span class="tag">&gt;</span>2026-1048<span class="tag">&lt;/td&gt;</span>
+      <span class="tag">&lt;td</span> <span class="attr">class=</span><span class="val">"glass-table__num"</span> <span class="attr">role=</span><span class="val">"cell"</span> <span class="attr">data-label=</span><span class="val">"Amount"</span><span class="tag">&gt;</span>1,240.00<span class="tag">&lt;/td&gt;</span>
+      <span class="tag">&lt;td</span> <span class="attr">class=</span><span class="val">"glass-table__actions"</span> <span class="attr">role=</span><span class="val">"cell"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/tbody&gt;</span>
+<span class="tag">&lt;/table&gt;</span></div>
+    </div>
+
+    <h3 id="table-empty">Empty</h3>
+    <p>While no row is there, <code>__empty</code> below the table holds an <a href="#empty">empty state</a> and the header stays; <code>hidden</code> takes it away again.</p>
+    <div class="docs-preview">
+      <div class="glass-table-wrap">
+        <table class="glass-table">
+          <thead><tr><th>Invoice</th><th>Customer</th><th class="glass-table__num">Amount</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="glass-table__empty">
+          <div class="glass-empty">
+            <span class="glass-empty__icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+            <p class="glass-empty__title">No invoices</p>
+            <p class="glass-empty__text">Nothing matches this filter.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-table-wrap"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;table</span> <span class="attr">class=</span><span class="val">"glass-table"</span><span class="tag">&gt;</span><span class="tag">&lt;thead&gt;</span>…<span class="tag">&lt;/thead&gt;&lt;tbody&gt;&lt;/tbody&gt;&lt;/table&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-table__empty"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-empty"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+    <table class="docs-table">
+      <thead><tr><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>__sort</code>, <code>__sort-icon</code></td><td>Button filling a header cell that sorts by its column, and its arrow: up for <code>ascending</code>, down for <code>descending</code>, faint while unsorted</td></tr>
+        <tr><td><code>th[aria-sort]</code></td><td>The state: <code>ascending</code>, <code>descending</code>, <code>none</code></td></tr>
+        <tr><td><code>--sticky</code> + <code>.glass-table-wrap--sticky</code></td><td>The header sticks to the top of a wrap that scrolls both ways, at most <code>--gl-table-max-height</code> high</td></tr>
+        <tr><td><code>__actions</code></td><td>Cell for row actions, at the row&rsquo;s end, kept there while the table scrolls sideways</td></tr>
+        <tr><td><code>--scrolls</code></td><td>Set while the table scrolls sideways: the actions on a surface of their own, with a shadow</td></tr>
+        <tr><td><code>.glass-table-frame</code></td><td>Around the wrap; shades the start or end edge with <code>data-more-start</code>, <code>data-more-end</code></td></tr>
+        <tr><td><code>__empty</code></td><td>Below the table in its wrap, the room for an empty state</td></tr>
+        <tr><td><code>--list</code></td><td>Each row a card, the labels from <code>data-label</code>, the actions at its top end</td></tr>
+      </tbody>
+    </table>
+    <table class="docs-table">
+      <thead><tr><th>Token</th><th>Unset</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gl-table-cell-padding</code></td><td><code>9px 10px</code></td><td>The room in the body cells</td></tr>
+        <tr><td><code>--gl-table-header-padding</code></td><td><code>8px 10px</code></td><td>The room in the header cells</td></tr>
+        <tr><td><code>--gl-table-max-height</code></td><td><code>60vh</code></td><td>How high a sticky wrap gets before it scrolls</td></tr>
+        <tr><td><code>--gl-table-header-bg</code></td><td><code>--gl-color-bg-mid</code> at 94&nbsp;%</td><td>The sticky header&rsquo;s surface, and that of the actions while the table scrolls sideways</td></tr>
       </tbody>
     </table>
   </section>
@@ -1992,7 +2775,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <!-- STEPS -->
   <section class="docs-section" id="steps">
     <h2>Steps</h2>
-    <p>Progress through a short flow: numbered circles joined by hairlines, done ones on the success surface (with an SVG check), the current one in the primary colour and marked <code>aria-current="step"</code>.</p>
+    <p>Progress through a short flow: numbered circles joined by hairlines, done ones on the success surface (with an SVG check), the current one in the primary colour (<code>--gl-color-primary-fill</code> where a project sets one, since 1.32.0) and marked <code>aria-current="step"</code>.</p>
     <div class="docs-preview">
       <ol class="glass-steps">
   <li class="glass-steps__item glass-steps__item--done"><span class="glass-steps__num"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="glass-steps__label">Day</span></li>
@@ -2169,7 +2952,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       <thead><tr><th>Class</th><th>Description</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-date-strip</code></td><td>Scrolling row; hidden scrollbar; 4 px padding so its own overflow does not clip the focus ring</td></tr>
-        <tr><td><code>__day</code></td><td>Chip button, 44 px minimum; <code>[aria-pressed="true"]</code> chosen, <code>:disabled</code> / <code>[aria-disabled="true"]</code> dimmed</td></tr>
+        <tr><td><code>__day</code></td><td>Chip button, 44 px minimum; <code>[aria-pressed="true"]</code> chosen, on <code>--gl-color-primary-fill</code> where set, else the primary (since 1.32.0), <code>:disabled</code> / <code>[aria-disabled="true"]</code> dimmed</td></tr>
         <tr><td><code>__day--today</code></td><td>Underlines the number</td></tr>
         <tr><td><code>__wd</code>, <code>__num</code></td><td>Weekday in small caps, day number</td></tr>
         <tr><td><code>__mark</code></td><td>6 px dot; transparent without a tone</td></tr>
@@ -2262,7 +3045,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-calendar</code></td><td>Block; <code>__head</code> with <code>__title</code> (ellipsis when tight) and two <code>__nav</code> buttons, 32 px round, with an SVG chevron</td></tr>
         <tr><td><code>__grid</code></td><td>Seven columns, 4 px gap</td></tr>
         <tr><td><code>__wd</code></td><td>Weekday header cell, muted small caps</td></tr>
-        <tr><td><code>__day</code></td><td>Square day button; <code>[aria-pressed="true"]</code> chosen, <code>--today</code> warm border, <code>--other</code> dimmed neighbour month, <code>:disabled</code> / <code>[aria-disabled="true"]</code> dimmed and unpickable</td></tr>
+        <tr><td><code>__day</code></td><td>Square day button; <code>[aria-pressed="true"]</code> chosen, on <code>--gl-color-primary-fill</code> where set, else the primary (since 1.32.0), <code>--today</code> warm border, <code>--other</code> dimmed neighbour month, <code>:disabled</code> / <code>[aria-disabled="true"]</code> dimmed and unpickable</td></tr>
         <tr><td><code>__marks</code>, <code>__mark</code></td><td>5 px dots beneath the number, up to three; <code>__mark--primary</code> / <code>--success</code> / <code>--warning</code> / <code>--error</code> via <code>--gl-calendar-tone</code>, the ink on the chosen day via <code>--gl-calendar-ink</code></td></tr>
       </tbody>
     </table>
@@ -2383,9 +3166,11 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td>Avatar</td><td><code>.glass-avatar</code></td><td><code>--sm</code>, <code>--lg</code></td></tr>
         <tr><td>Divider</td><td><code>.glass-divider</code></td><td>–</td></tr>
         <tr><td>Status</td><td><code>.glass-status</code></td><td>–</td></tr>
-        <tr><td>List</td><td><code>.glass-list</code></td><td><code>--flush</code>, <code>--bare</code>, <code>__item--interactive</code>, <code>__item--center</code>, <code>__item--danger</code>, <code>__item--accent</code>, <code>__leading--lg</code>, <code>__subtitle--wrap</code>, <code>__value</code>, <code>__section-header</code></td></tr>
+        <tr><td>List</td><td><code>.glass-list</code></td><td><code>--flush</code>, <code>--bare</code>, <code>__item--interactive</code>, <code>__item--center</code>, <code>__item--danger</code>, <code>__item--accent</code>, <code>__leading--lg</code>, <code>__subtitle--wrap</code>, <code>__value</code>, <code>__section-header</code>, <code>.is-flash</code></td></tr>
+        <tr><td>Tree</td><td><code>.glass-tree</code></td><td><code>__row</code>, <code>__twisty</code>, <code>__icon</code>, <code>__label</code>, <code>__trailing</code>, <code>__group</code>, <code>.is-expanded</code>, <code>.is-leaf</code>, <code>.is-selected</code>, <code>.is-loading</code>, <code>.is-error</code>, <code>.is-flash</code>, <code>.is-disabled</code>, <code>.is-focus-visible</code>, <code>--gl-tree-level</code></td></tr>
+        <tr><td>Sorting</td><td><code>.glass-sort__<wbr>ghost</code>, <code>.glass-sort__<wbr>handle</code></td><td><code>.is-sort-source</code>, <code>.is-sort-before</code>, <code>.is-sort-after</code>, <code>.is-sort-inside</code>, <code>.is-sort-refused</code></td></tr>
         <tr><td>Skeleton</td><td><code>.glass-skeleton</code></td><td><code>__line</code>, <code>__line--title</code></td></tr>
-        <tr><td>Table</td><td><code>.glass-table</code></td><td><code>-wrap</code>, <code>__num</code>, <code>__muted</code></td></tr>
+        <tr><td>Table</td><td><code>.glass-table</code></td><td><code>-wrap</code>, <code>-wrap--sticky</code>, <code>-frame</code>, <code>__num</code>, <code>__muted</code>, <code>__sort</code>, <code>__sort-icon</code>, <code>[aria-sort]</code>, <code>__actions</code>, <code>__empty</code>, <code>--sticky</code>, <code>--scrolls</code>, <code>--list</code></td></tr>
         <tr><td>Prose</td><td><code>.glass-prose</code></td><td>–</td></tr>
         <tr><td>Segmented</td><td><code>.glass-segmented</code></td><td><code>--full</code>, <code>--scroll</code>, <code>--wrap</code>, <code>--icons</code>, <code>__item</code>, <code>__item--success</code>/<code>--warning</code>/<code>--error</code>, <code>__dot</code>, <code>__icon</code>, <code>__badge</code>, <code>[aria-pressed]</code>, <code>--droplet</code></td></tr>
         <tr><td>Steps</td><td><code>.glass-steps</code></td><td><code>__item</code>, <code>__item--done</code>, <code>__item--current</code>, <code>__num</code>, <code>__label</code>, <code>__line</code></td></tr>
@@ -2394,7 +3179,9 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td>Date strip</td><td><code>.glass-date-strip</code></td><td><code>__day</code>, <code>__day--today</code>, <code>__wd</code>, <code>__num</code>, <code>__mark</code>, <code>__mark--primary</code>/<code>--success</code>/<code>--warning</code>/<code>--error</code>, <code>[aria-pressed]</code>, <code>:disabled</code></td></tr>
         <tr><td>Calendar</td><td><code>.glass-calendar</code></td><td><code>__head</code>, <code>__title</code>, <code>__nav</code>, <code>__grid</code>, <code>__wd</code>, <code>__day</code>, <code>__day--today</code>, <code>__day--other</code>, <code>__marks</code>, <code>__mark--primary</code>/<code>--success</code>/<code>--warning</code>/<code>--error</code>, <code>[aria-pressed]</code>, <code>[aria-disabled]</code></td></tr>
         <tr><td>Image picker</td><td><code>.glass-image-picker</code></td><td><code>__preview</code>, <code>__preview--round</code>, <code>__meta</code>, <code>__label</code>, <code>__hint</code>, <code>__actions</code></td></tr>
-        <tr><td>Popover</td><td><code>.glass-popover</code></td><td><code>--top</code>, <code>--start</code>, <code>--end</code>, <code>.is-open</code></td></tr>
+        <tr><td>Popover</td><td><code>.glass-popover</code></td><td><code>--top</code>, <code>--start</code>, <code>--end</code>, <code>.is-open</code>, <code>[popover]</code>, <code>[data-side="top"]</code></td></tr>
+        <tr><td>Tooltip</td><td><code>.glass-tooltip</code></td><td><code>[popover]</code></td></tr>
+        <tr><td>Menu</td><td><code>.glass-menu</code></td><td><code>__item</code>, <code>__item--danger</code>, <code>__check</code>, <code>__icon</code>, <code>__label</code>, <code>__trailing</code>, <code>__separator</code>, <code>__group-label</code>, <code>[aria-checked]</code>, <code>[aria-disabled]</code>, <code>.is-checked</code>, <code>.is-focused</code>, <code>.is-focus-visible</code>, <code>[popover]</code></td></tr>
         <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code>; <code>.glass-input-wrap</code> with <code>__prefix</code> / <code>__suffix</code></td></tr>
         <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td><code>:disabled</code></td></tr>
         <tr><td>Select</td><td><code>.glass-select</code></td><td><code>:disabled</code></td></tr>
@@ -2406,8 +3193,9 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td>Progress</td><td><code>.glass-progress</code></td><td><code>--sm</code>, <code>--lg</code>, <code>--success</code>, <code>--error</code></td></tr>
         <tr><td>Modal</td><td><code>.glass-modal-overlay</code></td><td><code>.is-active</code></td></tr>
         <tr><td>Toast</td><td><code>.glass-toast</code></td><td><code>--success</code>, <code>--error</code>, <code>--warning</code>, <code>.is-visible</code>, <code>__action</code>, <code>__close</code></td></tr>
-        <tr><td>Tab-Bar</td><td><code>.glass-tab-bar</code></td><td><code>__item</code> with <code>.is-active</code>, <code>__icon</code>, <code>__label</code>, <code>__badge</code>, <code>--droplet</code></td></tr>
-        <tr><td>Tab-Bar Floating</td><td><code>.glass-tab-bar-dock</code> + <code>.glass-tab-bar--floating</code></td><td><code>__accessory</code>, <code>__accessory--accent</code>/<code>--success</code>/<code>--error</code>, <code>--accessory-left</code></td></tr>
+        <tr><td>Tab-Bar</td><td><code>.glass-tab-bar</code></td><td><code>__item</code> with <code>.is-active</code>, <code>__icon</code>, <code>__label</code>, <code>__badge</code>, <code>--droplet</code>, <code>--vertical</code>, <code>--rail</code>, <code>--start</code>, <code>--end</code>, <code>--top</code></td></tr>
+        <tr><td>Tab-Bar Floating</td><td><code>.glass-tab-bar-dock</code> + <code>.glass-tab-bar--floating</code></td><td><code>__accessory</code>, <code>__accessory--accent</code>/<code>--success</code>/<code>--error</code>, <code>--accessory-left</code>, <code>-dock--vertical</code>, <code>-dock--start</code></td></tr>
+        <tr><td>Breadcrumbs</td><td><code>.glass-<wbr>breadcrumbs</code></td><td><code>__list</code>, <code>__item</code>, <code>__crumb</code>, <code>__current</code>, <code>__overflow</code>, <code>__item--overflow</code>, <code>.is-drop-target</code>, <code>.is-drop-refused</code></td></tr>
         <tr><td>Accordion</td><td><code>.glass-accordion</code></td><td><code>.is-open</code> auf Items</td></tr>
       </tbody>
     </table>
@@ -2420,7 +3208,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
     <table class="docs-table">
       <thead><tr><th>Feature</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td>Copy-paste HTML</td><td>All 34 components with exact nesting and BEM hierarchy</td></tr>
+        <tr><td>Copy-paste HTML</td><td>All 38 components with exact nesting and BEM hierarchy</td></tr>
         <tr><td>Design token tables</td><td>Colors, surfaces, blur, radii, spacing, shadows, typography</td></tr>
         <tr><td>State class mapping</td><td><code>is-active</code>, <code>is-open</code>, <code>is-visible</code>, <code>:checked</code> – where each belongs</td></tr>
         <tr><td>Composition patterns</td><td>6 full page layouts: Login, Dashboard, Form, Modal, Settings, Progress</td></tr>
@@ -2482,6 +3270,41 @@ node_modules/@jungherz-de/glasskit/SKILL.md</div>
     const item = e.target.closest('.glass-tab-bar__item'); if (!item) return;
     for (const it of bar.querySelectorAll('.glass-tab-bar__item')) it.classList.toggle('is-active', it === item);
   });
+</script>
+<script>
+  // Top layer preview: places the popover below its button while it is open
+  for (const pop of document.querySelectorAll('.glass-popover[popover]')) {
+    const button = document.querySelector(`[popovertarget="${pop.id}"]`);
+    const place = () => { const r = button.getBoundingClientRect(); pop.style.left = `${r.left}px`; pop.style.top = `${r.bottom + 8}px`; };
+    pop.addEventListener('beforetoggle', e => { if (e.newState === 'open') place(); });
+    for (const type of ['scroll', 'resize']) addEventListener(type, () => { if (pop.matches(':popover-open')) place(); }, { passive: true });
+  }
+</script>
+<script>
+  // Table preview: sorts by a column and shades the edges where more columns
+  // wait, as <glk-table> does
+  for (const box of document.querySelectorAll('[data-docs-table]')) {
+    const frame = box.querySelector('.glass-table-frame');
+    const wrap = box.querySelector('.glass-table-wrap');
+    const table = box.querySelector('table');
+    box.addEventListener('click', e => {
+      const th = e.target.closest('.glass-table__sort')?.closest('th'); if (!th) return;
+      const direction = th.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending';
+      for (const cell of th.parentElement.cells) if (cell.hasAttribute('aria-sort')) cell.setAttribute('aria-sort', cell === th ? direction : 'none');
+      const value = row => row.cells[th.cellIndex].dataset.value ?? row.cells[th.cellIndex].textContent.trim();
+      const sign = direction === 'ascending' ? 1 : -1;
+      const body = table.tBodies[0];
+      body.append(...[...body.rows].sort((a, b) => sign * value(a).localeCompare(value(b), undefined, { numeric: true })));
+    });
+    const edges = () => {
+      const scrolls = wrap.scrollWidth > wrap.clientWidth + 1, x = Math.abs(wrap.scrollLeft);
+      table.classList.toggle('glass-table--scrolls', scrolls);
+      frame.toggleAttribute('data-more-start', scrolls && x > 1);
+      frame.toggleAttribute('data-more-end', scrolls && x + wrap.clientWidth < wrap.scrollWidth - 1);
+    };
+    wrap.addEventListener('scroll', edges, { passive: true });
+    new ResizeObserver(edges).observe(wrap);
+  }
 </script>
 <script type="module">
   import { attachDroplets } from './glasskit-droplet.js';

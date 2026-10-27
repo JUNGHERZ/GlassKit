@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.31.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.32.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
-  <img src="https://img.shields.io/badge/components-34-green?style=flat-square" alt="Components">
+  <img src="https://img.shields.io/badge/components-38-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.31.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.32.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -16,7 +16,7 @@
 
 <p align="center">
   <strong>A modern glassmorphism CSS component library.</strong><br>
-  34 Components · Dark & Light Mode · No Dependencies · Design Tokens
+  38 Components · Dark & Light Mode · No Dependencies · Design Tokens
 </p>
 
 <p align="center">
@@ -57,7 +57,8 @@ GlassKit is the **CSS foundation** of a three-layer family: [GlassKit Elements](
 - 🔌 **Framework-agnostic** – works with React, Vue, Svelte, plain HTML, or any other stack
 - 🧩 **Shadow DOM ready** – Constructable Stylesheet for Web Components included
 - 💧 **Fluid selection** – an optional drop of glass that glides between the items of a tab bar or a segmented control (since 1.27.0)
-- 🪶 **Lightweight** – 51 KB raw / 39 KB minified / 6.5 KB gzipped, no external dependencies
+- 🧭 **Navigation at every edge** – one tab bar as bottom bar, top bar, sidebar or icon rail, or docked at a side where the thumb rests on a phone held open (since 1.32.0)
+- 🪶 **Lightweight** – 186 KB raw / 115 KB minified / 16.7 KB gzipped, no external dependencies
 - 🎯 **BEM-like naming convention** – `glass-*` prefix, no conflicts with existing CSS
 - 🤖 **AI-ready** – ships with [`SKILL.md`](SKILL.md), a structured reference for LLMs & AI copilots
 
@@ -73,22 +74,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.31/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.32/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.31/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.32/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.31/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.32/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.31` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.32` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.31/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.32/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -181,8 +182,9 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Background** | `.glass-bg` | Aurora gradient with light effects |
 | **Nav Bar** | `.glass-nav` | Transparent navigation |
 | **Pill Button** | `.glass-pill` | Round glass icon button (46×46) |
-| **Tab Bar** | `.glass-tab-bar` | Fixed bottom navigation; any icon — SVG, icon font, image — follows its states |
-| **Tab Bar – Floating** | `.glass-tab-bar--floating` + `.glass-tab-bar-dock` | Pill-shaped Liquid-Glass tab bar with optional `.glass-tab-bar__accessory` capsule; `--droplet` for a gliding selection |
+| **Tab Bar** | `.glass-tab-bar` | Fixed bottom navigation; any icon — SVG, icon font, image — follows its states. The same bar as a sidebar (`--vertical`), fixed to a side edge (`--start` / `--end`), an icon rail (`--rail`) or a top bar (`--top`) |
+| **Tab Bar – Floating** | `.glass-tab-bar--floating` + `.glass-tab-bar-dock` | Pill-shaped Liquid-Glass tab bar with optional `.glass-tab-bar__accessory` capsule, upright at a side with `.glass-tab-bar-dock--vertical`; `--droplet` for a gliding selection |
+| **Breadcrumbs** | `.glass-breadcrumbs` | The path through nested levels: CSS separators, a "…" for folded levels, crumbs as drop targets |
 | **Accordion** | `.glass-accordion` | Collapsible content sections |
 | **Divider** | `.glass-divider` | Fading separator line |
 
@@ -197,8 +199,10 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Avatar** | `.glass-avatar` | Glass circle (sm/md/lg) |
 | **Status** | `.glass-status` | Notice card with icon |
 | **List** | `.glass-list` | iOS-style grouped settings list with auto dividers |
+| **Tree** | `.glass-tree` | Levels that open and close: twisty, icon, label and a trailing slot per row; children loading or failed to load; a flash for a changed item |
+| **Sorting** | `.is-sort-*` + `.glass-sort__ghost` | The states of a drag that reorders a list or a tree: source, drop line, inside, refused, a grip |
 | **Skeleton** | `.glass-skeleton` | Shimmer lines while content loads |
-| **Table** | `.glass-table` | Plain `<table>` on glass — hairline rows, tabular numbers |
+| **Table** | `.glass-table` | Plain `<table>` on glass — hairline rows, tabular numbers; sort buttons, a sticky header, a row action column, an empty row, cards for narrow places |
 | **Prose** | `.glass-prose` | Rendered Markdown / running text with one class |
 | **Segmented** | `.glass-segmented` | Small exclusive choice as one control, with tone dots, icons or counts, icons alone with `--icons`; scrolls or wraps when crowded; `--droplet` for a gliding selection |
 | **Steps** | `.glass-steps` | Progress through a short flow; container-query aware |
@@ -214,7 +218,9 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Button (Tertiary)** | `.glass-btn--tertiary` | Subtle glass – tertiary action |
 | **Modal** | `.glass-modal` | Centered dialog with blur overlay |
 | **Toast** | `.glass-toast` | Temporary notification, optionally with one action and a close button |
-| **Popover** | `.glass-popover` | Anchored dropdown / menu with fade & scale animation |
+| **Popover** | `.glass-popover` | Anchored dropdown / menu with fade & scale animation; in the top layer with the `popover` attribute |
+| **Tooltip** | `.glass-tooltip` | A short name or hint for a control, on hover and focus, in the top layer |
+| **Menu** | `.glass-menu` | Actions behind a button: icons, shortcuts, check marks, separators, a destructive item |
 
 ### Form Elements
 
@@ -256,6 +262,41 @@ The stylesheet draws the drop; `glasskit-droplet.js` is an optional module in th
 The tab bar's active item can also stand on a capsule of its own, without the drop (since 1.27.0): `--gl-tab-bar-active-bg` and `--gl-tab-bar-active-shadow` draw it, `--gl-tab-bar-spotlight-opacity: 0` turns the spotlight off, `--gl-tab-bar-active-glow: none` the glow on the icon. Where they are set, the drop takes the same surface. The chosen segmented option has the same hooks since 1.28.0: `--gl-segmented-active-bg`, `--gl-segmented-active-shadow` and `--gl-segmented-active-color`, for the option and its drop alike.
 
 **Icons of any kind (since 1.28.0).** Tab bar, accessory and segmented control colour their icon box, and an SVG strokes in `currentColor`: an icon font such as Material Icons, an `<img>` mask or a custom element in `.glass-tab-bar__icon` or `.glass-segmented__icon` follows every state, the lens of the drop and the drag. `.glass-segmented--icons` makes a row of icons alone, a light / dark / auto switch for instance.
+
+**Timing and direction (since 1.32.0).** The drop's motion is tokens, unset today's values and read by the stylesheet and the module alike: `--gl-droplet-duration` and `-easing` for the leading edge, `-trail-duration`, `-trail-delay` and `-trail-easing` for the trailing one, `-lift` (`0.86`; `1` runs it without squashing) and `-lift-duration`, `-settle-duration` and `-settle-easing` for the spring back, `-lens-duration` and `-lens-easing` for the item below the drop. A product whose UI motion stays within about 240ms ease-out:
+
+```css
+:root {
+  --gl-droplet-duration: 240ms;       --gl-droplet-easing: ease-out;
+  --gl-droplet-trail-duration: 240ms; --gl-droplet-trail-delay: 0ms; --gl-droplet-trail-easing: ease-out;
+  --gl-droplet-lift: 1;               --gl-droplet-lift-duration: 0ms; --gl-droplet-settle-duration: 0ms;
+  --gl-droplet-lens-duration: 240ms;  --gl-droplet-lens-easing: ease-out;
+}
+```
+
+Every edge then stops after about 250ms. Keep `--gl-droplet-lift-duration: 0ms` in it: without it the lift's deeper shadow still fades back until about 600ms.
+
+In a column — a sidebar, see below — the drop runs along y: the module takes the axis from the row's `flex-direction` or `aria-orientation="vertical"`, and a finger drags it up and down.
+
+---
+
+## 🧭 One navigation, every edge
+
+Since **1.32.0** the tab bar is not bound to the bottom edge. The items stay the same — icon, label, badge, the active item, the drop — and modifiers on the bar choose the layout, so a page switches between them without rendering the items again:
+
+```html
+<nav class="glass-tab-bar glass-tab-bar--vertical" aria-label="Main">…</nav>                      <!-- sidebar in a grid column -->
+<nav class="glass-tab-bar glass-tab-bar--vertical glass-tab-bar--end" aria-label="Main">…</nav>   <!-- fixed to the end edge -->
+<nav class="glass-tab-bar glass-tab-bar--vertical glass-tab-bar--rail" aria-label="Main">…</nav>  <!-- icons alone -->
+<nav class="glass-tab-bar glass-tab-bar--top" aria-label="Main">…</nav>                           <!-- top of a page -->
+
+<div class="glass-tab-bar-dock glass-tab-bar-dock--vertical glass-tab-bar-dock--start">           <!-- floating, upright -->
+  <nav class="glass-tab-bar glass-tab-bar--floating glass-tab-bar--vertical glass-tab-bar--droplet">…</nav>
+  <button class="glass-tab-bar__accessory glass-tab-bar__accessory--accent" aria-label="Compose">…</button>
+</div>
+```
+
+`--vertical` is a column as high as its container, the icon before the label, the badge at the row's end — a long label ends `--gl-tab-bar-badge-room` (32px) before it. `--start` and `--end` fix it to that edge of the viewport, clear of the edge's safe area — where the thumb rests when a phone is held open, or a foldable has moved its own controls to a side; start and end follow the writing direction. `--rail` shows the icons alone, `--gl-tab-bar-rail-width` (72px) wide, the labels hidden from view but still the items' names. `--top` lays the bar out for a sticky header, with the icon beside the label from 640px, clear of the badge. Every bar shows a focus ring for the keyboard now, the active item under the drop too, and an item may be a link. In GlassKit Elements: `<glk-tab-bar orientation="vertical" dock="end" rail>`, `placement="top"`.
 
 ---
 
@@ -323,6 +364,18 @@ a later declaration if you want to bend one.
 `--gl-tab-bar-active-color` colours the icon and label of the active tab alone, for a spotlight that needs a lighter tone still; unset, they take `--gl-color-primary-text`.
 
 **Contrast (since 1.31.0).** Muted text, card text and icons reach WCAG AA by default in both themes — text 4.5:1, icons with a meaning 3:1, on the page and on glass. The primary as text keeps the primary: GlassKit's light orange reads 2.43:1 as text, but a fixed mix would darken every brand alike, so a light theme that keeps the orange sets `[data-theme="light"] { --gl-color-primary-text: var(--gl-color-primary-on-surface); }` (5.8:1). White on the primary button stays part of the look; `--gl-color-on-primary: color-mix(in srgb, var(--gl-color-primary) 17%, #000)` switches it to a dark ink with 4.6:1 or more.
+
+**Accent fills with white text (since 1.32.0).** To keep white on the primary button, the chosen day and the current step, darken the fills alone — not `--gl-color-primary`, which also draws focus rings, borders and the accent as text. `--gl-btn-primary-bg` replaces the button's background, `--gl-color-primary-fill` colours the flat fills; both are unset. On GlassKit's orange white reaches 4.5:1 from 75 % of the primary mixed with black in the light theme and from 65 % in the dark one:
+
+```css
+:root, [data-theme="dark"] { --gl-color-primary-fill: color-mix(in srgb, var(--gl-color-primary) 65%, #000); }
+[data-theme="light"]       { --gl-color-primary-fill: color-mix(in srgb, var(--gl-color-primary) 75%, #000); }
+:root, [data-theme="dark"], [data-theme="light"] {
+  --gl-btn-primary-bg: linear-gradient(135deg, var(--gl-color-primary-fill), color-mix(in srgb, var(--gl-color-primary-dark) 80%, #000));
+}
+```
+
+White reads 4.53:1 on the fill and at least that along the gradient, and on the chosen day of the date strip the weekday is now as strong as the number. The radio's dot follows `--gl-color-on-primary` now, like the checkbox tick, so the dark ink reaches it as well. Where the brand colour is set at run time, `contrast-color(var(--gl-color-primary))` behind `@supports (color: contrast-color(red))` picks black or white by itself — black on GlassKit's orange, 5.5:1 or more on every stop of the button.
 
 The `theme-override.css` template comes with **4 example themes**:
 - 🔵 Ocean Blue
@@ -424,6 +477,7 @@ All visual values are controlled via CSS Custom Properties:
 /* Colors */
 --gl-color-primary        /* Primary color */
 --gl-color-primary-text   /* text and line icons in the primary; defaults to it */
+--gl-color-primary-fill   /* flat accent fills that carry text: chosen day, current step; defaults to the primary */
 --gl-color-text           /* Text color */
 --gl-color-text-muted     /* Secondary text */
 
@@ -461,6 +515,7 @@ All visual values are controlled via CSS Custom Properties:
 
 /* Component hooks */
 --gl-modal-max-width      /* 340px */
+--gl-btn-primary-bg        /* the primary button's whole background; unset: the gradient of the primary */
 --gl-btn-radius            /* buttons alone; unset: --gl-radius-btn, shared with lists, toasts, the segmented control */
 --gl-btn-radius-sm         /* --sm; unset: --gl-btn-radius, then --gl-radius-sm */
 --gl-btn-padding-x         /* room beside the label; unset: 24px */
@@ -476,7 +531,7 @@ All visual values are controlled via CSS Custom Properties:
 --gl-toggle-track-bg            /* toggle track when off; unset: --gl-surface-2 (…-checked: the primary gradient) */
 --gl-radio-bg, --gl-radio-bg-checked, --gl-radio-border, --gl-radio-border-checked
 --gl-radio-dot-size             /* 10px */
---gl-radio-dot-color            /* white */
+--gl-radio-dot-color            /* unset: --gl-color-on-primary (white), so it follows a dark ink */
 --gl-textarea-field-sizing      /* fixed; content lets text areas grow with their text */
 --gl-input-picker-icon          /* none hides Chromium's picker button of date and time fields */
 --gl-tab-bar-active-color       /* icon and label of the active tab; unset: --gl-color-primary-text */
@@ -488,6 +543,23 @@ All visual values are controlled via CSS Custom Properties:
 --gl-tab-bar-hover-color        /* … of a hovered tab; unset: --gl-icon-default */
 --gl-tab-bar-label-size         /* 10px */
 --gl-tab-bar-z-index            /* 900; fixed bar and floating dock */
+--gl-tab-bar-rail-width         /* 72px; the icon rail */
+--gl-tab-bar-badge-room         /* 32px; where a sidebar row's label ends before its badge */
+--gl-flash-color                /* the flash of a changed list item or tree row; unset: the primary at 30 % */
+--gl-droplet-duration, -easing, -trail-duration, -trail-delay, -trail-easing   /* the drop's journey */
+--gl-droplet-lift, -lift-duration, -settle-duration, -settle-easing           /* its squash and spring back */
+--gl-droplet-lens-duration, -lens-easing                                      /* the item below it growing */
+--gl-tooltip-max-width          /* 240px */
+--gl-tooltip-bg, --gl-tooltip-color   /* unset: the theme's dark background, the text colour */
+--gl-tooltip-offset             /* 8px; the distance GlassKit Elements keeps from the control */
+--gl-tree-indent                /* 20px per level */
+--gl-tree-row-height            /* 36px */
+--gl-breadcrumbs-crumb-width    /* 200px; a longer crumb ends in an ellipsis */
+--gl-sort-duration, --gl-sort-easing  /* 180ms, ease-out: rows making room while a list is sorted */
+--gl-table-cell-padding         /* 9px 10px */
+--gl-table-header-padding       /* 8px 10px */
+--gl-table-max-height           /* 60vh; the wrap with a sticky header */
+--gl-table-header-bg            /* the sticky header's surface */
 --gl-segmented-active-bg        /* chosen option and its drop; unset: --gl-surface-5 */
 --gl-segmented-active-shadow    /* their shadow; unset: --gl-shadow-btn */
 --gl-segmented-active-color     /* label and icon of the chosen option; unset: --gl-color-text-heading */
@@ -651,7 +723,7 @@ glasskit/
 
 The full documentation with **live previews**, **copy-paste code blocks**, and **class reference tables** is available in `docs.html`:
 
-- Sidebar navigation to all 34 components
+- Sidebar navigation to all 38 components
 - Live previews on a real glassmorphism background
 - Design token reference
 - Theming guide
@@ -693,10 +765,10 @@ GlassKit ships with an **AI-optimized component reference** in [`SKILL.md`](SKIL
 
 ### What it provides
 
-- **Copy-paste-ready HTML** for all 34 components with exact nesting rules
+- **Copy-paste-ready HTML** for all 38 components with exact nesting rules
 - **Complete design token tables** (colors, surfaces, blur, radii, spacing, shadows, typography)
 - **State class reference** – which class goes where (`is-active`, `is-open`, `is-visible`, `:checked`)
-- **6 composition patterns** – full page layouts (Login, Dashboard, Form, Modal, Settings, Progress)
+- **8 composition patterns** – full page layouts (Login, Dashboard, Form, Modal, Settings, iOS Settings, Progress, Back office)
 - **Common mistakes & corrections** – prevents the most frequent AI-generated errors
 - **Quick reference table** – all components with their modifiers at a glance
 
@@ -723,7 +795,8 @@ A few refinements arrive later and fall back quietly where they are missing:
 
 - The first-line alignment of toggle, checkbox and radio uses the `lh` unit (Firefox 120); without it the control sits at the top of its label.
 - List rows without a leading icon move their divider in with `:has()` (Firefox 121); without it the divider keeps the icon inset.
-- Right to left, the pairs that must move together — select chevron and padding, toggle thumb and travel, progress gradient — sit under `:dir(rtl)` (Chrome 120); without it they stay left to right.
+- Right to left, the pairs that must move together — select chevron and padding, toggle thumb and travel, progress gradient — sit under `:dir(rtl)` (Chrome 120); without it they stay left to right. A side bar and the upright dock (since 1.32.0) find their edge by the writing direction everywhere; only the padding for the safe area of the physical side waits for `:dir()`.
+- The top-layer variants of popover, tooltip and menu (`[popover]`, since 1.32.0) need the Popover API (Chrome 114, Safari 17, Firefox 125); the anchored `.glass-popover` with `.is-open` works everywhere. `contrast-color()` for the ink is an opt-in behind `@supports`.
 
 > **Note:** In browsers without `backdrop-filter` support, elements will be rendered with the defined background colors – the UI remains usable, just without the blur effect.
 
@@ -739,16 +812,18 @@ Page Attributes (on <html>):
 Interactive States:
   .is-active          → Tab Bar item, Modal Overlay
   .is-open            → Accordion item, Popover
+  :popover-open       → Popover, Tooltip, Menu with [popover] (top layer)
   .is-visible         → Toast
   :checked            → Toggle, Checkbox, Radio
   :focus              → Input, Textarea, Select, Range
   :disabled           → Input, Select, Textarea, Range, Toggle, Checkbox, Radio,
                         Button, Pill, Tab Bar Accessory, Modal action, list row
-  [aria-disabled]     → a.glass-btn and the other buttons (link still navigates)
+  [aria-disabled]     → a.glass-btn and the other buttons (link still navigates), menu items
 
 Button Modifiers:
   .glass-btn--primary / --secondary / --tertiary
   .glass-btn--sm / --lg / --auto
+  --gl-btn-primary-bg              (the primary's whole background, for white text with AA)
 
 Card Modifiers:
   .glass-card--glow
@@ -784,16 +859,38 @@ Input affixes:
 List Modifiers:
   .glass-list--flush / --bare
   .glass-list__item--interactive / --center
+  .glass-list__item.is-flash       (a changed item flashes; --gl-flash-color)
   --gl-list-title-white-space / --gl-list-subtitle-white-space / --gl-list-subtitle-lines   (wrapping, app-wide)
 
 Popover Modifiers:
   .glass-popover--top / --start / --end
+  .glass-popover[popover]          (top layer, placed by script; [data-side="top"] above its control)
+
+Tooltip:
+  .glass-tooltip[popover]          (role="tooltip", top layer)
+  --gl-tooltip-max-width / --gl-tooltip-bg / --gl-tooltip-color
+
+Menu:
+  .glass-menu[popover] · __item / __item--danger / [aria-checked] / [aria-disabled] · __check / __icon / __label / __trailing · __separator · __group-label
+
+Tree:
+  .glass-tree · __row.is-expanded / .is-selected / .is-leaf / .is-loading / .is-error / .is-disabled / .is-flash · __twisty / __icon / __label / __trailing · __group
+  --gl-tree-level (per row) / --gl-tree-indent / --gl-tree-row-height
+
+Breadcrumbs:
+  .glass-breadcrumbs · __list / __item / __item--overflow · __crumb / __current / __overflow · .is-drop-target / .is-drop-refused
+
+Sorting:
+  .is-sort-source / -before / -after / -inside / -refused · .glass-sort__ghost · .glass-sort__handle
+  --gl-sort-duration / --gl-sort-easing
 
 Skeleton:
   .glass-skeleton__line / __line--title
 
 Table:
   .glass-table-wrap · .glass-table__num / __muted
+  .glass-table__sort / __sort-icon · th[aria-sort] · .glass-table__actions · .glass-table__empty
+  .glass-table-wrap--sticky + .glass-table--sticky · .glass-table--scrolls · .glass-table--list · .glass-table-frame[data-more-start / data-more-end]
 
 Prose:
   .glass-prose   (styles the rendered content beneath it)
@@ -817,6 +914,7 @@ Date strip:
 
 Calendar:
   .glass-calendar__nav · __wd · __day[aria-pressed] / --today / --other / [aria-disabled] · __marks · __mark--primary / --success / --warning / --error
+  --gl-color-primary-fill          (the chosen day's fill, also in the date strip and the current step's number)
 
 Image picker:
   .glass-image-picker__preview / --round · __label / __hint / __actions
@@ -833,6 +931,13 @@ Tab Bar – Floating:
   .glass-tab-bar__accessory--accent / --success / --error
   --gl-tab-bar-active-bg / -shadow · --gl-tab-bar-spotlight-opacity · --gl-tab-bar-active-glow
   --gl-tab-bar-color / -hover-color · --gl-tab-bar-label-size · --gl-tab-bar-z-index
+  --gl-droplet-duration / -easing / -trail-duration / -trail-delay / -trail-easing / -lift / -lift-duration / -settle-duration / -settle-easing / -lens-duration / -lens-easing
+
+Tab Bar – Layouts:
+  .glass-tab-bar--vertical         (sidebar) · --start / --end (fixed to a side) · --rail (icons alone)
+  .glass-tab-bar--top              (top of a page)
+  .glass-tab-bar-dock--vertical / --start / --end   (the floating bar upright at a side)
+  --gl-tab-bar-rail-width / --gl-tab-bar-badge-room
 
 Right to left:
   dir="rtl" on <html> or a container – the components mirror
