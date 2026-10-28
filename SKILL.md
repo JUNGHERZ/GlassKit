@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.32.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.33.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -13,6 +13,8 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.32.0) wi
 > **New in 1.28.0 — icons of any kind, and tokens instead of overrides.** Tab bar, accessory and segmented control colour their icon box, not the SVG: put a font icon (Material Icons), an `<img>` mask or a custom element straight into `.glass-tab-bar__icon` or `.glass-segmented__icon`, and it follows every state, the lens of the drop and the drag. `--icons` makes an icon-only segmented row (light / dark / auto). The inactive tab colour, the hover colour, the label size and the z-index of the tab bar are tokens, and so are the surface, shadow and text colour of the chosen segmented option. **Where a project restyles tab icons per state, or overrides the tab bar's literals, replace that with the tokens** (3.4, 3.29).
 
 > **New in 1.32.0 — one navigation for every edge, four components, and AA on the accent fills.** The tab bar leaves the bottom edge: `--vertical` makes it a sidebar, `--start` or `--end` fixes it to that side of the viewport — where the thumb rests on a phone held open, or a foldable that moved its system controls to a side — `--rail` shrinks it to icons, `--top` lays it out for the top of a page, and the floating bar stands upright in `.glass-tab-bar-dock--vertical`. In a column the drop runs along y, and its timing is tokens (`--gl-droplet-*`). New: the tooltip, the menu, the tree and the breadcrumbs (3.36–3.39), the states of a drag that reorders a list or a tree (3.40), and for the table a sort button, a sticky header, a row action column, an empty row and a card layout (3.27). Popover, tooltip and menu open in the top layer with the `popover` attribute. `--gl-btn-primary-bg` and `--gl-color-primary-fill` darken the accent fills for white text without touching the brand colour, and the radio's dot follows `--gl-color-on-primary`. **Where a project builds its own sidebar, tooltip, menu, tree or breadcrumbs, overrides the drop's transitions, or darkens `--gl-color-primary` for white button text, replace that** (3.4, 3.7, 3.25, section 2).
+
+> **New in 1.33.0 — a rail that names its items, and tokens for the tab bar's details.** `--rail` with `--labels` keeps the label under the icon, and `--floating` with `--vertical` and `--start` or `--end` makes the rail a pane of its own glass at that edge, full height and inset from it; `__leading` and `__trailing` hold a mark, the accessory (`__accessory-item` with its name under it) and a foot inside the bar. `--gl-tab-bar-icon-size`, `--gl-tab-bar-item-radius` and `--gl-tab-bar-active-weight` replace overrides of global tokens, and the items transition only colour, surface, shadow, opacity and the press. Also new: `.glass-input-group--label-end` for a link such as "Forgot password?" at the end of the label row, and `.glass-badge--md`, a 36px choice chip with a 44px tap target.
 
 ---
 
@@ -505,9 +507,13 @@ Every state — inactive, hover, active, under the drop, the drag — sets `colo
 | `--gl-tab-bar-color` | `--gl-icon-muted` | Icon and label of the inactive tabs; `var(--gl-icon-strong)` reads better on a busy background |
 | `--gl-tab-bar-hover-color` | `--gl-icon-default` | Icon and label of a hovered tab — set it too when `--gl-tab-bar-color` is lighter than `--gl-icon-default`, or hover dims the tab |
 | `--gl-tab-bar-label-size` | `10px` | Label size (Material uses 12px, Apple's HIG about 13px) |
+| `--gl-tab-bar-icon-size` | `24px` | Size of the icon box and of an SVG in it (since 1.33.0); a compact top bar takes the segmented control's 18px |
+| `--gl-tab-bar-active-weight` | `--gl-font-weight-medium` | Weight of the active tab's label (since 1.33.0), e.g. `var(--gl-font-weight-semibold)` |
 | `--gl-tab-bar-z-index` | `900` | Stacking of `.glass-tab-bar` and `.glass-tab-bar-dock`, e.g. below a side drawer |
 
 Never copy the state rules onto an icon element of your own, and never override `stroke` on `.glass-tab-bar__icon svg`: since 1.28.0 such a rule reaches every state, the active one too. Set the tokens.
+
+**Transitions (since 1.33.0).** The items move only what a state changes — `color`, `background-color`, `box-shadow`, `opacity`, `transform` — not `all`. A bar that switches its layout (upright, floating, a rail) takes its new size at once; with `all`, padding, width and height glided for 250ms and an item measured meanwhile was not yet its size. Do not put `transition: all` back on the items.
 
 #### Floating variant + Accessory
 
@@ -610,6 +616,8 @@ Tokens for a capsule behind the active item, like the selected tab of iOS 26 —
 
 A nearly opaque white capsule (`rgba(255, 255, 255, 0.9)`) lets a dark brand primary stay the active colour in the dark theme. The capsule is the item's background, rounded like the item: a pill on the floating bar, 12px on the fixed one.
 
+`--gl-tab-bar-item-radius` (since 1.33.0) rounds the floating items and the drop together — unset a capsule (`--gl-radius-full`); in a rail with labels unset 16px. Set it on the bar instead of `--gl-radius-full`, which every pill and badge shares: 18px for the rounded squares of a rail, 12px for a compact top bar that looks like a segmented control.
+
 #### Sidebar, rail, top bar and side dock (since 1.32.0)
 
 One navigation in more places than the bottom edge. The items stay the same — icon, label, badge, `.is-active`, the drop — and only the bar's modifiers change, so a page switches between the layouts (a media query in script, a setting per device) without rendering the items again.
@@ -666,6 +674,51 @@ One navigation in more places than the bottom edge. The items stay the same — 
 - **Name and state.** Name every navigation with `aria-label` when a page has more than one, mark the open view with `aria-current="page"`, and word a count in the item's name — `aria-label="Customers, 3 new"` instead of "3 Customers".
 - **Every bar, the bottom one too,** shows a focus ring on the item that has the keyboard focus — the active item under the drop included — and an item may be an `<a>` (no underline, the bar's colours).
 - The drop runs along y in a column (see Droplet above); `--vertical` with `--droplet` needs nothing else.
+
+#### Rail with labels, floating rail, leading and trailing places (since 1.33.0)
+
+A desktop rail that names its items: `--labels` next to `--rail` keeps the label under the icon. With `--floating` the rail is a pane of its own glass, as high as its container with the corners of a card; with `--start` or `--end` as well, it stands at that edge of the viewport, full height less `--gl-tab-bar-floating-inset` at both ends and that far from its edge, clear of the safe areas, with the corners of a card. `__leading` and `__trailing` are places inside the bar: above the items in a column (a mark, the accessory) and at its far end (a foot such as the account); before and after the items in a row.
+
+```html
+<nav class="glass-tab-bar glass-tab-bar--floating glass-tab-bar--vertical glass-tab-bar--start
+            glass-tab-bar--rail glass-tab-bar--labels glass-tab-bar--droplet"
+     aria-label="Main" style="--gl-tab-bar-rail-width: 96px; --gl-tab-bar-label-size: 12px">
+  <div class="glass-tab-bar__leading">
+    <img src="mark.svg" alt="" width="40" height="40">
+    <div class="glass-tab-bar__accessory-item">
+      <button class="glass-tab-bar__accessory glass-tab-bar__accessory--accent" aria-label="Assistant"><svg viewBox="0 0 24 24"><!-- Icon --></svg></button>
+      <span class="glass-tab-bar__accessory-label" aria-hidden="true">Assistant</span>
+    </div>
+  </div>
+  <a class="glass-tab-bar__item is-active" href="/" aria-current="page">
+    <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><!-- Icon --></svg></span>
+    <span class="glass-tab-bar__label">App</span>
+  </a>
+  <!-- more items -->
+  <div class="glass-tab-bar__trailing"><!-- the account --></div>
+</nav>
+<main style="padding-inline-start: calc(96px + 2 * 16px)">…</main>
+```
+
+| Class | Description |
+|---|---|
+| `.glass-tab-bar--labels` | With `--rail`: the label under the icon at `--gl-tab-bar-label-size`; the items fill the rail's width (`--gl-tab-bar-rail-width`) and are at least `--gl-tab-bar-rail-item-height` (62px) high, rounded by `--gl-tab-bar-item-radius` (unset 16px), and so is the drop; a long label ends in an ellipsis; no tooltips needed |
+| `--floating` + `--vertical` + `--rail` | A rail of its own glass, docked or not: as high as its container, corners `--gl-tab-bar-rail-radius` (unset `--gl-radius-card`), padding `--gl-space-sm` / `--gl-space-xs`. With `--start` / `--end` as well, fixed at that edge: `top` / `bottom` and the side `--gl-tab-bar-floating-inset` (16px) plus the safe area; mirrored right to left |
+| `.glass-tab-bar__leading` / `__trailing` | Places inside the bar before and after the items: in a column above them and at the far end (`margin-block-start: auto`), in a row before and after them; hide an empty one with `hidden` |
+| `.glass-tab-bar__accessory-item` | The accessory over its name, `.glass-tab-bar__accessory-label` — the name is the button's `aria-label` too, so the visible one is `aria-hidden`; let a click on it press the button |
+
+| Token | Unset | Effect |
+|---|---|---|
+| `--gl-tab-bar-rail-width` | `72px` | Width of the rail (a labelled one usually 96px) |
+| `--gl-tab-bar-rail-item-height` | `62px` | Least height of an item in a rail with labels |
+| `--gl-tab-bar-item-radius` | a capsule; `16px` in a rail with labels | Corners of the floating items, the labelled rail's items and the drop |
+| `--gl-tab-bar-floating-inset` | `16px` | Distance of a floating rail at an edge from that edge and from the viewport's ends |
+| `--gl-tab-bar-rail-radius` | `--gl-radius-card` | Corners of a floating rail, docked or not |
+
+- **The page keeps the rail's side free**, its width plus the inset on both sides: `padding-inline-start: calc(var(--rail-width) + 2 * 16px)`.
+- **In the flow** (no `--start` / `--end`) a floating rail is the same pane: as high as its container (a grid column), with `--gl-tab-bar-rail-radius` corners and room around its items. Only the compact upright pill without `--rail` — the one in `.glass-tab-bar-dock--vertical` — stays a capsule.
+- **A compact top bar** looks like a segmented control with `--gl-tab-bar-icon-size: 18px`, `--gl-tab-bar-item-radius: 12px` and `--gl-tab-bar-active-weight: var(--gl-font-weight-semibold)` on `.glass-tab-bar--top`.
+- GlassKit Elements: `<glk-tab-bar floating orientation="vertical" dock="start" rail="labels">`, the mark and `<glk-tab-accessory show-label>` in `slot="leading"`, the foot in `slot="trailing"`.
 
 ---
 
@@ -784,6 +837,7 @@ Tags and labels.
 | `.glass-badge--error` | Red |
 | `.glass-badge--interactive` | Pressable chip — cursor, hover tint, focus ring, press feedback |
 | `.glass-badge--selected` | The chip that is on |
+| `.glass-badge--md` | A chip to choose with (since 1.33.0): `--gl-badge-md-height` (36px) high, in the small text of a form; with `--interactive` a tap target of 44px |
 
 **Chips (since 1.12.0).** A badge doubles as a filter chip. Use a real `<button>` and carry the state in `aria-pressed`, so the row is operable by keyboard and announced as a toggle — the classes only paint it.
 
@@ -792,6 +846,13 @@ Tags and labels.
         aria-pressed="true">Active</button>
 <button class="glass-badge glass-badge--interactive"
         aria-pressed="false">Applied</button>
+```
+
+**Choice chips (since 1.33.0).** `--md` sizes a chip for a choice in a form — a row of sectors in a sign-up — 36px high (`--gl-badge-md-height`) in `--gl-font-size-sm`. Interactive, it takes taps 4px above and below its edges, 44px in all, the target every other control keeps; leave at least 8px between the lines of a wrapping row so the targets meet without overlapping. Never bend `--gl-space-2xs` or `--gl-font-size-xs` to make chips taller.
+
+```html
+<button class="glass-badge glass-badge--md glass-badge--interactive glass-badge--selected" aria-pressed="true">Café &amp; bakery</button>
+<button class="glass-badge glass-badge--md glass-badge--interactive" aria-pressed="false">Restaurant</button>
 ```
 
 `--selected` deepens the color the badge already carries rather than overruling it, so `glass-badge--success glass-badge--selected` stays green. Each variant points `--gl-badge-accent` at its own color; set that variable on a single badge to give one chip a color of its own. Both states paint through a full-bleed inset shadow instead of `background`, so they layer over a variant's gradient without wiping it.
@@ -1028,6 +1089,8 @@ Date and time fields (`type="date"`, `time`, `datetime-local`, `month`) take the
 | `.glass-input-wrap` | Box around the input that holds a prefix and/or suffix (since 1.22.0) |
 | `.glass-input-wrap__prefix` / `__suffix` | Icon, currency, unit or button at the field's start / end (logical: they swap sides under `dir="rtl"`) |
 | `.glass-input-wrap--prefix` / `--suffix` | Makes room in the field; also automatic where `:has()` is supported |
+| `.glass-input-group--label-end` | The group draws `__label-end` on the label's line, at its end (since 1.33.0) |
+| `.glass-input-group__label-end` | A link such as "Forgot password?", written **after** the field so the keyboard reaches it after the field |
 
 **Prefix and suffix (since 1.22.0).** The affixes lie on the field, centred; its padding grows by `--gl-input-prefix-size` / `--gl-input-suffix-size` (18px — an icon — unless set; set it for a wider unit). A click on text, an icon or a disabled control reaches the field; enabled controls, links and elements with `tabindex` take their own, form-associated custom elements such as `<glk-button>` included (since 1.22.2 — before, a disabled button took the click and a `<glk-button>` got none). They take it even inside a container locked with `pointer-events: none`: lock it with `inert`, or disable them. `<glk-input>` in GlassKit Elements has `prefix` / `suffix` slots on this and measures the width itself.
 
@@ -1042,6 +1105,16 @@ Date and time fields (`type="date"`, `time`, `datetime-local`, `month`) take the
 ```
 
 **Long values, empty labels, picker icon (since 1.25.0).** A value or placeholder too long for the field ends in an ellipsis while the field is not being edited, and a `.glass-label` without text takes no room (`:empty`; it used to keep the group's 8px gap). Date and time fields keep the browser's own picker button; `--gl-input-picker-icon: none` hides it in Chromium (WebKit and Firefox draw none to hide) — for a field whose prefix is the picker; call `showPicker()` from it then. It also hides the arrow of a field with a `<datalist>`.
+
+**At the end of the label row (since 1.33.0).** A link on the line of the label, such as "Forgot password?" beside "Password": write `.glass-input-group__label-end` after the field and add `--label-end` to the group. The group becomes a grid that draws the link at the end of the label's line, in the label's small text; in the tab order it stays after the field — e-mail, password, "Forgot password?", sign in, the order that reads best in a sign-in form. It works the same around a `.glass-textarea` or `.glass-select`. Never position the link absolutely over the label row. In GlassKit Elements: `slot="label-end"` on `<glk-input>`, `<glk-textarea>` and `<glk-select>`.
+
+```html
+<div class="glass-input-group glass-input-group--label-end">
+  <label class="glass-label" for="password">Password</label>
+  <input class="glass-input" id="password" type="password">
+  <a class="glass-input-group__label-end" href="/reset">Forgot password?</a>
+</div>
+```
 
 ---
 
@@ -2598,6 +2671,10 @@ Key points:
 | The native `title` attribute as the tooltip of an icon button | `.glass-tooltip` (3.36) — `title` shows neither on keyboard focus nor on touch |
 | Commands behind a button as plain buttons in a popover, without menu roles | `.glass-menu` with `role="menu"` / `menuitem` (3.37), the keyboard from `<glk-menu>` |
 | `›` or `/` typed between breadcrumbs | Leave them out — `.glass-breadcrumbs__item` draws the chevron, hidden from screen readers and mirrored right to left |
+| `--gl-radius-full` changed on the tab bar to round its drop and items | `--gl-tab-bar-item-radius` (since 1.33.0); the global token shapes every pill and badge |
+| A wrapper around a floating vertical bar that draws the rail's glass, with the mark and the accessory as its siblings | `--floating --vertical --start` with `--rail --labels`, the mark and `__accessory-item` in `__leading` (since 1.33.0) |
+| `--gl-space-2xs` / `--gl-font-size-xs` raised on a chip to make it taller | `.glass-badge--md` (since 1.33.0) |
+| A "Forgot password?" link positioned absolutely over the label row | `.glass-input-group--label-end` with `__label-end` after the field (since 1.33.0) |
 | `position: sticky` on `th` inside `.glass-table-wrap` | `.glass-table-wrap--sticky` + `.glass-table--sticky` (since 1.32.0) — a wrap that scrolls sideways is a scroll container in both directions |
 | `.glass-popover` without `[popover]` inside a card or a scrolling box that clips | Open it in the top layer with the `popover` attribute (since 1.32.0) |
 | Overriding `height` of `.glass-btn`, `.glass-input` etc. for a denser UI | `data-density="compact"` on `<html>`, or set a density token — toggle thumb and label alignment follow the tokens, not a hand-set `height` |
@@ -2615,12 +2692,12 @@ Key points:
 | Title | `.glass-title` | – |
 | Card | `.glass-card` | `--glow` |
 | Button | `.glass-btn` | `--primary`, `--secondary`, `--tertiary`, `--sm`, `--lg`, `--auto`, `:disabled` |
-| Badge | `.glass-badge` | `--primary`, `--success`, `--warning`, `--error`, `--interactive`, `--selected` |
+| Badge | `.glass-badge` | `--primary`, `--success`, `--warning`, `--error`, `--interactive`, `--selected`, `--md` |
 | Avatar | `.glass-avatar` | `--sm`, `--lg` |
 | Divider | `.glass-divider` | – |
 | Status | `.glass-status` | – |
 | Input | `.glass-input` | `--error`, `:disabled`; `.glass-input-wrap` with `__prefix` / `__suffix`, `--prefix` / `--suffix` |
-| Input Group | `.glass-input-group` | – |
+| Input Group | `.glass-input-group` | `--label-end` with `__label-end` |
 | Label | `.glass-label` | – |
 | Hint | `.glass-hint` | `--error` |
 | Textarea | `.glass-textarea` | `:disabled` |
@@ -2633,7 +2710,7 @@ Key points:
 | Progress | `.glass-progress` | `--sm`, `--lg`, `--success`, `--error` |
 | Modal | `.glass-modal-overlay` | `.is-active` |
 | Toast | `.glass-toast` | `--success`, `--error`, `--warning`, `.is-visible`, `__action`, `__close` |
-| Tab Bar | `.glass-tab-bar` | `.is-active` on items, `__icon`, `__label`, `__badge`, `--floating`, `--droplet`, `--vertical`, `--start`, `--end`, `--rail`, `--top`; `.glass-tab-bar-dock--vertical`, `-dock--start` / `--end` |
+| Tab Bar | `.glass-tab-bar` | `.is-active` on items, `__icon`, `__label`, `__badge`, `__leading`, `__trailing`, `__accessory-item`, `__accessory-label`, `--floating`, `--droplet`, `--vertical`, `--start`, `--end`, `--rail`, `--labels`, `--top`; `.glass-tab-bar-dock--vertical`, `-dock--start` / `--end` |
 | Accordion | `.glass-accordion` | `.is-open` on items |
 | List | `.glass-list` | `--flush`, `--bare`, `__item--interactive`, `__item--center`, `__item--danger`, `__item--accent`, `__leading--lg`, `__subtitle--wrap`, `__value`, `__section-header`, `.is-flash` on items |
 | Popover | `.glass-popover` | `--top`, `--start`, `--end`, `.is-open`, `[popover]`, `[data-side]` |

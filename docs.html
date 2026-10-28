@@ -380,7 +380,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.32.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.33.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -465,7 +465,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.32.0</span>
+      <span class="docs-hero__badge">v1.33.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">38 Components</span>
@@ -838,13 +838,15 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span></div>
     </div>
     <h3 id="tab-bar-icons" style="margin-top:var(--gl-space-lg);">Icons and tokens</h3>
-    <p>Since 1.28.0 every state colours the icon box, and an SVG strokes in <code>currentColor</code>. So the icon can be anything that takes a colour &mdash; a font icon such as Material Icons, an <code>&lt;img&gt;</code> drawn as a mask, an element of your own &mdash; and it follows active and hover, the lens of the <a href="#droplet">drop</a> and the drag. A font icon takes the box&rsquo;s 24&nbsp;px unless its own class sets a size. Give it <code>aria-hidden="true"</code>: its text would join the tab&rsquo;s name. Four tokens, all unset, so nothing changes until a project sets them:</p>
+    <p>Since 1.28.0 every state colours the icon box, and an SVG strokes in <code>currentColor</code>. So the icon can be anything that takes a colour &mdash; a font icon such as Material Icons, an <code>&lt;img&gt;</code> drawn as a mask, an element of your own &mdash; and it follows active and hover, the lens of the <a href="#droplet">drop</a> and the drag. A font icon takes the box&rsquo;s 24&nbsp;px unless its own class sets a size. Give it <code>aria-hidden="true"</code>: its text would join the tab&rsquo;s name. Six tokens, all unset, so nothing changes until a project sets them:</p>
     <table class="docs-table">
       <thead><tr><th>Token</th><th>Unset</th><th>Effect</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-tab-bar-color</code></td><td><code>--gl-icon-muted</code></td><td>Icon and label of the inactive tabs</td></tr>
         <tr><td><code>--gl-tab-bar-hover-color</code></td><td><code>--gl-icon-default</code></td><td>Icon and label of a hovered tab; set it as well when the colour above is lighter</td></tr>
         <tr><td><code>--gl-tab-bar-label-size</code></td><td><code>10px</code></td><td>Size of the labels</td></tr>
+        <tr><td><code>--gl-tab-bar-icon-size</code></td><td><code>24px</code></td><td>Size of the icon box and of an SVG in it (since 1.33.0); a compact bar takes 18&nbsp;px</td></tr>
+        <tr><td><code>--gl-tab-bar-active-weight</code></td><td><code>--gl-font-weight-medium</code></td><td>Weight of the active tab&rsquo;s label (since 1.33.0); every label is medium unless this is set</td></tr>
         <tr><td><code>--gl-tab-bar-z-index</code></td><td><code>900</code></td><td>Stacking of the fixed bar and of the floating dock</td></tr>
       </tbody>
     </table>
@@ -862,6 +864,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <span class="attr">--gl-tab-bar-label-size</span>: <span class="val">12px</span>;
 }</div>
     </div>
+    <p>Since 1.33.0 the items move only what a state changes: colour, surface, shadow, opacity and the press (<code>transition-property: color, background-color, box-shadow, opacity, transform</code>). With <code>all</code>, a bar that changed its layout &mdash; upright, floating, a rail &mdash; let padding, width and height glide for 250&nbsp;ms, and an item measured in that time was not yet its size.</p>
 
     <h3 id="tab-bar-layouts" style="margin-top:var(--gl-space-lg);">Sidebar, rail and top bar</h3>
     <p>Since 1.32.0 the same navigation goes where the layout needs it, not only along the bottom edge. The items stay as they are &mdash; icon, label, badge, the active state, the <a href="#droplet">drop</a> &mdash; and only the bar&rsquo;s layout changes. <code>--vertical</code> makes it a column for a sidebar: placed by the page&rsquo;s layout, a grid column for example, and as high as its container, one item per row with the icon before the label at body size and the badge at the row&rsquo;s end. The active row stands on a surface of its own, <code>--gl-tab-bar-active-bg</code> where that is set, else <code>--gl-surface-3</code>. With <code>--rail</code> as well, the column shows the icons alone, <code>--gl-tab-bar-rail-width</code> (72&nbsp;px) wide: the label stays the item&rsquo;s name for assistive technology, hidden from view, so show it in a <a href="#tooltip">tooltip</a>.</p>
@@ -971,7 +974,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar glass-tab-bar--top"</span> <span class="attr">aria-label=</span><span class="val">"Sections"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/nav&gt;</span>
 <span class="tag">&lt;/header&gt;</span></div>
     </div>
-    <p>Every bar shows a ring for the keyboard now, <code>--gl-shadow-focus</code> on the focused item; until 1.32.0 the items had none. An item may also be a link, <code>&lt;a class="glass-tab-bar__item" href="…"&gt;</code>, so a view opens in a new tab as well; it looks like the button. In GlassKit Elements the layouts are attributes: <code>&lt;glk-tab-bar orientation="vertical"&gt;</code> with <code>rail</code> and <code>dock="start"</code> or <code>"end"</code>, and <code>placement="top"</code>.</p>
+    <p>Every bar shows a ring for the keyboard now, <code>--gl-shadow-focus</code> on the focused item; until 1.32.0 the items had none. An item may also be a link, <code>&lt;a class="glass-tab-bar__item" href="…"&gt;</code>, so a view opens in a new tab as well; it looks like the button. In GlassKit Elements the layouts are attributes: <code>&lt;glk-tab-bar orientation="vertical"&gt;</code> with <code>rail</code> (or <code>rail="labels"</code>) and <code>dock="start"</code> or <code>"end"</code>, and <code>placement="top"</code>; <code>slot="leading"</code> and <code>"trailing"</code> fill the places before and after the items.</p>
     <table class="docs-table">
       <thead><tr><th>Class</th><th>Description</th></tr></thead>
       <tbody>
@@ -980,6 +983,10 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-tab-bar--start</code>, <code>--end</code></td><td>With <code>--vertical</code>: fixed to that edge of the viewport, full height, clear of the safe area; mirrored right to left</td></tr>
         <tr><td><code>.glass-tab-bar--top</code></td><td>Horizontal bar for the top of a page, in the flow, its border at the bottom; the icon beside the label from 640&nbsp;px</td></tr>
         <tr><td><code>a.glass-tab-bar__item</code></td><td>An item as a link, without underline</td></tr>
+        <tr><td><code>.glass-tab-bar--labels</code></td><td>With <code>--rail</code>: the label under the icon; the items fill the rail&rsquo;s width and are at least <code>--gl-tab-bar-rail-item-height</code> high, rounded by <code>--gl-tab-bar-item-radius</code> (since 1.33.0, see <a href="#tab-bar-rail-labels">A rail with labels</a>)</td></tr>
+        <tr><td><code>--floating</code> with <code>--vertical</code> and <code>--rail</code></td><td>A rail of its own glass: as high as its container, with the corners of a card; with <code>--start</code> or <code>--end</code> as well, at that edge of the viewport, full height less <code>--gl-tab-bar-floating-inset</code> at both ends, that far from its edge, clear of the safe areas (since 1.33.0)</td></tr>
+        <tr><td><code>.glass-tab-bar__leading</code>, <code>__trailing</code></td><td>Places before and after the items: above and below them in a column, the trailing one at the far end; before and after them in a row (since 1.33.0)</td></tr>
+        <tr><td><code>.glass-tab-bar__accessory-item</code></td><td>The accessory over its name, <code>.glass-tab-bar__accessory-label</code> (since 1.33.0)</td></tr>
       </tbody>
     </table>
     <p>In the column a long label is cut with an ellipsis and ends before the badge: while a badge shows, the row keeps <code>--gl-tab-bar-badge-room</code> free at its end.</p>
@@ -989,8 +996,100 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>--gl-tab-bar-rail-width</code></td><td><code>72px</code></td><td>Width of the rail</td></tr>
         <tr><td><code>--gl-tab-bar-badge-room</code></td><td><code>32px</code></td><td>Room kept at the end of a sidebar row while it shows a badge, so the label ends before it</td></tr>
         <tr><td><code>--gl-tab-bar-active-bg</code></td><td><code>--gl-surface-3</code> in a column</td><td>The active row&rsquo;s surface; on the bottom bar unset means none</td></tr>
+        <tr><td><code>--gl-tab-bar-rail-item-height</code></td><td><code>62px</code></td><td>Least height of an item in a rail with labels (since 1.33.0)</td></tr>
+        <tr><td><code>--gl-tab-bar-item-radius</code></td><td>a capsule; <code>16px</code> in a rail with labels</td><td>Corners of the floating items, of a labelled rail&rsquo;s items and of the drop (since 1.33.0)</td></tr>
+        <tr><td><code>--gl-tab-bar-floating-inset</code></td><td><code>16px</code></td><td>Distance of a floating rail at an edge from that edge and from the viewport&rsquo;s ends (since 1.33.0)</td></tr>
+        <tr><td><code>--gl-tab-bar-rail-radius</code></td><td><code>--gl-radius-card</code></td><td>Corners of a floating rail, docked or not (since 1.33.0)</td></tr>
       </tbody>
     </table>
+
+    <h3 id="tab-bar-compact" style="margin-top:var(--gl-space-lg);">A compact top bar</h3>
+    <p>Three tokens since 1.33.0 shape the items without a change to GlassKit&rsquo;s global ones: <code>--gl-tab-bar-icon-size</code> sizes the icons, <code>--gl-tab-bar-item-radius</code> rounds the drop and the floating items &mdash; unset a capsule &mdash;, and <code>--gl-tab-bar-active-weight</code> sets the active label&rsquo;s weight. A top bar drawn as a compact track, like a <a href="#segmented">segmented control</a>, takes the control&rsquo;s 18&nbsp;px icons and 12&nbsp;px corners:</p>
+    <div class="docs-preview" style="padding:0;">
+      <nav class="glass-tab-bar glass-tab-bar--top glass-tab-bar--droplet" aria-label="Sections" data-docs-tabs style="--gl-tab-bar-icon-size: 18px; --gl-tab-bar-item-radius: 12px; --gl-tab-bar-active-weight: var(--gl-font-weight-semibold);">
+          <button class="glass-tab-bar__item is-active">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <span class="glass-tab-bar__label">Home</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg><span class="glass-tab-bar__badge">3</span></span>
+            <span class="glass-tab-bar__label">Invoices</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <span class="glass-tab-bar__label">Customers</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span>
+            <span class="glass-tab-bar__label">Settings</span>
+          </button>
+      </nav>
+      <div aria-hidden="true" style="padding:20px 24px;"><div class="glass-skeleton"><div class="glass-skeleton__line glass-skeleton__line--title" style="width:40%"></div><div class="glass-skeleton__line"></div><div class="glass-skeleton__line" style="width:70%"></div></div></div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar glass-tab-bar--top glass-tab-bar--droplet"</span> <span class="attr">aria-label=</span><span class="val">"Sections"</span>
+     <span class="attr">style=</span><span class="val">"--gl-tab-bar-icon-size: 18px; --gl-tab-bar-item-radius: 12px;
+            --gl-tab-bar-active-weight: var(--gl-font-weight-semibold)"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/nav&gt;</span></div>
+    </div>
+
+    <h3 id="tab-bar-rail-labels" style="margin-top:var(--gl-space-lg);">A rail with labels</h3>
+    <p>Since 1.33.0 <code>--labels</code> next to <code>--rail</code> keeps the label under the icon, as on the floating bar: a desktop rail that names its items. The items fill the rail&rsquo;s width, <code>--gl-tab-bar-rail-width</code>, and are at least <code>--gl-tab-bar-rail-item-height</code> (62&nbsp;px) high; <code>--gl-tab-bar-item-radius</code> rounds them and the drop, unset 16&nbsp;px, the corners of a button. A long label ends in an ellipsis, and the badge stays at the icon&rsquo;s corner.</p>
+    <p><code>__leading</code> and <code>__trailing</code> are places inside the bar before and after the items: in a column above them &mdash; a mark, the <a href="#tab-bar-floating">accessory</a> &mdash; and at its far end &mdash; a foot such as the account; in a row before and after them. <code>.glass-tab-bar__accessory-item</code> stands the accessory over its name, <code>__accessory-label</code>. The name is the button&rsquo;s <code>aria-label</code> as well, so the visible one is <code>aria-hidden</code>, and a click on it should press the button.</p>
+    <p>With <code>--floating</code> the rail is a pane of its own glass, docked or not: as high as its container, with the corners of a card, <code>--gl-tab-bar-rail-radius</code>, and room around its items &mdash; in the flow, a grid column of the page, as in the preview. With <code>--start</code> or <code>--end</code> as well, it stands at that edge of the viewport instead: as high as the viewport less <code>--gl-tab-bar-floating-inset</code> (16&nbsp;px) at both ends, that far from its edge, clear of the safe areas and mirrored right to left. The compact upright pill of the <a href="#tab-bar-floating-vertical">vertical dock</a>, without <code>--rail</code>, stays a capsule.</p>
+    <div class="docs-preview" style="padding:16px;height:520px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;">
+      <nav class="glass-tab-bar glass-tab-bar--floating glass-tab-bar--vertical glass-tab-bar--rail glass-tab-bar--labels glass-tab-bar--droplet" aria-label="Sections" data-docs-tabs style="--gl-tab-bar-rail-width: 96px; --gl-tab-bar-label-size: 12px;">
+        <div class="glass-tab-bar__leading">
+          <span aria-hidden="true" style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--gl-color-primary),var(--gl-color-primary-dark));box-shadow:var(--gl-inset-strong),0 4px 12px rgba(0,0,0,0.12);"></span>
+          <div class="glass-tab-bar__accessory-item">
+            <button class="glass-tab-bar__accessory glass-tab-bar__accessory--accent" aria-label="Assistant"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.6 5.6 1.9-5.6 1.9L12 18l-1.9-5.6-5.6-1.9 5.6-1.9z"/></svg></button>
+            <span class="glass-tab-bar__accessory-label" aria-hidden="true">Assistant</span>
+          </div>
+        </div>
+          <button class="glass-tab-bar__item is-active">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <span class="glass-tab-bar__label">Home</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg><span class="glass-tab-bar__badge">3</span></span>
+            <span class="glass-tab-bar__label">Invoices</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <span class="glass-tab-bar__label">Customers</span>
+          </button>
+          <button class="glass-tab-bar__item">
+            <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span>
+            <span class="glass-tab-bar__label">Settings</span>
+          </button>
+        <div class="glass-tab-bar__trailing">
+          <span class="glass-avatar glass-avatar--sm" role="img" aria-label="Account">MK</span>
+        </div>
+      </nav>
+      <div aria-hidden="true" style="padding:8px 4px;"><div class="glass-skeleton"><div class="glass-skeleton__line glass-skeleton__line--title" style="width:60%"></div><div class="glass-skeleton__line"></div><div class="glass-skeleton__line" style="width:80%"></div></div></div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;nav</span> <span class="attr">class=</span><span class="val">"glass-tab-bar glass-tab-bar--floating glass-tab-bar--vertical glass-tab-bar--start
+            glass-tab-bar--rail glass-tab-bar--labels glass-tab-bar--droplet"</span>
+     <span class="attr">aria-label=</span><span class="val">"Sections"</span> <span class="attr">style=</span><span class="val">"--gl-tab-bar-rail-width: 96px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__leading"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;img</span> <span class="attr">src=</span><span class="val">"mark.svg"</span> <span class="attr">alt=</span><span class="val">""</span> <span class="attr">width=</span><span class="val">"40"</span> <span class="attr">height=</span><span class="val">"40"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__accessory-item"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__accessory glass-tab-bar__accessory--accent"</span> <span class="attr">aria-label=</span><span class="val">"Assistant"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;/button&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__accessory-label"</span> <span class="attr">aria-hidden=</span><span class="val">"true"</span><span class="tag">&gt;</span>Assistant<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;a</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__item is-active"</span> <span class="attr">href=</span><span class="val">"/"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__icon"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__label"</span><span class="tag">&gt;</span>Home<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;/a&gt;</span>
+  <span class="cmt">&lt;!-- more items --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__trailing"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- the account --&gt;</span><span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/nav&gt;</span>
+
+<span class="cmt">/* The page keeps the rail's side free: its width and the inset on both sides */</span>
+<span class="cls">main</span> { <span class="attr">padding-inline-start</span>: <span class="val">calc(96px + 2 * 16px)</span>; }</div>
+    </div>
+    <p>In GlassKit Elements the rail is <code>&lt;glk-tab-bar floating orientation="vertical" dock="start" rail="labels"&gt;</code>, with the mark and a <code>&lt;glk-tab-accessory show-label&gt;</code> in <code>slot="leading"</code> and the foot in <code>slot="trailing"</code>.</p>
   </section>
 
   <!-- TAB BAR – FLOATING -->
@@ -1140,7 +1239,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <span class="attr">--gl-tab-bar-active-glow</span>: <span class="val">none</span>;
 }</div>
     </div>
-    <p>A nearly opaque white capsule, <code>rgba(255, 255, 255, 0.9)</code>, lets a dark brand primary stay the active tab&rsquo;s colour in the dark theme, where the spotlight would leave it unreadable. The capsule is the item&rsquo;s background, so it is rounded like the item: a pill on the floating bar, 12px on the fixed one.</p>
+    <p>A nearly opaque white capsule, <code>rgba(255, 255, 255, 0.9)</code>, lets a dark brand primary stay the active tab&rsquo;s colour in the dark theme, where the spotlight would leave it unreadable. The capsule is the item&rsquo;s background, so it is rounded like the item: a pill on the floating bar, 12px on the fixed one. Since 1.33.0 <code>--gl-tab-bar-item-radius</code> rounds the floating items and the <a href="#droplet">drop</a> together, unset a capsule: rounded squares in a rail, the 12&nbsp;px of a segmented control in a <a href="#tab-bar-compact">compact top bar</a>.</p>
 
     <h3 id="droplet" style="margin-top:var(--gl-space-lg);">Droplet</h3>
     <p>Since 1.27.0 <code>.glass-tab-bar--droplet</code> makes the selection fluid. The active item sits on a drop of glass that floats a little above the bar. Tap another tab and the drop runs there like water on a pane: the leading edge goes first, the trailing one follows, the drop runs flatter on the way, settles with a small wobble, and the icons it passes grow as under a lens. A finger can also drag it along the bar; let go, and the tab below it is chosen. It is the most noticeable upgrade an app on the floating bar can take, and it changes nothing else: the markup stays, and where the script does not run the bar keeps its spotlight. Try it:</p>
@@ -1176,7 +1275,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.32/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.33/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -1424,6 +1523,27 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>--gl-badge-accent</code></td><td>The colour both states deepen. Set it per badge to give a chip a colour of its own.</td></tr>
       </tbody>
     </table>
+
+    <h3 id="badge-md" style="margin-top:var(--gl-space-lg);">Choice chips</h3>
+    <p>Since 1.33.0 <code>--md</code> makes a chip to choose with, as in a sign-up form&rsquo;s row of sectors: <code>--gl-badge-md-height</code> (36&nbsp;px) high, in the small text of a form. With <code>--interactive</code> it takes taps on 44&nbsp;px, 4&nbsp;px above and below its edges, the target the other controls keep. Keep at least 8&nbsp;px between the lines of a wrapping row, so the targets meet and do not overlap.</p>
+    <div class="docs-preview docs-preview--row docs-preview--compact">
+      <button class="glass-badge glass-badge--md glass-badge--interactive glass-badge--selected" aria-pressed="true">Caf&eacute; &amp; bakery</button>
+      <button class="glass-badge glass-badge--md glass-badge--interactive" aria-pressed="false">Restaurant</button>
+      <button class="glass-badge glass-badge--md glass-badge--interactive" aria-pressed="false">Hairdresser</button>
+      <button class="glass-badge glass-badge--md glass-badge--interactive" aria-pressed="false">Craft</button>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-badge glass-badge--md glass-badge--interactive glass-badge--selected"</span>
+        <span class="attr">aria-pressed=</span><span class="val">"true"</span><span class="tag">&gt;</span>Caf&eacute; &amp;amp; bakery<span class="tag">&lt;/button&gt;</span></div>
+    </div>
+    <table class="docs-table">
+      <thead><tr><th>Class / token</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>--md</code></td><td>A chip to choose with: 36&nbsp;px high, the small text of a form; interactive, a tap target of 44&nbsp;px</td></tr>
+        <tr><td><code>--gl-badge-md-height</code></td><td>Its height, unset <code>36px</code>; the tap target grows to 44&nbsp;px around it</td></tr>
+      </tbody>
+    </table>
+    <p>In GlassKit Elements: <code>&lt;glk-badge interactive size="md"&gt;</code>.</p>
   </section>
 
   <!-- AVATAR -->
@@ -2211,6 +2331,28 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
     <p>A value or placeholder too long for the field ends in an ellipsis while the field is not being edited, and a <code>.glass-label</code> without text takes no room (both since 1.25.0). Date and time fields keep the browser&rsquo;s own picker button; <code>--gl-input-picker-icon: none</code> hides it in Chromium &mdash; when the field&rsquo;s prefix is the picker, for instance; call <code>showPicker()</code> from it then. It also hides the arrow of a field with a <code>&lt;datalist&gt;</code>.</p>
+    <h3 id="input-label-end">At the end of the label row</h3>
+    <p>Since 1.33.0 a field&rsquo;s label row has a place at its end, for a link such as &ldquo;Forgot password?&rdquo; on the line of &ldquo;Password&rdquo;. Put <code>.glass-input-group__label-end</code> after the field in the markup and <code>--label-end</code> on the group: the group draws it on the label&rsquo;s line, at its end, in the label&rsquo;s small text, and the keyboard still reaches it after the field &mdash; e-mail, password, &ldquo;Forgot password?&rdquo;, sign in, the order that reads best in a sign-in form. It works the same around a <a href="#textarea">textarea</a> or a <a href="#select">select</a>; in GlassKit Elements, <code>&lt;glk-input&gt;</code>, <code>&lt;glk-textarea&gt;</code> and <code>&lt;glk-select&gt;</code> have a <code>label-end</code> slot for it.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <div class="gl-stack gl-stack--md">
+        <div class="glass-input-group">
+          <label class="glass-label" for="docs-signin-email">E-mail</label>
+          <input class="glass-input" id="docs-signin-email" type="email" placeholder="you@example.com" autocomplete="off">
+        </div>
+        <div class="glass-input-group glass-input-group--label-end">
+          <label class="glass-label" for="docs-signin-password">Password</label>
+          <input class="glass-input" id="docs-signin-password" type="password" placeholder="Your password" autocomplete="off">
+          <a class="glass-input-group__label-end" href="#input-label-end" style="color:var(--gl-color-primary-on-surface, var(--gl-color-primary));font-weight:var(--gl-font-weight-medium);text-decoration:none;">Forgot password?</a>
+        </div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-input-group glass-input-group--label-end"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;label</span> <span class="attr">class=</span><span class="val">"glass-label"</span> <span class="attr">for=</span><span class="val">"password"</span><span class="tag">&gt;</span>Password<span class="tag">&lt;/label&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">class=</span><span class="val">"glass-input"</span> <span class="attr">id=</span><span class="val">"password"</span> <span class="attr">type=</span><span class="val">"password"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;a</span> <span class="attr">class=</span><span class="val">"glass-input-group__label-end"</span> <span class="attr">href=</span><span class="val">"/reset"</span><span class="tag">&gt;</span>Forgot password?<span class="tag">&lt;/a&gt;</span>   <span class="cmt">&lt;!-- after the field --&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
   </section>
 
   <!-- TEXTAREA -->
@@ -3162,7 +3304,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td>Title</td><td><code>.glass-title</code></td><td>–</td></tr>
         <tr><td>Card</td><td><code>.glass-card</code></td><td><code>--glow</code></td></tr>
         <tr><td>Button</td><td><code>.glass-btn</code></td><td><code>--primary</code>, <code>--secondary</code>, <code>--tertiary</code>, <code>--sm</code>, <code>--lg</code>, <code>--auto</code>, <code>:disabled</code></td></tr>
-        <tr><td>Badge</td><td><code>.glass-badge</code></td><td><code>--primary</code>, <code>--success</code>, <code>--warning</code>, <code>--error</code>, <code>--interactive</code>, <code>--selected</code></td></tr>
+        <tr><td>Badge</td><td><code>.glass-badge</code></td><td><code>--primary</code>, <code>--success</code>, <code>--warning</code>, <code>--error</code>, <code>--interactive</code>, <code>--selected</code>, <code>--md</code></td></tr>
         <tr><td>Avatar</td><td><code>.glass-avatar</code></td><td><code>--sm</code>, <code>--lg</code></td></tr>
         <tr><td>Divider</td><td><code>.glass-divider</code></td><td>–</td></tr>
         <tr><td>Status</td><td><code>.glass-status</code></td><td>–</td></tr>
@@ -3182,7 +3324,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td>Popover</td><td><code>.glass-popover</code></td><td><code>--top</code>, <code>--start</code>, <code>--end</code>, <code>.is-open</code>, <code>[popover]</code>, <code>[data-side="top"]</code></td></tr>
         <tr><td>Tooltip</td><td><code>.glass-tooltip</code></td><td><code>[popover]</code></td></tr>
         <tr><td>Menu</td><td><code>.glass-menu</code></td><td><code>__item</code>, <code>__item--danger</code>, <code>__check</code>, <code>__icon</code>, <code>__label</code>, <code>__trailing</code>, <code>__separator</code>, <code>__group-label</code>, <code>[aria-checked]</code>, <code>[aria-disabled]</code>, <code>.is-checked</code>, <code>.is-focused</code>, <code>.is-focus-visible</code>, <code>[popover]</code></td></tr>
-        <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code>; <code>.glass-input-wrap</code> with <code>__prefix</code> / <code>__suffix</code></td></tr>
+        <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code>; <code>.glass-input-wrap</code> with <code>__prefix</code> / <code>__suffix</code>; <code>.glass-input-group--label-end</code> with <code>__label-end</code></td></tr>
         <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td><code>:disabled</code></td></tr>
         <tr><td>Select</td><td><code>.glass-select</code></td><td><code>:disabled</code></td></tr>
         <tr><td>Search</td><td><code>.glass-search</code></td><td>–</td></tr>
@@ -3193,8 +3335,8 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td>Progress</td><td><code>.glass-progress</code></td><td><code>--sm</code>, <code>--lg</code>, <code>--success</code>, <code>--error</code></td></tr>
         <tr><td>Modal</td><td><code>.glass-modal-overlay</code></td><td><code>.is-active</code></td></tr>
         <tr><td>Toast</td><td><code>.glass-toast</code></td><td><code>--success</code>, <code>--error</code>, <code>--warning</code>, <code>.is-visible</code>, <code>__action</code>, <code>__close</code></td></tr>
-        <tr><td>Tab-Bar</td><td><code>.glass-tab-bar</code></td><td><code>__item</code> with <code>.is-active</code>, <code>__icon</code>, <code>__label</code>, <code>__badge</code>, <code>--droplet</code>, <code>--vertical</code>, <code>--rail</code>, <code>--start</code>, <code>--end</code>, <code>--top</code></td></tr>
-        <tr><td>Tab-Bar Floating</td><td><code>.glass-tab-bar-dock</code> + <code>.glass-tab-bar--floating</code></td><td><code>__accessory</code>, <code>__accessory--accent</code>/<code>--success</code>/<code>--error</code>, <code>--accessory-left</code>, <code>-dock--vertical</code>, <code>-dock--start</code></td></tr>
+        <tr><td>Tab-Bar</td><td><code>.glass-tab-bar</code></td><td><code>__item</code> with <code>.is-active</code>, <code>__icon</code>, <code>__label</code>, <code>__badge</code>, <code>__leading</code>, <code>__trailing</code>, <code>--droplet</code>, <code>--vertical</code>, <code>--rail</code>, <code>--labels</code>, <code>--start</code>, <code>--end</code>, <code>--top</code></td></tr>
+        <tr><td>Tab-Bar Floating</td><td><code>.glass-tab-bar-dock</code> + <code>.glass-tab-bar--floating</code></td><td><code>__accessory</code>, <code>__accessory--accent</code>/<code>--success</code>/<code>--error</code>, <code>__accessory-item</code>, <code>__accessory-label</code>, <code>--accessory-left</code>, <code>-dock--vertical</code>, <code>-dock--start</code></td></tr>
         <tr><td>Breadcrumbs</td><td><code>.glass-<wbr>breadcrumbs</code></td><td><code>__list</code>, <code>__item</code>, <code>__crumb</code>, <code>__current</code>, <code>__overflow</code>, <code>__item--overflow</code>, <code>.is-drop-target</code>, <code>.is-drop-refused</code></td></tr>
         <tr><td>Accordion</td><td><code>.glass-accordion</code></td><td><code>.is-open</code> auf Items</td></tr>
       </tbody>

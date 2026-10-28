@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.32.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.33.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-38-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.32.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.33.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -74,22 +74,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.32/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.33/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.32/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.33/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.32/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.33/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.32` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.33` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.32/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.33/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -182,8 +182,8 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Background** | `.glass-bg` | Aurora gradient with light effects |
 | **Nav Bar** | `.glass-nav` | Transparent navigation |
 | **Pill Button** | `.glass-pill` | Round glass icon button (46×46) |
-| **Tab Bar** | `.glass-tab-bar` | Fixed bottom navigation; any icon — SVG, icon font, image — follows its states. The same bar as a sidebar (`--vertical`), fixed to a side edge (`--start` / `--end`), an icon rail (`--rail`) or a top bar (`--top`) |
-| **Tab Bar – Floating** | `.glass-tab-bar--floating` + `.glass-tab-bar-dock` | Pill-shaped Liquid-Glass tab bar with optional `.glass-tab-bar__accessory` capsule, upright at a side with `.glass-tab-bar-dock--vertical`; `--droplet` for a gliding selection |
+| **Tab Bar** | `.glass-tab-bar` | Fixed bottom navigation; any icon — SVG, icon font, image — follows its states. The same bar as a sidebar (`--vertical`), fixed to a side edge (`--start` / `--end`), an icon rail (`--rail`, with `--labels` the label under the icon) or a top bar (`--top`); places before and after the items (`__leading`, `__trailing`) |
+| **Tab Bar – Floating** | `.glass-tab-bar--floating` + `.glass-tab-bar-dock` | Pill-shaped Liquid-Glass tab bar with optional `.glass-tab-bar__accessory` capsule, upright at a side with `.glass-tab-bar-dock--vertical`, a rail of its own glass with `--vertical --rail` (fixed at a side with `--start` / `--end`); `--droplet` for a gliding selection |
 | **Breadcrumbs** | `.glass-breadcrumbs` | The path through nested levels: CSS separators, a "…" for folded levels, crumbs as drop targets |
 | **Accordion** | `.glass-accordion` | Collapsible content sections |
 | **Divider** | `.glass-divider` | Fading separator line |
@@ -195,7 +195,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Title** | `.glass-title` | Page title with text shadow |
 | **Card** | `.glass-card` | Glass container for content |
 | **Card (Glow)** | `.glass-card--glow` | Card with light-to-milky gradient |
-| **Badge** | `.glass-badge` | Tags, labels & filter chips |
+| **Badge** | `.glass-badge` | Tags, labels & filter chips; `--md` for 36px choice chips with a 44px tap target |
 | **Avatar** | `.glass-avatar` | Glass circle (sm/md/lg) |
 | **Status** | `.glass-status` | Notice card with icon |
 | **List** | `.glass-list` | iOS-style grouped settings list with auto dividers |
@@ -226,7 +226,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 
 | Component | Class | Description |
 |---|---|---|
-| **Input** | `.glass-input` | Text field with glass background |
+| **Input** | `.glass-input` | Text field with glass background; a link at the end of the label row with `.glass-input-group--label-end` |
 | **Textarea** | `.glass-textarea` | Multi-line input |
 | **Select** | `.glass-select` | Dropdown with custom chevron |
 | **Search** | `.glass-search` | Input with search icon |
@@ -297,6 +297,26 @@ Since **1.32.0** the tab bar is not bound to the bottom edge. The items stay the
 ```
 
 `--vertical` is a column as high as its container, the icon before the label, the badge at the row's end — a long label ends `--gl-tab-bar-badge-room` (32px) before it. `--start` and `--end` fix it to that edge of the viewport, clear of the edge's safe area — where the thumb rests when a phone is held open, or a foldable has moved its own controls to a side; start and end follow the writing direction. `--rail` shows the icons alone, `--gl-tab-bar-rail-width` (72px) wide, the labels hidden from view but still the items' names. `--top` lays the bar out for a sticky header, with the icon beside the label from 640px, clear of the badge. Every bar shows a focus ring for the keyboard now, the active item under the drop too, and an item may be a link. In GlassKit Elements: `<glk-tab-bar orientation="vertical" dock="end" rail>`, `placement="top"`.
+
+Since **1.33.0** a rail can name its items and stand as a pane of its own glass. `--labels` next to `--rail` keeps the label under the icon; with `--floating` the rail is a pane of its own glass, as high as its container with the corners of a card, and with `--start` or `--end` as well it stands at that edge, full height less `--gl-tab-bar-floating-inset` (16px) at both ends and that far from the edge, clear of the safe areas. `__leading` and `__trailing` hold a mark, the accessory (`__accessory-item`, its name under it) and a foot such as the account inside the bar:
+
+```html
+<nav class="glass-tab-bar glass-tab-bar--floating glass-tab-bar--vertical glass-tab-bar--start
+            glass-tab-bar--rail glass-tab-bar--labels glass-tab-bar--droplet"
+     aria-label="Main" style="--gl-tab-bar-rail-width: 96px">
+  <div class="glass-tab-bar__leading">
+    <img src="mark.svg" alt="" width="40" height="40">
+    <div class="glass-tab-bar__accessory-item">
+      <button class="glass-tab-bar__accessory glass-tab-bar__accessory--accent" aria-label="Assistant">…</button>
+      <span class="glass-tab-bar__accessory-label" aria-hidden="true">Assistant</span>
+    </div>
+  </div>
+  <a class="glass-tab-bar__item is-active" href="/">…</a>
+  <div class="glass-tab-bar__trailing">…</div>
+</nav>
+```
+
+Three tokens shape the items without touching global ones: `--gl-tab-bar-icon-size` (24px), `--gl-tab-bar-item-radius` (the drop and the floating items, a capsule unless set; 16px in a rail with labels) and `--gl-tab-bar-active-weight` — a compact top bar like a segmented control takes 18px, 12px and semibold. The items transition only colour, surface, shadow, opacity and the press, so a bar that changes its layout takes its new size at once.
 
 ---
 
@@ -545,6 +565,13 @@ All visual values are controlled via CSS Custom Properties:
 --gl-tab-bar-z-index            /* 900; fixed bar and floating dock */
 --gl-tab-bar-rail-width         /* 72px; the icon rail */
 --gl-tab-bar-badge-room         /* 32px; where a sidebar row's label ends before its badge */
+--gl-tab-bar-icon-size          /* 24px; the icon box and its SVG */
+--gl-tab-bar-item-radius        /* the floating items and the drop; unset a capsule, 16px in a rail with labels */
+--gl-tab-bar-active-weight      /* the active label's weight; unset medium */
+--gl-tab-bar-rail-item-height   /* 62px; least height of an item in a rail with labels */
+--gl-tab-bar-floating-inset     /* 16px; a floating rail's distance from its edge and the ends */
+--gl-tab-bar-rail-radius        /* a floating rail's corners; unset --gl-radius-card */
+--gl-badge-md-height            /* 36px; a choice chip (.glass-badge--md) */
 --gl-flash-color                /* the flash of a changed list item or tree row; unset: the primary at 30 % */
 --gl-droplet-duration, -easing, -trail-duration, -trail-delay, -trail-easing   /* the drop's journey */
 --gl-droplet-lift, -lift-duration, -settle-duration, -settle-easing           /* its squash and spring back */
@@ -835,6 +862,7 @@ Progress Modifiers:
 Badge Modifiers:
   .glass-badge--primary / --success / --warning / --error
   .glass-badge--interactive / --selected   (chips)
+  .glass-badge--md                         (choice chip, 36px; --gl-badge-md-height)
 
 Avatar Modifiers:
   .glass-avatar--sm / --lg
@@ -855,6 +883,7 @@ Select:
 Input affixes:
   .glass-input-wrap > __prefix / __suffix · --prefix / --suffix
   --gl-input-prefix-size / --gl-input-suffix-size   (room in the field, 18px unless set)
+  .glass-input-group--label-end > __label-end   (a link at the end of the label row, written after the field)
 
 List Modifiers:
   .glass-list--flush / --bare
@@ -931,13 +960,18 @@ Tab Bar – Floating:
   .glass-tab-bar__accessory--accent / --success / --error
   --gl-tab-bar-active-bg / -shadow · --gl-tab-bar-spotlight-opacity · --gl-tab-bar-active-glow
   --gl-tab-bar-color / -hover-color · --gl-tab-bar-label-size · --gl-tab-bar-z-index
+  --gl-tab-bar-icon-size · --gl-tab-bar-item-radius · --gl-tab-bar-active-weight
   --gl-droplet-duration / -easing / -trail-duration / -trail-delay / -trail-easing / -lift / -lift-duration / -settle-duration / -settle-easing / -lens-duration / -lens-easing
 
 Tab Bar – Layouts:
-  .glass-tab-bar--vertical         (sidebar) · --start / --end (fixed to a side) · --rail (icons alone)
+  .glass-tab-bar--vertical         (sidebar) · --start / --end (fixed to a side) · --rail (icons alone) · --labels (with --rail: the label under the icon)
+  .glass-tab-bar--floating + --vertical + --rail   (a rail of its own glass; with --start / --end fixed at a side)
+  .glass-tab-bar__leading / __trailing   (a mark, the accessory, a foot inside the bar)
+  .glass-tab-bar__accessory-item > __accessory-label   (the accessory with its name under it)
   .glass-tab-bar--top              (top of a page)
   .glass-tab-bar-dock--vertical / --start / --end   (the floating bar upright at a side)
-  --gl-tab-bar-rail-width / --gl-tab-bar-badge-room
+  --gl-tab-bar-rail-width / --gl-tab-bar-badge-room / --gl-tab-bar-rail-item-height
+  --gl-tab-bar-floating-inset / --gl-tab-bar-rail-radius
 
 Right to left:
   dir="rtl" on <html> or a container – the components mirror

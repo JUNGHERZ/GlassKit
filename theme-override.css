@@ -298,6 +298,38 @@
 
 
 /* ============================================================
+   BEISPIEL: Rail mit Labels und eine kompakte obere Leiste
+   (seit 1.33.0)
+
+   Eine schwebende Rail (.glass-tab-bar--floating --vertical
+   --start --rail --labels) von 96px Breite mit 12px-Labels und
+   abgerundeten Quadraten statt Kapseln, 12px vom Rand und von den
+   Enden entfernt. Die obere Leiste (.glass-tab-bar--top) wird zur
+   kompakten Spur wie ein Segmented Control: 18px-Icons, 12px-Ecken
+   für den Tropfen und ein halbfettes aktives Label. Dazu höhere
+   Auswahl-Chips (.glass-badge--md). Nur die Leisten-Tokens ändern
+   sich, --gl-radius-full und die Schrift-Tokens bleiben.
+   ============================================================ */
+
+/*
+.glass-tab-bar--rail.glass-tab-bar--labels {
+  --gl-tab-bar-rail-width:       96px;
+  --gl-tab-bar-label-size:       12px;
+  --gl-tab-bar-item-radius:      18px;
+  --gl-tab-bar-floating-inset:   12px;
+}
+.glass-tab-bar--top {
+  --gl-tab-bar-icon-size:        18px;
+  --gl-tab-bar-item-radius:      12px;
+  --gl-tab-bar-active-weight:    var(--gl-font-weight-semibold);
+}
+:root {
+  --gl-badge-md-height:          40px;
+}
+*/
+
+
+/* ============================================================
    DEIN CUSTOM THEME
    Entkommentiere und passe an:
    ============================================================ */

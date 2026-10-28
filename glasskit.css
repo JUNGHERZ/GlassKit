@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.32.0
+   Jungherz GmbH – v1.33.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -927,6 +927,21 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
    above its field (until 1.24.0). */
 .glass-label:empty { display: none; }
 
+/* A place at the end of the label row (since 1.33.0): "Forgot password?"
+   on the line of the label "Password". The __label-end element comes
+   after the field in the markup, so the keyboard reaches it after the
+   field, which reads best in a sign-in form; --label-end draws it on the
+   label's line, at its end. */
+.glass-input-group.glass-input-group--label-end {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center; column-gap: var(--gl-space-sm);
+}
+.glass-input-group--label-end > * { grid-column: 1 / -1; }
+.glass-input-group--label-end > .glass-label { grid-column: 1; grid-row: 1; }
+.glass-input-group--label-end > .glass-input-group__label-end { grid-column: 2; grid-row: 1; justify-self: end; }
+.glass-input-group__label-end { font-size: var(--gl-font-size-sm); }
+.glass-input-group__label-end[hidden] { display: none; }
+
 .glass-input {
   width: 100%; height: var(--gl-control-height, 52px);
   padding: 0 var(--gl-control-padding-x, var(--gl-space-md));
@@ -1731,7 +1746,12 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   padding: var(--gl-space-2xs) var(--gl-space-sm);
   background: none; border: none; cursor: pointer;
   border-radius: var(--gl-radius-sm);
-  transition: var(--gl-transition); outline: none;
+  /* Colours and the press move; the box does not (since 1.33.0): a bar that
+     changes its layout — upright, floating, a rail — took 250ms to settle
+     with `all`, and an item measured then was not yet its size. */
+  transition-property: color, background-color, box-shadow, opacity, transform;
+  transition-duration: 0.25s; transition-timing-function: ease;
+  outline: none;
   -webkit-tap-highlight-color: transparent;
   min-width: 60px;
 }
@@ -1743,26 +1763,28 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
    inactive colour is --gl-icon-muted and the hovered one --gl-icon-default;
    --gl-tab-bar-color and --gl-tab-bar-hover-color set them, for icon and
    label alike. */
+/* --gl-tab-bar-icon-size (24px, since 1.33.0) sizes the box and the SVG:
+   a compact top bar takes the 18px of the segmented control's icons. */
 .glass-tab-bar__icon {
-  width: 24px; height: 24px;
+  width: var(--gl-tab-bar-icon-size, 24px); height: var(--gl-tab-bar-icon-size, 24px);
   display: flex; align-items: center; justify-content: center;
   position: relative;
   color: var(--gl-tab-bar-color, var(--gl-icon-muted));
-  font-size: 24px;
-  transition: var(--gl-transition);
+  font-size: var(--gl-tab-bar-icon-size, 24px);
+  transition: color 0.25s ease;
 }
 
 .glass-tab-bar__icon svg,
 .glass-tab-bar__icon ::slotted(svg) {
-  width: 24px; height: 24px; fill: none;
+  width: var(--gl-tab-bar-icon-size, 24px); height: var(--gl-tab-bar-icon-size, 24px); fill: none;
   stroke: currentColor; stroke-width: 1.8;
   stroke-linecap: round; stroke-linejoin: round;
-  transition: var(--gl-transition);
+  transition: color 0.25s ease;
 }
 
 .glass-tab-bar__label {
   font-size: var(--gl-tab-bar-label-size, 10px); font-weight: var(--gl-font-weight-medium);
-  color: var(--gl-tab-bar-color, var(--gl-icon-muted)); transition: var(--gl-transition);
+  color: var(--gl-tab-bar-color, var(--gl-icon-muted)); transition: color 0.25s ease;
   letter-spacing: 0.2px;
 }
 
@@ -1776,7 +1798,12 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-tab-bar__item.is-active .glass-tab-bar__icon ::slotted(*) {
   filter: var(--gl-tab-bar-active-glow, drop-shadow(0 0 6px color-mix(in srgb, var(--gl-color-primary) 35%, transparent)));
 }
-.glass-tab-bar__item.is-active .glass-tab-bar__label { color: var(--gl-tab-bar-active-color, var(--gl-color-primary-text)); }
+/* --gl-tab-bar-active-weight (since 1.33.0) sets the active label's weight,
+   unset the medium of every label. */
+.glass-tab-bar__item.is-active .glass-tab-bar__label {
+  color: var(--gl-tab-bar-active-color, var(--gl-color-primary-text));
+  font-weight: var(--gl-tab-bar-active-weight, var(--gl-font-weight-medium));
+}
 
 /* The active item's own surface; unset, it has none. A capsule like the
    selected tab of iOS 26 takes --gl-tab-bar-active-bg and -shadow; on the
@@ -1846,9 +1873,12 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   gap: var(--gl-space-2xs);
 }
 
+/* --gl-tab-bar-item-radius (since 1.33.0) rounds the floating items and the
+   drop, unset a capsule: rounded squares in a rail, the 12px of the
+   segmented control in a compact top bar. */
 .glass-tab-bar--floating .glass-tab-bar__item {
   position: relative;
-  border-radius: var(--gl-radius-full);
+  border-radius: var(--gl-tab-bar-item-radius, var(--gl-radius-full));
   padding: var(--gl-space-2xs) var(--gl-space-sm);
   min-width: auto;
   align-items: center;
@@ -2034,7 +2064,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 /* The tab bar's drop is a capsule, in the active item's surface where a
    project set one (--gl-tab-bar-active-bg, -shadow). */
 .glass-tab-bar.glass-tab-bar--droplet[data-droplet]::before {
-  border-radius: var(--gl-radius-full);
+  border-radius: var(--gl-tab-bar-item-radius, var(--gl-radius-full));
   background:
     var(--gl-gloss-droplet, none),
     var(--gl-tab-bar-active-bg, linear-gradient(to bottom, var(--gl-surface-5) 0%, var(--gl-surface-3) 100%));
@@ -2138,7 +2168,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
    a lens. While a finger drags the drop, the item below it takes the
    chosen colour and the chosen item lets it go. The tab icon keeps the
    fade of its colour next to the lens. */
-.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon { transition: var(--gl-transition), transform var(--gl-droplet-lens-duration, 0.4s) var(--gl-droplet-lens-easing, cubic-bezier(0.34, 1.6, 0.5, 1)); }
+.glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon { transition: color 0.25s ease, transform var(--gl-droplet-lens-duration, 0.4s) var(--gl-droplet-lens-easing, cubic-bezier(0.34, 1.6, 0.5, 1)); }
 .glass-segmented--droplet[data-droplet] .glass-segmented__dot,
 .glass-segmented--droplet[data-droplet] .glass-segmented__icon { transition: transform var(--gl-droplet-lens-duration, 0.4s) var(--gl-droplet-lens-easing, cubic-bezier(0.34, 1.6, 0.5, 1)); }
 .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__item.is-under-droplet .glass-tab-bar__icon { transform: scale(1.15); }
@@ -2154,7 +2184,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-dir]::before,
   :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-drag]::before,
   :is(.glass-tab-bar.glass-tab-bar--droplet, .glass-segmented.glass-segmented--droplet)[data-droplet][data-droplet-axis="y"][data-droplet-drag]::before { transition: none; }
-  .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon { transition: var(--gl-transition), transform 0s; }
+  .glass-tab-bar--droplet[data-droplet] .glass-tab-bar__icon { transition: color 0.25s ease, transform 0s; }
   .glass-segmented--droplet[data-droplet] .glass-segmented__dot,
   .glass-segmented--droplet[data-droplet] .glass-segmented__icon { transition: none; }
 }
@@ -2286,6 +2316,99 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   flex: none; font-size: var(--gl-tab-bar-label-size, 10px);
 }
 .glass-tab-bar--floating.glass-tab-bar--vertical .glass-tab-bar__item.is-active { background: var(--gl-tab-bar-active-bg, none); }
+
+/* ---- Rail with labels (since 1.33.0) ---- */
+/* --labels with --rail: the label under the icon, as on the floating bar —
+   a desktop rail that names its items. The items fill the rail's width
+   (--gl-tab-bar-rail-width) and are at least --gl-tab-bar-rail-item-height
+   (62px) high; --gl-tab-bar-item-radius rounds them and the drop, unset
+   16px, the corners of a button. */
+/* A floating rail is a pane, not a pill, docked or in the flow: as high as
+   its container, with the card's corners (--gl-tab-bar-rail-radius) and
+   room around its items. */
+.glass-tab-bar.glass-tab-bar--floating.glass-tab-bar--vertical.glass-tab-bar--rail {
+  width: var(--gl-tab-bar-rail-width, 72px); height: 100%;
+  padding: var(--gl-space-sm) var(--gl-space-xs);
+  border-radius: var(--gl-tab-bar-rail-radius, var(--gl-radius-card));
+}
+.glass-tab-bar.glass-tab-bar--vertical.glass-tab-bar--rail.glass-tab-bar--labels { align-items: stretch; }
+.glass-tab-bar--rail.glass-tab-bar--labels .glass-tab-bar__item {
+  flex-direction: column; justify-content: center;
+  gap: var(--gl-space-2xs);
+  width: 100%; min-height: var(--gl-tab-bar-rail-item-height, 62px);
+  padding: var(--gl-space-xs) var(--gl-space-2xs);
+  border-radius: var(--gl-tab-bar-item-radius, var(--gl-radius-btn));
+}
+.glass-tab-bar--rail.glass-tab-bar--labels .glass-tab-bar__label {
+  position: static; width: auto; height: auto; margin: 0; padding: 0; clip-path: none;
+  flex: none; max-width: 100%;
+  font-size: var(--gl-tab-bar-label-size, 10px); text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.glass-tab-bar.glass-tab-bar--rail.glass-tab-bar--labels.glass-tab-bar--droplet[data-droplet]::before {
+  border-radius: var(--gl-tab-bar-item-radius, var(--gl-radius-btn));
+}
+
+/* ---- Floating rail at an edge (since 1.33.0) ---- */
+/* --floating with --vertical and --start or --end: a rail of its own
+   glass, as high as the viewport less --gl-tab-bar-floating-inset (16px)
+   at both ends and that much from its edge, clear of the safe areas, with
+   the corners of a card (--gl-tab-bar-rail-radius). */
+.glass-tab-bar.glass-tab-bar--floating.glass-tab-bar--vertical:is(.glass-tab-bar--start, .glass-tab-bar--end) {
+  top: calc(var(--gl-tab-bar-floating-inset, 16px) + env(safe-area-inset-top, 0px));
+  bottom: calc(var(--gl-tab-bar-floating-inset, 16px) + env(safe-area-inset-bottom, 0px));
+  height: auto; max-height: none;
+  padding: var(--gl-space-sm) var(--gl-space-xs);
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-tab-bar-rail-radius, var(--gl-radius-card));
+  overflow-y: auto;
+}
+.glass-tab-bar.glass-tab-bar--floating.glass-tab-bar--vertical.glass-tab-bar--start {
+  inset-inline-start: calc(var(--gl-tab-bar-floating-inset, 16px) + env(safe-area-inset-left, 0px));
+}
+.glass-tab-bar.glass-tab-bar--floating.glass-tab-bar--vertical.glass-tab-bar--end {
+  inset-inline-end: calc(var(--gl-tab-bar-floating-inset, 16px) + env(safe-area-inset-right, 0px));
+}
+.glass-tab-bar.glass-tab-bar--floating.glass-tab-bar--vertical.glass-tab-bar--start:dir(rtl) {
+  inset-inline-start: calc(var(--gl-tab-bar-floating-inset, 16px) + env(safe-area-inset-right, 0px));
+}
+.glass-tab-bar.glass-tab-bar--floating.glass-tab-bar--vertical.glass-tab-bar--end:dir(rtl) {
+  inset-inline-end: calc(var(--gl-tab-bar-floating-inset, 16px) + env(safe-area-inset-left, 0px));
+}
+
+/* ---- A place before and after the items (since 1.33.0) ---- */
+/* __leading holds a mark or the accessory, __trailing a foot such as the
+   account: above and below the items in a column, the trailing part at
+   the far end; before and after them in a row. */
+.glass-tab-bar__leading,
+.glass-tab-bar__trailing {
+  display: flex; align-items: center; justify-content: center;
+  gap: var(--gl-space-sm);
+  flex: none;
+}
+.glass-tab-bar__leading[hidden],
+.glass-tab-bar__trailing[hidden] { display: none; }
+.glass-tab-bar--vertical .glass-tab-bar__leading,
+.glass-tab-bar--vertical .glass-tab-bar__trailing {
+  flex-direction: column;
+  width: 100%;
+  padding-block: var(--gl-space-2xs);
+}
+.glass-tab-bar--vertical .glass-tab-bar__leading { margin-block-end: var(--gl-space-sm); }
+.glass-tab-bar--vertical .glass-tab-bar__trailing { margin-block-start: auto; padding-block-start: var(--gl-space-sm); }
+
+/* The accessory with its name under it (since 1.33.0), for a rail's
+   leading place; the name is the button's too. */
+.glass-tab-bar__accessory-item {
+  display: flex; flex-direction: column; align-items: center;
+  gap: var(--gl-space-2xs);
+}
+.glass-tab-bar__accessory-label {
+  font-size: var(--gl-tab-bar-label-size, 10px); font-weight: var(--gl-font-weight-medium);
+  letter-spacing: 0.2px; text-align: center;
+  color: var(--gl-tab-bar-color, var(--gl-icon-muted));
+  cursor: pointer;
+}
 
 .glass-tab-bar-dock.glass-tab-bar-dock--vertical {
   flex-direction: column;
@@ -2524,6 +2647,23 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 .glass-badge--interactive.glass-badge--selected:focus-visible {
   box-shadow: var(--gl-shadow-focus), var(--gl-inset-subtle),
               inset 0 0 0 100px color-mix(in srgb, var(--gl-badge-accent) 22%, transparent);
+}
+
+/* A chip to choose with (since 1.33.0): --gl-badge-md-height (36px) high,
+   in the small text of a form. Interactive, it takes taps on 44px above
+   and below its edges, the target every control keeps. */
+.glass-badge--md {
+  box-sizing: border-box;
+  min-height: var(--gl-badge-md-height, 36px);
+  padding: 0 var(--gl-space-md);
+  justify-content: center;
+  font-size: var(--gl-font-size-sm);
+}
+.glass-badge--interactive.glass-badge--md { position: relative; }
+.glass-badge--interactive.glass-badge--md::after {
+  content: ''; position: absolute;
+  /* From the padding box, so the 1px border counts as well. */
+  inset: min(0px, calc((var(--gl-badge-md-height, 36px) - 44px) / 2 - 1px)) 0;
 }
 
 

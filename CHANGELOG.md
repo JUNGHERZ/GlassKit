@@ -7,6 +7,39 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.33.0] – 2026-10-28
+
+### Added
+
+- **Tokens for the tab bar's icons, corners and active label.** A compact top bar drawn like `.glass-segmented` (18px icons, a 12px segment) or a rail of rounded squares had to wrap its icons in boxes of its own and change the global `--gl-radius-full` on the bar. The drop and the spotlight take that token too.
+  - `--gl-tab-bar-icon-size` (24px) sizes the icon's box and its SVG.
+  - `--gl-tab-bar-item-radius` rounds the floating items and the drop, unset a capsule as before.
+  - `--gl-tab-bar-active-weight` sets the active label's weight, unset the medium of every label.
+
+  Measured in Chromium 153, WebKit 26.6 and Firefox 151 with the issue's top bar: 18px icons and SVGs, a 12px drop, a 600 active label beside 500 for the others. ([#25](https://github.com/JUNGHERZ/GlassKit/issues/25))
+- **A rail with its labels under the icons, a floating rail at an edge, and places before and after the items.** A desktop rail that names its items, a mark and the accessory above them, and an own pane of glass inset from the edge took a wrapper, overrides of the items' size and the global radius.
+  - `.glass-tab-bar--labels` with `--rail` keeps the label under the icon, as on the floating bar. The items fill the rail's width, `--gl-tab-bar-rail-width`, at least `--gl-tab-bar-rail-item-height` (62px) high, with the corners of a button. `--gl-tab-bar-item-radius` sets their corners and the drop's alike.
+  - `--floating` with `--vertical` and `--start` or `--end` makes a rail of its own glass at that edge. It is as high as the viewport less `--gl-tab-bar-floating-inset` (16px) at both ends, that far from its edge and clear of the safe areas, with a card's corners (`--gl-tab-bar-rail-radius`, 24px). In the flow, without an edge, a floating rail is such a pane as well, as high as its container; only the upright pill of the vertical dock stays a capsule.
+  - `__leading` holds a mark or the accessory above the items, and `__trailing` a foot such as the account at the far end. In a row they sit before and after the items.
+  - `__accessory-item` with `__accessory-label` sets the accessory's name under it.
+
+  Measured in all three engines through GlassKit Elements with the issue's design: a 96px rail 16px from the start edge and the ends, as high as a 760px viewport less 32px, with 24px corners. The items are 78 by 62px with 16px corners, and the labels stand under their icons, a long one cut with an ellipsis. The mark and the accessory with its name sit at the top, the account at the bottom, and the drop runs along y. Right to left the rail stands at the right edge. ([GlassKit Elements #32](https://github.com/JUNGHERZ/GlassKit-Elements/issues/32))
+- **A place at the end of a field's label row: `.glass-input-group--label-end`**, for "Forgot password?" on the line of the label "Password". The `__label-end` element comes after the field in the markup, so the keyboard reaches it after the field, which reads best in a sign-in form; the modifier draws it on the label's line, at its end. Measured in all three engines with an input, a textarea and a select: the link on the label's line, its end at the field's end, above the field, and Tab from the field to the link. Safari reaches links with Tab only with its preference or Option+Tab, as anywhere. ([GlassKit Elements #33](https://github.com/JUNGHERZ/GlassKit-Elements/issues/33))
+- **A chip to choose with: `.glass-badge--md`.** An interactive badge was 25 to 26px high, a filter chip's size, below the room a choice in a form needs. `--md` is `--gl-badge-md-height` (36px) high, in the small text of a form. Interactive, it takes taps 4px above and below its edges, 44px in all, the target every control keeps. Measured in all three engines: 36px, a tap 3.5px above or below the edge goes to the chip, 4.5px below goes past it. ([GlassKit Elements #34](https://github.com/JUNGHERZ/GlassKit-Elements/issues/34))
+
+### Changed
+
+- **The tab bar's items move their colours, the press and the shadow, not their box.** Items, icons and labels transitioned `all` for 250ms. A bar that changed its layout (upright, floating, a rail) let padding, width and height glide, and an item measured 250ms later was 60 instead of 62px. They now transition `color`, `background-color`, `box-shadow`, `opacity` and `transform`. Measured in all three engines: an item switched from a row to a labeled rail has its 62px in the next frame. ([#25](https://github.com/JUNGHERZ/GlassKit/issues/25))
+
+### Compatibility
+
+- Nothing changes for a project that sets none of the new tokens and classes. One exception: a tab bar item that changes its size no longer glides into it.
+- No theme token changed, so the no-JS mirror of GlassKit Web has nothing to update.
+
+Docs (English and German), README, SKILL.md and `theme-override.css` describe the tokens, the labeled and floating rail, the places before and after the items, the label row's end and the chip. With the new stylesheet the existing docs, showcase and landing pages render pixel-identical to 1.32.0: in WebKit and Firefox on whole pages, in Chromium section by section, where full-page captures differ by rasterisation.
+
+---
+
 ## [1.32.0] – 2026-10-27
 
 ### Added
@@ -1324,6 +1357,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.33.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.33.0
 [1.32.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.32.0
 [1.31.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.31.0
 [1.30.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.30.0
@@ -1369,4 +1403,4 @@ during development. Version 1.3 is the first public open-source release.
 [1.3.2]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.3.0
-[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.32.0...HEAD
+[Unreleased]: https://github.com/JUNGHERZ/GlassKit/compare/v1.33.0...HEAD
