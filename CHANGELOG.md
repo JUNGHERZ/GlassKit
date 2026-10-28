@@ -7,6 +7,52 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.34.0] – 2026-10-28
+
+### Added
+
+- **Tiles side by side: `.glass-list--grid`.** A grid of components — news, opening hours, a submenu to move them into — had no place in GlassKit: the list stacks rows, and a page drew tiles of its own.
+  - `--grid` lays the items out as tiles: as many columns as fit at `--gl-list-tile-width` (140px), `--gl-list-tile-gap` (12px) apart, each at least `--gl-list-tile-min-height` (112px) high.
+  - Every tile is a pane of glass of its own, with the surface, edge light and shadow the list has as a whole; the list itself has none. The icon stands at the top, title and subtitle at the foot, `__trailing` in the top end corner, a `.glass-sort__handle` in the bottom end corner. There are no dividers.
+  - Hover, the focus ring and the chosen state work as on rows. A tile with more to say grows; its text never shrinks below its lines.
+  - `.glass-list__item--tile` makes a row a tile where it cannot be a child of the grid, as in GlassKit Elements' `<glk-list grid>`, whose rows lie in shadow roots of their own.
+
+  ([GlassKit Elements #40](https://github.com/JUNGHERZ/GlassKit-Elements/issues/40))
+- **A chosen list row: `.glass-list__item.is-selected`.** A compact list beside an editor marks the entry that is open. The list had no such state, and the tree's `.is-selected` belongs to its rows.
+  - It lays a pill of raised glass into the row, as the chosen tree row and the active row of a sidebar have: `--gl-list-item-selected-bg` (unset `--gl-surface-4`), `--gl-inset-strong`, `--gl-shadow-btn`, the title semibold and the icon in the accent.
+  - A chosen tile is raised glass as a whole.
+  - Hover and press leave it as it is, and the keyboard ring stays around the row.
+  - `aria-current="true"` on the row tells assistive technology which entry it is (`aria-selected` in a listbox).
+  - While the row is a drop target of a drag, the pill makes way for the line or the tint.
+
+  ([GlassKit Elements #39](https://github.com/JUNGHERZ/GlassKit-Elements/issues/39))
+- **Where the dividers start: `--gl-list-item-divider-inset`.** A sortable list of components shows the grip first: grip, icon, title, actions. The divider started after a 28px icon, under the icon, and a project moved it through a stylesheet adopted into every item.
+  - The token sets the start for rows laid out otherwise, on the list or one row.
+  - A row whose first child is a `.glass-sort__handle` lets the line run from its padding, since the grip's width is the page's. Set the token to where the text begins, 90px for an 18px grip and a 28px icon.
+
+  ([GlassKit Elements #38](https://github.com/JUNGHERZ/GlassKit-Elements/issues/38))
+- **An upright drop line for items side by side: `.is-sort-inline`.** With `.is-sort-before` or `.is-sort-after`, the line stands at the target's start or end edge, for tiles in a grid. Between the tiles of a `--grid` it stands in the middle of the gap. ([GlassKit Elements #40](https://github.com/JUNGHERZ/GlassKit-Elements/issues/40))
+- **A larger icon field in the tree: `--gl-tree-icon-size`.** A tree of components shows each entry's chip in the icon field, a tinted square of 28px with the component's symbol, as list rows do. The field was 18 by 18px with no token, and a 28px chip came out 18 by 28px. The token (18px) sizes the field and its SVG. ([#26](https://github.com/JUNGHERZ/GlassKit/issues/26))
+
+### Fixed
+
+- **The tint of a drop target shows over the hover and the chosen state.** `.is-sort-inside` and `.is-sort-refused` weighed less than `.glass-list__item--interactive:hover` and `.glass-tree__row.is-selected`. An interactive row under the pointer, which a drop target always is, settled at the hover surface, and a chosen tree row kept its own, so only the ring showed. In 1.33.0 such a row ended at `rgba(255, 255, 255, 0.6)` in all three engines; now it shows the tint.
+
+### Compatibility
+
+- Nothing changes for a project that sets none of the new classes and tokens, with one exception: a row whose first child is a `.glass-sort__handle` now runs its divider from its padding instead of from 60px.
+- No theme token changed, so the no-JS mirror of GlassKit Web has nothing to update.
+
+Measured in Chromium 153, WebKit 26.6 and Firefox 151:
+- **Tree:** the issue's 28px chip comes out 28 by 28px with `--gl-tree-icon-size: 28px`. The row stays 36px high, and the default field stays 18px.
+- **Lists:** the dividers start at 60px after an icon, at 20px with the grip first, and at 90px with the token.
+- **Chosen row:** a pill 8px in from the sides and 3px from the ends, with 12px corners, unchanged on hover. The focus ring stays on top.
+- **Tiles:** the line stands 2px wide in the middle of a 12px gap.
+
+Docs (English and German), README, SKILL.md and `theme-override.css` describe the tiles, the chosen row, the divider's start, the upright line and the tree's icon size. With the new stylesheet the existing docs, showcase and landing pages render pixel-identical to 1.33.0 in all three engines. Only the new sections of the docs differ: the chosen row and the grip-first list under List, the tiles under Sorting.
+
+---
+
 ## [1.33.0] – 2026-10-28
 
 ### Added
@@ -1357,6 +1403,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.34.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.34.0
 [1.33.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.33.0
 [1.32.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.32.0
 [1.31.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.31.0

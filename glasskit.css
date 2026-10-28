@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.33.0
+   Jungherz GmbH – v1.34.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -3037,10 +3037,14 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   list-style: none;
 }
 
+/* The divider starts under the text: after the leading icon, or at the
+   row's padding without one. --gl-list-item-divider-inset (since 1.34.0)
+   sets the start for rows laid out otherwise — a drag handle before the
+   icon, a wider leading element. */
 .glass-list__item:not(:last-child)::after {
   content: '';
   position: absolute;
-  inset-inline-start: calc(var(--gl-space-lg) + 28px + var(--gl-space-sm));
+  inset-inline-start: var(--gl-list-item-divider-inset, calc(var(--gl-space-lg) + 28px + var(--gl-space-sm)));
   inset-inline-end: var(--gl-space-lg);
   bottom: 0;
   height: 1px;
@@ -3050,10 +3054,16 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 /* Items without a leading icon — no slot, or a hidden one: divider follows
    the standard horizontal padding instead of the icon slot. */
 .glass-list__item:not(:has(.glass-list__leading:not([hidden]))):not(:last-child)::after {
-  inset-inline-start: var(--gl-space-lg);
+  inset-inline-start: var(--gl-list-item-divider-inset, var(--gl-space-lg));
 }
 .glass-list__item:has(.glass-list__leading--lg:not([hidden])):not(:last-child)::after {
-  inset-inline-start: calc(var(--gl-space-lg) + 40px + var(--gl-space-sm));
+  inset-inline-start: var(--gl-list-item-divider-inset, calc(var(--gl-space-lg) + 40px + var(--gl-space-sm)));
+}
+/* A drag handle at the start of the row (since 1.34.0): its width is the
+   page's, so the line runs from the row's padding, as in a row without an
+   icon, until --gl-list-item-divider-inset says where the text begins. */
+.glass-list__item:has(> .glass-sort__handle:first-child:not([hidden])):not(:last-child)::after {
+  inset-inline-start: var(--gl-list-item-divider-inset, var(--gl-space-lg));
 }
 
 .glass-list__item--center {
@@ -3090,6 +3100,27 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 .glass-list__item--interactive[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
 .glass-list__item--interactive:disabled:is(:hover, :active),
 .glass-list__item--interactive[aria-disabled="true"]:is(:hover, :active) { background: transparent; }
+
+/* The chosen row of a list beside its detail (since 1.34.0) — the entry an
+   editor next to it shows: a pill of raised glass inside the row, as the
+   chosen tree row and the active row of a sidebar, with the title in the
+   heading colour and the icon in the accent. The state is .is-selected;
+   aria-current="true" (or aria-selected in a listbox) tells assistive
+   technology. Hover and press leave it as it is; the keyboard ring stays
+   around the row. While the row is a drop target of a drag, the pill makes
+   way for the line or the tint. */
+.glass-list__item.is-selected { color: var(--gl-color-text-heading); isolation: isolate; }
+.glass-list__item.is-selected:not(.is-sort-before, .is-sort-after, .is-sort-inside, .is-sort-refused)::before {
+  content: ''; position: absolute; z-index: -1;
+  inset: 3px var(--gl-space-xs);
+  border-radius: var(--gl-radius-sm);
+  background: var(--gl-list-item-selected-bg, var(--gl-surface-4));
+  box-shadow: var(--gl-inset-strong), var(--gl-shadow-btn);
+  pointer-events: none;
+}
+.glass-list__item--interactive.is-selected:is(:hover, :active, :focus-visible) { background: transparent; }
+.glass-list__item.is-selected .glass-list__title { font-weight: var(--gl-font-weight-semibold); }
+.glass-list__item.is-selected .glass-list__leading { color: var(--gl-color-primary-text); }
 
 .glass-list__item--danger { color: var(--gl-color-error); }
 .glass-list__item--danger .glass-list__title,
@@ -3212,6 +3243,63 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   white-space: nowrap;
 }
 
+/* Tiles side by side (since 1.34.0): the list as a grid of panes of glass
+   — components, apps, choices — each with the surface, edge light and
+   shadow the list has as a whole, which itself has none. The icon stands
+   at the top, the title and subtitle at the foot, the trailing content in
+   the top end corner and a drag handle in the bottom end corner; no
+   dividers. --gl-list-tile-width (140px) is the least width of a column,
+   --gl-list-tile-gap (--gl-space-sm) the gap, --gl-list-tile-min-height
+   (112px) the least height. In plain markup the items of a .glass-list
+   --grid are tiles; GlassKit Elements puts .glass-list__item--tile on the
+   rows of <glk-list grid>, which lie in shadow roots of their own. */
+.glass-list--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--gl-list-tile-width, 140px)), 1fr));
+  gap: var(--gl-list-tile-gap, var(--gl-space-sm));
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+:where(.glass-list--grid) > .glass-list__item,
+.glass-list__item--tile {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gl-space-sm);
+  height: 100%;
+  min-height: var(--gl-list-tile-min-height, 112px);
+  padding: var(--gl-space-md);
+  border-radius: var(--gl-radius-btn);
+  background: var(--gl-surface-1);
+  backdrop-filter: blur(var(--gl-blur-light));
+  -webkit-backdrop-filter: blur(var(--gl-blur-light));
+  border: 1px solid var(--gl-border-subtle);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08), var(--gl-inset-subtle);
+}
+.glass-list--grid > .glass-list__item::after,
+.glass-list__item.glass-list__item--tile::after { content: none; }
+/* The text sits at the foot. It never shrinks below its lines — its
+   overflow: hidden would let it, and cut the title's descenders —, so a
+   tile with more to say grows. */
+:where(.glass-list--grid) > .glass-list__item .glass-list__content,
+.glass-list__item--tile .glass-list__content { flex: 1 0 auto; align-self: stretch; justify-content: flex-end; }
+:where(.glass-list--grid) > .glass-list__item .glass-list__trailing,
+.glass-list__item--tile .glass-list__trailing { position: absolute; top: var(--gl-space-sm); inset-inline-end: var(--gl-space-sm); }
+:where(.glass-list--grid) > .glass-list__item > .glass-sort__handle,
+.glass-list__item--tile > .glass-sort__handle { position: absolute; bottom: var(--gl-space-sm); inset-inline-end: var(--gl-space-sm); }
+/* The chosen tile is raised glass as a whole. */
+.glass-list--grid > .glass-list__item.is-selected:not(.is-sort-before, .is-sort-after, .is-sort-inside, .is-sort-refused)::before,
+.glass-list__item--tile.is-selected:not(.is-sort-before, .is-sort-after, .is-sort-inside, .is-sort-refused)::before { inset: -1px; border-radius: inherit; }
+/* The drop line stands in the middle of the gap. */
+.glass-list--grid > .glass-list__item.is-sort-inline.is-sort-before::before,
+.glass-list__item--tile.is-sort-inline.is-sort-before::before { inset-inline-start: calc(var(--gl-list-tile-gap, var(--gl-space-sm)) / -2 - 1px); }
+.glass-list--grid > .glass-list__item.is-sort-inline.is-sort-after::before,
+.glass-list__item--tile.is-sort-inline.is-sort-after::before { inset-inline-end: calc(var(--gl-list-tile-gap, var(--gl-space-sm)) / -2 - 1px); }
+
 
 /* ============================================================
    25b. TREE
@@ -3278,15 +3366,18 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   animation: glass-tree-spin .8s linear infinite;
 }
 @keyframes glass-tree-spin { to { transform: rotate(360deg); } }
+/* The icon field is --gl-tree-icon-size square (since 1.34.0; 18px), and
+   so is its SVG: a larger mark — a tinted 28px chip with a symbol, as list
+   rows show — gets a field of its size instead of being squeezed into 18px. */
 .glass-tree__icon {
-  flex: none; width: 18px; height: 18px;
+  flex: none; width: var(--gl-tree-icon-size, 18px); height: var(--gl-tree-icon-size, 18px);
   display: flex; align-items: center; justify-content: center;
   color: var(--gl-icon-default);
 }
 .glass-tree__icon:empty, .glass-tree__icon[hidden] { display: none; }
 .glass-tree__icon svg,
 .glass-tree__icon ::slotted(svg) {
-  width: 18px; height: 18px; fill: none;
+  width: var(--gl-tree-icon-size, 18px); height: var(--gl-tree-icon-size, 18px); fill: none;
   stroke: currentColor; stroke-width: 1.8;
   stroke-linecap: round; stroke-linejoin: round;
 }
@@ -3413,11 +3504,24 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 }
 .is-sort-before::before { top: -1px; }
 .is-sort-after::before { bottom: -1px; }
-.is-sort-inside {
+/* Items side by side — tiles in a grid, a row of them (since 1.34.0): with
+   .is-sort-inline the line stands upright at the target's start or end
+   edge, where the item lands. */
+.is-sort-inline.is-sort-before::before,
+.is-sort-inline.is-sort-after::before { inset-block: var(--gl-space-xs); width: 2px; height: auto; }
+.is-sort-inline.is-sort-before::before { inset-inline: -1px auto; }
+.is-sort-inline.is-sort-after::before { inset-inline: auto -1px; }
+/* On a list or tree row also over its hover and its chosen state (since
+   1.34.0; before, both covered the tint). */
+.is-sort-inside,
+.glass-list__item.is-sort-inside,
+.glass-tree__row.is-sort-inside {
   background: color-mix(in srgb, var(--gl-color-primary) 16%, transparent);
   box-shadow: inset 0 0 0 1.5px var(--gl-border-focus);
 }
-.is-sort-refused {
+.is-sort-refused,
+.glass-list__item.is-sort-refused,
+.glass-tree__row.is-sort-refused {
   background: var(--gl-color-error-surface);
   box-shadow: inset 0 0 0 1.5px var(--gl-color-error-border);
 }

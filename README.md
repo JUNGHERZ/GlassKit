@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.33.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.34.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-38-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.33.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.34.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -74,22 +74,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.33/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.34/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.33/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.34/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.33/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.34/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.33` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.34` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.33/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.34/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -200,7 +200,7 @@ Download the files directly from the [GitHub Release](https://github.com/JUNGHER
 | **Status** | `.glass-status` | Notice card with icon |
 | **List** | `.glass-list` | iOS-style grouped settings list with auto dividers |
 | **Tree** | `.glass-tree` | Levels that open and close: twisty, icon, label and a trailing slot per row; children loading or failed to load; a flash for a changed item |
-| **Sorting** | `.is-sort-*` + `.glass-sort__ghost` | The states of a drag that reorders a list or a tree: source, drop line, inside, refused, a grip |
+| **Sorting** | `.is-sort-*` + `.glass-sort__ghost` | The states of a drag that reorders a list, a tree or tiles: source, drop line (upright between tiles), inside, refused, a grip |
 | **Skeleton** | `.glass-skeleton` | Shimmer lines while content loads |
 | **Table** | `.glass-table` | Plain `<table>` on glass — hairline rows, tabular numbers; sort buttons, a sticky header, a row action column, an empty row, cards for narrow places |
 | **Prose** | `.glass-prose` | Rendered Markdown / running text with one class |
@@ -581,6 +581,9 @@ All visual values are controlled via CSS Custom Properties:
 --gl-tooltip-offset             /* 8px; the distance GlassKit Elements keeps from the control */
 --gl-tree-indent                /* 20px per level */
 --gl-tree-row-height            /* 36px */
+--gl-tree-icon-size             /* 18px; the icon field and its SVG — 28px for a tinted chip */
+--gl-list-item-divider-inset    /* where a list row's divider starts; unset after the icon, or at the padding */
+--gl-list-item-selected-bg      /* the pill of the chosen list row; unset --gl-surface-4 */
 --gl-breadcrumbs-crumb-width    /* 200px; a longer crumb ends in an ellipsis */
 --gl-sort-duration, --gl-sort-easing  /* 180ms, ease-out: rows making room while a list is sorted */
 --gl-table-cell-padding         /* 9px 10px */
@@ -889,6 +892,8 @@ List Modifiers:
   .glass-list--flush / --bare
   .glass-list__item--interactive / --center
   .glass-list__item.is-flash       (a changed item flashes; --gl-flash-color)
+  .glass-list__item.is-selected    (the chosen row beside its detail, with aria-current; --gl-list-item-selected-bg)
+  --gl-list-item-divider-inset     (where the dividers start; a row with its grip first runs them from its padding)
   --gl-list-title-white-space / --gl-list-subtitle-white-space / --gl-list-subtitle-lines   (wrapping, app-wide)
 
 Popover Modifiers:
@@ -904,13 +909,13 @@ Menu:
 
 Tree:
   .glass-tree · __row.is-expanded / .is-selected / .is-leaf / .is-loading / .is-error / .is-disabled / .is-flash · __twisty / __icon / __label / __trailing · __group
-  --gl-tree-level (per row) / --gl-tree-indent / --gl-tree-row-height
+  --gl-tree-level (per row) / --gl-tree-indent / --gl-tree-row-height / --gl-tree-icon-size
 
 Breadcrumbs:
   .glass-breadcrumbs · __list / __item / __item--overflow · __crumb / __current / __overflow · .is-drop-target / .is-drop-refused
 
 Sorting:
-  .is-sort-source / -before / -after / -inside / -refused · .glass-sort__ghost · .glass-sort__handle
+  .is-sort-source / -before / -after / -inline / -inside / -refused · .glass-sort__ghost · .glass-sort__handle
   --gl-sort-duration / --gl-sort-easing
 
 Skeleton:

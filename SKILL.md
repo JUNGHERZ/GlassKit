@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.33.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.34.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -13,6 +13,8 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.33.0) wi
 > **New in 1.28.0 — icons of any kind, and tokens instead of overrides.** Tab bar, accessory and segmented control colour their icon box, not the SVG: put a font icon (Material Icons), an `<img>` mask or a custom element straight into `.glass-tab-bar__icon` or `.glass-segmented__icon`, and it follows every state, the lens of the drop and the drag. `--icons` makes an icon-only segmented row (light / dark / auto). The inactive tab colour, the hover colour, the label size and the z-index of the tab bar are tokens, and so are the surface, shadow and text colour of the chosen segmented option. **Where a project restyles tab icons per state, or overrides the tab bar's literals, replace that with the tokens** (3.4, 3.29).
 
 > **New in 1.32.0 — one navigation for every edge, four components, and AA on the accent fills.** The tab bar leaves the bottom edge: `--vertical` makes it a sidebar, `--start` or `--end` fixes it to that side of the viewport — where the thumb rests on a phone held open, or a foldable that moved its system controls to a side — `--rail` shrinks it to icons, `--top` lays it out for the top of a page, and the floating bar stands upright in `.glass-tab-bar-dock--vertical`. In a column the drop runs along y, and its timing is tokens (`--gl-droplet-*`). New: the tooltip, the menu, the tree and the breadcrumbs (3.36–3.39), the states of a drag that reorders a list or a tree (3.40), and for the table a sort button, a sticky header, a row action column, an empty row and a card layout (3.27). Popover, tooltip and menu open in the top layer with the `popover` attribute. `--gl-btn-primary-bg` and `--gl-color-primary-fill` darken the accent fills for white text without touching the brand colour, and the radio's dot follows `--gl-color-on-primary`. **Where a project builds its own sidebar, tooltip, menu, tree or breadcrumbs, overrides the drop's transitions, or darkens `--gl-color-primary` for white button text, replace that** (3.4, 3.7, 3.25, section 2).
+
+> **New in 1.34.0 — a chosen list row, a list that starts with the grip, tiles that sort.** `.glass-list__item.is-selected` marks the entry a list beside its detail shows — a pill of raised glass, as the chosen tree row — with `aria-current="true"` (3.24). `--gl-list-item-divider-inset` sets where the dividers start, and a row with its `.glass-sort__handle` first lets them run from its padding. `.is-sort-inline` stands the drop line upright for tiles side by side (3.40). `--gl-tree-icon-size` (18px) gives the tree a larger icon field, for a 28px chip (3.38). **Where a project paints a chosen row with its own styles, squeezes a chip into the tree's 18px icon, or moves the grip by adopted stylesheets, replace that.**
 
 > **New in 1.33.0 — a rail that names its items, and tokens for the tab bar's details.** `--rail` with `--labels` keeps the label under the icon, and `--floating` with `--vertical` and `--start` or `--end` makes the rail a pane of its own glass at that edge, full height and inset from it; `__leading` and `__trailing` hold a mark, the accessory (`__accessory-item` with its name under it) and a foot inside the bar. `--gl-tab-bar-icon-size`, `--gl-tab-bar-item-radius` and `--gl-tab-bar-active-weight` replace overrides of global tokens, and the items transition only colour, surface, shadow, opacity and the press. Also new: `.glass-input-group--label-end` for a link such as "Forgot password?" at the end of the label row, and `.glass-badge--md`, a 36px choice chip with a 44px tap target.
 
@@ -1471,11 +1473,13 @@ iOS-style grouped settings list. Items can carry a leading icon, a title with op
 | `.glass-list__subtitle--wrap` | Multi-line subtitle (up to 3 lines, clamped with ellipsis; `--gl-list-subtitle-lines` sets the limit) |
 | `.glass-list__trailing` | Trailing slot — chevron, value, button, badge |
 | `.glass-list__value` | Muted text inside `.glass-list__trailing` (e.g. file size) |
+| `.glass-list__item.is-selected` | The chosen row of a list beside its detail (since 1.34.0): a pill of raised glass inside the row (`--gl-list-item-selected-bg`, unset `--gl-surface-4`), the title semibold, the icon in the accent. Put `aria-current="true"` on the row (`aria-selected` in a listbox). Hover and press leave it as it is; the keyboard ring stays around the row |
 | `.glass-list__item.is-flash` | A 1.2s flash for an item that changed elsewhere — on another device, by an undo — so the eye finds it; tinted by `--gl-flash-color` (unset: the primary at 30 %), none under `prefers-reduced-motion` (since 1.32.0). Take the class off on `animationend`; GlassKit Elements' `highlight()` sets it |
 
 **Notes:**
 - Dividers are auto-rendered via `::after`. The last item never has a divider.
 - Items **with** a `__leading` slot get an icon-aligned divider inset; items **without** one — or with a `__leading` that carries the `hidden` attribute (since 1.20.0) — get the standard padding inset (handled via `:has()`). Large leading (`--lg`) adjusts the divider inset automatically.
+- **Where the divider starts (since 1.34.0):** `--gl-list-item-divider-inset` overrides the start for rows laid out otherwise. A row whose first child is a `.glass-sort__handle` (the grip before the icon) lets the line run from its padding, since the grip's width is the page's — set the token to where the text begins, e.g. `90px` for an 18px grip and a 28px icon.
 - A `__leading` or `__trailing` with `hidden` takes no room (since 1.20.0; `display: flex` used to beat the attribute).
 - SVG icon convention: `24px` for leading (32px for `--lg`), `18px` for trailing, `stroke: currentColor`, `stroke-width: 2`.
 - Use `<ul>` + `<li>` for semantic lists. For interactive rows wrap in `<a>` or `<button>` instead of `<li>` if a single-row list is needed.
@@ -2042,7 +2046,7 @@ Levels that open and close (since 1.32.0): the structure of an app, menus with s
 | `.glass-tree__row.is-flash` | A 1.2s flash for an item that changed elsewhere, in `--gl-flash-color`, as on list items (since 1.32.0) |
 | `.glass-tree__row.is-focus-visible` | The focus ring, for a script that marks the focus itself. Where the `treeitem` takes the focus, `:focus-visible` on it already draws the ring on its row, not the browser's outline around the whole item (since 1.32.0); `:focus-visible` on the row itself works as well |
 | `.glass-tree__twisty` | The chevron; mirrored right to left |
-| `.glass-tree__icon` | 18px icon; empty or `hidden` takes no room |
+| `.glass-tree__icon` | The icon field, `--gl-tree-icon-size` square (18px) with its SVG (since 1.34.0) — `28px` for a tinted chip as list rows show; empty or `hidden` takes no room |
 | `.glass-tree__label` | One line with an ellipsis |
 | `.glass-tree__trailing` | Muted, at the row's end |
 | `.glass-tree__group` | The children, `role="group"`; `hidden` while the item is closed |
@@ -2104,7 +2108,8 @@ The states of a drag that reorders a list or a tree (since 1.32.0). The dragged 
 | `.is-sort-source` | The dragged item where it was: faded to 0.4 |
 | `.glass-sort__ghost` | The raised copy that follows the pointer, in the top layer (`popover="manual"`); never takes the pointer, and is hidden while closed |
 | `.is-sort-before` / `.is-sort-after` | On the target row: a primary line above or below it, indented by `--gl-tree-level` |
-| `.is-sort-inside` | On a row that takes the item inside it — a tree item, a submenu: tint and ring |
+| `.is-sort-inline` | With `.is-sort-before` / `.is-sort-after`, for items side by side — tiles in a grid (since 1.34.0): the line stands upright at the start or end edge |
+| `.is-sort-inside` | On a row that takes the item inside it — a tree item, a submenu: tint and ring; since 1.34.0 also over the hover of an interactive row and over the chosen state, which covered the tint before |
 | `.is-sort-refused` | With one of the above: the target refuses the item — the error colour |
 | `.glass-sort__handle` | A grip: with one, only the handle starts a drag, so a tap on the row still chooses it, and a finger on it drags at once (`touch-action: none`) |
 

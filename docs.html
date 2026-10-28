@@ -390,7 +390,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.33.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.34.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -475,7 +475,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.33.0</span>
+      <span class="docs-hero__badge">v1.34.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">38 Components</span>
@@ -1285,7 +1285,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.33/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.34/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -1738,6 +1738,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-list__trailing</code></td><td>Trailing slot &mdash; chevron, value, button, badge</td></tr>
         <tr><td><code>.glass-list__value</code></td><td>Muted text inside <code>.glass-list__trailing</code> (e.g. file size)</td></tr>
         <tr><td><code>.glass-list__item.is-flash</code></td><td>Flashes once, 1.2&nbsp;s in <code>--gl-flash-color</code>, for an item that changed elsewhere (since 1.32.0)</td></tr>
+        <tr><td><code>.glass-list__item.is-selected</code></td><td>The chosen row of a list beside its detail: a pill of raised glass inside the row, <code>--gl-list-item-selected-bg</code> (unset <code>--gl-surface-4</code>), the title semibold, the icon in the accent; with <code>aria-current="true"</code> (since 1.34.0, <a href="#list-selected">below</a>)</td></tr>
       </tbody>
     </table></div>
     <p style="margin-top:12px;"><strong>Dividers</strong> between rows are rendered automatically via <code>::after</code>. Items <em>with</em> a leading icon get an icon-aligned inset; items <em>without</em> &mdash; no <code>__leading</code>, or one carrying the <code>hidden</code> attribute (since 1.20.0) &mdash; get the standard padding inset. A hidden <code>__leading</code> or <code>__trailing</code> takes no room. The last item never has a divider. SVG icon convention: <code>24px</code> for leading, <code>18px</code> for trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
@@ -1771,6 +1772,36 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 }
 <span class="cmt">/* Breaks at syllables; short words stay whole */</span>
 <span class="cls">.glass-list, glk-list</span> { <span class="attr">hyphens</span>: <span class="val">auto</span>; <span class="attr">-webkit-hyphens</span>: <span class="val">auto</span>; <span class="attr">hyphenate-limit-chars</span>: <span class="val">10 4 4</span>; }</div>
+    </div>
+
+    <h3 id="list-selected">The chosen row</h3>
+    <p>A compact list next to an editor marks the entry that is open (since 1.34.0): <code>.is-selected</code> on the row lays a pill of raised glass into it, as the chosen <a href="#tree">tree</a> row and the active row of a sidebar have, with the title semibold and the icon in the accent. <code>aria-current="true"</code> tells assistive technology which entry it is &mdash; <code>aria-selected</code> instead where the list is a listbox. Hover and press leave the chosen row as it is, and the keyboard ring stays around it. <code>--gl-list-item-selected-bg</code> sets the pill&rsquo;s surface, unset <code>--gl-surface-4</code>.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <ul class="glass-list" aria-label="Pages">
+        <li class="glass-list__item glass-list__item--interactive" tabindex="0"><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="glass-list__content"><div class="glass-list__title">Home</div></div></li>
+        <li class="glass-list__item glass-list__item--interactive is-selected" tabindex="0" aria-current="true"><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="glass-list__content"><div class="glass-list__title">Opening hours</div><div class="glass-list__subtitle">Open in the editor</div></div></li>
+        <li class="glass-list__item glass-list__item--interactive" tabindex="0"><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="glass-list__content"><div class="glass-list__title">News</div></div></li>
+      </ul>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item glass-list__item--interactive is-selected"</span> <span class="attr">aria-current=</span><span class="val">"true"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/li&gt;</span></div>
+    </div>
+    <p>The divider starts under the text: after the leading icon, or at the row&rsquo;s padding without one. <code>--gl-list-item-divider-inset</code> (since 1.34.0) sets where it starts for rows laid out otherwise. A row with a <a href="#sorting">drag handle</a> before its icon lets the line run from its padding, since the handle&rsquo;s width is the page&rsquo;s, until the token says where the text begins.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <ul class="glass-list" aria-label="Components" style="--gl-list-item-divider-inset: 90px">
+        <li class="glass-list__item"><span class="glass-sort__handle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="16" x2="20" y2="16"/></svg></span><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="glass-list__content"><div class="glass-list__title">News</div><div class="glass-list__subtitle">Component</div></div></li>
+        <li class="glass-list__item"><span class="glass-sort__handle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="16" x2="20" y2="16"/></svg></span><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="glass-list__content"><div class="glass-list__title">Opening hours</div><div class="glass-list__subtitle">Component</div></div></li>
+        <li class="glass-list__item"><span class="glass-sort__handle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="16" x2="20" y2="16"/></svg></span><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="glass-list__content"><div class="glass-list__title">Team</div><div class="glass-list__subtitle">Component</div></div></li>
+      </ul>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;ul</span> <span class="attr">class=</span><span class="val">"glass-list"</span> <span class="attr">style=</span><span class="val">"--gl-list-item-divider-inset: 90px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">class=</span><span class="val">"glass-list__item"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-sort__handle"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/span&gt;</span>     <span class="cmt">&lt;!-- the grip first --&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-list__leading"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-list__content"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></div>
     </div>
   </section>
 
@@ -1877,7 +1908,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>.glass-tree</code></td><td>The list; no surface of its own</td></tr>
         <tr><td><code>__row</code></td><td>One item&rsquo;s row, <code>--gl-tree-row-height</code> (36&nbsp;px) high, indented by <code>--gl-tree-indent</code> (20&nbsp;px) for each level of <code>--gl-tree-level</code> past the first</td></tr>
         <tr><td><code>__twisty</code></td><td>The chevron; turns with <code>.is-expanded</code>, keeps its room but hides with <code>.is-leaf</code>, mirrored right to left</td></tr>
-        <tr><td><code>__icon</code></td><td>18&nbsp;px icon before the label; an empty one takes no room</td></tr>
+        <tr><td><code>__icon</code></td><td>The icon before the label, <code>--gl-tree-icon-size</code> (18&nbsp;px) square, its SVG too (since 1.34.0) &mdash; <code>28px</code> for a tinted chip as list rows show; an empty one takes no room</td></tr>
         <tr><td><code>__label</code></td><td>The label, one line with ellipsis</td></tr>
         <tr><td><code>__trailing</code></td><td>At the row&rsquo;s end: a badge, a status, an action</td></tr>
         <tr><td><code>__group</code></td><td>The item&rsquo;s children, below its row; <code>hidden</code> while closed</td></tr>
@@ -1951,13 +1982,28 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-sort__handle"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- SVG --&gt;</span><span class="tag">&lt;/span&gt;</span>Services
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
+    <p>Items side by side &mdash; tiles in a grid &mdash; take the line upright (since 1.34.0): <code>.is-sort-inline</code> with <code>.is-sort-before</code> puts it at the item&rsquo;s start edge, with <code>.is-sort-after</code> at its end edge. A tile that takes the item inside lights up as a row does.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div class="glass-card" style="padding:16px;min-height:72px;">News</div>
+        <div class="glass-card is-sort-source" style="padding:16px;min-height:72px;">Team</div>
+        <div class="glass-card is-sort-inline is-sort-before" style="padding:16px;min-height:72px;">Opening hours</div>
+        <div class="glass-card is-sort-inside" style="padding:16px;min-height:72px;">Submenu</div>
+        <div class="glass-card" style="padding:16px;min-height:72px;">Gallery</div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"tile is-sort-inline is-sort-before"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>   <span class="cmt">&lt;!-- it lands before this tile --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"tile is-sort-inside"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>                  <span class="cmt">&lt;!-- or inside this one --&gt;</span></div>
+    </div>
     <p>With a <code>.glass-sort__handle</code> in the item only the handle starts a drag, so a tap on the item still chooses it, and a finger on the handle drags at once, without the long press. The drag itself is GlassKit Elements&rsquo;: <code>&lt;glk-list sortable&gt;</code> and <code>&lt;glk-tree sortable&gt;</code> reorder by mouse, by touch after a long press and by keyboard &mdash; Space picks an item up, the arrow keys move it, Space drops it, Escape cancels &mdash;, announce each step, take <a href="#breadcrumbs">breadcrumbs</a> as drop targets and let the items glide into place over <code>--gl-sort-duration</code> (180&nbsp;ms) with <code>--gl-sort-easing</code> (ease-out). Under <code>prefers-reduced-motion</code> nothing glides.</p>
     <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Class</th><th>Description</th></tr></thead>
       <tbody>
         <tr><td><code>.is-sort-source</code></td><td>The dragged item where it was, faded to 40&nbsp;%</td></tr>
         <tr><td><code>.is-sort-before</code>, <code>.is-sort-after</code></td><td>A 2&nbsp;px line in the primary above or below the item, indented to <code>--gl-tree-level</code></td></tr>
-        <tr><td><code>.is-sort-inside</code></td><td>The item takes the dragged one inside: tinted, with a ring</td></tr>
+        <tr><td><code>.is-sort-inline</code></td><td>With <code>.is-sort-before</code> or <code>.is-sort-after</code>: the line stands upright at the item&rsquo;s start or end edge, for items side by side &mdash; tiles in a grid (since 1.34.0)</td></tr>
+        <tr><td><code>.is-sort-inside</code></td><td>The item takes the dragged one inside: tinted, with a ring &mdash; since 1.34.0 also over the hover of an interactive row and over the chosen state</td></tr>
         <tr><td><code>.is-sort-refused</code></td><td>The item does not take it: the error surface and ring; a line turns red</td></tr>
         <tr><td><code>.glass-sort__ghost</code></td><td>The raised copy that follows the pointer; <code>[popover]</code> in the top layer</td></tr>
         <tr><td><code>.glass-sort__handle</code></td><td>The grip: only it starts a drag, and a finger on it drags at once</td></tr>

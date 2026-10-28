@@ -330,6 +330,28 @@
 
 
 /* ============================================================
+   BEISPIEL: Bausteinliste mit Griff vorn, gewählte Zeile und
+   Baum mit Chips (seit 1.34.0)
+
+   Eine sortierbare Liste der Seite, deren Griff (18px) vor dem
+   Icon (28px) steht: die Trennlinien beginnen unter dem Text statt
+   am Innenabstand. Die gewählte Zeile einer Liste neben ihrem
+   Editor bekommt eine kräftigere Fläche, und der Baum zeigt
+   getönte 28px-Chips statt 18px-Icons.
+   ============================================================ */
+
+/*
+.component-list {
+  --gl-list-item-divider-inset:  90px;
+}
+:root {
+  --gl-list-item-selected-bg:    var(--gl-surface-5);
+  --gl-tree-icon-size:           28px;
+}
+*/
+
+
+/* ============================================================
    DEIN CUSTOM THEME
    Entkommentiere und passe an:
    ============================================================ */
