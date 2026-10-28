@@ -274,6 +274,16 @@
   }
 
   .docs-table td:last-child { color: var(--gl-color-text-muted); }
+  /* A wide table scrolls in its own box, as a code block does, instead of
+     widening the page on a phone. The box takes the table's margin. */
+  .docs-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 16px; }
+  .docs-table-wrap > .docs-table { margin-bottom: 0; }
+  /* On a phone code stays on one line and the last column keeps room to
+     read; the table scrolls sideways where that is wider than the page. */
+  @media (max-width: 600px) {
+    .docs-table code { white-space: nowrap; }
+    .docs-table td:last-child { min-width: 12em; }
+  }
 
   /* Quick Ref */
   .docs-quickref {
@@ -497,7 +507,7 @@
     <p>Alle visuellen Werte werden über CSS Custom Properties gesteuert.</p>
 
     <h3>Farbpalette</h3>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Token</th><th>Dark-Wert</th><th>Verwendung</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-color-primary</code></td><td>#f5a623</td><td>Primärfarbe, Buttons, aktive Elemente</td></tr>
@@ -510,10 +520,10 @@
         <tr><td><code>--gl-color-warning</code></td><td>#ffcc00</td><td>Warn-Status</td></tr>
         <tr><td><code>--gl-color-{state}-surface</code>, <code>-border</code>, <code>-on-surface</code></td><td>color-mix(&hellip;)</td><td>Get&ouml;nte Fl&auml;che, Rand und Schrift eines Status-Badges, abgeleitet von der Statusfarbe &mdash; f&uuml;r <code>success</code>, <code>error</code> und seit 1.18.0 <code>warning</code></td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <h3>Glasflächen</h3>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Token</th><th>Wert</th><th>Verwendung</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-surface-1</code></td><td>rgba(…, 0.08)</td><td>Subtilste Fläche (Status)</td></tr>
@@ -523,10 +533,10 @@
         <tr><td><code>--gl-surface-5</code></td><td>rgba(…, 0.22)</td><td>Starker Hover</td></tr>
         <tr><td><code>--gl-surface-milk-strong</code></td><td>rgba(…, 0.75)</td><td>Secondary Button</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <h3>Glanz</h3>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Token</th><th>Wert</th><th>Verwendung</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-gloss-card</code></td><td>linear-gradient(90deg, …)</td><td>Licht an der Oberkante von <code>.glass-card--glow</code></td></tr>
@@ -535,11 +545,11 @@
         <tr><td><code>--gl-range-thumb-border</code></td><td>2px solid rgba(255,255,255,0.5)</td><td>Rand des Range-Knopfs</td></tr>
         <tr><td><code>--gl-gloss-droplet</code></td><td>radial-gradient(&hellip;), radial-gradient(&hellip;)</td><td>Glanzlicht und Leuchten im Tropfen der <a href="#droplet"><code>--droplet</code></a>-Zeilen (seit 1.27.0)</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p>Seit 1.24.0, in beiden Themes gleich. <a href="#surface"><code>data-surface="solid"</code></a> schaltet sie ab, zusammen mit dem Blur und dem Glanz von <code>--gl-inset-*</code>.</p>
 
     <h3>Spacing & Radii</h3>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Token</th><th>Wert</th><th>Token</th><th>Wert</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-space-2xs</code></td><td>4px</td><td><code>--gl-radius-xs</code></td><td>8px</td></tr>
@@ -550,10 +560,10 @@
         <tr><td><code>--gl-space-xl</code></td><td>24px</td><td><code>--gl-radius-full</code></td><td>9999px</td></tr>
         <tr><td><code>--gl-space-2xl</code></td><td>32px</td><td><code>--gl-radius-pill</code></td><td>50%</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <h3>Dichte</h3>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Token</th><th>Standard</th><th>Kompakt</th><th>Verwendung</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-control-height</code></td><td>52px</td><td>40px</td><td>Input, Select, Suchfeld</td></tr>
@@ -569,7 +579,7 @@
         <tr><td><code>--gl-check-size</code></td><td>24px</td><td>20px</td><td>Checkbox, Radio</td></tr>
         <tr><td><code>--gl-modal-action-height</code></td><td>52px</td><td>44px</td><td>Modal-Aktionen</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- THEMING -->
@@ -739,14 +749,14 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <section class="docs-section" id="background">
     <h2>Hintergrund</h2>
     <p>Der Glaseffekt braucht einen farbigen Hintergrund.</p>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-bg</code></td><td>Vollständiger Hintergrund mit Aurora-Lichteffekten</td></tr>
         <tr><td><code>.glass-bg--has-tab-bar</code></td><td>Modifier: Padding unten für Tab-Bar</td></tr>
         <tr><td><code>.glass-bg--has-tab-bar-floating</code></td><td>Modifier: Padding unten für Floating-Tab-Bar + Accessory</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-bg glass-bg--has-tab-bar"</span><span class="tag">&gt;</span>
   <span class="cmt">&lt;!-- Inhalte --&gt;</span>
@@ -780,13 +790,13 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       <button class="glass-pill"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg></button>
       <button class="glass-theme-toggle" onclick="toggleTheme()"><svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-pill</code></td><td>Standard Glas-Kreis (46×46px)</td></tr>
         <tr><td><code>.glass-theme-toggle</code></td><td>Pill mit Mond/Sonne-Icon-Switch</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- TAB BAR -->
@@ -839,7 +849,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
     </div>
     <h3 id="tab-bar-icons" style="margin-top:var(--gl-space-lg);">Icons und Tokens</h3>
     <p>Seit 1.28.0 färbt jeder Zustand die Icon-Box, und ein SVG zieht seine Linien in <code>currentColor</code>. Das Icon kann deshalb alles sein, was eine Farbe annimmt &mdash; ein Icon-Font wie Material Icons, ein als Maske gezeichnetes <code>&lt;img&gt;</code>, ein eigenes Element &mdash;, und es folgt aktivem Zustand und Hover, der Lupe des <a href="#droplet">Tropfens</a> und dem Ziehen. Ein Font-Icon übernimmt die 24&nbsp;px der Box, solange seine eigene Klasse keine Größe setzt. Gib ihm <code>aria-hidden="true"</code>: Sein Text würde sonst zum Namen des Tabs. Sechs Tokens, alle ungesetzt, also ändert sich nichts, bis ein Projekt sie setzt:</p>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Token</th><th>Ungesetzt</th><th>Wirkung</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-tab-bar-color</code></td><td><code>--gl-icon-muted</code></td><td>Icon und Label der inaktiven Tabs</td></tr>
@@ -849,7 +859,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>--gl-tab-bar-active-weight</code></td><td><code>--gl-font-weight-medium</code></td><td>Schriftstärke des Labels am aktiven Tab (seit 1.33.0); ohne ihn ist jedes Label medium</td></tr>
         <tr><td><code>--gl-tab-bar-z-index</code></td><td><code>900</code></td><td>Stapelung der festen Leiste und des schwebenden Docks</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__item"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__icon"</span><span class="tag">&gt;</span>
@@ -975,7 +985,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/header&gt;</span></div>
     </div>
     <p>Jede Leiste zeigt jetzt einen Ring für die Tastatur, <code>--gl-shadow-focus</code> am fokussierten Eintrag; bis 1.32.0 hatten die Einträge keinen. Ein Eintrag darf auch ein Link sein, <code>&lt;a class="glass-tab-bar__item" href="…"&gt;</code>, sodass sich eine Ansicht auch in einem neuen Tab öffnen lässt; er sieht aus wie der Button. In GlassKit Elements sind die Layouts Attribute: <code>&lt;glk-tab-bar orientation="vertical"&gt;</code> mit <code>rail</code> (oder <code>rail="labels"</code>) und <code>dock="start"</code> oder <code>"end"</code>, und <code>placement="top"</code>; <code>slot="leading"</code> und <code>"trailing"</code> füllen die Plätze vor und nach den Einträgen.</p>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-tab-bar--vertical</code></td><td>Spalte für eine Seitenleiste, platziert vom Layout der Seite und so hoch wie ihr Container; scrollt selbst, wo die Einträge nicht passen</td></tr>
@@ -988,9 +998,9 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-tab-bar__leading</code>, <code>__trailing</code></td><td>Plätze vor und nach den Einträgen: in einer Spalte darüber und darunter, der hintere am fernen Ende; in einer Zeile davor und danach (seit 1.33.0)</td></tr>
         <tr><td><code>.glass-tab-bar__accessory-item</code></td><td>Das Accessory über seinem Namen, <code>.glass-tab-bar__accessory-label</code> (seit 1.33.0)</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p>In der Spalte wird ein langes Label mit Auslassungspunkten gekürzt und endet vor dem Badge: Solange ein Badge zu sehen ist, hält die Zeile an ihrem Ende <code>--gl-tab-bar-badge-room</code> frei.</p>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Token</th><th>Ungesetzt</th><th>Wirkung</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-tab-bar-rail-width</code></td><td><code>72px</code></td><td>Breite der Rail</td></tr>
@@ -1001,7 +1011,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>--gl-tab-bar-floating-inset</code></td><td><code>16px</code></td><td>Abstand einer schwebenden Rail an einer Kante von dieser Kante und von den Enden des Viewports (seit 1.33.0)</td></tr>
         <tr><td><code>--gl-tab-bar-rail-radius</code></td><td><code>--gl-radius-card</code></td><td>Ecken einer schwebenden Rail, angedockt oder nicht (seit 1.33.0)</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <h3 id="tab-bar-compact" style="margin-top:var(--gl-space-lg);">Eine kompakte obere Leiste</h3>
     <p>Drei Tokens formen die Einträge seit 1.33.0, ohne dass sich GlassKits globale Tokens ändern: <code>--gl-tab-bar-icon-size</code> setzt die Größe der Icons, <code>--gl-tab-bar-item-radius</code> rundet den Tropfen und die schwebenden Einträge &mdash; ungesetzt eine Kapsel &mdash;, und <code>--gl-tab-bar-active-weight</code> setzt die Schriftstärke des aktiven Labels. Eine obere Leiste, die als kompakte Spur gezeichnet ist wie ein <a href="#segmented">Segmented Control</a>, nimmt dessen 18&nbsp;px große Icons und 12&nbsp;px Ecken:</p>
@@ -1158,7 +1168,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         </button>
       </div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-tab-bar-dock</code></td><td>Wrapper: fest unten zentriert, hält Tab-Bar + Accessory</td></tr>
@@ -1173,7 +1183,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-tab-bar-dock--vertical</code></td><td>Modifier: das Dock aufrecht am Endrand, senkrecht zentriert; die Bar darin bekommt <code>--vertical</code> (seit 1.32.0)</td></tr>
         <tr><td><code>.glass-tab-bar-dock--start</code></td><td>Mit <code>--vertical</code>: stattdessen am Startrand</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <h3 id="tab-bar-floating-vertical" style="margin-top:var(--gl-space-lg);">Aufrecht an der Seite</h3>
     <p>Seit 1.32.0 steht die Floating-Bar auch aufrecht an einer Seite, dort, wo ein Daumen auf einem quer gehaltenen Telefon liegt. <code>.glass-tab-bar-dock--vertical</code> am Dock und <code>--vertical</code> an der Bar stapeln die Einträge so, wie sie an der unteren Kante stehen, Icon über Label, mit dem Accessory darunter (darüber mit <code>--accessory-left</code>), senkrecht zentriert am Endrand; <code>.glass-tab-bar-dock--start</code> rückt es an den anderen. Beide halten den sicheren Bereich frei und folgen der Schreibrichtung. Mit <code>--droplet</code> läuft der Tropfen auf und ab:</p>
@@ -1305,7 +1315,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 
     <h3 id="droplet-timing" style="margin-top:var(--gl-space-lg);">Timing des Tropfens</h3>
     <p>Seit 1.32.0 ist die Bewegung Tokens, die das Stylesheet und <code>glasskit-droplet.js</code> gleichermaßen lesen. Sie werden vererbt und erreichen so auch <code>&lt;glk-tab-bar droplet&gt;</code> und <code>&lt;glk-segmented droplet&gt;</code> in GlassKit Elements. Ungesetzt lassen sie den Tropfen, wie er war: Er kommt etwa 830&nbsp;ms nach einem Tipp zur Ruhe.</p>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Token</th><th>Ungesetzt</th><th>Wirkung</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-droplet-duration</code></td><td><code>0.3s</code></td><td>Die Vorderkante und die Kanten quer zum Weg</td></tr>
@@ -1320,7 +1330,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>--gl-droplet-lens-duration</code></td><td><code>0.4s</code></td><td>Der Eintrag unter dem Tropfen, der wie unter einer Lupe wächst</td></tr>
         <tr><td><code>--gl-droplet-lens-easing</code></td><td><code>cubic-bezier(0.34, 1.6, 0.5, 1)</code></td><td>Seine Kurve</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p>Ein Produkt, das seine Bewegungen bei 240&nbsp;ms ease-out hält, lässt den Tropfen in 240&nbsp;ms ankommen, ohne Nachlauf, in der Tab-Bar wie in der Segmentwahl. Mit der Dauer des Anhebens bei <code>0ms</code> vertieft der Tropfen unterwegs auch seinen Schatten nicht, der sich sonst erst nach etwa 600&nbsp;ms wieder legt:</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="cls">:root</span> {
@@ -1398,7 +1408,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         </nav>
       </div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-breadcrumbs</code></td><td>Am <code>&lt;nav&gt;</code>; gibt in einer engen Zeile nach (<code>min-width: 0</code>)</td></tr>
@@ -1410,7 +1420,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>__item--overflow</code></td><td>Am <code>&lt;li&gt;</code> dieses Buttons: behält seine Breite, während die anderen Krumen nachgeben</td></tr>
         <tr><td><code>.is-drop-target</code>, <code>.is-drop-refused</code></td><td>An einer Krume, solange ein gezogenes Element über ihr ist: Sie nimmt es an oder nicht</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- TITLE -->
@@ -1439,7 +1449,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
   <span class="tag">&lt;p</span> <span class="attr">class=</span><span class="val">"glass-card__text"</span><span class="tag">&gt;</span>Text<span class="tag">&lt;/p&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-card</code></td><td>Basis-Glasfläche</td></tr>
@@ -1447,7 +1457,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-card__icon</code></td><td>Zentrierter Icon-Wrapper</td></tr>
         <tr><td><code>.glass-card__text</code></td><td>Beschreibungstext</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- BUTTONS -->
@@ -1461,7 +1471,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <button class="glass-btn glass-btn--primary" disabled>Deaktiviert</button>
       </div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-btn</code></td><td>Basis (56px, volle Breite)</td></tr>
@@ -1474,7 +1484,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>:disabled</code>, <code>[aria-disabled="true"]</code></td><td>Gedimmt auf 0,45, Cursor not-allowed, kein Hover (seit 1.21.2)</td></tr>
         <tr><td><code>svg.glass-icon--fill</code></td><td>Bewusst gefülltes Icon (z.&nbsp;B. Brand-Logos)</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p>Ein deaktivierter Button &mdash; <code>disabled</code>, oder <code>aria-disabled="true"</code> an einem <code>a.glass-btn</code>, der sich nicht deaktivieren lässt &mdash; ist gedimmt, zeigt den Cursor not-allowed und hebt sich beim Hover nicht mehr an (seit 1.21.2; vorher sah er genau aus wie ein aktiver). Der Link selbst navigiert weiter, wenn die Seite ihn nicht abfängt. Dasselbe gilt für Pill, Tab-Bar-Accessory, Modal-Aktionen, interaktive Listenzeilen und die Monatspfeile des Kalenders; Toggle, Checkbox und Radio dimmen Bedienelement und Label, Select, Textarea und Range dimmen wie das Input.</p>
     <p>Buttons haben seit 1.31.0 eigene Haken. <code>--gl-btn-radius</code> rundet sie, ungesetzt <code>--gl-radius-btn</code>, das sich Listen, Statuskarte, Toasts, Akkordeon und Segmentwahl teilen: <code>--gl-btn-radius: 9999px</code> auf <code>:root</code> ergibt Buttons in Pillenform und lässt die anderen, wie sie sind. <code>--gl-btn-padding-x</code> ist der Raum neben der Beschriftung, ungesetzt 24&nbsp;px, der Innenabstand, den bisher nur <code>--auto</code> hatte; jeder andere Button hatte die 6&nbsp;px des Browsers, sodass ein kleiner, der seine Breite aus dem Text nahm, in einer Reihe von Aktionen den Text mit seinen Kanten berührte. <code>--sm</code> liest zuerst <code>--gl-btn-radius-sm</code> und <code>--gl-btn-padding-x-sm</code>, dann die Haken darüber, und behält seinen Radius von 12&nbsp;px, solange keiner gesetzt ist; so formt ein Wert jede Größe.</p>
     <p>Seit 1.32.0 ersetzt <code>--gl-btn-primary-bg</code> den ganzen Hintergrund von <code>--primary</code>, so wie Schalter und Radio ihre eigenen haben; ungesetzt ist es der Verlauf von <code>--gl-color-primary</code> über <code>-mid</code> zu <code>-dark</code>. Ein Produkt, das bei weißer Schrift bleibt, lässt den Verlauf so dunkler beginnen und die Markenfarbe in Ruhe; das Rezept steht unter <a href="#primary-text">Primärfarbe als Text</a>.</p>
@@ -1515,14 +1525,14 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-badge glass-badge--interactive"</span>
         <span class="attr">aria-pressed=</span><span class="val">"false"</span><span class="tag">&gt;</span>beworben<span class="tag">&lt;/button&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>--interactive</code></td><td>Anklickbar: Zeiger, Hover-T&ouml;nung, Fokusring, Druck-R&uuml;ckmeldung</td></tr>
         <tr><td><code>--selected</code></td><td>Der aktive Chip &mdash; vertieft die eigene Farbe des Badges</td></tr>
         <tr><td><code>--gl-badge-accent</code></td><td>Die Farbe, die beide Zust&auml;nde vertiefen. Pro Badge setzbar, wenn ein Chip eine eigene Farbe bekommen soll.</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <h3 id="badge-md" style="margin-top:var(--gl-space-lg);">Auswahl-Chips</h3>
     <p>Seit 1.33.0 macht <code>--md</code> einen Chip zum Auswählen, wie in der Zeile der Branchen eines Anmeldeformulars: <code>--gl-badge-md-height</code> (36&nbsp;px) hoch, in der kleinen Schrift eines Formulars. Mit <code>--interactive</code> nimmt er Berührungen auf 44&nbsp;px an, 4&nbsp;px über und unter seinen Kanten, die Zielgröße, die die anderen Bedienelemente einhalten. In einer umbrechenden Zeile mindestens 8&nbsp;px zwischen den Zeilen lassen, damit sich die Ziele treffen und nicht überlappen.</p>
@@ -1536,13 +1546,13 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-badge glass-badge--md glass-badge--interactive glass-badge--selected"</span>
         <span class="attr">aria-pressed=</span><span class="val">"true"</span><span class="tag">&gt;</span>Café &amp;amp; Bäckerei<span class="tag">&lt;/button&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse / Token</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>--md</code></td><td>Ein Chip zum Auswählen: 36&nbsp;px hoch, die kleine Schrift eines Formulars; interaktiv ein Berührungsziel von 44&nbsp;px</td></tr>
         <tr><td><code>--gl-badge-md-height</code></td><td>Seine Höhe, ungesetzt <code>36px</code>; das Berührungsziel wächst um ihn herum auf 44&nbsp;px</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p>In GlassKit Elements: <code>&lt;glk-badge interactive size="md"&gt;</code>.</p>
   </section>
 
@@ -1707,7 +1717,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
     </div>
 
     <h3>Klassen-Referenz</h3>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-list</code></td><td>Gruppierter Surface-Container</td></tr>
@@ -1729,7 +1739,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-list__value</code></td><td>Gedämpfter Text in <code>.glass-list__trailing</code> (z.B. Dateigröße)</td></tr>
         <tr><td><code>.glass-list__item.is-flash</code></td><td>Leuchtet einmal auf, 1,2&nbsp;s in <code>--gl-flash-color</code>, für ein Element, das sich anderswo geändert hat (seit 1.32.0)</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p style="margin-top:12px;"><strong>Trennlinien</strong> zwischen Zeilen werden automatisch via <code>::after</code> gerendert. Items <em>mit</em> Leading-Icon erhalten einen icon-aligned Inset; Items <em>ohne</em> &mdash; kein <code>__leading</code>, oder eines mit dem Attribut <code>hidden</code> (seit 1.20.0) &mdash; bekommen das normale Padding-Inset. Ein verstecktes <code>__leading</code> oder <code>__trailing</code> nimmt keinen Platz ein. Das letzte Item hat nie eine Trennlinie. SVG-Icon-Konvention: <code>24px</code> für Leading, <code>18px</code> für Trailing, <code>stroke: currentColor</code>, <code>stroke-width: 2</code>.</p>
     <p>Seit 1.32.0 kann ein Element, das sich anderswo geändert hat &mdash; auf einem anderen Gerät, durch ein Rückgängig &mdash;, einmal aufleuchten, damit das Auge es zwischen den anderen findet: <code>.is-flash</code> tönt es 1,2&nbsp;s lang in <code>--gl-flash-color</code>, ungesetzt 30&nbsp;% der Primärfarbe, und unter <code>prefers-reduced-motion</code> leuchtet nichts. Die Klasse bei <code>animationend</code> wieder entfernen, damit die nächste Änderung erneut aufleuchtet.</p>
     <div class="docs-code-wrapper">
@@ -1861,7 +1871,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 row.classList.add(<span class="val">'is-flash'</span>);
 row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.classList.remove(<span class="val">'is-flash'</span>), { once: true });</div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-tree</code></td><td>Die Liste; ohne eigene Fläche</td></tr>
@@ -1879,7 +1889,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>.is-disabled</code></td><td>Gedimmt, Cursor not-allowed</td></tr>
         <tr><td><code>.is-focus-visible</code></td><td>Der Tastaturring innerhalb der Zeile, für ein Skript, das den Fokus bewegt</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- SORTING -->
@@ -1942,7 +1952,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
     <p>Mit einem <code>.glass-sort__handle</code> im Element startet nur der Griff ein Ziehen, ein Tipp auf das Element wählt es also weiterhin, und ein Finger auf dem Griff zieht sofort, ohne langes Drücken. Das Ziehen selbst bringt GlassKit Elements mit: <code>&lt;glk-list sortable&gt;</code> und <code>&lt;glk-tree sortable&gt;</code> ordnen mit der Maus, per Touch nach langem Drücken und mit der Tastatur &mdash; die Leertaste hebt ein Element auf, die Pfeiltasten bewegen es, die Leertaste legt es ab, Escape bricht ab &mdash;, sagen jeden Schritt an, nehmen <a href="#breadcrumbs">Breadcrumbs</a> als Ablageziele und lassen die Elemente über <code>--gl-sort-duration</code> (180&nbsp;ms) mit <code>--gl-sort-easing</code> (ease-out) an ihren Platz gleiten. Unter <code>prefers-reduced-motion</code> gleitet nichts.</p>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.is-sort-source</code></td><td>Das gezogene Element an seinem alten Platz, auf 40&nbsp;% verblasst</td></tr>
@@ -1952,7 +1962,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>.glass-sort__ghost</code></td><td>Die angehobene Kopie, die dem Zeiger folgt; <code>[popover]</code> im Top Layer</td></tr>
         <tr><td><code>.glass-sort__handle</code></td><td>Der Griff: Nur er startet ein Ziehen, und ein Finger darauf zieht sofort</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- MODAL -->
@@ -1999,7 +2009,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
     </div>
 
     <h3>Klassen-Referenz</h3>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-modal-overlay</code></td><td>Fullscreen Blur-Overlay</td></tr>
@@ -2012,7 +2022,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>__action--primary</code></td><td>Primäre Aktion</td></tr>
         <tr><td><code>__action--danger</code></td><td>Gefährliche Aktion</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p style="margin-top:12px;"><strong>Hinweis:</strong> die <code>.is-active</code>-Klasse gehört auf das <code>.glass-modal-overlay</code>, nicht auf <code>.glass-modal</code> selbst. Das Overlay übernimmt den Fullscreen-Backdrop, und sein <code>:is-active</code>-Zustand triggert sowohl das Backdrop-Fade-In als auch die Scale-Up-Animation des inneren Dialogs.</p>
     <h3>Als natives Dialog-Element</h3>
     <p>Seit 1.20.0 darf das Overlay auch ein <code>&lt;dialog&gt;</code> sein. Mit <code>showModal()</code> geöffnet liegt es in der Top Layer; die Seite dahinter ist für Zeiger, Tastatur und Screenreader inert; der Fokus wandert hinein und beim Schließen dorthin zurück, wo er herkam; Escape schließt. GlassKit nimmt dem Dialog seinen eigenen Kasten und Backdrop, er sieht also genau aus wie das <code>&lt;div&gt;</code>-Overlay. Seinen Namen bekommt er über <code>aria-labelledby</code> vom Titel. <code>&lt;glk-modal&gt;</code> aus GlassKit Elements arbeitet so.</p>
@@ -2086,7 +2096,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-toast__close"</span> <span class="attr">aria-label=</span><span class="val">"Schließen"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- × SVG --&gt;</span><span class="tag">&lt;/button&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-toast</code>, <code>.is-visible</code></td><td>Oben fixiert, sichtbar eingeblendet</td></tr>
@@ -2096,7 +2106,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>__close</code></td><td>Das &times;, 28 px mit 44 px Trefferfl&auml;che (seit 1.19.0)</td></tr>
         <tr><td><code>--gl-toast-top</code></td><td>Abstand vom oberen Rand, Vorgabe <code>var(--gl-space-4xl)</code> (seit 1.19.0)</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- POPOVER -->
@@ -2172,7 +2182,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
     </div>
 
     <h3>Klassen-Referenz</h3>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-popover-anchor</code></td><td>Positionierungs-Kontext für den Popover (umschließt Trigger + Popover)</td></tr>
@@ -2184,7 +2194,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>.glass-popover[popover]</code></td><td>Im Top Layer, <code>position: fixed</code>: mit <code>showPopover()</code> geöffnet, per Skript an Viewport-Koordinaten platziert, geschlossen ohne Platzbedarf (seit 1.32.0)</td></tr>
         <tr><td><code>[data-side="top"]</code></td><td>Mit <code>[popover]</code>: wächst von der Unterkante aus, für einen Popover über seinem Trigger</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p style="margin-top:12px;"><strong>Hinweis:</strong> die Toggle-Funktion darf <strong>nicht</strong> <code>togglePopover</code> heißen &mdash; dieser Name kollidiert mit der nativen <code>HTMLElement.togglePopover()</code>-Methode der HTML Popover API, und Inline-<code>onclick</code>-Handler werfen einen <code>NotSupportedError</code>.</p>
   </section>
 
@@ -2210,14 +2220,14 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
 <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tooltip"</span> <span class="attr">id=</span><span class="val">"tip-share"</span> <span class="attr">role=</span><span class="val">"tooltip"</span> <span class="attr">popover=</span><span class="val">"hint"</span><span class="tag">&gt;</span>Jeder mit dem Link …<span class="tag">&lt;/div&gt;</span></div>
     </div>
     <p>Er geht im Top Layer auf wie der <a href="#popover-top-layer">Popover</a>, mit <code>popover="hint"</code> (ein Browser ohne <code>hint</code> nimmt es als <code>manual</code>), per Skript neben sein Bedienelement gesetzt und umgeklappt oder verschoben, damit er im Viewport bleibt. Ohne das Attribut ist er ein schlichter Block wie in der Vorschau. WCAG 1.4.13 verlangt dreierlei von einem Tooltip: Der Zeiger kann auf ihn wechseln, ohne dass er zugeht, Escape schließt ihn, ohne den Fokus zu bewegen, und er bleibt, solange das Bedienelement überfahren oder fokussiert ist. <code>&lt;glk-tooltip&gt;</code> aus GlassKit Elements bringt dieses Verhalten mit: Er erscheint nach 400&nbsp;ms beim Überfahren, sofort beim Tastaturfokus und bei langem Drücken per Touch, während ein Tipp ihn nie zeigt.</p>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Token</th><th>Ungesetzt</th><th>Wirkung</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-tooltip-max-width</code></td><td><code>240px</code></td><td>Die größte Breite, bevor der Text umbricht</td></tr>
         <tr><td><code>--gl-tooltip-bg</code></td><td><code>--gl-color-bg-dark</code> zu 94&nbsp;%</td><td>Seine Fläche: der dunkelste Hintergrund des Themes, im hellen Theme hell</td></tr>
         <tr><td><code>--gl-tooltip-color</code></td><td><code>--gl-color-text</code></td><td>Seine Schrift</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- MENU -->
@@ -2269,7 +2279,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
 <span class="tag">&lt;/button&gt;</span></div>
     </div>
     <p>Die Tastatur ist die des WAI-ARIA-Menübuttons: Enter, Leertaste oder Pfeil runter am Button öffnen das Menü beim ersten Eintrag, Pfeil hoch beim letzten; im Menü wandern Pfeil runter und hoch und springen am Ende um, Pos1 und Ende gehen an die Enden, Tippen springt zum nächsten Eintrag mit diesen Anfangsbuchstaben, Escape schließt es und gibt den Fokus an den Button zurück, und Tab schließt es und geht weiter. <code>&lt;glk-menu&gt;</code> aus GlassKit Elements bringt sie mit, zusammen mit <code>&lt;glk-menu-item&gt;</code>, <code>&lt;glk-menu-separator&gt;</code> und <code>&lt;glk-menu-group&gt;</code>. Ein eigenes Skript, das den Fokus woanders hält, markiert den aktuellen Eintrag mit <code>.is-focused</code> und <code>.is-focus-visible</code>.</p>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-menu</code></td><td>Das Panel auf der Fläche des Popovers, 180 bis 320&nbsp;px breit, scrollt jenseits von 70vh oder 480&nbsp;px; <code>[popover]</code> öffnet es im Top Layer</td></tr>
@@ -2284,7 +2294,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>__group-label</code></td><td>Die kleine, gedämpfte Überschrift einer Gruppe</td></tr>
         <tr><td><code>.is-focused</code>, <code>.is-focus-visible</code></td><td>Fokuszustände für ein Skript, das den Fokus woanders hält</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- INPUT -->
@@ -2487,14 +2497,14 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         </div>
       </div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-progress</code></td><td>Basis-Container</td></tr>
         <tr><td><code>--sm / --lg</code></td><td>Track-Höhe: 4px / 12px</td></tr>
         <tr><td><code>--success / --error</code></td><td>Farb-Varianten</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- ACCORDION -->
@@ -2533,14 +2543,14 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-skeleton__line"</span> <span class="attr">style=</span><span class="val">"width:80%"</span><span class="tag">&gt;&lt;/div&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-skeleton</code></td><td>Stapel aus Zeilen, 10px Abstand</td></tr>
         <tr><td><code>.glass-skeleton__line</code></td><td>Eine Schimmerzeile (12px); Breite per Inline-Style</td></tr>
         <tr><td><code>.glass-skeleton__line--title</code></td><td>H&ouml;here Zeile (18px) f&uuml;r eine &Uuml;berschrift</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- TABLE -->
@@ -2567,7 +2577,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;/table&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-table-wrap</code></td><td>Optionaler Container mit seitlichem Scrollen</td></tr>
@@ -2575,7 +2585,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>.glass-table__num</code></td><td>Rechtsb&uuml;ndig, Tabellenziffern &mdash; auf <code>th</code> und <code>td</code></td></tr>
         <tr><td><code>.glass-table__muted</code></td><td>Sekund&auml;re Textfarbe f&uuml;r eine Zelle</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <h3 id="table-sorting" style="margin-top:var(--gl-space-lg);">Sortieren, fester Kopf, Zeilenaktionen</h3>
     <p>Seit 1.32.0 bringt die Tabelle mit, was eine Liste von Rechnungen oder Nutzern braucht. Eine Kopfzelle, die sortiert, enthält einen <code>__sort</code>-Button mit dem Pfeil und trägt <code>aria-sort</code>: <code>"ascending"</code>, <code>"descending"</code> oder <code>"none"</code>. Die Seite sortiert die Zeilen, oft auf dem Server; die Klassen zeigen nur den Zustand. <code>--sticky</code> an der Tabelle und <code>.glass-table-wrap--sticky</code> an ihrem Wrap halten den Kopf sichtbar: Der Wrap scrollt in beide Richtungen, höchstens <code>--gl-table-max-height</code> (60vh) hoch, und die Kopfzellen haften an seinem oberen Rand, auf <code>--gl-table-header-bg</code>. Zellen mit <code>__actions</code> tragen die Aktionen der Zeile &mdash; ein <a href="#menu">Menü</a>, Icon-Buttons mit <a href="#tooltip">Tooltips</a> &mdash; und bleiben am Zeilenende, während die Tabelle seitlich scrollt; sobald sie das tut, gibt <code>--scrolls</code> an der Tabelle ihnen eine eigene Fläche, und ein <code>.glass-table-frame</code> um den Wrap schattiert jeden Rand, hinter dem weitere Spalten warten (<code>data-more-start</code>, <code>data-more-end</code>). Sortiere die Spalten, scrolle die Tabelle, mach das Fenster schmal:</p>
@@ -2685,7 +2695,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;/div&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>__sort</code>, <code>__sort-icon</code></td><td>Button, der eine Kopfzelle füllt und nach ihrer Spalte sortiert, und sein Pfeil: nach oben für <code>ascending</code>, nach unten für <code>descending</code>, blass, solange unsortiert</td></tr>
@@ -2697,8 +2707,8 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>__empty</code></td><td>Unter der Tabelle in ihrem Wrap, der Platz für einen Leerzustand</td></tr>
         <tr><td><code>--list</code></td><td>Jede Zeile eine Karte, die Labels aus <code>data-label</code>, die Aktionen am oberen Ende</td></tr>
       </tbody>
-    </table>
-    <table class="docs-table">
+    </table></div>
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Token</th><th>Ungesetzt</th><th>Wirkung</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-table-cell-padding</code></td><td><code>9px 10px</code></td><td>Der Raum in den Zellen des Körpers</td></tr>
@@ -2706,7 +2716,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>--gl-table-max-height</code></td><td><code>60vh</code></td><td>Wie hoch ein haftender Wrap wird, bevor er scrollt</td></tr>
         <tr><td><code>--gl-table-header-bg</code></td><td><code>--gl-color-bg-mid</code> zu 94&nbsp;%</td><td>Die Fläche des haftenden Kopfs und die der Aktionen, solange die Tabelle seitlich scrollt</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- PROSE -->
@@ -2782,7 +2792,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-segmented__item"</span> <span class="attr">aria-pressed=</span><span class="val">"false"</span><span class="tag">&gt;</span>Hilfeseite<span class="tag">&lt;/button&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-segmented</code></td><td>Die Gruppe: eingelassene Glas-Schiene, Kn&ouml;pfe darin</td></tr>
@@ -2798,7 +2808,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>--icons</code></td><td>Nur Icons, quadratische Optionen; die Namen stehen in <code>aria-label</code> (seit 1.28.0)</td></tr>
         <tr><td><code>--droplet</code></td><td>Die gewählte Option sitzt auf einem Glastropfen, der zur nächsten gleitet (seit 1.27.0)</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <h3 id="segmented-icons">Icons</h3>
     <p>Seit 1.28.0 kann eine Option ein Icon in <code>.glass-segmented__icon</code> zeigen, vor ihrer Beschriftung: Ein SVG zieht seine Linien in der Farbe der Option, jedes andere Element &mdash; ein Font-Icon, eine <code>&lt;img&gt;</code>-Maske &mdash; übernimmt diese Farbe, ein Font-Icon auch die 18&nbsp;px der Box. Unter dem <a href="#droplet">Tropfen</a> wächst das Icon wie der Ton-Punkt. <code>--icons</code> macht eine Zeile nur aus Icons, etwa einen Schalter Hell / Dunkel / Automatisch: Die Optionen werden quadratisch, und jede trägt ihren Namen als <code>aria-label</code>, als <code>title</code> auch für den Tooltip. Die Icon-Box bekommt <code>aria-hidden="true"</code>, damit der Text eines Font-Icons nicht in den Namen gerät.</p>
     <div class="docs-preview docs-preview--compact" style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
@@ -2823,14 +2833,14 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
     </div>
     <h3 id="segmented-active">Fläche der gewählten Option</h3>
     <p>Seit 1.28.0 sind Fläche, Schatten und Textfarbe der gewählten Option Tokens, wie beim aktiven Eintrag der Tab-Bar: Auf einem dunklen Marken-Hintergrund ließ die helle Fläche ein weißes Label unter 4,5:1. Alle drei sind ungesetzt; der <a href="#droplet">Tropfen</a> übernimmt dieselbe Fläche und denselben Schatten, ein Wertepaar dient also beiden Darstellungen. Der Schatten steht in Schattenlisten: Abschalten mit einem Nullschatten, nicht mit <code>none</code>.</p>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Token</th><th>Ungesetzt</th><th>Wirkung</th></tr></thead>
       <tbody>
         <tr><td><code>--gl-segmented-active-bg</code></td><td><code>--gl-surface-5</code> (der Tropfen: ein heller Glasverlauf)</td><td>Fläche der gewählten Option und des Tropfens</td></tr>
         <tr><td><code>--gl-segmented-active-shadow</code></td><td><code>--gl-shadow-btn</code> (der Tropfen: sein eigener)</td><td>Ihr Schatten</td></tr>
         <tr><td><code>--gl-segmented-active-color</code></td><td><code>--gl-color-text-heading</code></td><td>Label und Icon der gewählten Option und der Option unter einem gezogenen Tropfen</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="cls">:root</span> {
   <span class="attr">--gl-segmented-active-bg</span>: <span class="val">var(--gl-color-primary)</span>;
@@ -2954,7 +2964,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;/li&gt;</span>
 <span class="tag">&lt;/ol&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-steps</code></td><td>Die Liste; ein Gr&ouml;&szlig;en-Container, in einer Flex-Zeile also mit Breite versehen</td></tr>
@@ -2963,7 +2973,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>__label</code></td><td>Die Beschriftung; unter 360 px ausgeblendet, au&szlig;er am aktuellen Schritt</td></tr>
         <tr><td><code>__line</code></td><td>Haarlinie zwischen den Schritten</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- SHEET -->
@@ -2998,7 +3008,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
 <span class="cmt">// &ouml;ffnen: hidden entfernen, Reflow erzwingen, im n&auml;chsten Frame .is-active setzen
 // schlie&szlig;en: .is-active entfernen, hidden nach transitionend (Sicherheitsnetz 400 ms)</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-sheet-overlay</code></td><td>Fixiertes Overlay: Scrim, Blur, Panel an der Unterkante; startet bei Opacity 0</td></tr>
@@ -3007,7 +3017,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>--inline</code></td><td>Im Fluss, ohne Overlay, rundum gerundet</td></tr>
         <tr><td><code>__grip</code>, <code>__title</code>, <code>__body</code>, <code>__actions</code></td><td>Griff, &Uuml;berschrift, Inhalt, Aktionsspalte</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <script>
       (() => {
         const ov = document.getElementById('docs-sheet'), panel = ov.querySelector('.glass-sheet');
@@ -3045,7 +3055,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-empty__action"</span><span class="tag">&gt;</span>&hellip;<span class="tag">&lt;/div&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-empty</code></td><td>Zentrierte Spalte</td></tr>
@@ -3053,7 +3063,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>__title</code>, <code>__text</code></td><td>&Uuml;berschrift und ged&auml;mpfter Text (max. 38 Zeichen breit)</td></tr>
         <tr><td><code>__action</code></td><td>Platz f&uuml;r eine oder mehrere Aktionen: nebeneinander mit 8 px Abstand, umbrechend und zentriert, wenn es eng wird (seit 1.17.0)</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- DATE STRIP -->
@@ -3090,7 +3100,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-date-strip__day"</span> <span class="attr">aria-pressed=</span><span class="val">"false"</span> <span class="attr">disabled</span><span class="tag">&gt;</span>&hellip;<span class="tag">&lt;/button&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-date-strip</code></td><td>Scrollende Reihe; versteckte Scrollbar; 4 px Innenabstand, damit der eigene &Uuml;berlauf den Fokusring nicht beschneidet</td></tr>
@@ -3100,7 +3110,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>__mark</code></td><td>6-px-Punkt; ohne Ton transparent</td></tr>
         <tr><td><code>__mark--primary</code>, <code>--success</code>, <code>--warning</code>, <code>--error</code></td><td>Ton des Punkts &uuml;ber <code>--gl-date-strip-tone</code>; auf dem gew&auml;hlten Chip wird jeder Ton zur Schriftfarbe auf Prim&auml;r (<code>--gl-date-strip-ink</code>)</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- CALENDAR -->
@@ -3181,7 +3191,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;/div&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-calendar</code></td><td>Block; <code>__head</code> mit <code>__title</code> (Ellipse, wenn es eng wird) und zwei <code>__nav</code>-Kn&ouml;pfen, 32 px rund, mit SVG-Chevron</td></tr>
@@ -3190,7 +3200,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>__day</code></td><td>Quadratischer Tages-Knopf; <code>[aria-pressed="true"]</code> gew&auml;hlt, auf <code>--gl-color-primary-fill</code>, wo gesetzt, sonst der Prim&auml;rfarbe (seit 1.32.0), <code>--today</code> warmer Rahmen, <code>--other</code> gedimmter Nachbarmonat, <code>:disabled</code> / <code>[aria-disabled="true"]</code> gedimmt und nicht w&auml;hlbar</td></tr>
         <tr><td><code>__marks</code>, <code>__mark</code></td><td>5-px-Punkte unter der Zahl, bis zu drei; <code>__mark--primary</code> / <code>--success</code> / <code>--warning</code> / <code>--error</code> &uuml;ber <code>--gl-calendar-tone</code>, die Schriftfarbe auf dem gew&auml;hlten Tag &uuml;ber <code>--gl-calendar-ink</code></td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- IMAGE PICKER -->
@@ -3229,7 +3239,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;/div&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Klasse</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-image-picker</code></td><td>Zeile: Fl&auml;che links, Spalte rechts, 14 px Abstand</td></tr>
@@ -3239,7 +3249,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>__label</code>, <code>__hint</code></td><td>Beschriftung im Look von <code>.glass-label</code>, bricht &uuml;berall um; kleiner ged&auml;mpfter Hinweis</td></tr>
         <tr><td><code>__actions</code></td><td>Umbrechende Reihe aus <code>.glass-btn</code>-Kn&ouml;pfen</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- UTILITIES -->
@@ -3294,7 +3304,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <!-- QUICK REFERENCE -->
   <section class="docs-section" id="quickref">
     <h2>📋 Alle Klassen auf einen Blick</h2>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Komponente</th><th>Klassen</th><th>Modifier / States</th></tr></thead>
       <tbody>
         <tr><td>Hintergrund</td><td><code>.glass-bg</code></td><td><code>--has-tab-bar</code></td></tr>
@@ -3340,14 +3350,14 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td>Breadcrumbs</td><td><code>.glass-<wbr>breadcrumbs</code></td><td><code>__list</code>, <code>__item</code>, <code>__crumb</code>, <code>__current</code>, <code>__overflow</code>, <code>__item--overflow</code>, <code>.is-drop-target</code>, <code>.is-drop-refused</code></td></tr>
         <tr><td>Accordion</td><td><code>.glass-accordion</code></td><td><code>.is-open</code> auf Items</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <!-- AI REFERENCE -->
   <section class="docs-section" id="ai-reference">
     <h2>🤖 KI / LLM-Referenz</h2>
     <p>GlassKit liefert eine <code>SKILL.md</code> mit – eine strukturierte, maschinenlesbare Komponenten-Referenz für KI-Assistenten, LLMs und Code-Generierungs-Tools.</p>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Feature</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td>Copy-Paste HTML</td><td>Alle 38 Komponenten mit exakter Verschachtelung und BEM-Hierarchie</td></tr>
@@ -3356,7 +3366,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td>Composition Patterns</td><td>6 fertige Seiten-Layouts: Login, Dashboard, Formular, Modal, Einstellungen, Fortschritt</td></tr>
         <tr><td>Häufige Fehler</td><td>Typische Fehler und deren Korrekturen</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p style="margin-top:12px;">Anhängen oder referenzieren Sie <code>SKILL.md</code>, wenn Sie eine KI bitten, GlassKit-HTML zu generieren – für produktionsreife Ergebnisse.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="cmt"># Dateipfad</span>
@@ -3372,14 +3382,14 @@ node_modules/@jungherz-de/glasskit/SKILL.md</div>
   <section class="docs-section" id="family">
     <h2>🧩 Die GlassKit-Familie</h2>
     <p>GlassKit ist das CSS-Fundament einer dreischichtigen Familie – drei Schichten, eine Designsprache. Für alles jenseits einzelner Komponenten sind die Schwesterprojekte der vorgesehene Weg.</p>
-    <table class="docs-table">
+    <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Schicht</th><th>Projekt</th><th>Einsatz</th></tr></thead>
       <tbody>
         <tr><td>CSS-Fundament</td><td>🧊 GlassKit <em>(Sie sind hier)</em></td><td>Die Designsprache: Pure-CSS-Komponenten, Design Tokens, Dark & Light.</td></tr>
         <tr><td>App-Schicht</td><td><a class="docs-family-link" href="https://glasskit-elements.jungherz.com" target="_blank" rel="noopener">GlassKit Elements</a></td><td>Drop-in Web Components (<code>glk-button</code>, <code>glk-card</code>, …) für App-UIs.</td></tr>
         <tr><td>Website-Schicht</td><td><a class="docs-family-link" href="https://glasskit-web.jungherz.com" target="_blank" rel="noopener">GlassKit Web</a></td><td>Eine komplette Website bauen – das offizielle Astro-Template mit Sections, i18n und SEO auf dem GlassKit-Fundament.</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
 </main>
