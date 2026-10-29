@@ -7,6 +7,18 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.35.1] – 2026-10-29
+
+### Fixed
+
+- **The example "Markenakzent auf Glas" (brand accent on glass) in `theme-override.css` lacked its light rule.** It set `--gl-color-primary-text` and `--gl-color-primary-on-glass` for a dark brand accent on `:root, [data-theme="dark"]`, and `:root` also matches a page in the light theme. Uncommented, it gave light pages the near-white accent text of the dark theme. A `[data-theme="light"]` rule after the dark one now resets both tokens, as the example of 1.26.0, the README, SKILL.md and the docs do. ([GlassKit Elements #48](https://github.com/JUNGHERZ/GlassKit-Elements/issues/48), comment)
+
+Measured in Chromium 153, WebKit 26.6 and Firefox 151 with `--gl-color-primary: #0082BB` and the example uncommented. In the light theme both tokens are the primary, as without the example. In the dark theme a link reads 7.20:1 on the page and 6.70 to 6.79:1 on a card, and the primary action of a modal 9.86:1 or more.
+
+Only the commented example changed. `glasskit.css` differs from 1.35.0 in its version header alone, so the pages render as in 1.35.0.
+
+---
+
 ## [1.35.0] – 2026-10-29
 
 ### Added
@@ -1468,6 +1480,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.35.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.35.1
 [1.35.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.35.0
 [1.34.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.34.0
 [1.33.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.33.0

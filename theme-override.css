@@ -357,14 +357,20 @@
 
    Ein dunkler Markenakzent als Text: auf der Seite und auf dem Glas
    von Karten, Modals und Sheets hell genug, mit eigenem Ton auf dem
-   Glas statt der 60-%-Mischung. Ein Seitenpanel 480px breit, 12px
-   vom Rand, und Listenzeilen mit kleinerem Untertitel.
+   Glas statt der 60-%-Mischung. Die helle Regel steht nach der
+   dunklen, weil :root auch eine Seite im hellen Theme trifft (bis
+   1.35.0 fehlte sie hier). Ein Seitenpanel 480px breit, 12px vom
+   Rand, und Listenzeilen mit kleinerem Untertitel.
    ============================================================ */
 
 /*
 :root, [data-theme="dark"] {
   --gl-color-primary-text:       color-mix(in srgb, var(--gl-color-primary) 35%, #ffffff);
   --gl-color-primary-on-glass:   color-mix(in srgb, var(--gl-color-primary) 18%, #ffffff);
+}
+[data-theme="light"] {
+  --gl-color-primary-text:       var(--gl-color-primary);
+  --gl-color-primary-on-glass:   var(--gl-color-primary-text);
 }
 :root {
   --gl-sheet-side-width:         480px;
