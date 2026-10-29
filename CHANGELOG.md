@@ -7,6 +7,31 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.37.0] – 2026-10-29
+
+### Added
+
+- **An avatar's size as a token, and avatars that fit a list row: `--gl-avatar-size`, `--gl-avatar-font-size`.** A contact list shows a 40px avatar per row. The avatar knew 44px, 32px with `--sm` and 56px with `--lg`, so the 40px leading box of a `--lg` row cut a 44px one, and a 32px one looked lost in it.
+  - `--gl-avatar-size` sets any size, on the avatar or a container around it, and `--gl-avatar-font-size` the initials' size with it.
+  - In a list row's `__leading` an avatar takes the box's size: 28px, and 40px in `--lg`. The token on the avatar itself still decides.
+
+  ([GlassKit Elements #58](https://github.com/JUNGHERZ/GlassKit-Elements/issues/58))
+- **A placeholder for the select, in the placeholder colour.** The native pattern, a first option with an empty value, `disabled` and `hidden`, is chosen while nothing is, and `.glass-select` now says it in `--gl-placeholder`, as an input does. A first real option standing in for "nothing chosen" cannot be chosen, since picking the option already shown changes nothing. ([GlassKit Elements #59](https://github.com/JUNGHERZ/GlassKit-Elements/issues/59))
+- **A character counter at the end of the label row: `.glass-input-group__counter`.** A meta description of 145 characters needs its count in view. In `__label-end` it reads "48/145" in the muted colour, and with `.is-over` past the limit in the error colour, since a value set by script may be longer. After a link in the same place it keeps its distance. ([GlassKit Elements #60](https://github.com/JUNGHERZ/GlassKit-Elements/issues/60))
+
+### Compatibility
+
+- No theme token is new, so the no-JS light mirror of GlassKit Web needs nothing.
+- An avatar in a list row's leading box is 28px, and 40px in `--lg`. Before, it kept its own size there: a 44px one overflowed the 28px box and was cut by the 40px one.
+
+Measured in Chromium 153, WebKit 26.6 and Firefox 151, 1.36.0 against 1.37.0, through GlassKit Elements 1.37.0:
+- **Avatar:** in a `--lg` leading box an avatar is 40px with 15px initials, whatever its size class (before: 44px cut to 40, or 32px). In a plain leading box it is 28px with 13px initials (before: 44px). With `--gl-avatar-size: 36px` on a container it is 36px. Outside lists the three sizes stay 44, 32 and 56px.
+- **Select:** with the placeholder option chosen, the field's text is in `--gl-placeholder`, rgba(26, 42, 54, 0.3) in light mode, and `required` reports `valueMissing`.
+- **Counter:** "10/10" at the end of the label row in the muted colour, "12/10" with `.is-over` in rgb(220, 53, 69), and after a link in the same place.
+- **Pages:** docs, showcase and landing pages render as in 1.36.0.
+
+---
+
 ## [1.36.0] – 2026-10-29
 
 ### Added
@@ -1514,6 +1539,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.37.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.37.0
 [1.36.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.36.0
 [1.35.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.35.1
 [1.35.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.35.0

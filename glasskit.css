@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.36.0
+   Jungherz GmbH – v1.37.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -971,6 +971,17 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-input-group--label-end > .glass-input-group__label-end { grid-column: 2; grid-row: 1; justify-self: end; }
 .glass-input-group__label-end { font-size: var(--gl-font-size-sm); }
 .glass-input-group__label-end[hidden] { display: none; }
+/* A character counter at the end of the label row (since 1.37.0): "12/145"
+   for a field with a maximum length, in the error colour past it — a value
+   set by script may be longer, the limit only stops typing. In
+   __label-end, after a link that stands there. */
+.glass-input-group__counter {
+  margin-inline-start: var(--gl-space-sm);
+  color: var(--gl-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.glass-input-group__counter.is-over { color: var(--gl-color-error); }
+.glass-input-group__counter[hidden] { display: none; }
 
 .glass-input {
   width: 100%; height: var(--gl-control-height, 52px);
@@ -1157,6 +1168,11 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   box-shadow: var(--gl-shadow-focus), var(--gl-inset-medium);
 }
 .glass-select option { background: var(--gl-color-bg-mid); color: var(--gl-color-text); }
+/* A placeholder (since 1.37.0): a first option with an empty value,
+   disabled and hidden — the native pattern — is chosen while nothing is,
+   and the field says it in the placeholder colour, as an input does. A
+   value that matched no option showed the first real one as chosen. */
+.glass-select:has(> option:first-child[value=""][disabled]:checked) { color: var(--gl-placeholder); }
 /* Disabled like .glass-input. */
 .glass-select:disabled,
 .glass-textarea:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -2721,7 +2737,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
    22. AVATAR
    ============================================================ */
 .glass-avatar {
-  width: 44px; height: 44px;
+  width: var(--gl-avatar-size, 44px); height: var(--gl-avatar-size, 44px);
   border-radius: var(--gl-radius-pill);
   background: var(--gl-surface-3);
   backdrop-filter: blur(var(--gl-blur-soft));
@@ -2731,14 +2747,18 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   overflow: hidden;
   box-shadow: var(--gl-shadow-glow), var(--gl-inset-medium);
   flex-shrink: 0;
-  font-size: var(--gl-font-size-btn);
+  font-size: var(--gl-avatar-font-size, var(--gl-font-size-btn));
   font-weight: var(--gl-font-weight-semibold);
   color: var(--gl-color-text);
 }
 .glass-avatar img,
 .glass-avatar ::slotted(img) { width: 100%; height: 100%; object-fit: cover; }
-.glass-avatar--sm { width: 32px; height: 32px; font-size: var(--gl-font-size-xs); }
-.glass-avatar--lg { width: 56px; height: 56px; font-size: var(--gl-font-size-lg); }
+/* 44px, --sm 32px, --lg 56px. --gl-avatar-size (since 1.37.0) sets any
+   other size, on the avatar or a container around it, and
+   --gl-avatar-font-size the initials' size with it. In the leading box of a
+   list row an avatar takes the box's size (see LIST). */
+.glass-avatar--sm { width: var(--gl-avatar-size, 32px); height: var(--gl-avatar-size, 32px); font-size: var(--gl-avatar-font-size, var(--gl-font-size-xs)); }
+.glass-avatar--lg { width: var(--gl-avatar-size, 56px); height: var(--gl-avatar-size, 56px); font-size: var(--gl-avatar-font-size, var(--gl-font-size-lg)); }
 
 
 /* ============================================================
@@ -3176,8 +3196,13 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 
 /* --gl-list-leading-width (since 1.36.0) widens the box for more than an
    icon — a time and a chip before the text; the divider follows it. A
-   length: for anything else set --gl-list-item-divider-inset as well. */
+   length: for anything else set --gl-list-item-divider-inset as well.
+   An avatar in the box takes its size (since 1.37.0): 28px, 40px in --lg —
+   a contact list. A 44px one was cut by the 40px box, a 32px one looked
+   lost in it. --gl-avatar-size on the avatar itself still decides. */
 .glass-list__leading {
+  --gl-avatar-size: 28px;
+  --gl-avatar-font-size: var(--gl-font-size-xs);
   flex-shrink: 0;
   width: var(--gl-list-leading-width, 28px);
   height: 28px;
@@ -3201,6 +3226,8 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   stroke-linejoin: round;
 }
 .glass-list__leading--lg {
+  --gl-avatar-size: 40px;
+  --gl-avatar-font-size: var(--gl-font-size-base);
   width: var(--gl-list-leading-width, 40px);
   height: 40px;
   border-radius: var(--gl-radius-xs);

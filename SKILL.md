@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.36.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.37.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -13,6 +13,8 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.36.0) wi
 > **New in 1.28.0 — icons of any kind, and tokens instead of overrides.** Tab bar, accessory and segmented control colour their icon box, not the SVG: put a font icon (Material Icons), an `<img>` mask or a custom element straight into `.glass-tab-bar__icon` or `.glass-segmented__icon`, and it follows every state, the lens of the drop and the drag. `--icons` makes an icon-only segmented row (light / dark / auto). The inactive tab colour, the hover colour, the label size and the z-index of the tab bar are tokens, and so are the surface, shadow and text colour of the chosen segmented option. **Where a project restyles tab icons per state, or overrides the tab bar's literals, replace that with the tokens** (3.4, 3.29).
 
 > **New in 1.32.0 — one navigation for every edge, four components, and AA on the accent fills.** The tab bar leaves the bottom edge: `--vertical` makes it a sidebar, `--start` or `--end` fixes it to that side of the viewport — where the thumb rests on a phone held open, or a foldable that moved its system controls to a side — `--rail` shrinks it to icons, `--top` lays it out for the top of a page, and the floating bar stands upright in `.glass-tab-bar-dock--vertical`. In a column the drop runs along y, and its timing is tokens (`--gl-droplet-*`). New: the tooltip, the menu, the tree and the breadcrumbs (3.36–3.39), the states of a drag that reorders a list or a tree (3.40), and for the table a sort button, a sticky header, a row action column, an empty row and a card layout (3.27). Popover, tooltip and menu open in the top layer with the `popover` attribute. `--gl-btn-primary-bg` and `--gl-color-primary-fill` darken the accent fills for white text without touching the brand colour, and the radio's dot follows `--gl-color-on-primary`. **Where a project builds its own sidebar, tooltip, menu, tree or breadcrumbs, overrides the drop's transitions, or darkens `--gl-color-primary` for white button text, replace that** (3.4, 3.7, 3.25, section 2).
+
+> **New in 1.37.0 — avatars that fit a list row, a placeholder for the select, a character counter.** `--gl-avatar-size` and `--gl-avatar-font-size` size `.glass-avatar` (3.9), and in a list row's `__leading` an avatar takes the box's size, 28px, 40px in `--lg` — a contact list (3.24). A first `<option value="" disabled hidden>` in a `.glass-select` shows in the placeholder colour (3.16). `.glass-input-group__counter` counts characters at the end of the label row, `.is-over` past `maxlength` (3.14).
 
 > **New in 1.36.0 — a sheet head with room below the title, tokens for its close button, insets per edge; a wider list icon box.** `.glass-sheet__subtitle` stands below the title in `__heading` (a badge there leaves the title its width), `--gl-sheet-close-size`, `--gl-sheet-close-icon-size` and `--gl-sheet-close-icon-stroke` resize the × (32px, 16px, 2), `--gl-sheet-side-inset-block-start`/`-block-end` set a side sheet's top and bottom on their own, and an empty `__head` with `hidden` takes no room (3.31). `--gl-list-leading-width` widens `__leading` for a time and a chip, the divider follows, and the chosen row's title takes the row's colour, so `--gl-list-item-selected-color` reaches it (3.24). `.glass-status p` has no margin of its own (3.11).
 
@@ -891,6 +893,12 @@ Glass circles in three sizes. For initials, icons, or images.
 | `.glass-avatar--sm` | Small |
 | `.glass-avatar--lg` | Large |
 
+Sizes: 44px, `--sm` 32px, `--lg` 56px. **`--gl-avatar-size` (since 1.37.0)** sets any other size, on the avatar or a container around it, and `--gl-avatar-font-size` the initials' size with it. In the `__leading` box of a list row an avatar takes the box's size: 28px, and 40px in `--lg` — a contact list. Before, a 44px avatar was cut by the 40px box and a 32px one looked lost in it. A token on the avatar itself still decides.
+
+```html
+<span class="glass-list__leading glass-list__leading--lg"><span class="glass-avatar">LH</span></span>   <!-- 40px -->
+```
+
 ---
 
 ### 3.10 Divider
@@ -1099,6 +1107,7 @@ Date and time fields (`type="date"`, `time`, `datetime-local`, `month`) take the
 | `.glass-input-wrap--prefix` / `--suffix` | Makes room in the field; also automatic where `:has()` is supported |
 | `.glass-input-group--label-end` | The group draws `__label-end` on the label's line, at its end (since 1.33.0) |
 | `.glass-input-group__label-end` | A link such as "Forgot password?", written **after** the field so the keyboard reaches it after the field |
+| `.glass-input-group__counter` | A character counter in that place, "48/145", muted; `.is-over` past the limit in the error colour (since 1.37.0) |
 
 **Prefix and suffix (since 1.22.0).** The affixes lie on the field, centred; its padding grows by `--gl-input-prefix-size` / `--gl-input-suffix-size` (18px — an icon — unless set; set it for a wider unit). A click on text, an icon or a disabled control reaches the field; enabled controls, links and elements with `tabindex` take their own, form-associated custom elements such as `<glk-button>` included (since 1.22.2 — before, a disabled button took the click and a `<glk-button>` got none). They take it even inside a container locked with `pointer-events: none`: lock it with `inert`, or disable them. `<glk-input>` in GlassKit Elements has `prefix` / `suffix` slots on this and measures the width itself.
 
@@ -1121,6 +1130,16 @@ Date and time fields (`type="date"`, `time`, `datetime-local`, `month`) take the
   <label class="glass-label" for="password">Password</label>
   <input class="glass-input" id="password" type="password">
   <a class="glass-input-group__label-end" href="/reset">Forgot password?</a>
+</div>
+```
+
+**A character counter (since 1.37.0).** `.glass-input-group__counter` in that place counts the value's characters, "48/145" with `maxlength`, in the muted colour, and with `.is-over` past the limit in the error colour — a value set by script may be longer, `maxlength` only stops typing. Update it on `input`, and tie it to the field with `aria-describedby` so a screen reader reads it with the field. After a link in the same place it keeps its distance. In GlassKit Elements: `counter` on `<glk-input>` and `<glk-textarea>`.
+
+```html
+<div class="glass-input-group glass-input-group--label-end">
+  <label class="glass-label" for="meta">Meta description</label>
+  <textarea class="glass-textarea" id="meta" maxlength="145" aria-describedby="meta-count"></textarea>
+  <span class="glass-input-group__label-end glass-input-group__counter" id="meta-count">0/145</span>
 </div>
 ```
 
@@ -1159,6 +1178,15 @@ Dropdown with glass styling and custom chevron.
 | `.glass-select` | Styled dropdown |
 
 The chevron is the token `--gl-select-chevron` — an SVG `url(…)` in each theme's muted text colour (since 1.20.0; before, it stayed white in the light theme). Override it with your own `url(…)`. Right to left, chevron and padding move to the left.
+
+**A placeholder (since 1.37.0)** is the native pattern: a first option with an empty value, `disabled` and `hidden`, `selected` while nothing is chosen. It cannot be picked, `required` keeps the form from submitting while it shows, and the field says it in the placeholder colour (`--gl-placeholder`), as an input does. **Do not** use a first real option such as "Please select…" for "nothing chosen": picking the option already shown changes nothing, so it cannot be chosen. In GlassKit Elements: `placeholder` on `<glk-select>`.
+
+```html
+<select class="glass-select" required>
+  <option value="" disabled hidden selected>Choose a kind…</option>
+  <option value="facebook">Facebook</option>
+</select>
+```
 
 ---
 

@@ -390,7 +390,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.36.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.37.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -475,7 +475,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.36.0</span>
+      <span class="docs-hero__badge">v1.37.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">38 Components</span>
@@ -1287,7 +1287,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.36/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.37/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -1570,6 +1570,11 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
     </div>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-avatar glass-avatar--lg"</span><span class="tag">&gt;</span>L<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+    <p>Since 1.37.0 <code>--gl-avatar-size</code> sets any size, on the avatar or a container around it, and <code>--gl-avatar-font-size</code> the initials&rsquo; size with it. In the leading box of a <a href="#list">list</a> row an avatar takes the box&rsquo;s size, 28&nbsp;px, and 40&nbsp;px in <code>--lg</code>, the avatar of a contact list: 44&nbsp;px was cut by the box, 32&nbsp;px looked lost in it. The token on the avatar itself still decides.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-list__leading glass-list__leading--lg"</span><span class="tag">&gt;&lt;span</span> <span class="attr">class=</span><span class="val">"glass-avatar"</span><span class="tag">&gt;</span>LH<span class="tag">&lt;/span&gt;&lt;/span&gt;</span>   <span class="cmt">&lt;!-- 40px --&gt;</span>
+<span class="cls">.contacts</span> { <span class="attr">--gl-avatar-size</span>: <span class="val">36px</span>; <span class="attr">--gl-avatar-font-size</span>: <span class="val">14px</span>; }</div>
     </div>
   </section>
 
@@ -2453,6 +2458,25 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;a</span> <span class="attr">class=</span><span class="val">"glass-input-group__label-end"</span> <span class="attr">href=</span><span class="val">"/reset"</span><span class="tag">&gt;</span>Forgot password?<span class="tag">&lt;/a&gt;</span>   <span class="cmt">&lt;!-- after the field --&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
+    <p>Since 1.37.0 the place may hold a character counter, <code>.glass-input-group__counter</code>: &ldquo;48/145&rdquo; in the muted colour, and in the error colour with <code>.is-over</code> past the limit &mdash; a value set by script may be longer, <code>maxlength</code> only stops typing. Keep it up to date on <code>input</code> and tie it to the field with <code>aria-describedby</code>, so a screen reader reads it with the field. After a link in the same place it keeps its distance.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <div class="glass-input-group glass-input-group--label-end">
+        <label class="glass-label" for="docs-meta">Meta description</label>
+        <textarea class="glass-textarea" id="docs-meta" rows="3" maxlength="145" aria-describedby="docs-meta-count">Opening hours, the team and the way to the shelter.</textarea>
+        <span class="glass-input-group__label-end glass-input-group__counter" id="docs-meta-count">51/145</span>
+      </div>
+      <script>
+        (() => { const f = document.getElementById('docs-meta'), c = document.getElementById('docs-meta-count');
+          f.addEventListener('input', () => { c.textContent = f.value.length + '/' + f.maxLength; }); })();
+      </script>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-input-group glass-input-group--label-end"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;label</span> <span class="attr">class=</span><span class="val">"glass-label"</span> <span class="attr">for=</span><span class="val">"meta"</span><span class="tag">&gt;</span>Meta description<span class="tag">&lt;/label&gt;</span>
+  <span class="tag">&lt;textarea</span> <span class="attr">class=</span><span class="val">"glass-textarea"</span> <span class="attr">id=</span><span class="val">"meta"</span> <span class="attr">maxlength=</span><span class="val">"145"</span> <span class="attr">aria-describedby=</span><span class="val">"meta-count"</span><span class="tag">&gt;&lt;/textarea&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-input-group__label-end glass-input-group__counter"</span> <span class="attr">id=</span><span class="val">"meta-count"</span><span class="tag">&gt;</span>0/145<span class="tag">&lt;/span&gt;</span>   <span class="cmt">&lt;!-- kept up to date on input --&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
   </section>
 
   <!-- TEXTAREA -->
@@ -2482,6 +2506,16 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
 <span class="tag">&lt;/select&gt;</span></div>
     </div>
     <p>The chevron is <code>--gl-select-chevron</code>, an SVG drawn in each theme&rsquo;s muted text colour &mdash; since 1.20.0; before, it stayed white in the light theme and all but vanished. Set the token to your own <code>url(&hellip;)</code> to replace it. Right to left, the chevron and the room kept for it move to the left.</p>
+    <p>A placeholder is the native pattern: a first option with an empty value, <code>disabled</code> and <code>hidden</code>, chosen while nothing is. It cannot be picked, and with <code>required</code> the form does not submit while it shows. Since 1.37.0 the field says it in the placeholder colour, as an input does; a first real option standing in for &ldquo;nothing chosen&rdquo; could not be chosen, since picking the option already shown changes nothing.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <select class="glass-select" aria-label="Choose a kind…"><option value="" disabled hidden selected>Choose a kind…</option><option>Facebook</option><option>Instagram</option></select>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;select</span> <span class="attr">class=</span><span class="val">"glass-select"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value=</span><span class="val">""</span> <span class="attr">disabled hidden selected</span><span class="tag">&gt;</span>Choose a kind…<span class="tag">&lt;/option&gt;</span>
+  <span class="tag">&lt;option&gt;</span>Facebook<span class="tag">&lt;/option&gt;</span>
+<span class="tag">&lt;/select&gt;</span></div>
+    </div>
   </section>
 
   <!-- SEARCH -->
@@ -3492,7 +3526,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td>Card</td><td><code>.glass-card</code></td><td><code>--glow</code></td></tr>
         <tr><td>Button</td><td><code>.glass-btn</code></td><td><code>--primary</code>, <code>--secondary</code>, <code>--tertiary</code>, <code>--sm</code>, <code>--lg</code>, <code>--auto</code>, <code>:disabled</code></td></tr>
         <tr><td>Badge</td><td><code>.glass-badge</code></td><td><code>--primary</code>, <code>--success</code>, <code>--warning</code>, <code>--error</code>, <code>--interactive</code>, <code>--selected</code>, <code>--md</code></td></tr>
-        <tr><td>Avatar</td><td><code>.glass-avatar</code></td><td><code>--sm</code>, <code>--lg</code></td></tr>
+        <tr><td>Avatar</td><td><code>.glass-avatar</code></td><td><code>--sm</code>, <code>--lg</code>; <code>--gl-avatar-size</code> (since 1.37.0)</td></tr>
         <tr><td>Divider</td><td><code>.glass-divider</code></td><td>–</td></tr>
         <tr><td>Status</td><td><code>.glass-status</code></td><td>–</td></tr>
         <tr><td>List</td><td><code>.glass-list</code></td><td><code>--flush</code>, <code>--bare</code>, <code>__item--interactive</code>, <code>__item--center</code>, <code>__item--danger</code>, <code>__item--accent</code>, <code>__leading--lg</code>, <code>__subtitle--wrap</code>, <code>__value</code>, <code>__section-header</code>, <code>.is-flash</code></td></tr>
@@ -3511,9 +3545,9 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td>Popover</td><td><code>.glass-popover</code></td><td><code>--top</code>, <code>--start</code>, <code>--end</code>, <code>.is-open</code>, <code>[popover]</code>, <code>[data-side="top"]</code></td></tr>
         <tr><td>Tooltip</td><td><code>.glass-tooltip</code></td><td><code>[popover]</code></td></tr>
         <tr><td>Menu</td><td><code>.glass-menu</code></td><td><code>__item</code>, <code>__item--danger</code>, <code>__check</code>, <code>__icon</code>, <code>__label</code>, <code>__trailing</code>, <code>__separator</code>, <code>__group-label</code>, <code>[aria-checked]</code>, <code>[aria-disabled]</code>, <code>.is-checked</code>, <code>.is-focused</code>, <code>.is-focus-visible</code>, <code>[popover]</code></td></tr>
-        <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code>; <code>.glass-input-wrap</code> with <code>__prefix</code> / <code>__suffix</code>; <code>.glass-input-group--label-end</code> with <code>__label-end</code></td></tr>
+        <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code>; <code>.glass-input-wrap</code> with <code>__prefix</code> / <code>__suffix</code>; <code>.glass-input-group--label-end</code> with <code>__label-end</code> and <code>__counter</code> (since 1.37.0)</td></tr>
         <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td><code>:disabled</code></td></tr>
-        <tr><td>Select</td><td><code>.glass-select</code></td><td><code>:disabled</code></td></tr>
+        <tr><td>Select</td><td><code>.glass-select</code></td><td><code>:disabled</code>; a placeholder option in the placeholder colour (since 1.37.0)</td></tr>
         <tr><td>Search</td><td><code>.glass-search</code></td><td>–</td></tr>
         <tr><td>Toggle</td><td><code>.glass-toggle</code></td><td><code>:checked</code>, <code>:disabled</code></td></tr>
         <tr><td>Checkbox</td><td><code>.glass-checkbox</code></td><td><code>:checked</code>, <code>:disabled</code></td></tr>
