@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.34.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.35.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-38-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.34.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.35.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -74,22 +74,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.34/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.35/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.34/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.35/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.34/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.35/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.34` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.35` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.34/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.35/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -497,6 +497,9 @@ All visual values are controlled via CSS Custom Properties:
 /* Colors */
 --gl-color-primary        /* Primary color */
 --gl-color-primary-text   /* text and line icons in the primary; defaults to it */
+--gl-color-primary-on-glass /* the primary as text on cards, modals and sheets; dark: 60 % primary text in white */
+--gl-dialog-glow-top / --gl-dialog-well / --gl-dialog-raised / --gl-dialog-control   /* dark glass of modal and sheet: glow start, segmented well, its chosen option, tertiary button */
+--gl-badge-selected-color /* a chosen badge's label; dark: the text colour */
 --gl-color-primary-fill   /* flat accent fills that carry text: chosen day, current step; defaults to the primary */
 --gl-color-text           /* Text color */
 --gl-color-text-muted     /* Secondary text */
@@ -584,6 +587,12 @@ All visual values are controlled via CSS Custom Properties:
 --gl-tree-icon-size             /* 18px; the icon field and its SVG — 28px for a tinted chip */
 --gl-list-item-divider-inset    /* where a list row's divider starts; unset after the icon, or at the padding */
 --gl-list-item-selected-bg      /* the pill of the chosen list row; unset --gl-surface-4 */
+--gl-list-item-selected-inset / -radius / -shadow / -color / -weight   /* the chosen row's pill and title; 0, 0, none: a flat tint */
+--gl-list-title-size / --gl-list-title-weight / --gl-list-subtitle-size   /* a row's type */
+--gl-sheet-bg / --gl-modal-bg   /* replace the surface of sheet and modal */
+--gl-sheet-side-width / --gl-sheet-side-inset / --gl-sheet-z-index   /* 440px, 16px, 1000: a sheet at a side */
+--gl-segmented-bg               /* the segmented track; unset --gl-surface-1 */
+--gl-status-color               /* the status message; unset muted text */
 --gl-breadcrumbs-crumb-width    /* 200px; a longer crumb ends in an ellipsis */
 --gl-sort-duration, --gl-sort-easing  /* 180ms, ease-out: rows making room while a list is sorted */
 --gl-table-cell-padding         /* 9px 10px */
@@ -866,6 +875,7 @@ Badge Modifiers:
   .glass-badge--primary / --success / --warning / --error
   .glass-badge--interactive / --selected   (chips)
   .glass-badge--md                         (choice chip, 36px; --gl-badge-md-height)
+  --gl-badge-selected-color                (a chosen chip's label; the text colour in dark mode)
 
 Avatar Modifiers:
   .glass-avatar--sm / --lg
@@ -893,6 +903,7 @@ List Modifiers:
   .glass-list__item--interactive / --center
   .glass-list__item.is-flash       (a changed item flashes; --gl-flash-color)
   .glass-list__item.is-selected    (the chosen row beside its detail, with aria-current; --gl-list-item-selected-bg)
+  .glass-list__title-row > __title + __title-trailing · __extra   (beside the title, below the subtitle)
   --gl-list-item-divider-inset     (where the dividers start; a row with its grip first runs them from its padding)
   --gl-list-title-white-space / --gl-list-subtitle-white-space / --gl-list-subtitle-lines   (wrapping, app-wide)
 
@@ -930,7 +941,7 @@ Prose:
   .glass-prose   (styles the rendered content beneath it)
 
 Segmented:
-  .glass-segmented--full / --scroll / --wrap / --icons · __item[aria-pressed] · __item--success / --warning / --error · __dot · __icon · __badge (--primary / --success / --warning / --error)
+  .glass-segmented--full / --scroll / --wrap / --icons · __item[aria-pressed] · __item--success / --warning / --error · __dot · __icon · __badge (--primary / --success / --warning / --error) · __icon--color (a logo keeps its colours)
   .glass-segmented--droplet        (gliding selection, with glasskit-droplet.js)
 
 Steps:
@@ -938,6 +949,8 @@ Steps:
 
 Sheet:
   .glass-sheet-overlay.is-active · .glass-sheet--inline · __grip / __title / __body / __actions
+  .glass-sheet__head > __leading / __heading (__eyebrow + __title) / __trailing / __close
+  .glass-sheet-overlay--start / --end · --modeless   (a panel at a side; modeless with show())
   dialog.glass-sheet-overlay       (a native <dialog>, opened with showModal(), since 1.30.0)
 
 Empty state:

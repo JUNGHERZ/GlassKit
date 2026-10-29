@@ -390,7 +390,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.34.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.35.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -475,7 +475,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.34.0</span>
+      <span class="docs-hero__badge">v1.35.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">38 Komponenten</span>
@@ -513,6 +513,7 @@
         <tr><td><code>--gl-color-primary</code></td><td>#f5a623</td><td>Primärfarbe, Buttons, aktive Elemente</td></tr>
         <tr><td><code>--gl-color-primary-dark</code></td><td>#d4692a</td><td>Gradient-Endwert</td></tr>
         <tr><td><code>--gl-color-primary-text</code></td><td>var(--gl-color-primary)</td><td>Text und Linien-Icons in der Primärfarbe: Links in Prose, der aktive Tab, die primäre Modal-Aktion, Akzent-Listenzeilen, der Wert eines Reglers, das Akkordeon &mdash; seit 1.26.0, siehe <a href="#primary-text">Primärfarbe als Text</a></td></tr>
+        <tr><td><code>--gl-color-primary-on-glass</code></td><td>color-mix(in srgb, var(--gl-color-primary-text) 60%, #ffffff)</td><td>Die Primärfarbe als Text auf dem Glas einer Karte, eines Modals oder eines Sheets: Links, der Range-Wert, Akzentzeilen, die primäre Modal-Aktion (seit 1.35.0); im hellen Modus der Primärtext</td></tr>
         <tr><td><code>--gl-color-text</code></td><td>#ffffff</td><td>Standard-Textfarbe</td></tr>
         <tr><td><code>--gl-color-text-muted</code></td><td>rgba(255,255,255,0.65)</td><td>Sekundärer Text</td></tr>
         <tr><td><code>--gl-color-success</code></td><td>#34c759</td><td>Erfolg-Status</td></tr>
@@ -608,6 +609,7 @@ function <span class="cls">toggleTheme</span>() {
 }</div>
     </div>
     <p>Die helle Regel steht nach der dunklen: <code>:root</code> trifft auch eine Seite im hellen Theme, und von zwei passenden Regeln gewinnt die spätere. Der richtige Ton hängt vom Hintergrund ab, also dort messen. Auf GlassKits eigenem dunklen Hintergrund mit <code>#c25028</code> als Primärfarbe hebt diese Mischung einen Link auf einer Glas-Card von 1,37:1 auf 5,05:1.</p>
+    <p id="primary-on-glass">Seit 1.35.0 nimmt Akzenttext auf dem Glas einer Karte, eines Modals oder eines Sheets <code>--gl-color-primary-on-glass</code>: im dunklen Modus den Primärtext mit 40&nbsp;% Weiß, weil eine Karte heller ist als die Seite. GlassKits eigenes Orange las als Link auf einer Karte im dunklen Modus 4,18:1, jetzt 5,54:1; auf der Seite bleibt es bei 5,69:1. Im hellen Modus ist der Token der Primärtext. Links und Chips der Seite auf einer Karte nutzen ihn ebenso, <code>color: var(--gl-color-primary-on-glass)</code>. Das helle obere Ende einer <code>.glass-card--glow</code> bleibt für Akzenttext außer Reichweite: Setze ihn tiefer in die Karte oder nimm dort die Textfarbe.</p>
     <p>Der aktive Tab nimmt für Icon und Label <code>--gl-tab-bar-active-color</code>, wo das gesetzt ist, sonst <code>--gl-color-primary-text</code>. Das Spotlight der Floating-Bar hellt den aktiven Eintrag stärker auf als jede andere Fläche, eine Marke braucht dort also womöglich einen helleren Ton, bis hin zu Weiß. Es wird pro Theme gesetzt wie die Textfarbe; <code>var(--gl-color-primary-text)</code> in der hellen Regel stellt die Vorgabe wieder her. Leuchten und Punkt bleiben in der Primärfarbe, das Spotlight in <code>--gl-tab-bar-spotlight-color</code>.</p>
     <p>Seit 1.31.0 erreichen gedämpfter Text, Kartentext und Icons von Haus aus WCAG AA, in beiden Themes. Die Primärfarbe als Text nicht, mit Absicht: GlassKits eigenes Orange liegt als Text auf der hellen Seite bei 2,43:1, eine dunklere Marke besteht aber womöglich schon oder braucht viel weniger, und eine feste Mischung mit Schwarz würde jede Marke gleich stark abdunkeln. Wo das helle Theme beim Orange bleibt, dunkle es dort ab; <code>--gl-color-primary-on-surface</code>, die Tinte des primären Badges, erreicht 5,8:1. Auch Weiß auf dem Primary-Button gehört zum Aussehen, 2,7:1 im hellen und 2,0:1 im dunklen Theme am hellsten Punkt des Verlaufs; <code>--gl-color-on-primary</code> stellt auf eine dunkle Tinte um, die auf jedem Punkt 4,6:1 oder mehr erreicht:</p>
     <div class="docs-code-wrapper">
@@ -1285,7 +1287,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.34/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.35/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// jede --droplet-Zeile der Seite; attachDroplet(row) für eine</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -1485,6 +1487,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>svg.glass-icon--fill</code></td><td>Bewusst gefülltes Icon (z.&nbsp;B. Brand-Logos)</td></tr>
       </tbody>
     </table></div>
+    <p>Auf dem Glas eines Modals oder eines Sheets ist ein tertiärer Button im dunklen Modus eine Stufe dunkler, <code>--gl-dialog-control</code>, und nimmt keinen eigenen Blur (seit 1.35.0): Seine gedämpfte Beschriftung las dort 3 bis 4:1.</p>
     <p>Ein deaktivierter Button &mdash; <code>disabled</code>, oder <code>aria-disabled="true"</code> an einem <code>a.glass-btn</code>, der sich nicht deaktivieren lässt &mdash; ist gedimmt, zeigt den Cursor not-allowed und hebt sich beim Hover nicht mehr an (seit 1.21.2; vorher sah er genau aus wie ein aktiver). Der Link selbst navigiert weiter, wenn die Seite ihn nicht abfängt. Dasselbe gilt für Pill, Tab-Bar-Accessory, Modal-Aktionen, interaktive Listenzeilen und die Monatspfeile des Kalenders; Toggle, Checkbox und Radio dimmen Bedienelement und Label, Select, Textarea und Range dimmen wie das Input.</p>
     <p>Buttons haben seit 1.31.0 eigene Haken. <code>--gl-btn-radius</code> rundet sie, ungesetzt <code>--gl-radius-btn</code>, das sich Listen, Statuskarte, Toasts, Akkordeon und Segmentwahl teilen: <code>--gl-btn-radius: 9999px</code> auf <code>:root</code> ergibt Buttons in Pillenform und lässt die anderen, wie sie sind. <code>--gl-btn-padding-x</code> ist der Raum neben der Beschriftung, ungesetzt 24&nbsp;px, der Innenabstand, den bisher nur <code>--auto</code> hatte; jeder andere Button hatte die 6&nbsp;px des Browsers, sodass ein kleiner, der seine Breite aus dem Text nahm, in einer Reihe von Aktionen den Text mit seinen Kanten berührte. <code>--sm</code> liest zuerst <code>--gl-btn-radius-sm</code> und <code>--gl-btn-padding-x-sm</code>, dann die Haken darüber, und behält seinen Radius von 12&nbsp;px, solange keiner gesetzt ist; so formt ein Wert jede Größe.</p>
     <p>Seit 1.32.0 ersetzt <code>--gl-btn-primary-bg</code> den ganzen Hintergrund von <code>--primary</code>, so wie Schalter und Radio ihre eigenen haben; ungesetzt ist es der Verlauf von <code>--gl-color-primary</code> über <code>-mid</code> zu <code>-dark</code>. Ein Produkt, das bei weißer Schrift bleibt, lässt den Verlauf so dunkler beginnen und die Markenfarbe in Ruhe; das Rezept steht unter <a href="#primary-text">Primärfarbe als Text</a>.</p>
@@ -1514,6 +1517,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       <button class="glass-badge glass-badge--interactive" aria-pressed="false">pausiert</button>
     </div>
     <p><code>--selected</code> vertieft die Farbe, die der Badge schon hat, statt sie zu &uuml;bergehen &mdash; ein Status-Chip bleibt beim Ausw&auml;hlen also in seiner eigenen Farbe.</p>
+    <p>Im dunklen Modus sagt ein gewählter Badge seine Beschriftung in der Textfarbe (seit 1.35.0): Der für dunkle Flächen aufgehellte Akzent las auf einem Chip über Glas 2,2 bis 3:1. Rand und Tönung zeigen die Auswahl; <code>--gl-badge-selected-color</code> setzt die Farbe der Beschriftung. Auf dem Glas eines Modals oder eines Sheets nimmt ein Badge keinen eigenen Blur: Der Dialog weichzeichnet schon, und Chromium zählte seinen Schimmer unter einem verschachtelten Backdrop-Filter doppelt, sodass ein Chip für Weiß auf 2,9:1 kam.</p>
     <div class="docs-preview docs-preview--row docs-preview--compact">
       <button class="glass-badge glass-badge--success glass-badge--interactive glass-badge--selected" aria-pressed="true">erledigt</button>
       <button class="glass-badge glass-badge--error glass-badge--interactive" aria-pressed="false">fehlgeschlagen</button>
@@ -1587,6 +1591,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <p>Noch keine Verträge vorhanden.</p>
       </div>
     </div>
+    <p><code>--gl-status-color</code> setzt die Farbe der Nachricht (seit 1.35.0), ohne Wert gedämpfter Text. Ein Wort darin in <code>&lt;b&gt;</code>, etwa ein Paketname, bekommt die Textfarbe über eine Regel der Seite.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-status"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;svg</span> <span class="attr">viewBox=</span><span class="val">"0 0 24 24"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- Icon --&gt;</span><span class="tag">&lt;/svg&gt;</span>
@@ -1734,6 +1739,8 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-list__content</code></td><td>Flexibler mittlerer Slot &mdash; nimmt verbleibende Breite, ermöglicht Truncation</td></tr>
         <tr><td><code>.glass-list__title</code></td><td>Primärer Text (medium weight, eine Zeile mit Ellipsis, außer <code>--gl-list-title-white-space</code> lässt ihn umbrechen)</td></tr>
         <tr><td><code>.glass-list__subtitle</code></td><td>Sekundärer Text (klein, gedämpft, eine Zeile mit Ellipsis, außer <code>--gl-list-subtitle-white-space</code> lässt ihn umbrechen)</td></tr>
+        <tr><td><code>.glass-list__title-row</code></td><td>Hält den Titel und <code>__title-trailing</code> &mdash; einen Badge, eine Marke &mdash;, das unter den Titel rückt, wo die Zeile zu schmal ist (seit 1.35.0)</td></tr>
+        <tr><td><code>.glass-list__extra</code></td><td>Unter dem Untertitel: ein Link, eine Reihe Chips (seit 1.35.0)</td></tr>
         <tr><td><code>.glass-list__subtitle--wrap</code></td><td>Mehrzeiliger Subtitle (bis 3 Zeilen, mit Ellipsis-Clamp; <code>--gl-list-subtitle-lines</code> setzt die Grenze)</td></tr>
         <tr><td><code>.glass-list__trailing</code></td><td>Trailing-Slot &mdash; Chevron, Wert, Button, Badge</td></tr>
         <tr><td><code>.glass-list__value</code></td><td>Gedämpfter Text in <code>.glass-list__trailing</code> (z.B. Dateigröße)</td></tr>
@@ -1774,8 +1781,28 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="cls">.glass-list, glk-list</span> { <span class="attr">hyphens</span>: <span class="val">auto</span>; <span class="attr">-webkit-hyphens</span>: <span class="val">auto</span>; <span class="attr">hyphenate-limit-chars</span>: <span class="val">10 4 4</span>; }</div>
     </div>
 
+    <h3 id="list-room">Platz neben dem Titel</h3>
+    <p>Eine Zeile darf mehr sagen als einen Titel (seit 1.35.0). <code>.glass-list__title-row</code> hält den Titel und daneben <code>__title-trailing</code> &mdash; einen Badge wie &bdquo;KI&ldquo;, eine Marke &mdash;, das unter den Titel rückt, wo die Zeile zu schmal ist, während der Titel seine Auslassungspunkte behält. <code>__extra</code> unter dem Untertitel nimmt einen Link (&bdquo;Rückgängig&ldquo;) oder eine Reihe Chips auf. <code>--gl-list-title-size</code>, <code>--gl-list-title-weight</code> und <code>--gl-list-subtitle-size</code> setzen die Schrift einer Zeile, an der Liste oder an einer Zeile.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <ul class="glass-list" aria-label="Verlauf" style="--gl-list-item-min-height: 64px">
+        <li class="glass-list__item"><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></span><div class="glass-list__content"><div class="glass-list__title-row"><div class="glass-list__title">&Ouml;ffnungszeiten</div><span class="glass-list__title-trailing"><span class="glass-badge glass-badge--primary">KI</span></span></div><div class="glass-list__subtitle">Heute ge&auml;ndert, 09:41</div><div class="glass-list__extra"><a href="#list-room" style="color: var(--gl-color-primary-text)">R&uuml;ckg&auml;ngig</a></div></div></li>
+        <li class="glass-list__item"><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></span><div class="glass-list__content"><div class="glass-list__title">Neuigkeiten</div><div class="glass-list__subtitle">Gestern ge&auml;ndert</div></div></li>
+      </ul>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-list__content"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-list__title-row"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-list__title"</span><span class="tag">&gt;</span>Öffnungszeiten<span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-list__title-trailing"</span><span class="tag">&gt;&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-badge glass-badge--primary"</span><span class="tag">&gt;</span>KI<span class="tag">&lt;/span&gt;&lt;/span&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-list__subtitle"</span><span class="tag">&gt;</span>Heute geändert, 09:41<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-list__extra"</span><span class="tag">&gt;&lt;a</span> <span class="attr">href</span>=<span class="val">"…"</span><span class="tag">&gt;</span>Rückgängig<span class="tag">&lt;/a&gt;&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+
     <h3 id="list-selected">Die gew&auml;hlte Zeile</h3>
     <p>Eine kompakte Liste neben einem Editor markiert den Eintrag, der offen ist (seit 1.34.0): <code>.is-selected</code> an der Zeile legt eine Pille aus erhabenem Glas hinein, wie sie die gew&auml;hlte <a href="#tree">Baumzeile</a> und die aktive Zeile einer Seitenleiste haben, mit halbfettem Titel und dem Icon im Akzent. <code>aria-current="true"</code> sagt Hilfstechnik, welcher Eintrag es ist &mdash; <code>aria-selected</code> stattdessen, wo die Liste eine Listbox ist. Hover und Druck lassen die gew&auml;hlte Zeile, wie sie ist, und der Tastaturring bleibt um sie herum. <code>--gl-list-item-selected-bg</code> setzt die Fl&auml;che der Pille, ohne Wert <code>--gl-surface-4</code>.</p>
+    <p>Seit 1.35.0 formen Tokens die gewählte Zeile anders: <code>--gl-list-item-selected-inset</code> (3&nbsp;px <code>--gl-space-xs</code>), <code>-radius</code> (<code>--gl-radius-sm</code>), <code>-shadow</code> (Kantenlicht und der Schatten eines Buttons), <code>-color</code> (die Überschriftenfarbe) und <code>-weight</code> (halbfett). <code>0</code>, <code>0</code> und <code>none</code> für Abstand, Radius und Schatten ergeben eine flache Tönung über die ganze Zeile.</p>
     <div class="docs-preview docs-preview--constrained">
       <ul class="glass-list" aria-label="Seiten">
         <li class="glass-list__item glass-list__item--interactive" tabindex="0"><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="glass-list__content"><div class="glass-list__title">Start</div></div></li>
@@ -2104,6 +2131,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="cls">.settings-dialog</span> { <span class="attr">--gl-modal-max-width</span>: <span class="val">560px</span>; }</div>
     </div>
+    <p><code>--gl-modal-bg</code> ersetzt die Fläche des Panels (seit 1.35.0). Im dunklen Modus beginnt der Schimmer bei <code>--gl-dialog-glow-top</code>, dem mittleren Schimmer der Karte: Auf dem hellsten Teil eines hohen Dialogs las weiße Schrift auf Bedienelementen 2,9 bis 4,7:1 &mdash; siehe <a href="#sheet-dark">dunkles Glas</a>.</p>
     <h3>Blur hinter dem Dialog</h3>
     <p>Die Abdunkelung hinter einem Dialog und hinter einem <a href="#sheet">Sheet</a> verschwimmt mit <code>--gl-blur-overlay</code>, wo ein Projekt es setzt, sonst mit <code>--gl-blur-soft</code> (seit 1.25.0). Die <a href="#surface">Oberflächen-Presets</a> setzen die Blur-Tokens auf 0, lassen dieses aber in Ruhe; so behält auch eine Seite ohne Glas eine verschwommene Abdunkelung:</p>
     <div class="docs-code-wrapper">
@@ -2852,11 +2880,13 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>__badge</code></td><td>Eine Zahl nach der Beschriftung, in der Tonfarbe, wo ein Ton gesetzt ist; in <code>__icon</code> an der Ecke des Icons (seit 1.29.0)</td></tr>
         <tr><td><code>__badge--primary</code>, <code>--success</code>, <code>--warning</code>, <code>--error</code></td><td>Der Zähler in eigener Farbe, gleich welcher Ton, ohne Punkt (seit 1.31.0)</td></tr>
         <tr><td><code>--icons</code></td><td>Nur Icons, quadratische Optionen; die Namen stehen in <code>aria-label</code> (seit 1.28.0)</td></tr>
+        <tr><td><code>__icon--color</code></td><td>Ein farbiges Logo behält seine eigenen Füllungen und Konturen; ohne zieht ein SVG Linien wie ein Linien-Icon (seit 1.35.0)</td></tr>
         <tr><td><code>--droplet</code></td><td>Die gewählte Option sitzt auf einem Glastropfen, der zur nächsten gleitet (seit 1.27.0)</td></tr>
       </tbody>
     </table></div>
     <h3 id="segmented-icons">Icons</h3>
     <p>Seit 1.28.0 kann eine Option ein Icon in <code>.glass-segmented__icon</code> zeigen, vor ihrer Beschriftung: Ein SVG zieht seine Linien in der Farbe der Option, jedes andere Element &mdash; ein Font-Icon, eine <code>&lt;img&gt;</code>-Maske &mdash; übernimmt diese Farbe, ein Font-Icon auch die 18&nbsp;px der Box. Unter dem <a href="#droplet">Tropfen</a> wächst das Icon wie der Ton-Punkt. <code>--icons</code> macht eine Zeile nur aus Icons, etwa einen Schalter Hell / Dunkel / Automatisch: Die Optionen werden quadratisch, und jede trägt ihren Namen als <code>aria-label</code>, als <code>title</code> auch für den Tooltip. Die Icon-Box bekommt <code>aria-hidden="true"</code>, damit der Text eines Font-Icons nicht in den Namen gerät.</p>
+    <p>Ein farbiges Logo als Icon &mdash; das Zeichen einer Bildquelle &mdash; nimmt <code>.glass-segmented__icon--color</code> (seit 1.35.0) und behält seine eigenen Füllungen und Konturen; vorher erbten seine Formen die Kontur des Linien-Icons und standen in der Textfarbe umrandet da. <code>--gl-segmented-bg</code> setzt die Spur (seit 1.35.0); auf dem Glas eines Modals oder eines Sheets im dunklen Modus ist sie eine Mulde, <code>--gl-dialog-well</code>, mit der gewählten Option auf <code>--gl-dialog-raised</code>.</p>
     <div class="docs-preview docs-preview--compact" style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
       <div class="glass-segmented" role="group" aria-label="Ansicht" data-docs-segmented>
         <button class="glass-segmented__item" aria-pressed="true"><span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span>Liste</button>
@@ -3062,8 +3092,64 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>.glass-sheet</code></td><td>Das Panel: Milchglas, oben gerundet, unten Safe-Area-Abstand</td></tr>
         <tr><td><code>--inline</code></td><td>Im Fluss, ohne Overlay, rundum gerundet</td></tr>
         <tr><td><code>__grip</code>, <code>__title</code>, <code>__body</code>, <code>__actions</code></td><td>Griff, &Uuml;berschrift, Inhalt, Aktionsspalte</td></tr>
+        <tr><td><code>__head</code>, <code>__heading</code></td><td>Der Kopf: nimmt Platz und Abstand des Titels ein; <code>__heading</code> hält <code>__eyebrow</code> und den Titel (seit 1.35.0)</td></tr>
+        <tr><td><code>__eyebrow</code></td><td>Eine kurze Zeile über dem Titel, kleine Versalien in der gedämpften Farbe</td></tr>
+        <tr><td><code>__leading</code>, <code>__trailing</code></td><td>Vor und nach dem Titel: eine Marke oder ein Icon-Chip, ein Badge</td></tr>
+        <tr><td><code>__close</code></td><td>Ein runder Schließen-Button aus Glas, 32&nbsp;px mit 44&nbsp;px Trefferfläche, am Ende des Kopfs</td></tr>
+        <tr><td><code>.glass-sheet-overlay--start</code>, <code>--end</code></td><td>Das Panel an dieser Seite, volle Höhe, von der Seite, ohne Griff, Aktionen nebeneinander (seit 1.35.0)</td></tr>
+        <tr><td><code>.glass-sheet-overlay--modeless</code></td><td>Kein Scrim und kein Blur; nur das Panel nimmt den Zeiger &mdash; für ein mit <code>show()</code> geöffnetes Sheet</td></tr>
       </tbody>
     </table></div>
+    <h3 id="sheet-head">Der Kopf</h3>
+    <p>Seit 1.35.0 hält der Kopf mehr als den Titel: <code>__eyebrow</code> darüber (&bdquo;Wiederherstellen&ldquo;), <code>__leading</code> davor (ein Icon-Chip von 56&nbsp;px), <code>__trailing</code> danach (ein Badge) und <code>__close</code> an seinem Ende, einen runden Button aus Glas. <code>__head</code> nimmt Platz und Abstand des Titels ein; ein Titel allein darin steht wie ohne ihn.</p>
+    <div class="docs-preview">
+      <div class="glass-sheet glass-sheet--inline">
+        <div class="glass-sheet__grip" aria-hidden="true"></div>
+        <div class="glass-sheet__head">
+          <span class="glass-sheet__leading"><span style="display:inline-flex;width:56px;height:56px;border-radius:14px;align-items:center;justify-content:center;background:color-mix(in srgb, var(--gl-color-primary) 28%, transparent)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></span></span>
+          <div class="glass-sheet__heading"><span class="glass-sheet__eyebrow">Wiederherstellen</span><h2 class="glass-sheet__title">Version von 09:41</h2></div>
+          <span class="glass-sheet__trailing"><span class="glass-badge">1&times; in deiner App</span></span>
+          <button class="glass-sheet__close" type="button" aria-label="Schließen"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+        </div>
+        <div class="glass-sheet__body">Wiederherstellen ersetzt die aktuelle Version.</div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-sheet__head"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-sheet__leading"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- ein Icon-Chip --&gt;</span><span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-sheet__heading"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-sheet__eyebrow"</span><span class="tag">&gt;</span>Wiederherstellen<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="val">"glass-sheet__title"</span><span class="tag">&gt;</span>Version von 09:41<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-sheet__trailing"</span><span class="tag">&gt;&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-badge"</span><span class="tag">&gt;</span>1× in deiner App<span class="tag">&lt;/span&gt;&lt;/span&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="val">"glass-sheet__close"</span> <span class="attr">aria-label</span>=<span class="val">"Schließen"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- × --&gt;</span><span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+
+    <h3 id="sheet-side">An einer Seite, nicht-modal</h3>
+    <p><code>.glass-sheet-overlay--end</code> oder <code>--start</code> (seit 1.35.0) setzt das Panel an diese Seite des Fensters: so hoch wie das Fenster weniger <code>--gl-sheet-side-inset</code> (16&nbsp;px) an beiden Enden und so weit vom Rand entfernt, <code>--gl-sheet-side-width</code> (440&nbsp;px) breit, mit den Ecken einer Karte. Es gleitet von dieser Seite herein, von rechts nach links gespiegelt, hat keinen Griff, und seine Aktionen stehen nebeneinander an seinem Fuß &mdash; ein Seitenpanel auf dem Desktop. <code>--modeless</code> lässt die Seite bedienbar: kein Scrim und kein Blur, nur das Panel nimmt den Zeiger. Öffne diesen Dialog mit <code>show()</code> statt <code>showModal()</code>: Die Seite ist nicht inert, ihre gewählte Zeile bleibt sichtbar, und ein später geöffnetes Modal liegt über dem Sheet. <code>--gl-sheet-z-index</code> (1000) stapelt es.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;dialog</span> <span class="attr">class</span>=<span class="val">"glass-sheet-overlay glass-sheet-overlay--end"</span><span class="tag">&gt;</span>   <span class="cmt">&lt;!-- showModal(), dann .is-active --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-sheet"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/dialog&gt;</span>
+<span class="tag">&lt;dialog</span> <span class="attr">class</span>=<span class="val">"glass-sheet-overlay glass-sheet-overlay--end glass-sheet-overlay--modeless"</span><span class="tag">&gt;</span>   <span class="cmt">&lt;!-- show() --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-sheet"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/dialog&gt;</span></div>
+    </div>
+
+    <h3 id="sheet-dark">Dunkles Glas</h3>
+    <p>Das Glas eines Modals oder eines Sheets ist heller als die Seite, oben am meisten. Im dunklen Modus beginnt seit 1.35.0 der Schimmer beider beim mittleren Schimmer der Karte, und die Bedienelemente darauf nehmen eigene Werte, wo die Seite keine gesetzt hat: Ein Segmented Control liegt in einer Mulde mit der gewählten Option eine Stufe dunkler, ein tertiärer Button ist eine Stufe dunkler, Badges und tertiäre Buttons nehmen keinen eigenen Blur, und Akzenttext nimmt <a href="#primary-on-glass"><code>--gl-color-primary-on-glass</code></a>. Oben auf einem hohen Sheet im dunklen Modus las weiße Schrift auf Badges und Segmenten in 1.34.0 2,9 bis 4,7:1 und liest jetzt 4,7 bis 7,7:1, in Chromium, WebKit und Firefox. Der helle Modus behält Schimmer und Bedienelemente. <code>--gl-sheet-bg</code> und <code>--gl-modal-bg</code> ersetzen die ganze Fläche.</p>
+    <div class="docs-table-wrap"><table class="docs-table">
+      <thead><tr><th>Token</th><th>Dunkler Wert</th><th>Verwendung</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gl-dialog-glow-top</code></td><td>var(--gl-card-glow-mid)</td><td>Wo der Schimmer eines Modals und eines Sheets beginnt</td></tr>
+        <tr><td><code>--gl-dialog-well</code></td><td>rgba(0, 0, 0, 0.10)</td><td>Die Spur eines Segmented Controls auf Dialogglas</td></tr>
+        <tr><td><code>--gl-dialog-raised</code></td><td>var(--gl-surface-3)</td><td>Seine gewählte Option</td></tr>
+        <tr><td><code>--gl-dialog-control</code></td><td>var(--gl-surface-1)</td><td>Ein tertiärer Button auf Dialogglas</td></tr>
+        <tr><td><code>--gl-badge-selected-color</code></td><td>var(--gl-color-text)</td><td>Die Beschriftung eines gewählten Badges, überall</td></tr>
+      </tbody>
+    </table></div>
+    <p>Alle fünf sind im hellen Modus ohne Wert. Ein Segmented Control oder ein Badge, dessen Tokens die Seite setzt, behält sie auch auf Dialogglas.</p>
     <script>
       (() => {
         const ov = document.getElementById('docs-sheet'), panel = ov.querySelector('.glass-sheet');

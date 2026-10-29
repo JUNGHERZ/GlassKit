@@ -7,6 +7,71 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.35.0] – 2026-10-29
+
+### Added
+
+- **A sheet at a side, and one that leaves the page usable: `.glass-sheet-overlay--start` / `--end` and `--modeless`.** On a desktop two common layouts need the sheet at a side: a modal panel at the right edge (restoring a version), and a modeless side sheet beside a list whose chosen row stays in view. The sheet only rose from the bottom, and a `transform` set from outside also applied to the open state.
+  - `--end` or `--start` on the overlay puts the panel at that side, with a card's corners and no grip. It is as high as the window less `--gl-sheet-side-inset` (16px) at both ends and that far from its edge, and `--gl-sheet-side-width` (440px) wide.
+  - It slides in from that side, mirrored right to left, and its actions stand side by side at its foot.
+  - `--modeless` has no scrim and no blur, and only the panel takes the pointer. Open that dialog with `show()`: the page stays usable, and a modal opened later lies above it.
+  - `--gl-sheet-z-index` (1000) stacks the overlay.
+
+  ([GlassKit Elements #44](https://github.com/JUNGHERZ/GlassKit-Elements/issues/44))
+- **A head for the sheet: `__head` with `__eyebrow`, `__leading`, `__trailing` and `__close`.** Designs put a short line above the title ("RESTORE"), a 56px icon chip before it, a badge after it, and a × at the end. The sheet's head held only the title.
+  - `__head` takes the title's place and spacing, and a title alone in it stands as it did without one.
+  - `__close` is a round glass button, 32px with a 44px target.
+
+  ([GlassKit Elements #43](https://github.com/JUNGHERZ/GlassKit-Elements/issues/43))
+- **Room beside a list title and below its subtitle, and tokens for its type: `__title-row`, `__title-trailing`, `__extra`, `--gl-list-title-size`, `--gl-list-title-weight`, `--gl-list-subtitle-size`.** History rows show a badge "AI" beside the title and an "Undo" link below the subtitle, at 64px with a 13px subtitle.
+  - `__title-trailing` moves under the title where the row is too narrow, and the title keeps its ellipsis.
+  - In a `--center` row the title row stays centred.
+
+  ([GlassKit Elements #42](https://github.com/JUNGHERZ/GlassKit-Elements/issues/42))
+- **Tokens for the chosen list row: `--gl-list-item-selected-inset`, `-radius`, `-shadow`, `-color`, `-weight`.** The pill of 1.34.0 could only change its surface. Inset 0, radius 0 and shadow none make a flat tint over the whole row. ([GlassKit Elements #42](https://github.com/JUNGHERZ/GlassKit-Elements/issues/42))
+- **A coloured logo as a segmented icon: `.glass-segmented__icon--color`.** The line icon's stroke reached a logo's shapes, which then came out outlined in the text colour. With `--color` the icon keeps its own fills and strokes; attributes on the `<svg>` itself lose to the slotted rule in all three engines, so the modifier is needed. ([GlassKit Elements #47](https://github.com/JUNGHERZ/GlassKit-Elements/issues/47))
+- **`--gl-status-color`** for the message of a status line ([GlassKit Elements #45](https://github.com/JUNGHERZ/GlassKit-Elements/issues/45)), **`--gl-segmented-bg`** for the segmented track, and **`--gl-sheet-bg`** and **`--gl-modal-bg`** for the surfaces of sheet and modal ([GlassKit Elements #48](https://github.com/JUNGHERZ/GlassKit-Elements/issues/48)).
+- **`--gl-color-primary-on-glass`, the primary as text on the glass of a card, a modal or a sheet.**
+  - A card is brighter than the page. GlassKit's own orange read 4.18:1 as a link on a card in dark mode, and a brand's accent less.
+  - Links in `.glass-prose`, the range value, accent rows, the hovered accordion and the primary modal action take it there now. In dark mode it is the primary text with 40% white; in light mode, the primary text.
+  - A link of the page's own on a card uses it as well.
+
+  ([GlassKit Elements #48](https://github.com/JUNGHERZ/GlassKit-Elements/issues/48), comment)
+
+### Changed
+
+- **Dark glass keeps its contrast.** In dark mode the glass of a modal or a sheet is brighter than the page, most at its top. White text on badges and segments there read 2.9 to 4.7:1, and a chosen badge in the lightened accent 1.9 to 3.3:1. In dark mode now:
+  - The glow of modal and sheet starts at the card's middle glow (`--gl-dialog-glow-top`).
+  - A segmented control on them lies in a well (`--gl-dialog-well`, black 10%), its chosen option one step darker (`--gl-dialog-raised`).
+  - A tertiary button is one step darker (`--gl-dialog-control`).
+  - Badges and tertiary buttons take no blur of their own. Chromium counted the dialog's glow twice beneath a nested backdrop filter, which is why it measured lower than WebKit and Firefox.
+  - A chosen badge says its label in the text colour (`--gl-badge-selected-color`); border and tint show the selection.
+  - A segmented control or badge whose tokens the page sets keeps them. Light mode is unchanged.
+
+  ([GlassKit Elements #48](https://github.com/JUNGHERZ/GlassKit-Elements/issues/48))
+
+### Compatibility
+
+- Light mode renders as in 1.34.0. In dark mode modals, sheets, chosen badges and accent text on cards look as described above.
+- Six theme tokens are new in both theme blocks: `--gl-dialog-glow-top`, `--gl-dialog-well`, `--gl-dialog-raised`, `--gl-dialog-control` and `--gl-badge-selected-color` (unset in light mode), and `--gl-color-primary-on-glass` (the primary text in light mode). The no-JS light mirror of GlassKit Web needs these six lines from the light block; its `check:tokens` names them.
+- In plain markup `__title-row`, `__head` and the new places are optional: a list title or a sheet title without them stands as before.
+
+Measured in Chromium 153, WebKit 26.6 and Firefox 151, at the top of an 820px dark sheet over GlassKit's dark page, with the background taken from the pixels under each text:
+
+| Text | 1.34.0 | 1.35.0 |
+|---|---|---|
+| white on a badge | 2.87 to 4.65:1 | 6.00 to 6.79:1 |
+| a chosen badge, GlassKit's orange | 1.91 to 2.74:1 | 4.66 to 5.22:1 (white) |
+| a chosen badge, accent #0082BB | 2.27 to 3.29:1 | 5.67 to 6.37:1 (white) |
+| the chosen and an open segment | 3.40 to 3.84:1 | 5.45 to 7.70:1 |
+| a field's text (Chromium) | 3.89:1 | 5.47:1 |
+| a tertiary button | 2.98 to 4.00:1 | 4.69 to 5.35:1 |
+| a link on a card, GlassKit's orange | 4.18:1 | 5.54 to 5.61:1 |
+
+The side sheet measures 440px wide, 16px from the edge and both ends, and slides in from the right, or from the left right to left. Docs (English and German), README, SKILL.md and `theme-override.css` describe all of it. With the new stylesheet the light docs, showcase and landing pages render pixel-identical to 1.34.0 in all three engines, apart from the new examples. In dark mode only the chosen badges and the previews of modal and sheet differ as well.
+
+---
+
 ## [1.34.0] – 2026-10-28
 
 ### Added
@@ -1403,6 +1468,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.35.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.35.0
 [1.34.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.34.0
 [1.33.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.33.0
 [1.32.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.32.0

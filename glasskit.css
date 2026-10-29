@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.34.0
+   Jungherz GmbH – v1.35.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -133,6 +133,21 @@
   --gl-card-glow-mid:        rgba(255, 255, 255, 0.22);
   --gl-card-glow-low:        rgba(255, 255, 255, 0.14);
   --gl-card-glow-bottom:     rgba(255, 255, 255, 0.08);
+  /* Dark glass of a modal or a sheet is brighter than the page (since
+     1.35.0): its glow starts at the middle one, a segmented control on it
+     lies in a well with its chosen option one step darker, a tertiary
+     button too is one step darker, and a chosen badge says its label in
+     the text colour. Unset in light mode. */
+  --gl-dialog-glow-top:      var(--gl-card-glow-mid);
+  --gl-dialog-well:          rgba(0, 0, 0, 0.10);
+  --gl-dialog-raised:        var(--gl-surface-3);
+  --gl-dialog-control:       var(--gl-surface-1);
+  --gl-badge-selected-color: var(--gl-color-text);
+  /* The accent as text on the glass of a card, a modal or a sheet (since
+     1.35.0): the primary text lightened by 40 % white. A card is brighter
+     than the page, and the primary as a link, a range value or an accent
+     row fell to 4.2:1 on it. Light mode keeps the primary text. */
+  --gl-color-primary-on-glass: color-mix(in srgb, var(--gl-color-primary-text) 60%, #ffffff);
 
   /* Card Text & Icons */
   --gl-card-icon-color:      rgba(255, 255, 255, 0.8);
@@ -359,6 +374,12 @@
   --gl-card-glow-mid:        rgba(255, 255, 255, 0.78);
   --gl-card-glow-low:        rgba(255, 255, 255, 0.65);
   --gl-card-glow-bottom:     rgba(255, 255, 255, 0.50);
+  --gl-dialog-glow-top:      initial;
+  --gl-dialog-well:          initial;
+  --gl-dialog-raised:        initial;
+  --gl-dialog-control:       initial;
+  --gl-badge-selected-color: initial;
+  --gl-color-primary-on-glass: var(--gl-color-primary-text);
 
   --gl-card-icon-color:      rgba(26, 42, 54, 0.65);
   --gl-card-text-color:      rgba(26, 42, 54, 0.68);
@@ -723,6 +744,8 @@
   box-shadow: var(--gl-shadow-card), var(--gl-inset-strong);
   /* A .glass-list--flush inside reaches the card's edges (since 1.29.1). */
   --gl-list-flush-inset: var(--gl-space-xl);
+  /* Accent text on it takes --gl-color-primary-on-glass (since 1.35.0). */
+  --gl-ctx-primary-text: var(--gl-color-primary-on-glass);
 }
 
 .glass-card--glow {
@@ -837,10 +860,13 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-btn--secondary:active { transform: translateY(1px); }
 
 /* Tertiary */
+/* On the glass of a modal or a sheet (since 1.35.0) one step darker in dark
+   mode, --gl-dialog-control, and without a blur of its own: its muted
+   label read 3 to 4:1 there. */
 .glass-btn--tertiary {
-  background: var(--gl-surface-2);
-  backdrop-filter: blur(var(--gl-blur-light));
-  -webkit-backdrop-filter: blur(var(--gl-blur-light));
+  background: var(--gl-ctx-btn-tertiary-bg, var(--gl-surface-2));
+  backdrop-filter: var(--gl-ctx-control-backdrop, blur(var(--gl-blur-light)));
+  -webkit-backdrop-filter: var(--gl-ctx-control-backdrop, blur(var(--gl-blur-light)));
   border: 1px solid var(--gl-border-subtle);
   color: var(--gl-color-text-muted);
   box-shadow: 0 4px 12px rgba(0,0,0,0.10), var(--gl-inset-subtle);
@@ -868,7 +894,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-btn[aria-disabled="true"]:is(:hover, :active) { transform: none; }
 .glass-btn--tertiary:disabled:hover,
 .glass-btn--tertiary[aria-disabled="true"]:hover {
-  background: var(--gl-surface-2); color: var(--gl-color-text-muted);
+  background: var(--gl-ctx-btn-tertiary-bg, var(--gl-surface-2)); color: var(--gl-color-text-muted);
 }
 
 /* Sizes */
@@ -903,7 +929,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 }
 
 .glass-status p {
-  color: var(--gl-color-text-muted);
+  color: var(--gl-status-color, var(--gl-color-text-muted));
   font-size: var(--gl-font-size-sm);
   font-weight: var(--gl-font-weight-normal);
   line-height: 1.45;
@@ -1391,7 +1417,7 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 .glass-range-value {
   font-size: var(--gl-font-size-sm);
   font-weight: var(--gl-font-weight-semibold);
-  color: var(--gl-color-primary-text);
+  color: var(--gl-ctx-primary-text, var(--gl-color-primary-text));
   font-variant-numeric: tabular-nums;
 }
 
@@ -1546,9 +1572,11 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 
 .glass-modal {
   width: 100%; max-width: var(--gl-modal-max-width, 340px);
-  background: linear-gradient(to bottom,
-    var(--gl-card-glow-top) 0%, var(--gl-card-glow-bottom) 100%
-  );
+  /* --gl-modal-bg replaces the surface (since 1.35.0); in dark mode the
+     glow starts at --gl-dialog-glow-top, the card's middle one. */
+  background: var(--gl-modal-bg, linear-gradient(to bottom,
+    var(--gl-dialog-glow-top, var(--gl-card-glow-top)) 0%, var(--gl-card-glow-bottom) 100%
+  ));
   backdrop-filter: blur(var(--gl-blur-heavy));
   -webkit-backdrop-filter: blur(var(--gl-blur-heavy));
   border: 1.5px solid var(--gl-border-medium);
@@ -1586,7 +1614,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-modal__action:disabled { opacity: 0.45; cursor: not-allowed; }
 .glass-modal__action:disabled:hover { background: transparent; }
 .glass-modal__action + .glass-modal__action { border-inline-start: 1px solid var(--gl-border-subtle); }
-.glass-modal__action--primary { color: var(--gl-color-primary-text); font-weight: var(--gl-font-weight-semibold); }
+.glass-modal__action--primary { color: var(--gl-ctx-primary-text, var(--gl-color-primary-text)); font-weight: var(--gl-font-weight-semibold); }
 .glass-modal__action--danger { color: var(--gl-color-error); font-weight: var(--gl-font-weight-semibold); }
 
 
@@ -2078,7 +2106,7 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-segmented.glass-segmented--droplet[data-droplet]::before {
   background:
     var(--gl-gloss-droplet, none),
-    var(--gl-segmented-active-bg, linear-gradient(to bottom, var(--gl-surface-5) 0%, var(--gl-surface-3) 100%));
+    var(--gl-segmented-active-bg, var(--gl-ctx-segmented-active-bg, linear-gradient(to bottom, var(--gl-surface-5) 0%, var(--gl-surface-3) 100%)));
   box-shadow:
     var(--gl-segmented-active-shadow, 0 4px 14px rgba(0,0,0,0.18), 0 1px 3px rgba(0,0,0,0.12)),
     inset 0 0 0 1px var(--gl-border-subtle),
@@ -2488,7 +2516,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   -webkit-tap-highlight-color: transparent;
 }
 
-.glass-accordion__trigger:hover { color: var(--gl-color-primary-text); }
+.glass-accordion__trigger:hover { color: var(--gl-ctx-primary-text, var(--gl-color-primary-text)); }
 
 .glass-accordion__trigger-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
@@ -2543,8 +2571,11 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   display: inline-flex; align-items: center; gap: var(--gl-space-2xs);
   padding: var(--gl-space-2xs) var(--gl-space-sm);
   background: var(--gl-surface-3);
-  backdrop-filter: blur(var(--gl-blur-soft));
-  -webkit-backdrop-filter: blur(var(--gl-blur-soft));
+  /* No blur of its own on the glass of a modal or a sheet (since 1.35.0):
+     the dialog blurs already, and Chromium counted its glow twice beneath
+     a nested backdrop filter — a chip there came out 2.9:1 for white. */
+  backdrop-filter: var(--gl-ctx-control-backdrop, blur(var(--gl-blur-soft)));
+  -webkit-backdrop-filter: var(--gl-ctx-control-backdrop, blur(var(--gl-blur-soft)));
   border: 1px solid var(--gl-border-subtle);
   border-radius: var(--gl-radius-full);
   font-size: var(--gl-font-size-xs);
@@ -2632,9 +2663,12 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   box-shadow: var(--gl-shadow-focus), var(--gl-inset-subtle);
 }
 
+/* In dark mode the label takes the text colour (since 1.35.0): the accent
+   lightened for dark surfaces read 2.2 to 3:1 on a chip over glass. The
+   selection shows in the border and the tint. */
 .glass-badge--selected {
   border-color: color-mix(in srgb, var(--gl-badge-accent) 55%, transparent);
-  color: var(--gl-badge-accent-text);
+  color: var(--gl-badge-selected-color, var(--gl-badge-accent-text));
   box-shadow: var(--gl-inset-subtle),
               inset 0 0 0 100px color-mix(in srgb, var(--gl-badge-accent) 22%, transparent);
 }
@@ -3109,24 +3143,28 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
    technology. Hover and press leave it as it is; the keyboard ring stays
    around the row. While the row is a drop target of a drag, the pill makes
    way for the line or the tint. */
-.glass-list__item.is-selected { color: var(--gl-color-text-heading); isolation: isolate; }
+/* Tokens since 1.35.0 shape it otherwise: --gl-list-item-selected-inset
+   (3px --gl-space-xs), -radius (--gl-radius-sm), -shadow (edge light and a
+   button's shadow), -color (the heading colour) and -weight (semibold).
+   Inset 0, radius 0 and shadow none make a flat tint over the whole row. */
+.glass-list__item.is-selected { color: var(--gl-list-item-selected-color, var(--gl-color-text-heading)); isolation: isolate; }
 .glass-list__item.is-selected:not(.is-sort-before, .is-sort-after, .is-sort-inside, .is-sort-refused)::before {
   content: ''; position: absolute; z-index: -1;
-  inset: 3px var(--gl-space-xs);
-  border-radius: var(--gl-radius-sm);
+  inset: var(--gl-list-item-selected-inset, 3px var(--gl-space-xs));
+  border-radius: var(--gl-list-item-selected-radius, var(--gl-radius-sm));
   background: var(--gl-list-item-selected-bg, var(--gl-surface-4));
-  box-shadow: var(--gl-inset-strong), var(--gl-shadow-btn);
+  box-shadow: var(--gl-list-item-selected-shadow, var(--gl-inset-strong), var(--gl-shadow-btn));
   pointer-events: none;
 }
 .glass-list__item--interactive.is-selected:is(:hover, :active, :focus-visible) { background: transparent; }
-.glass-list__item.is-selected .glass-list__title { font-weight: var(--gl-font-weight-semibold); }
+.glass-list__item.is-selected .glass-list__title { font-weight: var(--gl-list-item-selected-weight, var(--gl-font-weight-semibold)); }
 .glass-list__item.is-selected .glass-list__leading { color: var(--gl-color-primary-text); }
 
 .glass-list__item--danger { color: var(--gl-color-error); }
 .glass-list__item--danger .glass-list__title,
 .glass-list__item--danger .glass-list__leading { color: inherit; }
 
-.glass-list__item--accent { color: var(--gl-color-primary-text); }
+.glass-list__item--accent { color: var(--gl-ctx-primary-text, var(--gl-color-primary-text)); }
 .glass-list__item--accent .glass-list__title,
 .glass-list__item--accent .glass-list__leading { color: inherit; }
 
@@ -3191,9 +3229,11 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
    out of it — an e-mail address in a --wrap subtitle used to — while text
    still breaks at spaces. hyphens is left to inheritance: set it on the
    list or the page for breaks at syllables. */
+/* --gl-list-title-size, --gl-list-title-weight and --gl-list-subtitle-size
+   (since 1.35.0) set the type of a row, on the list or one row. */
 .glass-list__title {
-  font-size: var(--gl-font-size-base);
-  font-weight: var(--gl-font-weight-medium);
+  font-size: var(--gl-list-title-size, var(--gl-font-size-base));
+  font-weight: var(--gl-list-title-weight, var(--gl-font-weight-medium));
   color: var(--gl-color-text);
   white-space: var(--gl-list-title-white-space, nowrap);
   overflow: hidden;
@@ -3201,7 +3241,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   overflow-wrap: anywhere;
 }
 .glass-list__subtitle {
-  font-size: var(--gl-font-size-sm);
+  font-size: var(--gl-list-subtitle-size, var(--gl-font-size-sm));
   color: var(--gl-color-text-muted);
   white-space: var(--gl-list-subtitle-white-space, nowrap);
   overflow: hidden;
@@ -3218,6 +3258,27 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 /* display: -webkit-box above beats the hidden attribute's own rule: an empty
    --wrap subtitle kept its place, and the title sat 1px off centre. */
 .glass-list__subtitle[hidden] { display: none; }
+/* Room beside the title and below the subtitle (since 1.35.0). __title-row
+   holds the title and __title-trailing — a badge such as "AI", a mark —,
+   which moves under the title where the row is too narrow; the title keeps
+   its ellipsis. __extra below the subtitle takes a link ("Undo") or a line
+   of chips. */
+.glass-list__title-row {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--gl-space-2xs) var(--gl-space-xs);
+  min-width: 0;
+}
+.glass-list__title-row > .glass-list__title { flex: 0 1 auto; min-width: 0; }
+.glass-list__item--center .glass-list__title-row { justify-content: center; }
+.glass-list__title-trailing { flex: none; display: inline-flex; align-items: center; gap: var(--gl-space-2xs); }
+.glass-list__extra {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--gl-space-xs);
+  margin-top: var(--gl-space-2xs);
+  font-size: var(--gl-font-size-sm);
+  color: var(--gl-color-text-muted);
+}
+.glass-list__title-trailing[hidden],
+.glass-list__extra[hidden] { display: none; }
 
 .glass-list__trailing {
   flex-shrink: 0;
@@ -3763,7 +3824,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 .glass-prose ul, .glass-prose ol { padding-inline-start: 1.3em; }
 .glass-prose strong { color: var(--gl-color-text-heading); }
 /* Links in running text are underlined: colour alone does not mark them. */
-.glass-prose a { color: var(--gl-color-primary-text); text-decoration: underline; text-underline-offset: 2px; }
+.glass-prose a { color: var(--gl-ctx-primary-text, var(--gl-color-primary-text)); text-decoration: underline; text-underline-offset: 2px; }
 .glass-prose code {
   font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.9em;
   background: var(--gl-surface-2); padding: 1px 5px; border-radius: 4px;
@@ -3801,7 +3862,9 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 .glass-segmented {
   display: inline-flex; gap: 4px; padding: 4px;
   max-width: 100%;
-  background: var(--gl-surface-1);
+  /* --gl-segmented-bg (since 1.35.0); on the glass of a modal or a sheet
+     in dark mode the track is a well, --gl-dialog-well. */
+  background: var(--gl-segmented-bg, var(--gl-ctx-segmented-bg, var(--gl-surface-1)));
   border: 1px solid var(--gl-border-subtle);
   border-radius: var(--gl-radius-btn);
   box-shadow: var(--gl-inset-subtle);
@@ -3845,7 +3908,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
    values; the drop of --droplet takes the same surface (18c). The shadow
    sits in shadow lists: switch it off with a zero shadow, not none. */
 .glass-segmented__item[aria-pressed="true"] {
-  background: var(--gl-segmented-active-bg, var(--gl-surface-5));
+  background: var(--gl-segmented-active-bg, var(--gl-ctx-segmented-active-bg, var(--gl-surface-5)));
   color: var(--gl-segmented-active-color, var(--gl-color-text-heading));
   box-shadow: var(--gl-segmented-active-shadow, var(--gl-shadow-btn));
 }
@@ -3876,8 +3939,13 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 }
 .glass-segmented__icon[hidden] { display: none; }
 .glass-segmented__icon svg,
-.glass-segmented__icon ::slotted(svg) {
-  width: 18px; height: 18px; fill: none;
+.glass-segmented__icon ::slotted(svg) { width: 18px; height: 18px; }
+/* A line icon strokes in the option's colour. --color (since 1.35.0) keeps
+   a coloured logo's own fills and strokes; before, its shapes inherited the
+   stroke and came out outlined in the text colour. */
+.glass-segmented__icon:not(.glass-segmented__icon--color) svg,
+.glass-segmented__icon:not(.glass-segmented__icon--color) ::slotted(svg) {
+  fill: none;
   stroke: currentColor; stroke-width: 1.8;
   stroke-linecap: round; stroke-linejoin: round;
 }
@@ -4042,7 +4110,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
    layout instead of idling at opacity 0. <glk-sheet> in GlassKit Elements
    does exactly this. --inline embeds the panel in the flow, no overlay. */
 .glass-sheet-overlay {
-  position: fixed; inset: 0; z-index: 1000;
+  position: fixed; inset: 0; z-index: var(--gl-sheet-z-index, 1000);
   display: flex; align-items: flex-end; justify-content: center;
   background: var(--gl-surface-overlay);
   /* Like the modal's dimmer: --gl-blur-overlay where set (1.25.0). */
@@ -4080,9 +4148,9 @@ dialog.glass-sheet-overlay::backdrop { background: transparent; }
      light in dark mode — with --gl-color-text on it the sheet read white
      on white-grey. The card glow gradient over heavy blur is what the
      text tokens are made for, in both themes. */
-  background: linear-gradient(to bottom,
-    var(--gl-card-glow-top) 0%, var(--gl-card-glow-bottom) 100%
-  );
+  background: var(--gl-sheet-bg, linear-gradient(to bottom,
+    var(--gl-dialog-glow-top, var(--gl-card-glow-top)) 0%, var(--gl-card-glow-bottom) 100%
+  ));
   backdrop-filter: blur(var(--gl-blur-heavy));
   -webkit-backdrop-filter: blur(var(--gl-blur-heavy));
   color: var(--gl-color-text);
@@ -4097,11 +4165,105 @@ dialog.glass-sheet-overlay::backdrop { background: transparent; }
 .glass-sheet-overlay.is-active .glass-sheet { transform: translateY(0); }
 .glass-sheet--inline { border-radius: var(--gl-radius-card); box-shadow: var(--gl-shadow-card); }
 
+/* Controls on the glass of a modal or a sheet (since 1.35.0) take the
+   theme's dialog values where the page set none of its own: a segmented
+   control lies in --gl-dialog-well with its chosen option on
+   --gl-dialog-raised, a tertiary button on --gl-dialog-control (all dark
+   mode only), and badges and tertiary buttons take no blur of their own;
+   accent text — a link, an accent row — takes --gl-color-primary-on-glass,
+   as on a card. Inherited, so they reach the controls of GlassKit Elements in
+   their shadow roots. */
+.glass-modal, .glass-sheet {
+  --gl-ctx-segmented-bg: var(--gl-dialog-well);
+  --gl-ctx-segmented-active-bg: var(--gl-dialog-raised);
+  --gl-ctx-btn-tertiary-bg: var(--gl-dialog-control);
+  --gl-ctx-control-backdrop: none;
+  --gl-ctx-primary-text: var(--gl-color-primary-on-glass);
+}
+
+/* At a side (since 1.35.0): --start or --end on the overlay puts the panel
+   at that edge, as high as the window less --gl-sheet-side-inset (16px) at
+   both ends and that far from its edge, --gl-sheet-side-width (440px) wide,
+   with a card's corners. It slides in from that edge, has no grip, and its
+   actions stand side by side at its foot. --modeless leaves the page
+   usable: no scrim and no blur, and only the panel takes the pointer — for
+   a sheet opened with show() instead of showModal(), beside a list whose
+   chosen row stays in view. --gl-sheet-z-index (1000) stacks it. */
+/* The inset is the panel's margin: the dialog's own padding is undone. */
+.glass-sheet-overlay--start,
+.glass-sheet-overlay--end { align-items: stretch; }
+.glass-sheet-overlay--start { justify-content: flex-start; }
+.glass-sheet-overlay--end { justify-content: flex-end; }
+:is(.glass-sheet-overlay--start, .glass-sheet-overlay--end) .glass-sheet {
+  width: min(var(--gl-sheet-side-width, 440px), 100% - 2 * var(--gl-sheet-side-inset, 16px)); max-height: none;
+  margin: var(--gl-sheet-side-inset, 16px);
+  display: flex; flex-direction: column;
+  padding-top: var(--gl-space-lg);
+  border-radius: var(--gl-radius-card);
+}
+.glass-sheet-overlay--end .glass-sheet,
+.glass-sheet-overlay--start:dir(rtl) .glass-sheet { transform: translateX(calc(100% + var(--gl-sheet-side-inset, 16px))); }
+.glass-sheet-overlay--start .glass-sheet,
+.glass-sheet-overlay--end:dir(rtl) .glass-sheet { transform: translateX(calc(-100% - var(--gl-sheet-side-inset, 16px))); }
+:is(.glass-sheet-overlay--start, .glass-sheet-overlay--end).is-active .glass-sheet { transform: none; }
+:is(.glass-sheet-overlay--start, .glass-sheet-overlay--end) .glass-sheet__grip { display: none; }
+:is(.glass-sheet-overlay--start, .glass-sheet-overlay--end) .glass-sheet__body { flex: 1 0 auto; }
+:is(.glass-sheet-overlay--start, .glass-sheet-overlay--end) .glass-sheet__actions { flex-direction: row; flex-wrap: wrap; justify-content: flex-end; }
+.glass-sheet-overlay--modeless {
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  pointer-events: none;
+}
+.glass-sheet-overlay--modeless .glass-sheet { pointer-events: auto; }
+/* The panel takes the focus only as a whole, to hand it on; no ring. */
+.glass-sheet:focus { outline: none; }
+
 .glass-sheet__grip { width: 40px; height: 4px; margin: 4px auto 12px; border-radius: 2px; background: var(--gl-border-strong); }
 .glass-sheet__title {
   margin: 0 0 8px;
   font-size: var(--gl-font-size-modal); font-weight: var(--gl-font-weight-semibold);
   color: var(--gl-color-text-heading);
+}
+/* The head (since 1.35.0): the title with a short line above it
+   (__eyebrow), something before it (__leading, a mark or an icon chip),
+   something after it (__trailing, a badge) and a close button (__close) at
+   its end. __head takes the title's place and its spacing; a title alone
+   in it stands as it did without one. */
+.glass-sheet__head { display: flex; align-items: center; gap: var(--gl-space-sm); margin: 0 0 8px; }
+.glass-sheet__heading { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.glass-sheet__head .glass-sheet__title { margin: 0; }
+.glass-sheet__eyebrow {
+  font-size: var(--gl-font-size-xs); font-weight: var(--gl-font-weight-semibold);
+  letter-spacing: 0.3px; text-transform: uppercase;
+  color: var(--gl-color-text-muted);
+}
+.glass-sheet__leading,
+.glass-sheet__trailing { flex: none; display: flex; align-items: center; gap: var(--gl-space-xs); }
+.glass-sheet__eyebrow[hidden],
+.glass-sheet__leading[hidden],
+.glass-sheet__trailing[hidden],
+.glass-sheet__close[hidden] { display: none; }
+/* A round glass button, 32px, with a 44px target. */
+.glass-sheet__close {
+  -webkit-appearance: none; appearance: none;
+  flex: none; position: relative;
+  width: 32px; height: 32px; margin-inline-end: -4px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--gl-border-subtle); border-radius: 50%;
+  background: var(--gl-surface-2);
+  color: var(--gl-color-text-muted);
+  box-shadow: var(--gl-inset-subtle);
+  font: inherit; cursor: pointer;
+  transition: var(--gl-transition-fast);
+  outline: none; -webkit-tap-highlight-color: transparent;
+}
+.glass-sheet__close::after { content: ""; position: absolute; inset: -6px; }
+.glass-sheet__close:hover { background: var(--gl-surface-3); color: var(--gl-color-text); }
+.glass-sheet__close:focus-visible { box-shadow: var(--gl-shadow-focus), var(--gl-inset-subtle); }
+.glass-sheet__close svg {
+  width: 16px; height: 16px; fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round;
 }
 .glass-sheet__body { font-size: var(--gl-font-size-base); line-height: 1.55; }
 .glass-sheet__actions { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }

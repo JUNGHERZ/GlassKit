@@ -390,7 +390,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.34.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.35.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -475,7 +475,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.34.0</span>
+      <span class="docs-hero__badge">v1.35.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">38 Components</span>
@@ -513,6 +513,7 @@
         <tr><td><code>--gl-color-primary</code></td><td>#f5a623</td><td>Primary color, buttons, active elements</td></tr>
         <tr><td><code>--gl-color-primary-dark</code></td><td>#d4692a</td><td>Gradient end value</td></tr>
         <tr><td><code>--gl-color-primary-text</code></td><td>var(--gl-color-primary)</td><td>Text and line icons in the primary colour: prose links, the active tab, the primary modal action, accent list rows, the range value, the accordion &mdash; since 1.26.0, see <a href="#primary-text">Primary as text</a></td></tr>
+        <tr><td><code>--gl-color-primary-on-glass</code></td><td>color-mix(in srgb, var(--gl-color-primary-text) 60%, #ffffff)</td><td>The primary as text on the glass of a card, a modal or a sheet: links, the range value, accent rows, the primary modal action (since 1.35.0); in light mode the primary text</td></tr>
         <tr><td><code>--gl-color-text</code></td><td>#ffffff</td><td>Default text color</td></tr>
         <tr><td><code>--gl-color-text-muted</code></td><td>rgba(255,255,255,0.65)</td><td>Secondary text</td></tr>
         <tr><td><code>--gl-color-success</code></td><td>#34c759</td><td>Success status</td></tr>
@@ -608,6 +609,7 @@ function <span class="cls">toggleTheme</span>() {
 }</div>
     </div>
     <p>Write the light rule after the dark one: <code>:root</code> matches a page in the light theme too, and of two matching rules the later one wins. The right tone depends on the background, so measure it there. On GlassKit&rsquo;s own dark background with <code>#c25028</code> as primary, this mix takes a link on a glass card from 1.37:1 to 5.05:1.</p>
+    <p id="primary-on-glass">Since 1.35.0 accent text on the glass of a card, a modal or a sheet takes <code>--gl-color-primary-on-glass</code>: in dark mode the primary text with 40&nbsp;% white, because a card is brighter than the page. GlassKit&rsquo;s own orange read 4.18:1 as a link on a card in dark mode; now it reads 5.54:1, and on the page it stays at 5.69:1. In light mode the token is the primary text. Links and chips of the page&rsquo;s own on a card use it the same way, <code>color: var(--gl-color-primary-on-glass)</code>. The bright top of a <code>.glass-card--glow</code> stays out of reach for accent text: put it lower in the card, or use the text colour there.</p>
     <p>The active tab takes <code>--gl-tab-bar-active-color</code> for its icon and label where that is set, else <code>--gl-color-primary-text</code>. The spotlight of the floating bar lightens the active item more than any other surface, so a brand may need a lighter tone there, up to white. Set it per theme like the text colour; <code>var(--gl-color-primary-text)</code> in the light rule gives the default back. Glow and dot stay in the primary, the spotlight in <code>--gl-tab-bar-spotlight-color</code>.</p>
     <p>Since 1.31.0 muted text, card text and icons reach WCAG AA by default, in both themes. The primary as text does not, on purpose: GlassKit&rsquo;s own orange reads 2.43:1 as text on the light page, but a darker brand may pass already or need far less, and a fixed mix with black would darken every brand alike. Where the light theme keeps the orange, darken it there; <code>--gl-color-primary-on-surface</code>, the ink of the primary badge, reaches 5.8:1. White on the primary button is part of the look as well, 2.7:1 in the light theme and 2.0:1 in the dark one on the lightest stop of the gradient; <code>--gl-color-on-primary</code> switches it to a dark ink that reaches 4.6:1 or more on every stop:</p>
     <div class="docs-code-wrapper">
@@ -1285,7 +1287,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.34/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.35/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -1485,6 +1487,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>svg.glass-icon--fill</code></td><td>Deliberately filled icon (e.g. brand logos)</td></tr>
       </tbody>
     </table></div>
+    <p>On the glass of a modal or a sheet a tertiary button is one step darker in dark mode, <code>--gl-dialog-control</code>, and takes no blur of its own (since 1.35.0): its muted label read 3 to 4:1 there.</p>
     <p>A disabled button &mdash; <code>disabled</code>, or <code>aria-disabled="true"</code> on an <code>a.glass-btn</code>, which cannot be disabled &mdash; is dimmed, shows the not-allowed cursor and no longer lifts on hover (since 1.21.2; before, it looked exactly like an enabled one). The link still navigates unless the page stops it. The same holds for pill, tab-bar accessory, modal actions, interactive list rows and the calendar&rsquo;s month arrows; toggle, checkbox and radio dim their control and label, select, textarea and range dim like the input.</p>
     <p>Buttons have hooks of their own since 1.31.0. <code>--gl-btn-radius</code> rounds them, unset <code>--gl-radius-btn</code>, which lists, the status card, toasts, the accordion and the segmented control share: <code>--gl-btn-radius: 9999px</code> on <code>:root</code> gives pill-shaped buttons and leaves those as they are. <code>--gl-btn-padding-x</code> is the room beside the label, unset 24&nbsp;px, the padding <code>--auto</code> had alone; any other button had the browser&rsquo;s 6&nbsp;px, so a small one that took its width from its text, in a row of actions, touched the text with its edges. <code>--sm</code> reads <code>--gl-btn-radius-sm</code> and <code>--gl-btn-padding-x-sm</code> first, then the hooks above, and keeps its 12&nbsp;px radius while none is set, so one value can shape every size.</p>
     <p>Since 1.32.0 <code>--gl-btn-primary-bg</code> replaces the whole background of <code>--primary</code>, as the toggle and the radio have theirs; unset, it is the gradient from <code>--gl-color-primary</code> over <code>-mid</code> to <code>-dark</code>. A product that keeps white text starts the gradient darker this way and leaves the brand colour alone; the recipe is under <a href="#primary-text">Primary as text</a>.</p>
@@ -1514,6 +1517,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
       <button class="glass-badge glass-badge--interactive" aria-pressed="false">Paused</button>
     </div>
     <p><code>--selected</code> deepens the colour the badge already carries instead of overruling it, so a status chip stays in its own colour when it is picked.</p>
+    <p>In dark mode a chosen badge says its label in the text colour (since 1.35.0): the accent lightened for dark surfaces read 2.2 to 3:1 on a chip over glass. The border and the tint show the selection; <code>--gl-badge-selected-color</code> sets the label&rsquo;s colour. On the glass of a modal or a sheet a badge takes no blur of its own: the dialog blurs already, and Chromium counted its glow twice beneath a nested backdrop filter, so a chip came out 2.9:1 for white.</p>
     <div class="docs-preview docs-preview--row docs-preview--compact">
       <button class="glass-badge glass-badge--success glass-badge--interactive glass-badge--selected" aria-pressed="true">Done</button>
       <button class="glass-badge glass-badge--error glass-badge--interactive" aria-pressed="false">Failed</button>
@@ -1587,6 +1591,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <p>No documents captured yet.</p>
       </div>
     </div>
+    <p><code>--gl-status-color</code> sets the message&rsquo;s colour (since 1.35.0), muted text unless set. A word in <code>&lt;b&gt;</code> inside, such as a package name, takes the text colour with a rule of the page&rsquo;s own.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-status"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;svg</span> <span class="attr">viewBox=</span><span class="val">"0 0 24 24"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- Icon --&gt;</span><span class="tag">&lt;/svg&gt;</span>
@@ -1734,6 +1739,8 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-list__content</code></td><td>Flexible middle slot &mdash; takes remaining width, enables truncation</td></tr>
         <tr><td><code>.glass-list__title</code></td><td>Primary text (medium weight, one line with ellipsis unless <code>--gl-list-title-white-space</code> lets it wrap)</td></tr>
         <tr><td><code>.glass-list__subtitle</code></td><td>Secondary text (small, muted, one line with ellipsis unless <code>--gl-list-subtitle-white-space</code> lets it wrap)</td></tr>
+        <tr><td><code>.glass-list__title-row</code></td><td>Holds the title and <code>__title-trailing</code> &mdash; a badge, a mark &mdash;, which moves under the title where the row is too narrow (since 1.35.0)</td></tr>
+        <tr><td><code>.glass-list__extra</code></td><td>Below the subtitle: a link, a line of chips (since 1.35.0)</td></tr>
         <tr><td><code>.glass-list__subtitle--wrap</code></td><td>Multi-line subtitle (up to 3 lines, clamped with ellipsis; <code>--gl-list-subtitle-lines</code> sets the limit)</td></tr>
         <tr><td><code>.glass-list__trailing</code></td><td>Trailing slot &mdash; chevron, value, button, badge</td></tr>
         <tr><td><code>.glass-list__value</code></td><td>Muted text inside <code>.glass-list__trailing</code> (e.g. file size)</td></tr>
@@ -1774,8 +1781,28 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="cls">.glass-list, glk-list</span> { <span class="attr">hyphens</span>: <span class="val">auto</span>; <span class="attr">-webkit-hyphens</span>: <span class="val">auto</span>; <span class="attr">hyphenate-limit-chars</span>: <span class="val">10 4 4</span>; }</div>
     </div>
 
+    <h3 id="list-room">Room beside the title</h3>
+    <p>A row may say more than a title (since 1.35.0). <code>.glass-list__title-row</code> holds the title and <code>__title-trailing</code> beside it &mdash; a badge such as &ldquo;AI&rdquo;, a mark &mdash;, which moves under the title where the row is too narrow while the title keeps its ellipsis. <code>__extra</code> below the subtitle takes a link (&ldquo;Undo&rdquo;) or a line of chips. <code>--gl-list-title-size</code>, <code>--gl-list-title-weight</code> and <code>--gl-list-subtitle-size</code> set a row&rsquo;s type, on the list or one row.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <ul class="glass-list" aria-label="History" style="--gl-list-item-min-height: 64px">
+        <li class="glass-list__item"><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></span><div class="glass-list__content"><div class="glass-list__title-row"><div class="glass-list__title">Opening hours</div><span class="glass-list__title-trailing"><span class="glass-badge glass-badge--primary">AI</span></span></div><div class="glass-list__subtitle">Changed today, 09:41</div><div class="glass-list__extra"><a href="#list-room" style="color: var(--gl-color-primary-text)">Undo</a></div></div></li>
+        <li class="glass-list__item"><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></span><div class="glass-list__content"><div class="glass-list__title">News</div><div class="glass-list__subtitle">Changed yesterday</div></div></li>
+      </ul>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-list__content"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-list__title-row"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-list__title"</span><span class="tag">&gt;</span>Opening hours<span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-list__title-trailing"</span><span class="tag">&gt;&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-badge glass-badge--primary"</span><span class="tag">&gt;</span>AI<span class="tag">&lt;/span&gt;&lt;/span&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-list__subtitle"</span><span class="tag">&gt;</span>Changed today, 09:41<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-list__extra"</span><span class="tag">&gt;&lt;a</span> <span class="attr">href</span>=<span class="val">"…"</span><span class="tag">&gt;</span>Undo<span class="tag">&lt;/a&gt;&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+
     <h3 id="list-selected">The chosen row</h3>
     <p>A compact list next to an editor marks the entry that is open (since 1.34.0): <code>.is-selected</code> on the row lays a pill of raised glass into it, as the chosen <a href="#tree">tree</a> row and the active row of a sidebar have, with the title semibold and the icon in the accent. <code>aria-current="true"</code> tells assistive technology which entry it is &mdash; <code>aria-selected</code> instead where the list is a listbox. Hover and press leave the chosen row as it is, and the keyboard ring stays around it. <code>--gl-list-item-selected-bg</code> sets the pill&rsquo;s surface, unset <code>--gl-surface-4</code>.</p>
+    <p>Since 1.35.0 tokens shape the chosen row otherwise: <code>--gl-list-item-selected-inset</code> (3&nbsp;px <code>--gl-space-xs</code>), <code>-radius</code> (<code>--gl-radius-sm</code>), <code>-shadow</code> (edge light and a button&rsquo;s shadow), <code>-color</code> (the heading colour) and <code>-weight</code> (semibold). <code>0</code>, <code>0</code> and <code>none</code> for inset, radius and shadow make a flat tint over the whole row.</p>
     <div class="docs-preview docs-preview--constrained">
       <ul class="glass-list" aria-label="Pages">
         <li class="glass-list__item glass-list__item--interactive" tabindex="0"><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="glass-list__content"><div class="glass-list__title">Home</div></div></li>
@@ -2104,6 +2131,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="cls">.settings-dialog</span> { <span class="attr">--gl-modal-max-width</span>: <span class="val">560px</span>; }</div>
     </div>
+    <p><code>--gl-modal-bg</code> replaces the panel&rsquo;s surface (since 1.35.0). In dark mode the glow starts at <code>--gl-dialog-glow-top</code>, the card&rsquo;s middle glow: on the brightest part of a tall dialog, white text on controls read 2.9 to 4.7:1 &mdash; see <a href="#sheet-dark">dark glass</a>.</p>
     <h3>Blur behind the dialog</h3>
     <p>The dimmer behind a dialog, and behind a <a href="#sheet">sheet</a>, blurs with <code>--gl-blur-overlay</code> where a project sets it, else with <code>--gl-blur-soft</code> (since 1.25.0). The <a href="#surface">surface presets</a> set the blur tokens to 0 but leave this one alone, so a page without glass can keep a blurred dimmer:</p>
     <div class="docs-code-wrapper">
@@ -2852,11 +2880,13 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>__badge</code></td><td>A count after the label, in the tone&rsquo;s colour where one is set; inside <code>__icon</code> at the icon&rsquo;s corner (since 1.29.0)</td></tr>
         <tr><td><code>__badge--primary</code>, <code>--success</code>, <code>--warning</code>, <code>--error</code></td><td>The count in a colour of its own, whatever the option&rsquo;s tone, without the dot (since 1.31.0)</td></tr>
         <tr><td><code>--icons</code></td><td>Icons alone, square options; the names go into <code>aria-label</code> (since 1.28.0)</td></tr>
+        <tr><td><code>__icon--color</code></td><td>A coloured logo keeps its own fills and strokes; without it an SVG strokes as a line icon (since 1.35.0)</td></tr>
         <tr><td><code>--droplet</code></td><td>The chosen option sits on a drop of glass that glides to the next one (since 1.27.0)</td></tr>
       </tbody>
     </table></div>
     <h3 id="segmented-icons">Icons</h3>
     <p>Since 1.28.0 an option can show an icon in <code>.glass-segmented__icon</code>, before its label: an SVG strokes in the option&rsquo;s colour, any other element &mdash; a font icon, an <code>&lt;img&gt;</code> mask &mdash; takes that colour, and a font icon the box&rsquo;s 18&nbsp;px. Under the <a href="#droplet">drop</a> the icon grows like the tone dot. <code>--icons</code> makes a row of icons alone, a light / dark / auto switch for instance: the options become square, and each takes its name as <code>aria-label</code>, and as <code>title</code> for a tooltip. Mark the icon box <code>aria-hidden="true"</code>, so a font icon&rsquo;s text does not join the name.</p>
+    <p>A coloured logo as an icon &mdash; the mark of an image source &mdash; takes <code>.glass-segmented__icon--color</code> (since 1.35.0) and keeps its own fills and strokes; before, its shapes inherited the line icon&rsquo;s stroke and came out outlined in the text colour. <code>--gl-segmented-bg</code> sets the track (since 1.35.0); on the glass of a modal or a sheet in dark mode it is a well, <code>--gl-dialog-well</code>, with the chosen option on <code>--gl-dialog-raised</code>.</p>
     <div class="docs-preview docs-preview--compact" style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
       <div class="glass-segmented" role="group" aria-label="View" data-docs-segmented>
         <button class="glass-segmented__item" aria-pressed="true"><span class="glass-segmented__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span>List</button>
@@ -3062,8 +3092,64 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>.glass-sheet</code></td><td>The panel: milky glass, top corners rounded, bottom safe-area padding</td></tr>
         <tr><td><code>--inline</code></td><td>In the flow, no overlay, all corners rounded</td></tr>
         <tr><td><code>__grip</code>, <code>__title</code>, <code>__body</code>, <code>__actions</code></td><td>Grip bar, heading, body, action column</td></tr>
+        <tr><td><code>__head</code>, <code>__heading</code></td><td>The head: takes the title&rsquo;s place and spacing; <code>__heading</code> holds <code>__eyebrow</code> and the title (since 1.35.0)</td></tr>
+        <tr><td><code>__eyebrow</code></td><td>A short line above the title, small capitals in the muted colour</td></tr>
+        <tr><td><code>__leading</code>, <code>__trailing</code></td><td>Before and after the title: a mark or an icon chip, a badge</td></tr>
+        <tr><td><code>__close</code></td><td>A round glass close button, 32&nbsp;px with a 44&nbsp;px target, at the head&rsquo;s end</td></tr>
+        <tr><td><code>.glass-sheet-overlay--start</code>, <code>--end</code></td><td>The panel at that side, full height, from the side, without grip, actions side by side (since 1.35.0)</td></tr>
+        <tr><td><code>.glass-sheet-overlay--modeless</code></td><td>No scrim and no blur; only the panel takes the pointer &mdash; for a sheet opened with <code>show()</code></td></tr>
       </tbody>
     </table></div>
+    <h3 id="sheet-head">The head</h3>
+    <p>Since 1.35.0 the head holds more than the title: <code>__eyebrow</code> above it (&ldquo;Restore&rdquo;), <code>__leading</code> before it (a 56&nbsp;px icon chip), <code>__trailing</code> after it (a badge) and <code>__close</code> at its end, a round glass button. <code>__head</code> takes the title&rsquo;s place and spacing; a title alone in it stands as it did without one.</p>
+    <div class="docs-preview">
+      <div class="glass-sheet glass-sheet--inline">
+        <div class="glass-sheet__grip" aria-hidden="true"></div>
+        <div class="glass-sheet__head">
+          <span class="glass-sheet__leading"><span style="display:inline-flex;width:56px;height:56px;border-radius:14px;align-items:center;justify-content:center;background:color-mix(in srgb, var(--gl-color-primary) 28%, transparent)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></span></span>
+          <div class="glass-sheet__heading"><span class="glass-sheet__eyebrow">Restore</span><h2 class="glass-sheet__title">Version from 09:41</h2></div>
+          <span class="glass-sheet__trailing"><span class="glass-badge">1&times; in your app</span></span>
+          <button class="glass-sheet__close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+        </div>
+        <div class="glass-sheet__body">Restoring replaces the current version.</div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-sheet__head"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-sheet__leading"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- an icon chip --&gt;</span><span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-sheet__heading"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-sheet__eyebrow"</span><span class="tag">&gt;</span>Restore<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="val">"glass-sheet__title"</span><span class="tag">&gt;</span>Version from 09:41<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-sheet__trailing"</span><span class="tag">&gt;&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-badge"</span><span class="tag">&gt;</span>1× in your app<span class="tag">&lt;/span&gt;&lt;/span&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="val">"glass-sheet__close"</span> <span class="attr">aria-label</span>=<span class="val">"Close"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- × --&gt;</span><span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+
+    <h3 id="sheet-side">At a side, modeless</h3>
+    <p><code>.glass-sheet-overlay--end</code> or <code>--start</code> (since 1.35.0) puts the panel at that side of the window: as high as the window less <code>--gl-sheet-side-inset</code> (16&nbsp;px) at both ends and that far from its edge, <code>--gl-sheet-side-width</code> (440&nbsp;px) wide, with a card&rsquo;s corners. It slides in from that side, mirrored right to left, has no grip, and its actions stand side by side at its foot &mdash; a side panel on a desktop. <code>--modeless</code> leaves the page usable: no scrim and no blur, only the panel takes the pointer. Open that dialog with <code>show()</code> instead of <code>showModal()</code>: the page is not inert, its chosen row stays in view, and a modal opened later lies above the sheet. <code>--gl-sheet-z-index</code> (1000) stacks it.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;dialog</span> <span class="attr">class</span>=<span class="val">"glass-sheet-overlay glass-sheet-overlay--end"</span><span class="tag">&gt;</span>   <span class="cmt">&lt;!-- showModal(), then .is-active --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-sheet"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/dialog&gt;</span>
+<span class="tag">&lt;dialog</span> <span class="attr">class</span>=<span class="val">"glass-sheet-overlay glass-sheet-overlay--end glass-sheet-overlay--modeless"</span><span class="tag">&gt;</span>   <span class="cmt">&lt;!-- show() --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-sheet"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/dialog&gt;</span></div>
+    </div>
+
+    <h3 id="sheet-dark">Dark glass</h3>
+    <p>The glass of a modal or a sheet is brighter than the page, most at its top. In dark mode, since 1.35.0, the glow of both starts at the card&rsquo;s middle one, and the controls on them take values of their own where the page set none: a segmented control lies in a well with its chosen option one step darker, a tertiary button is one step darker, badges and tertiary buttons take no blur of their own, and accent text takes <a href="#primary-on-glass"><code>--gl-color-primary-on-glass</code></a>. At the top of a tall sheet in dark mode, white text on badges and segments read 2.9 to 4.7:1 in 1.34.0 and reads 4.7 to 7.7:1 now, in Chromium, WebKit and Firefox. Light mode keeps its glow and controls. <code>--gl-sheet-bg</code> and <code>--gl-modal-bg</code> replace the whole surface.</p>
+    <div class="docs-table-wrap"><table class="docs-table">
+      <thead><tr><th>Token</th><th>Dark value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gl-dialog-glow-top</code></td><td>var(--gl-card-glow-mid)</td><td>Where the glow of a modal and a sheet starts</td></tr>
+        <tr><td><code>--gl-dialog-well</code></td><td>rgba(0, 0, 0, 0.10)</td><td>The track of a segmented control on dialog glass</td></tr>
+        <tr><td><code>--gl-dialog-raised</code></td><td>var(--gl-surface-3)</td><td>Its chosen option</td></tr>
+        <tr><td><code>--gl-dialog-control</code></td><td>var(--gl-surface-1)</td><td>A tertiary button on dialog glass</td></tr>
+        <tr><td><code>--gl-badge-selected-color</code></td><td>var(--gl-color-text)</td><td>The label of a chosen badge, anywhere</td></tr>
+      </tbody>
+    </table></div>
+    <p>All five are unset in light mode. A segmented control or a badge whose tokens the page sets keeps them on dialog glass too.</p>
     <script>
       (() => {
         const ov = document.getElementById('docs-sheet'), panel = ov.querySelector('.glass-sheet');

@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.34.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.35.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -13,6 +13,8 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.34.0) wi
 > **New in 1.28.0 — icons of any kind, and tokens instead of overrides.** Tab bar, accessory and segmented control colour their icon box, not the SVG: put a font icon (Material Icons), an `<img>` mask or a custom element straight into `.glass-tab-bar__icon` or `.glass-segmented__icon`, and it follows every state, the lens of the drop and the drag. `--icons` makes an icon-only segmented row (light / dark / auto). The inactive tab colour, the hover colour, the label size and the z-index of the tab bar are tokens, and so are the surface, shadow and text colour of the chosen segmented option. **Where a project restyles tab icons per state, or overrides the tab bar's literals, replace that with the tokens** (3.4, 3.29).
 
 > **New in 1.32.0 — one navigation for every edge, four components, and AA on the accent fills.** The tab bar leaves the bottom edge: `--vertical` makes it a sidebar, `--start` or `--end` fixes it to that side of the viewport — where the thumb rests on a phone held open, or a foldable that moved its system controls to a side — `--rail` shrinks it to icons, `--top` lays it out for the top of a page, and the floating bar stands upright in `.glass-tab-bar-dock--vertical`. In a column the drop runs along y, and its timing is tokens (`--gl-droplet-*`). New: the tooltip, the menu, the tree and the breadcrumbs (3.36–3.39), the states of a drag that reorders a list or a tree (3.40), and for the table a sort button, a sticky header, a row action column, an empty row and a card layout (3.27). Popover, tooltip and menu open in the top layer with the `popover` attribute. `--gl-btn-primary-bg` and `--gl-color-primary-fill` darken the accent fills for white text without touching the brand colour, and the radio's dot follows `--gl-color-on-primary`. **Where a project builds its own sidebar, tooltip, menu, tree or breadcrumbs, overrides the drop's transitions, or darkens `--gl-color-primary` for white button text, replace that** (3.4, 3.7, 3.25, section 2).
+
+> **New in 1.35.0 — sheets at a side and with a head, dark glass that keeps its contrast, room beside a list title.** `.glass-sheet-overlay--end`/`--start` put the sheet at a side as a full-height panel, `--modeless` leaves the page usable (open with `show()`); `__head` holds `__eyebrow`, `__leading`, `__trailing` and a round `__close` (3.31). In dark mode the glow of modal and sheet starts at the middle and controls on them get darker values — a segmented well, a tertiary button one step darker, no chip blur —, a chosen badge says its label in the text colour, and `--gl-color-primary-on-glass` lightens accent text on cards and dialogs: white on badges and segments at the top of a tall dark sheet went from 2.9–4.7:1 to 4.7–7.7:1 (3.31). Lists get `__title-row`/`__title-trailing`/`__extra` and tokens for title and subtitle type and the chosen row's pill (3.24); `.glass-segmented__icon--color` keeps a logo's colours (3.29); `--gl-status-color`, `--gl-sheet-bg`, `--gl-modal-bg`, `--gl-segmented-bg`. **Where a project restyles the sheet head, moves a sheet to the side through adopted styles, starts a dark glow lower, or sets its own on-glass link colour, replace that.**
 
 > **New in 1.34.0 — a chosen list row, a list that starts with the grip, tiles that sort.** `.glass-list__item.is-selected` marks the entry a list beside its detail shows — a pill of raised glass, as the chosen tree row — with `aria-current="true"` (3.24). `--gl-list-item-divider-inset` sets where the dividers start, and a row with its `.glass-sort__handle` first lets them run from its padding. `.is-sort-inline` stands the drop line upright for tiles side by side (3.40). `--gl-tree-icon-size` (18px) gives the tree a larger icon field, for a 28px chip (3.38). **Where a project paints a chosen row with its own styles, squeezes a chip into the tree's 18px icon, or moves the grip by adopted stylesheets, replace that.**
 
@@ -181,6 +183,8 @@ All are derived from the state color via `color-mix()`, so overriding
 | `--gl-color-error-on-surface` | Badge text on the error tint | lightened / darkened error |
 | `--gl-color-warning-on-surface` | Badge text on the warning tint (since 1.18.0) | lightened (dark) / darkened (light) warning |
 | `--gl-color-primary-text` | Text and line icons in the primary straight on the page or the glass: `.glass-prose` links, icon and label of the active tab, `.glass-modal__action--primary`, `.glass-list__item--accent`, `.glass-range-value`, the accordion trigger on hover and the chevron of an open item (since 1.26.0) | `var(--gl-color-primary)` in both themes |
+| `--gl-color-primary-on-glass` | The primary as text on the glass of a card, a modal or a sheet (since 1.35.0): links in `.glass-prose`, the range value, accent rows, the primary modal action. Dark: `color-mix(in srgb, var(--gl-color-primary-text) 60%, #ffffff)` — GlassKit's orange went from 4.18:1 to 5.54:1 as a link on a card; light: the primary text. Use it for links and chips of your own on a card |
+| `--gl-dialog-glow-top`, `--gl-dialog-well`, `--gl-dialog-raised`, `--gl-dialog-control`, `--gl-badge-selected-color` | Dark glass (since 1.35.0, dark mode only): where the glow of modal and sheet starts (the card's mid glow), the segmented track on dialog glass (black 10 %), its chosen option (`--gl-surface-3`), a tertiary button there (`--gl-surface-1`), a chosen badge's label (the text colour). Unset in light mode |
 | `--gl-color-primary-surface` / `-border` | Badge fill / border | `color-mix(… primary 25% / 30%, transparent)` |
 | `--gl-color-success-surface` / `-border` | Badge fill / border | `color-mix(… success 15% / 30%, transparent)` |
 | `--gl-color-error-surface` / `-border` | Badge fill / border | `color-mix(… error 15% / 30%, transparent)` |
@@ -796,7 +800,7 @@ Full-width buttons (56px height) with three variants and size modifiers.
 | `.glass-btn` | Base (56px height, width: 100%) |
 | `.glass-btn--primary` | Color gradient (orange) |
 | `.glass-btn--secondary` | Milky white, dark text |
-| `.glass-btn--tertiary` | Subtle glass, more transparent |
+| `.glass-btn--tertiary` | Subtle glass, more transparent; on the glass of a modal or a sheet one step darker in dark mode and without a blur of its own (since 1.35.0) |
 | `.glass-btn--sm` | 44px height |
 | `.glass-btn--lg` | 64px height |
 | `.glass-btn--auto` | Width: auto instead of 100% |
@@ -838,7 +842,7 @@ Tags and labels.
 | `.glass-badge--warning` | Yellow — states that wait for someone (since 1.18.0) |
 | `.glass-badge--error` | Red |
 | `.glass-badge--interactive` | Pressable chip — cursor, hover tint, focus ring, press feedback |
-| `.glass-badge--selected` | The chip that is on |
+| `.glass-badge--selected` | The chip that is on; in dark mode its label takes `--gl-badge-selected-color`, the text colour (since 1.35.0; the lightened accent read 2.2–3:1 on glass) — border and tint show the selection. On modal or sheet glass a badge takes no blur of its own |
 | `.glass-badge--md` | A chip to choose with (since 1.33.0): `--gl-badge-md-height` (36px) high, in the small text of a form; with `--interactive` a tap target of 44px |
 
 **Chips (since 1.12.0).** A badge doubles as a filter chip. Use a real `<button>` and carry the state in `aria-pressed`, so the row is operable by keyboard and announced as a toggle — the classes only paint it.
@@ -914,7 +918,7 @@ Info/notice card with icon and text.
 
 | Class | Description |
 |---|---|
-| `.glass-status` | Container with subtle glass surface |
+| `.glass-status` | Container with subtle glass surface; `--gl-status-color` sets the message's colour (since 1.35.0) |
 
 ---
 
@@ -950,7 +954,7 @@ Danger variant:
 | `.glass-modal-overlay` | Fullscreen container with blur |
 | `.glass-modal-overlay.is-active` | Visible + animated |
 | `dialog.glass-modal-overlay` | The overlay as a native `<dialog>`, opened with `showModal()` (since 1.20.0) |
-| `.glass-modal` | Dialog box, at most `--gl-modal-max-width` wide (340px unless set; since 1.20.0) |
+| `.glass-modal` | Dialog box, at most `--gl-modal-max-width` wide (340px unless set; since 1.20.0); `--gl-modal-bg` replaces its surface, and in dark mode its glow starts at `--gl-dialog-glow-top` (since 1.35.0, see 3.31) |
 | `.glass-modal__header` | Header area |
 | `.glass-modal__title` | Title (20px, bold) |
 | `.glass-modal__body` | Content area |
@@ -1473,12 +1477,15 @@ iOS-style grouped settings list. Items can carry a leading icon, a title with op
 | `.glass-list__subtitle--wrap` | Multi-line subtitle (up to 3 lines, clamped with ellipsis; `--gl-list-subtitle-lines` sets the limit) |
 | `.glass-list__trailing` | Trailing slot — chevron, value, button, badge |
 | `.glass-list__value` | Muted text inside `.glass-list__trailing` (e.g. file size) |
+| `.glass-list__title-row` | Holds `.glass-list__title` and `.glass-list__title-trailing` — a badge, a mark —, which moves under the title where the row is too narrow (since 1.35.0) |
+| `.glass-list__extra` | Below the subtitle: a link ("Undo"), a line of chips (since 1.35.0) |
 | `.glass-list__item.is-selected` | The chosen row of a list beside its detail (since 1.34.0): a pill of raised glass inside the row (`--gl-list-item-selected-bg`, unset `--gl-surface-4`), the title semibold, the icon in the accent. Put `aria-current="true"` on the row (`aria-selected` in a listbox). Hover and press leave it as it is; the keyboard ring stays around the row |
 | `.glass-list__item.is-flash` | A 1.2s flash for an item that changed elsewhere — on another device, by an undo — so the eye finds it; tinted by `--gl-flash-color` (unset: the primary at 30 %), none under `prefers-reduced-motion` (since 1.32.0). Take the class off on `animationend`; GlassKit Elements' `highlight()` sets it |
 
 **Notes:**
 - Dividers are auto-rendered via `::after`. The last item never has a divider.
 - Items **with** a `__leading` slot get an icon-aligned divider inset; items **without** one — or with a `__leading` that carries the `hidden` attribute (since 1.20.0) — get the standard padding inset (handled via `:has()`). Large leading (`--lg`) adjusts the divider inset automatically.
+- **Type and the chosen row (since 1.35.0):** `--gl-list-title-size`, `--gl-list-title-weight` and `--gl-list-subtitle-size` set a row's type, on the list or one row. `--gl-list-item-selected-inset` (3px `--gl-space-xs`), `-radius` (`--gl-radius-sm`), `-shadow`, `-color` (heading) and `-weight` (semibold) shape the chosen row; `0`, `0`, `none` make a flat tint over the whole row.
 - **Where the divider starts (since 1.34.0):** `--gl-list-item-divider-inset` overrides the start for rows laid out otherwise. A row whose first child is a `.glass-sort__handle` (the grip before the icon) lets the line run from its padding, since the grip's width is the page's — set the token to where the text begins, e.g. `90px` for an 18px grip and a 28px icon.
 - A `__leading` or `__trailing` with `hidden` takes no room (since 1.20.0; `display: flex` used to beat the attribute).
 - SVG icon convention: `24px` for leading (32px for `--lg`), `18px` for trailing, `stroke: currentColor`, `stroke-width: 2`.
@@ -1732,6 +1739,7 @@ More options than fit — seven areas on a phone: without a modifier the row sta
 | `.glass-segmented__item--success` / `--warning` / `--error` | Tone: sets `--gl-segmented-tone` for the dot |
 | `.glass-segmented__dot` | The dot before the label, in the tone colour |
 | `.glass-segmented__icon` | An icon before the label (since 1.28.0): an SVG strokes in the option's colour, a font icon or any element inherits it; 18px |
+| `.glass-segmented__icon--color` | A coloured logo keeps its own fills and strokes (since 1.35.0); without it an SVG strokes as a line icon, and a logo's shapes came out outlined |
 | `.glass-segmented--icons` | Icons alone, square options; each option's name in `aria-label` and `title` (since 1.28.0) |
 | `.glass-segmented__badge` | A count after the label — neutral, or in the option's tone; inside `__icon` at the icon's corner (since 1.29.0) |
 | `.glass-segmented__badge--primary` / `--success` / `--warning` / `--error` | The count in a colour of its own, whatever the option's tone, without the dot (since 1.31.0) |
@@ -1823,6 +1831,10 @@ Show: remove `hidden`, force a reflow (`void overlay.offsetHeight`), add `.is-ac
 | `.glass-sheet` | The panel: milky glass, top corners rounded, bottom safe-area padding |
 | `.glass-sheet--inline` | In the flow, no overlay, all corners rounded |
 | `.glass-sheet__grip`, `__title`, `__body`, `__actions` | Grip bar, heading, body, action column |
+| `.glass-sheet__head` > `__leading`, `__heading` (`__eyebrow` + `__title`), `__trailing`, `__close` | The head (since 1.35.0): a chip or mark before the title, a short line above it, a badge after it, a round 32px glass close button (44px target) at its end; a title alone in `__head` stands as before |
+| `.glass-sheet-overlay--start` / `--end` | The panel at that side (since 1.35.0): full height less `--gl-sheet-side-inset` (16px), `--gl-sheet-side-width` (440px), card corners, slides in from the side (mirrored in RTL), no grip, actions side by side |
+| `.glass-sheet-overlay--modeless` | No scrim, no blur, only the panel takes the pointer — open the dialog with `show()`; the page stays usable and later modals lie above it. `--gl-sheet-z-index` (1000) |
+| `--gl-sheet-bg` | Replaces the panel's surface (since 1.35.0). In dark mode the glow starts at `--gl-dialog-glow-top`, and controls on it take the dialog values (see the tokens in section 2) |
 
 ---
 

@@ -352,6 +352,29 @@
 
 
 /* ============================================================
+   BEISPIEL: Markenakzent auf Glas, Sheet an der Seite
+   (seit 1.35.0)
+
+   Ein dunkler Markenakzent als Text: auf der Seite und auf dem Glas
+   von Karten, Modals und Sheets hell genug, mit eigenem Ton auf dem
+   Glas statt der 60-%-Mischung. Ein Seitenpanel 480px breit, 12px
+   vom Rand, und Listenzeilen mit kleinerem Untertitel.
+   ============================================================ */
+
+/*
+:root, [data-theme="dark"] {
+  --gl-color-primary-text:       color-mix(in srgb, var(--gl-color-primary) 35%, #ffffff);
+  --gl-color-primary-on-glass:   color-mix(in srgb, var(--gl-color-primary) 18%, #ffffff);
+}
+:root {
+  --gl-sheet-side-width:         480px;
+  --gl-sheet-side-inset:         12px;
+  --gl-list-subtitle-size:       13px;
+}
+*/
+
+
+/* ============================================================
    DEIN CUSTOM THEME
    Entkommentiere und passe an:
    ============================================================ */
