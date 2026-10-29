@@ -7,6 +7,40 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.36.0] – 2026-10-29
+
+### Added
+
+- **Room below the sheet title, and tokens for the close button: `__subtitle`, `--gl-sheet-close-size`, `--gl-sheet-close-icon-size`, `--gl-sheet-close-icon-stroke`.** A detail sheet on a phone shows a chip, the title with a badge below it ("1× in your app") and the close button. A badge in `__trailing` stood beside the title and squeezed it: in a 390px sheet the title kept 92px. Boards also want a plain 44px close button with a 20px glyph, and nothing reached the glyph.
+  - `__subtitle` stands below the title in `__heading`, small in the muted colour.
+  - The tokens set the button (32px), its glyph (16px) and the glyph's stroke (2).
+
+  ([GlassKit Elements #56](https://github.com/JUNGHERZ/GlassKit-Elements/issues/56))
+- **A side sheet's top and bottom on their own: `--gl-sheet-side-inset-block-start` and `--gl-sheet-side-inset-block-end`.** Below a fixed top bar the panel has to start at 100px but keep 24px from the bottom and the side. With one inset it either covered the bar or stood 100px off at every edge. Both fall back to `--gl-sheet-side-inset`, which stays the side's and the way in. ([#27](https://github.com/JUNGHERZ/GlassKit/issues/27))
+- **A wider leading box in a list row: `--gl-list-leading-width`.** A history row shows the time and a chip before its text, 84px. `__leading` is 28px wide, 40px with `--lg`, and `--lg` cut the rest off. The divider follows the token. ([#28](https://github.com/JUNGHERZ/GlassKit/issues/28))
+
+### Fixed
+
+- **An empty sheet head kept its 8px.** In a sheet without a title, places or close button, `__head` with `hidden` kept `display: flex` and its margin, so the content started 8px lower than in 1.34.0, in a sheet named only by its label too. `.glass-sheet__head[hidden]` takes no room now, as its places did already. ([#27](https://github.com/JUNGHERZ/GlassKit/issues/27))
+- **The title of the chosen list row kept the text colour.** The row took the heading colour, or `--gl-list-item-selected-color`, but `.glass-list__title` set a colour of its own, so the token changed nothing on it. The title takes the row's colour now, as the comment of 1.34.0 already said. ([#28](https://github.com/JUNGHERZ/GlassKit/issues/28))
+- **The status message kept the browser's paragraph margins.** `.glass-status p` set colour, size and line height but no margin. Wherever no reset of the page reached the `p`, the card was 82px high instead of 54px: in GlassKit's own showcase, and in the shadow root of `<glk-status>`. It has `margin: 0` now. ([GlassKit Elements #57](https://github.com/JUNGHERZ/GlassKit-Elements/issues/57))
+
+### Compatibility
+
+- No theme token is new, so the no-JS light mirror of GlassKit Web needs nothing.
+- In light mode the title of a chosen list row is a little darker, the heading colour; in dark mode both colours are the same.
+- A status card on a page without a reset of `p` is 28px lower. GlassKit's docs reset it already.
+
+Measured in Chromium 153, WebKit 26.6 and Firefox 151, plain markup, 1.35.1 against 1.36.0:
+- **Empty head:** the content of an inline sheet starts 29px below the panel's top instead of 37px, as in 1.34.0.
+- **Side sheet:** in a 1440 × 900 window, with `--gl-sheet-side-inset: 24px` and `--gl-sheet-side-inset-block-start: 100px`, the panel starts at 100px, below a bar that ends at 84px, and keeps 24px from the right and the bottom. With the side inset alone it keeps 24px at every edge.
+- **List:** the chosen row's title is rgb(15, 31, 42), the row's heading colour, instead of rgb(26, 42, 54). With the token set to red it is red. `--gl-list-leading-width: 84px` widens a `--lg` box from 40 to 84px, and the divider starts at 116px instead of 72px.
+- **Status:** without a reset of `p` the card is 54px high instead of 82px.
+- **Head:** with the close tokens at 44px, 20px and 1.8, the button is 44px, the glyph 20px and its stroke 1.8px. `__subtitle` stands 4px below the title.
+- **Pages:** dark docs render as in 1.35.1. In the light docs only the title of the chosen row in the list section differs. The showcase is 28px shorter at its status card, and the phone of the landing page shows the same showcase.
+
+---
+
 ## [1.35.1] – 2026-10-29
 
 ### Fixed
@@ -1480,6 +1514,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.36.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.36.0
 [1.35.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.35.1
 [1.35.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.35.0
 [1.34.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.34.0

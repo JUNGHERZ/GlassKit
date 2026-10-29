@@ -390,7 +390,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.35.1 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.36.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -475,7 +475,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.35.1</span>
+      <span class="docs-hero__badge">v1.36.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">38 Komponenten</span>
@@ -1287,7 +1287,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.35/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.36/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// jede --droplet-Zeile der Seite; attachDroplet(row) für eine</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -1591,7 +1591,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <p>Noch keine Verträge vorhanden.</p>
       </div>
     </div>
-    <p><code>--gl-status-color</code> setzt die Farbe der Nachricht (seit 1.35.0), ohne Wert gedämpfter Text. Ein Wort darin in <code>&lt;b&gt;</code>, etwa ein Paketname, bekommt die Textfarbe über eine Regel der Seite.</p>
+    <p><code>--gl-status-color</code> setzt die Farbe der Nachricht (seit 1.35.0), ohne Wert gedämpfter Text. Ein Wort darin in <code>&lt;b&gt;</code>, etwa ein Paketname, bekommt die Textfarbe über eine Regel der Seite. Seit 1.36.0 hat die Nachricht keinen eigenen Außenabstand. Das 1em des Browsers darüber und darunter machte die Karte 82&nbsp;px statt 54&nbsp;px hoch, wo kein Reset der Seite das <code>&lt;p&gt;</code> erreichte: auf einer Seite ohne Reset, im Shadow Root von <code>&lt;glk-status&gt;</code>.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-status"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;svg</span> <span class="attr">viewBox=</span><span class="val">"0 0 24 24"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- Icon --&gt;</span><span class="tag">&lt;/svg&gt;</span>
@@ -1734,8 +1734,8 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
         <tr><td><code>.glass-list__item--center</code></td><td>Zentrierte Single-Text-Variante mit Ellipsis-Truncation</td></tr>
         <tr><td><code>.glass-list__item--danger</code></td><td>Roter Text für destruktive Aktionen</td></tr>
         <tr><td><code>.glass-list__item--accent</code></td><td>Primärfarbener Text für Akzent-Aktionen</td></tr>
-        <tr><td><code>.glass-list__leading</code></td><td>Leading-Slot (28&times;28, enthält ein Icon-SVG)</td></tr>
-        <tr><td><code>.glass-list__leading--lg</code></td><td>Großer Leading-Slot (40&times;40, abgerundetes Quadrat, unterstützt <code>&lt;img&gt;</code>)</td></tr>
+        <tr><td><code>.glass-list__leading</code></td><td>Leading-Slot (28&times;28, enthält ein Icon-SVG); <code>--gl-list-leading-width</code> verbreitert ihn (seit 1.36.0, <a href="#list-room">unten</a>)</td></tr>
+        <tr><td><code>.glass-list__leading--lg</code></td><td>Großer Leading-Slot (40&times;40, abgerundetes Quadrat, unterstützt <code>&lt;img&gt;</code>); derselbe Token verbreitert ihn</td></tr>
         <tr><td><code>.glass-list__content</code></td><td>Flexibler mittlerer Slot &mdash; nimmt verbleibende Breite, ermöglicht Truncation</td></tr>
         <tr><td><code>.glass-list__title</code></td><td>Primärer Text (medium weight, eine Zeile mit Ellipsis, außer <code>--gl-list-title-white-space</code> lässt ihn umbrechen)</td></tr>
         <tr><td><code>.glass-list__subtitle</code></td><td>Sekundärer Text (klein, gedämpft, eine Zeile mit Ellipsis, außer <code>--gl-list-subtitle-white-space</code> lässt ihn umbrechen)</td></tr>
@@ -1800,9 +1800,25 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
 
+    <p>Seit 1.36.0 verbreitert <code>--gl-list-leading-width</code> den Platz <code>__leading</code> für mehr als ein Icon &mdash; eine Uhrzeit und einen Chip vor dem Text einer Verlaufszeile. Die Box war 28&nbsp;px breit, mit <code>--lg</code> 40&nbsp;px, das abschneidet, was nicht passt. Die Trennlinie folgt dem Token. Er nimmt eine Länge; für eine anders aufgebaute Box sagt <code>--gl-list-item-divider-inset</code>, wo die Linie beginnt.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <ul class="glass-list" aria-label="Verlauf" style="--gl-list-leading-width: 84px">
+        <li class="glass-list__item"><span class="glass-list__leading glass-list__leading--lg"><span style="display:inline-flex;align-items:center;gap:12px"><span style="width:40px;font-size:var(--gl-font-size-xs);color:var(--gl-color-text-muted)">09:41</span><span style="width:32px;height:32px;border-radius:10px;background:color-mix(in srgb, var(--gl-color-primary) 24%, transparent)"></span></span></span><div class="glass-list__content"><div class="glass-list__title">Öffnungszeiten: Samstag 7:00 bis 14:00</div><div class="glass-list__subtitle">Öffnungszeiten &middot; Lena Hoffmann</div></div></li>
+        <li class="glass-list__item"><span class="glass-list__leading glass-list__leading--lg"><span style="display:inline-flex;align-items:center;gap:12px"><span style="width:40px;font-size:var(--gl-font-size-xs);color:var(--gl-color-text-muted)">08:15</span><span style="width:32px;height:32px;border-radius:10px;background:color-mix(in srgb, var(--gl-color-primary) 24%, transparent)"></span></span></span><div class="glass-list__content"><div class="glass-list__title">Neuigkeiten: Sommerfest</div><div class="glass-list__subtitle">Neuigkeiten &middot; Jonas Weber</div></div></li>
+      </ul>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;ul</span> <span class="attr">class</span>=<span class="val">"glass-list"</span> <span class="attr">style</span>=<span class="val">"--gl-list-leading-width: 84px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="val">"glass-list__item"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-list__leading glass-list__leading--lg"</span><span class="tag">&gt;</span><span class="cmt">&lt;!-- eine Uhrzeit und ein Chip --&gt;</span><span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-list__content"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></div>
+    </div>
+
     <h3 id="list-selected">Die gew&auml;hlte Zeile</h3>
     <p>Eine kompakte Liste neben einem Editor markiert den Eintrag, der offen ist (seit 1.34.0): <code>.is-selected</code> an der Zeile legt eine Pille aus erhabenem Glas hinein, wie sie die gew&auml;hlte <a href="#tree">Baumzeile</a> und die aktive Zeile einer Seitenleiste haben, mit halbfettem Titel und dem Icon im Akzent. <code>aria-current="true"</code> sagt Hilfstechnik, welcher Eintrag es ist &mdash; <code>aria-selected</code> stattdessen, wo die Liste eine Listbox ist. Hover und Druck lassen die gew&auml;hlte Zeile, wie sie ist, und der Tastaturring bleibt um sie herum. <code>--gl-list-item-selected-bg</code> setzt die Fl&auml;che der Pille, ohne Wert <code>--gl-surface-4</code>.</p>
-    <p>Seit 1.35.0 formen Tokens die gewählte Zeile anders: <code>--gl-list-item-selected-inset</code> (3&nbsp;px <code>--gl-space-xs</code>), <code>-radius</code> (<code>--gl-radius-sm</code>), <code>-shadow</code> (Kantenlicht und der Schatten eines Buttons), <code>-color</code> (die Überschriftenfarbe) und <code>-weight</code> (halbfett). <code>0</code>, <code>0</code> und <code>none</code> für Abstand, Radius und Schatten ergeben eine flache Tönung über die ganze Zeile.</p>
+    <p>Seit 1.35.0 formen Tokens die gewählte Zeile anders: <code>--gl-list-item-selected-inset</code> (3&nbsp;px <code>--gl-space-xs</code>), <code>-radius</code> (<code>--gl-radius-sm</code>), <code>-shadow</code> (Kantenlicht und der Schatten eines Buttons), <code>-color</code> (die Überschriftenfarbe) und <code>-weight</code> (halbfett). <code>0</code>, <code>0</code> und <code>none</code> für Abstand, Radius und Schatten ergeben eine flache Tönung über die ganze Zeile. Seit 1.36.0 nimmt der Titel die Farbe der Zeile an, die Überschriftenfarbe oder <code>-color</code>; vorher behielt er seine eigene Textfarbe, und <code>-color</code> änderte an ihm nichts.</p>
     <div class="docs-preview docs-preview--constrained">
       <ul class="glass-list" aria-label="Seiten">
         <li class="glass-list__item glass-list__item--interactive" tabindex="0"><span class="glass-list__leading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="glass-list__content"><div class="glass-list__title">Start</div></div></li>
@@ -3092,16 +3108,17 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>.glass-sheet</code></td><td>Das Panel: Milchglas, oben gerundet, unten Safe-Area-Abstand</td></tr>
         <tr><td><code>--inline</code></td><td>Im Fluss, ohne Overlay, rundum gerundet</td></tr>
         <tr><td><code>__grip</code>, <code>__title</code>, <code>__body</code>, <code>__actions</code></td><td>Griff, &Uuml;berschrift, Inhalt, Aktionsspalte</td></tr>
-        <tr><td><code>__head</code>, <code>__heading</code></td><td>Der Kopf: nimmt Platz und Abstand des Titels ein; <code>__heading</code> hält <code>__eyebrow</code> und den Titel (seit 1.35.0)</td></tr>
+        <tr><td><code>__head</code>, <code>__heading</code></td><td>Der Kopf: nimmt Platz und Abstand des Titels ein; <code>__heading</code> hält <code>__eyebrow</code>, den Titel und <code>__subtitle</code> (seit 1.35.0). Mit <code>hidden</code> nimmt er keinen Platz ein (seit 1.36.0)</td></tr>
         <tr><td><code>__eyebrow</code></td><td>Eine kurze Zeile über dem Titel, kleine Versalien in der gedämpften Farbe</td></tr>
+        <tr><td><code>__subtitle</code></td><td>Unter dem Titel: ein Badge, eine Zeile Text, klein in der gedämpften Farbe (seit 1.36.0)</td></tr>
         <tr><td><code>__leading</code>, <code>__trailing</code></td><td>Vor und nach dem Titel: eine Marke oder ein Icon-Chip, ein Badge</td></tr>
-        <tr><td><code>__close</code></td><td>Ein runder Schließen-Button aus Glas, 32&nbsp;px mit 44&nbsp;px Trefferfläche, am Ende des Kopfs</td></tr>
+        <tr><td><code>__close</code></td><td>Ein runder Schließen-Button aus Glas, 32&nbsp;px mit 44&nbsp;px Trefferfläche, am Ende des Kopfs; <code>--gl-sheet-close-size</code>, <code>--gl-sheet-close-icon-size</code> (16&nbsp;px) und <code>--gl-sheet-close-icon-stroke</code> (2) ändern ihn und sein Zeichen (seit 1.36.0)</td></tr>
         <tr><td><code>.glass-sheet-overlay--start</code>, <code>--end</code></td><td>Das Panel an dieser Seite, volle Höhe, von der Seite, ohne Griff, Aktionen nebeneinander (seit 1.35.0)</td></tr>
         <tr><td><code>.glass-sheet-overlay--modeless</code></td><td>Kein Scrim und kein Blur; nur das Panel nimmt den Zeiger &mdash; für ein mit <code>show()</code> geöffnetes Sheet</td></tr>
       </tbody>
     </table></div>
     <h3 id="sheet-head">Der Kopf</h3>
-    <p>Seit 1.35.0 hält der Kopf mehr als den Titel: <code>__eyebrow</code> darüber (&bdquo;Wiederherstellen&ldquo;), <code>__leading</code> davor (ein Icon-Chip von 56&nbsp;px), <code>__trailing</code> danach (ein Badge) und <code>__close</code> an seinem Ende, einen runden Button aus Glas. <code>__head</code> nimmt Platz und Abstand des Titels ein; ein Titel allein darin steht wie ohne ihn.</p>
+    <p>Seit 1.35.0 hält der Kopf mehr als den Titel: <code>__eyebrow</code> darüber (&bdquo;Wiederherstellen&ldquo;), <code>__leading</code> davor (ein Icon-Chip von 56&nbsp;px), <code>__trailing</code> danach (ein Badge) und <code>__close</code> an seinem Ende, einen runden Button aus Glas. <code>__head</code> nimmt Platz und Abstand des Titels ein; ein Titel allein darin steht wie ohne ihn. Seit 1.36.0 steht <code>__subtitle</code> unter dem Titel, in <code>__heading</code>: Ein Badge dort lässt dem Titel seine Breite, wo einer in <code>__trailing</code> ihn in einem schmalen Sheet zusammendrückte. Drei Tokens ändern den Schließen-Button und sein Zeichen &mdash; <code>--gl-sheet-close-size</code> (32&nbsp;px), <code>--gl-sheet-close-icon-size</code> (16&nbsp;px) und <code>--gl-sheet-close-icon-stroke</code> (2) &mdash;, und ein leerer Kopf mit <code>hidden</code> nimmt keinen Platz ein; vorher behielt er seine 8&nbsp;px.</p>
     <div class="docs-preview">
       <div class="glass-sheet glass-sheet--inline">
         <div class="glass-sheet__grip" aria-hidden="true"></div>
@@ -3126,15 +3143,43 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
 
+    <div class="docs-preview">
+      <div class="glass-sheet glass-sheet--inline" style="max-width:390px;--gl-sheet-close-size:44px;--gl-sheet-close-icon-size:20px;--gl-sheet-close-icon-stroke:1.8">
+        <div class="glass-sheet__grip" aria-hidden="true"></div>
+        <div class="glass-sheet__head">
+          <span class="glass-sheet__leading"><span style="display:inline-flex;width:56px;height:56px;border-radius:14px;align-items:center;justify-content:center;background:color-mix(in srgb, var(--gl-color-primary) 28%, transparent)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span></span>
+          <div class="glass-sheet__heading"><h2 class="glass-sheet__title">Bildergalerie</h2><span class="glass-sheet__subtitle"><span class="glass-badge glass-badge--success">1&times; in deiner App</span></span></div>
+          <button class="glass-sheet__close" type="button" aria-label="Schließen" style="background:transparent;border-color:transparent;box-shadow:none;color:var(--gl-color-text)"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+        </div>
+        <div class="glass-sheet__body">Das Badge steht unter dem Titel, der seine Breite behält. Der Schließen-Button ist schlicht, 44&nbsp;px mit einem Zeichen von 20&nbsp;px.</div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-sheet__heading"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="val">"glass-sheet__title"</span><span class="tag">&gt;</span>Bildergalerie<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-sheet__subtitle"</span><span class="tag">&gt;&lt;span</span> <span class="attr">class</span>=<span class="val">"glass-badge glass-badge--success"</span><span class="tag">&gt;</span>1&times; in deiner App<span class="tag">&lt;/span&gt;&lt;/span&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="cls">.my-sheet</span> {
+  <span class="attr">--gl-sheet-close-size</span>: <span class="val">44px</span>;
+  <span class="attr">--gl-sheet-close-icon-size</span>: <span class="val">20px</span>;
+  <span class="attr">--gl-sheet-close-icon-stroke</span>: <span class="val">1.8</span>;
+}
+<span class="cls">.my-sheet .glass-sheet__close</span> { <span class="attr">background</span>: <span class="val">transparent</span>; <span class="attr">border-color</span>: <span class="val">transparent</span>; <span class="attr">box-shadow</span>: <span class="val">none</span>; }</div>
+    </div>
+
     <h3 id="sheet-side">An einer Seite, nicht-modal</h3>
-    <p><code>.glass-sheet-overlay--end</code> oder <code>--start</code> (seit 1.35.0) setzt das Panel an diese Seite des Fensters: so hoch wie das Fenster weniger <code>--gl-sheet-side-inset</code> (16&nbsp;px) an beiden Enden und so weit vom Rand entfernt, <code>--gl-sheet-side-width</code> (440&nbsp;px) breit, mit den Ecken einer Karte. Es gleitet von dieser Seite herein, von rechts nach links gespiegelt, hat keinen Griff, und seine Aktionen stehen nebeneinander an seinem Fuß &mdash; ein Seitenpanel auf dem Desktop. <code>--modeless</code> lässt die Seite bedienbar: kein Scrim und kein Blur, nur das Panel nimmt den Zeiger. Öffne diesen Dialog mit <code>show()</code> statt <code>showModal()</code>: Die Seite ist nicht inert, ihre gewählte Zeile bleibt sichtbar, und ein später geöffnetes Modal liegt über dem Sheet. <code>--gl-sheet-z-index</code> (1000) stapelt es.</p>
+    <p><code>.glass-sheet-overlay--end</code> oder <code>--start</code> (seit 1.35.0) setzt das Panel an diese Seite des Fensters: so hoch wie das Fenster weniger <code>--gl-sheet-side-inset</code> (16&nbsp;px) an beiden Enden und so weit vom Rand entfernt, <code>--gl-sheet-side-width</code> (440&nbsp;px) breit, mit den Ecken einer Karte. Es gleitet von dieser Seite herein, von rechts nach links gespiegelt, hat keinen Griff, und seine Aktionen stehen nebeneinander an seinem Fuß &mdash; ein Seitenpanel auf dem Desktop. <code>--modeless</code> lässt die Seite bedienbar: kein Scrim und kein Blur, nur das Panel nimmt den Zeiger. Öffne diesen Dialog mit <code>show()</code> statt <code>showModal()</code>: Die Seite ist nicht inert, ihre gewählte Zeile bleibt sichtbar, und ein später geöffnetes Modal liegt über dem Sheet. <code>--gl-sheet-z-index</code> (1000) stapelt es. Seit 1.36.0 setzen <code>--gl-sheet-side-inset-block-start</code> und <code>--gl-sheet-side-inset-block-end</code> oben und unten für sich &mdash; etwa unter einer festen Kopfleiste &mdash; und fallen auf <code>--gl-sheet-side-inset</code> zurück, das für die Seite und den Weg herein bleibt.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="tag">&lt;dialog</span> <span class="attr">class</span>=<span class="val">"glass-sheet-overlay glass-sheet-overlay--end"</span><span class="tag">&gt;</span>   <span class="cmt">&lt;!-- showModal(), dann .is-active --&gt;</span>
   <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-sheet"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>
 <span class="tag">&lt;/dialog&gt;</span>
 <span class="tag">&lt;dialog</span> <span class="attr">class</span>=<span class="val">"glass-sheet-overlay glass-sheet-overlay--end glass-sheet-overlay--modeless"</span><span class="tag">&gt;</span>   <span class="cmt">&lt;!-- show() --&gt;</span>
   <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"glass-sheet"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>
-<span class="tag">&lt;/dialog&gt;</span></div>
+<span class="tag">&lt;/dialog&gt;</span>
+
+<span class="cmt">/* Unter einer festen Leiste von 68px, 16px vom oberen Rand */</span>
+<span class="cls">.my-side-sheet</span> { <span class="attr">--gl-sheet-side-inset</span>: <span class="val">24px</span>; <span class="attr">--gl-sheet-side-inset-block-start</span>: <span class="val">100px</span>; }</div>
     </div>
 
     <h3 id="sheet-dark">Dunkles Glas</h3>

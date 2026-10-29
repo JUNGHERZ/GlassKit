@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.35.1-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.36.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-38-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.35.1-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.36.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -74,22 +74,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.35/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.36/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.35/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.36/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.35/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.36/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.35` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.36` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.35/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.36/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -588,9 +588,12 @@ All visual values are controlled via CSS Custom Properties:
 --gl-list-item-divider-inset    /* where a list row's divider starts; unset after the icon, or at the padding */
 --gl-list-item-selected-bg      /* the pill of the chosen list row; unset --gl-surface-4 */
 --gl-list-item-selected-inset / -radius / -shadow / -color / -weight   /* the chosen row's pill and title; 0, 0, none: a flat tint */
+--gl-list-leading-width         /* 28px, 40px with --lg: the leading box, for a time and a chip */
 --gl-list-title-size / --gl-list-title-weight / --gl-list-subtitle-size   /* a row's type */
 --gl-sheet-bg / --gl-modal-bg   /* replace the surface of sheet and modal */
 --gl-sheet-side-width / --gl-sheet-side-inset / --gl-sheet-z-index   /* 440px, 16px, 1000: a sheet at a side */
+--gl-sheet-side-inset-block-start / -block-end   /* its top and bottom on their own; unset the side inset */
+--gl-sheet-close-size / --gl-sheet-close-icon-size / --gl-sheet-close-icon-stroke   /* 32px, 16px, 2: the sheet's close button */
 --gl-segmented-bg               /* the segmented track; unset --gl-surface-1 */
 --gl-status-color               /* the status message; unset muted text */
 --gl-breadcrumbs-crumb-width    /* 200px; a longer crumb ends in an ellipsis */
@@ -949,7 +952,7 @@ Steps:
 
 Sheet:
   .glass-sheet-overlay.is-active · .glass-sheet--inline · __grip / __title / __body / __actions
-  .glass-sheet__head > __leading / __heading (__eyebrow + __title) / __trailing / __close
+  .glass-sheet__head > __leading / __heading (__eyebrow + __title + __subtitle) / __trailing / __close
   .glass-sheet-overlay--start / --end · --modeless   (a panel at a side; modeless with show())
   dialog.glass-sheet-overlay       (a native <dialog>, opened with showModal(), since 1.30.0)
 

@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.35.1) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.36.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -13,6 +13,8 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.35.1) wi
 > **New in 1.28.0 — icons of any kind, and tokens instead of overrides.** Tab bar, accessory and segmented control colour their icon box, not the SVG: put a font icon (Material Icons), an `<img>` mask or a custom element straight into `.glass-tab-bar__icon` or `.glass-segmented__icon`, and it follows every state, the lens of the drop and the drag. `--icons` makes an icon-only segmented row (light / dark / auto). The inactive tab colour, the hover colour, the label size and the z-index of the tab bar are tokens, and so are the surface, shadow and text colour of the chosen segmented option. **Where a project restyles tab icons per state, or overrides the tab bar's literals, replace that with the tokens** (3.4, 3.29).
 
 > **New in 1.32.0 — one navigation for every edge, four components, and AA on the accent fills.** The tab bar leaves the bottom edge: `--vertical` makes it a sidebar, `--start` or `--end` fixes it to that side of the viewport — where the thumb rests on a phone held open, or a foldable that moved its system controls to a side — `--rail` shrinks it to icons, `--top` lays it out for the top of a page, and the floating bar stands upright in `.glass-tab-bar-dock--vertical`. In a column the drop runs along y, and its timing is tokens (`--gl-droplet-*`). New: the tooltip, the menu, the tree and the breadcrumbs (3.36–3.39), the states of a drag that reorders a list or a tree (3.40), and for the table a sort button, a sticky header, a row action column, an empty row and a card layout (3.27). Popover, tooltip and menu open in the top layer with the `popover` attribute. `--gl-btn-primary-bg` and `--gl-color-primary-fill` darken the accent fills for white text without touching the brand colour, and the radio's dot follows `--gl-color-on-primary`. **Where a project builds its own sidebar, tooltip, menu, tree or breadcrumbs, overrides the drop's transitions, or darkens `--gl-color-primary` for white button text, replace that** (3.4, 3.7, 3.25, section 2).
+
+> **New in 1.36.0 — a sheet head with room below the title, tokens for its close button, insets per edge; a wider list icon box.** `.glass-sheet__subtitle` stands below the title in `__heading` (a badge there leaves the title its width), `--gl-sheet-close-size`, `--gl-sheet-close-icon-size` and `--gl-sheet-close-icon-stroke` resize the × (32px, 16px, 2), `--gl-sheet-side-inset-block-start`/`-block-end` set a side sheet's top and bottom on their own, and an empty `__head` with `hidden` takes no room (3.31). `--gl-list-leading-width` widens `__leading` for a time and a chip, the divider follows, and the chosen row's title takes the row's colour, so `--gl-list-item-selected-color` reaches it (3.24). `.glass-status p` has no margin of its own (3.11).
 
 > **New in 1.35.0 — sheets at a side and with a head, dark glass that keeps its contrast, room beside a list title.** `.glass-sheet-overlay--end`/`--start` put the sheet at a side as a full-height panel, `--modeless` leaves the page usable (open with `show()`); `__head` holds `__eyebrow`, `__leading`, `__trailing` and a round `__close` (3.31). In dark mode the glow of modal and sheet starts at the middle and controls on them get darker values — a segmented well, a tertiary button one step darker, no chip blur —, a chosen badge says its label in the text colour, and `--gl-color-primary-on-glass` lightens accent text on cards and dialogs: white on badges and segments at the top of a tall dark sheet went from 2.9–4.7:1 to 4.7–7.7:1 (3.31). Lists get `__title-row`/`__title-trailing`/`__extra` and tokens for title and subtitle type and the chosen row's pill (3.24); `.glass-segmented__icon--color` keeps a logo's colours (3.29); `--gl-status-color`, `--gl-sheet-bg`, `--gl-modal-bg`, `--gl-segmented-bg`. **Where a project restyles the sheet head, moves a sheet to the side through adopted styles, starts a dark glow lower, or sets its own on-glass link colour, replace that.**
 
@@ -918,7 +920,7 @@ Info/notice card with icon and text.
 
 | Class | Description |
 |---|---|
-| `.glass-status` | Container with subtle glass surface; `--gl-status-color` sets the message's colour (since 1.35.0) |
+| `.glass-status` | Container with subtle glass surface; `--gl-status-color` sets the message's colour (since 1.35.0). The `p` has no margin of its own (since 1.36.0; the browser's 1em made the card 82px instead of 54px without a page reset) |
 
 ---
 
@@ -1469,8 +1471,8 @@ iOS-style grouped settings list. Items can carry a leading icon, a title with op
 | `.glass-list__item--center` | Centered single-text variant with ellipsis truncation |
 | `.glass-list__item--danger` | Red text for destructive actions |
 | `.glass-list__item--accent` | Primary-colored text for accent actions |
-| `.glass-list__leading` | Leading slot (28×28, holds an icon SVG) |
-| `.glass-list__leading--lg` | Large leading slot (40×40, rounded square, supports `<img>`) |
+| `.glass-list__leading` | Leading slot (28×28, holds an icon SVG); `--gl-list-leading-width` widens it (since 1.36.0) |
+| `.glass-list__leading--lg` | Large leading slot (40×40, rounded square, supports `<img>`); the same token widens it |
 | `.glass-list__content` | Flexible middle slot — takes remaining width, enables truncation |
 | `.glass-list__title` | Primary text (medium weight, one line with ellipsis unless `--gl-list-title-white-space` lets it wrap) |
 | `.glass-list__subtitle` | Secondary text (small, muted, one line with ellipsis unless `--gl-list-subtitle-white-space` lets it wrap) |
@@ -1485,7 +1487,8 @@ iOS-style grouped settings list. Items can carry a leading icon, a title with op
 **Notes:**
 - Dividers are auto-rendered via `::after`. The last item never has a divider.
 - Items **with** a `__leading` slot get an icon-aligned divider inset; items **without** one — or with a `__leading` that carries the `hidden` attribute (since 1.20.0) — get the standard padding inset (handled via `:has()`). Large leading (`--lg`) adjusts the divider inset automatically.
-- **Type and the chosen row (since 1.35.0):** `--gl-list-title-size`, `--gl-list-title-weight` and `--gl-list-subtitle-size` set a row's type, on the list or one row. `--gl-list-item-selected-inset` (3px `--gl-space-xs`), `-radius` (`--gl-radius-sm`), `-shadow`, `-color` (heading) and `-weight` (semibold) shape the chosen row; `0`, `0`, `none` make a flat tint over the whole row.
+- **Type and the chosen row (since 1.35.0):** `--gl-list-title-size`, `--gl-list-title-weight` and `--gl-list-subtitle-size` set a row's type, on the list or one row. `--gl-list-item-selected-inset` (3px `--gl-space-xs`), `-radius` (`--gl-radius-sm`), `-shadow`, `-color` (heading) and `-weight` (semibold) shape the chosen row; `0`, `0`, `none` make a flat tint over the whole row. Since 1.36.0 the title takes the row's colour, so `-color` reaches it (before, it kept the text colour).
+- **A wider leading box (since 1.36.0):** `--gl-list-leading-width` (28px, 40px with `--lg`) widens `__leading` for a time and a chip before the text, e.g. `84px` with `--lg`; the divider follows. It takes a length; for anything else set `--gl-list-item-divider-inset` too.
 - **Where the divider starts (since 1.34.0):** `--gl-list-item-divider-inset` overrides the start for rows laid out otherwise. A row whose first child is a `.glass-sort__handle` (the grip before the icon) lets the line run from its padding, since the grip's width is the page's — set the token to where the text begins, e.g. `90px` for an 18px grip and a 28px icon.
 - A `__leading` or `__trailing` with `hidden` takes no room (since 1.20.0; `display: flex` used to beat the attribute).
 - SVG icon convention: `24px` for leading (32px for `--lg`), `18px` for trailing, `stroke: currentColor`, `stroke-width: 2`.
@@ -1831,8 +1834,8 @@ Show: remove `hidden`, force a reflow (`void overlay.offsetHeight`), add `.is-ac
 | `.glass-sheet` | The panel: milky glass, top corners rounded, bottom safe-area padding |
 | `.glass-sheet--inline` | In the flow, no overlay, all corners rounded |
 | `.glass-sheet__grip`, `__title`, `__body`, `__actions` | Grip bar, heading, body, action column |
-| `.glass-sheet__head` > `__leading`, `__heading` (`__eyebrow` + `__title`), `__trailing`, `__close` | The head (since 1.35.0): a chip or mark before the title, a short line above it, a badge after it, a round 32px glass close button (44px target) at its end; a title alone in `__head` stands as before |
-| `.glass-sheet-overlay--start` / `--end` | The panel at that side (since 1.35.0): full height less `--gl-sheet-side-inset` (16px), `--gl-sheet-side-width` (440px), card corners, slides in from the side (mirrored in RTL), no grip, actions side by side |
+| `.glass-sheet__head` > `__leading`, `__heading` (`__eyebrow` + `__title` + `__subtitle`), `__trailing`, `__close` | The head (since 1.35.0): a chip or mark before the title, a short line above it, a badge after it, a round 32px glass close button (44px target) at its end; a title alone in `__head` stands as before. Since 1.36.0 `__subtitle` holds a badge or a line below the title, `--gl-sheet-close-size`, `--gl-sheet-close-icon-size` and `--gl-sheet-close-icon-stroke` (32px, 16px, 2) resize the × and its glyph, and `__head[hidden]` takes no room (it kept 8px) |
+| `.glass-sheet-overlay--start` / `--end` | The panel at that side (since 1.35.0): full height less `--gl-sheet-side-inset` (16px), `--gl-sheet-side-width` (440px), card corners, slides in from the side (mirrored in RTL), no grip, actions side by side. `--gl-sheet-side-inset-block-start` and `-block-end` (since 1.36.0) set top and bottom on their own, below a fixed bar |
 | `.glass-sheet-overlay--modeless` | No scrim, no blur, only the panel takes the pointer — open the dialog with `show()`; the page stays usable and later modals lie above it. `--gl-sheet-z-index` (1000) |
 | `--gl-sheet-bg` | Replaces the panel's surface (since 1.35.0). In dark mode the glow starts at `--gl-dialog-glow-top`, and controls on it take the dialog values (see the tokens in section 2) |
 

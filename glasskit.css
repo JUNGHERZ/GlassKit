@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.35.1
+   Jungherz GmbH – v1.36.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -928,7 +928,11 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   stroke-linecap: round; stroke-linejoin: round;
 }
 
+/* No margin of its own (since 1.36.0): the browser's 1em above and below
+   made the card 82px high instead of 54px wherever no page reset reached
+   the p — GlassKit's own showcase, the shadow root of <glk-status>. */
 .glass-status p {
+  margin: 0;
   color: var(--gl-status-color, var(--gl-color-text-muted));
   font-size: var(--gl-font-size-sm);
   font-weight: var(--gl-font-weight-normal);
@@ -3078,7 +3082,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 .glass-list__item:not(:last-child)::after {
   content: '';
   position: absolute;
-  inset-inline-start: var(--gl-list-item-divider-inset, calc(var(--gl-space-lg) + 28px + var(--gl-space-sm)));
+  inset-inline-start: var(--gl-list-item-divider-inset, calc(var(--gl-space-lg) + var(--gl-list-leading-width, 28px) + var(--gl-space-sm)));
   inset-inline-end: var(--gl-space-lg);
   bottom: 0;
   height: 1px;
@@ -3091,7 +3095,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   inset-inline-start: var(--gl-list-item-divider-inset, var(--gl-space-lg));
 }
 .glass-list__item:has(.glass-list__leading--lg:not([hidden])):not(:last-child)::after {
-  inset-inline-start: var(--gl-list-item-divider-inset, calc(var(--gl-space-lg) + 40px + var(--gl-space-sm)));
+  inset-inline-start: var(--gl-list-item-divider-inset, calc(var(--gl-space-lg) + var(--gl-list-leading-width, 40px) + var(--gl-space-sm)));
 }
 /* A drag handle at the start of the row (since 1.34.0): its width is the
    page's, so the line runs from the row's padding, as in a row without an
@@ -3138,7 +3142,9 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 /* The chosen row of a list beside its detail (since 1.34.0) — the entry an
    editor next to it shows: a pill of raised glass inside the row, as the
    chosen tree row and the active row of a sidebar, with the title in the
-   heading colour and the icon in the accent. The state is .is-selected;
+   heading colour (since 1.36.0; before, the title kept its own text colour
+   and only the row took the heading colour) and the icon in the accent.
+   The state is .is-selected;
    aria-current="true" (or aria-selected in a listbox) tells assistive
    technology. Hover and press leave it as it is; the keyboard ring stays
    around the row. While the row is a drop target of a drag, the pill makes
@@ -3157,7 +3163,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   pointer-events: none;
 }
 .glass-list__item--interactive.is-selected:is(:hover, :active, :focus-visible) { background: transparent; }
-.glass-list__item.is-selected .glass-list__title { font-weight: var(--gl-list-item-selected-weight, var(--gl-font-weight-semibold)); }
+.glass-list__item.is-selected .glass-list__title { color: inherit; font-weight: var(--gl-list-item-selected-weight, var(--gl-font-weight-semibold)); }
 .glass-list__item.is-selected .glass-list__leading { color: var(--gl-color-primary-text); }
 
 .glass-list__item--danger { color: var(--gl-color-error); }
@@ -3168,9 +3174,12 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 .glass-list__item--accent .glass-list__title,
 .glass-list__item--accent .glass-list__leading { color: inherit; }
 
+/* --gl-list-leading-width (since 1.36.0) widens the box for more than an
+   icon — a time and a chip before the text; the divider follows it. A
+   length: for anything else set --gl-list-item-divider-inset as well. */
 .glass-list__leading {
   flex-shrink: 0;
-  width: 28px;
+  width: var(--gl-list-leading-width, 28px);
   height: 28px;
   display: flex;
   align-items: center;
@@ -3192,7 +3201,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   stroke-linejoin: round;
 }
 .glass-list__leading--lg {
-  width: 40px;
+  width: var(--gl-list-leading-width, 40px);
   height: 40px;
   border-radius: var(--gl-radius-xs);
   overflow: hidden;
@@ -4189,7 +4198,10 @@ dialog.glass-sheet-overlay::backdrop { background: transparent; }
    usable: no scrim and no blur, and only the panel takes the pointer — for
    a sheet opened with show() instead of showModal(), beside a list whose
    chosen row stays in view. --gl-sheet-z-index (1000) stacks it. */
-/* The inset is the panel's margin: the dialog's own padding is undone. */
+/* The inset is the panel's margin: the dialog's own padding is undone.
+   --gl-sheet-side-inset-block-start and -block-end (since 1.36.0) set the
+   top and the bottom on their own — below a fixed top bar, say — and fall
+   back to --gl-sheet-side-inset, which stays the side's and the way in. */
 .glass-sheet-overlay--start,
 .glass-sheet-overlay--end { align-items: stretch; }
 .glass-sheet-overlay--start { justify-content: flex-start; }
@@ -4197,6 +4209,7 @@ dialog.glass-sheet-overlay::backdrop { background: transparent; }
 :is(.glass-sheet-overlay--start, .glass-sheet-overlay--end) .glass-sheet {
   width: min(var(--gl-sheet-side-width, 440px), 100% - 2 * var(--gl-sheet-side-inset, 16px)); max-height: none;
   margin: var(--gl-sheet-side-inset, 16px);
+  margin-block: var(--gl-sheet-side-inset-block-start, var(--gl-sheet-side-inset, 16px)) var(--gl-sheet-side-inset-block-end, var(--gl-sheet-side-inset, 16px));
   display: flex; flex-direction: column;
   padding-top: var(--gl-space-lg);
   border-radius: var(--gl-radius-card);
@@ -4229,7 +4242,9 @@ dialog.glass-sheet-overlay::backdrop { background: transparent; }
    (__eyebrow), something before it (__leading, a mark or an icon chip),
    something after it (__trailing, a badge) and a close button (__close) at
    its end. __head takes the title's place and its spacing; a title alone
-   in it stands as it did without one. */
+   in it stands as it did without one. __subtitle (since 1.36.0) stands
+   below the title, in the heading — a badge there leaves the title its
+   width, where __trailing beside it squeezed it in a narrow sheet. */
 .glass-sheet__head { display: flex; align-items: center; gap: var(--gl-space-sm); margin: 0 0 8px; }
 .glass-sheet__heading { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .glass-sheet__head .glass-sheet__title { margin: 0; }
@@ -4238,17 +4253,30 @@ dialog.glass-sheet-overlay::backdrop { background: transparent; }
   letter-spacing: 0.3px; text-transform: uppercase;
   color: var(--gl-color-text-muted);
 }
+.glass-sheet__subtitle {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--gl-space-xs);
+  margin-top: 2px;
+  font-size: var(--gl-font-size-sm);
+  color: var(--gl-color-text-muted);
+}
 .glass-sheet__leading,
 .glass-sheet__trailing { flex: none; display: flex; align-items: center; gap: var(--gl-space-xs); }
+/* An empty head takes no room either (since 1.36.0): display: flex beat
+   the hidden attribute's own rule, and a sheet without a title started its
+   content 8px lower than in 1.34.0. */
+.glass-sheet__head[hidden],
 .glass-sheet__eyebrow[hidden],
+.glass-sheet__subtitle[hidden],
 .glass-sheet__leading[hidden],
 .glass-sheet__trailing[hidden],
 .glass-sheet__close[hidden] { display: none; }
-/* A round glass button, 32px, with a 44px target. */
+/* A round glass button, 32px, with a 44px target. --gl-sheet-close-size,
+   --gl-sheet-close-icon-size (16px) and --gl-sheet-close-icon-stroke (2)
+   resize it and its glyph (since 1.36.0). */
 .glass-sheet__close {
   -webkit-appearance: none; appearance: none;
   flex: none; position: relative;
-  width: 32px; height: 32px; margin-inline-end: -4px; padding: 0;
+  width: var(--gl-sheet-close-size, 32px); height: var(--gl-sheet-close-size, 32px); margin-inline-end: -4px; padding: 0;
   display: inline-flex; align-items: center; justify-content: center;
   border: 1px solid var(--gl-border-subtle); border-radius: 50%;
   background: var(--gl-surface-2);
@@ -4262,8 +4290,9 @@ dialog.glass-sheet-overlay::backdrop { background: transparent; }
 .glass-sheet__close:hover { background: var(--gl-surface-3); color: var(--gl-color-text); }
 .glass-sheet__close:focus-visible { box-shadow: var(--gl-shadow-focus), var(--gl-inset-subtle); }
 .glass-sheet__close svg {
-  width: 16px; height: 16px; fill: none; stroke: currentColor;
-  stroke-width: 2; stroke-linecap: round;
+  width: var(--gl-sheet-close-icon-size, 16px); height: var(--gl-sheet-close-icon-size, 16px);
+  fill: none; stroke: currentColor;
+  stroke-width: var(--gl-sheet-close-icon-stroke, 2); stroke-linecap: round;
 }
 .glass-sheet__body { font-size: var(--gl-font-size-base); line-height: 1.55; }
 .glass-sheet__actions { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
