@@ -7,6 +7,38 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.38.0] – 2026-10-30
+
+### Added
+
+- **A dot without a count in the tab bar: `.glass-tab-bar__badge--dot`, and tokens for the badge.** An app that wants to say "something needs you here" at a tab could only show the pill with a character in it ("!"). The AppConfector Verwaltung shows a dot at its account tab for an open payment or a locked app, in all four placements of the bar.
+  - The dot is 10px at the icon's corner, in the plain error red, with a 2px ring in the colour behind the bar that sets it off the icon. In the sidebar it stands at the row's end, as the count does.
+  - It says nothing to a screen reader: the reason belongs in the item's name.
+  - `--gl-tab-bar-badge-size` (16px, the dot 10px), `--gl-tab-bar-badge-top` (-4px, the dot -2px) and `--gl-tab-bar-badge-end` (-8px, the dot -3px) set the count and the dot alike. The sidebar keeps its place at the row's end.
+  - `--gl-tab-bar-badge-ring-width` (none, the dot 2px) and `--gl-tab-bar-badge-ring-color` (`--gl-color-bg-mid`) set the ring, two tokens rather than one, so either can change alone. The ring is an outline: at 0px it is not drawn at all, so the count looks exactly as before.
+
+  ([#29](https://github.com/JUNGHERZ/GlassKit/issues/29))
+- **Labels hidden from a container query: `--gl-label-hidden: 1`.** Fields that stand under a shared head only while a table is wide enough need their labels hidden there and shown when it turns into a list. An attribute cannot follow a container or media query.
+  - On a group, or on a container around fields, the token keeps each `.glass-label` as its field's name and takes it out of sight, with the rules of GlassKit Elements' `label-hidden`.
+  - A query sets it, through style queries, which Chromium, WebKit and Firefox all have.
+  - It reaches into the fields of GlassKit Elements.
+
+  ([GlassKit Elements #62](https://github.com/JUNGHERZ/GlassKit-Elements/issues/62))
+
+### Compatibility
+
+- No theme token is new, so the no-JS light mirror of GlassKit Web needs nothing.
+
+Measured in Chromium 153, WebKit 26.6 and Firefox 151, 1.37.0 against 1.38.0, through GlassKit Elements 1.38.0:
+- **Dot:**
+  - In the bottom bar, the rail and the top bar the dot is 10 × 10px, 2px above and 3px beyond the icon's corner, with a 2px ring in rgb(240, 244, 248) in light mode. In the sidebar it stands 16px from the row's end.
+  - With `--gl-tab-bar-badge-size: 12px`, `-ring-width: 3px` and a green ring colour it is 12px with a 3px green ring.
+  - The count stays 16px at -4/-8, without a ring.
+- **Labels:** with `--gl-label-hidden: 1` set in a container query from 560px on, the label of a field in a 700px container is 1 × 1px, in GlassKit markup and in `<glk-input>`. In a 400px container it stays 195 × 16px.
+- **Pages:** docs, showcase and landing pages render as in 1.37.0. A first draw of the ring as a 0px shadow layer tinted the anti-aliased edge of every count in WebKit and Firefox by about 45 pixels; as an outline nothing changes.
+
+---
+
 ## [1.37.0] – 2026-10-29
 
 ### Added
@@ -1539,6 +1571,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.38.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.38.0
 [1.37.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.37.0
 [1.36.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.36.0
 [1.35.1]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.35.1

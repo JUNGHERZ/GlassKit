@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.37.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.38.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -13,6 +13,8 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.37.0) wi
 > **New in 1.28.0 — icons of any kind, and tokens instead of overrides.** Tab bar, accessory and segmented control colour their icon box, not the SVG: put a font icon (Material Icons), an `<img>` mask or a custom element straight into `.glass-tab-bar__icon` or `.glass-segmented__icon`, and it follows every state, the lens of the drop and the drag. `--icons` makes an icon-only segmented row (light / dark / auto). The inactive tab colour, the hover colour, the label size and the z-index of the tab bar are tokens, and so are the surface, shadow and text colour of the chosen segmented option. **Where a project restyles tab icons per state, or overrides the tab bar's literals, replace that with the tokens** (3.4, 3.29).
 
 > **New in 1.32.0 — one navigation for every edge, four components, and AA on the accent fills.** The tab bar leaves the bottom edge: `--vertical` makes it a sidebar, `--start` or `--end` fixes it to that side of the viewport — where the thumb rests on a phone held open, or a foldable that moved its system controls to a side — `--rail` shrinks it to icons, `--top` lays it out for the top of a page, and the floating bar stands upright in `.glass-tab-bar-dock--vertical`. In a column the drop runs along y, and its timing is tokens (`--gl-droplet-*`). New: the tooltip, the menu, the tree and the breadcrumbs (3.36–3.39), the states of a drag that reorders a list or a tree (3.40), and for the table a sort button, a sticky header, a row action column, an empty row and a card layout (3.27). Popover, tooltip and menu open in the top layer with the `popover` attribute. `--gl-btn-primary-bg` and `--gl-color-primary-fill` darken the accent fills for white text without touching the brand colour, and the radio's dot follows `--gl-color-on-primary`. **Where a project builds its own sidebar, tooltip, menu, tree or breadcrumbs, overrides the drop's transitions, or darkens `--gl-color-primary` for white button text, replace that** (3.4, 3.7, 3.25, section 2).
+
+> **New in 1.38.0 — a dot without a count in the tab bar, labels hidden from a container query.** `.glass-tab-bar__badge--dot` marks a tab without a number — an open payment at the account tab — 10px with a 2px ring, at the icon's corner or the sidebar row's end; `--gl-tab-bar-badge-size`, `-top`, `-end`, `-ring-width` and `-ring-color` set the count and the dot (3.4). `--gl-label-hidden: 1` on a group or a container keeps `.glass-label` as the name out of sight, set from a container or media query (3.14).
 
 > **New in 1.37.0 — avatars that fit a list row, a placeholder for the select, a character counter.** `--gl-avatar-size` and `--gl-avatar-font-size` size `.glass-avatar` (3.9), and in a list row's `__leading` an avatar takes the box's size, 28px, 40px in `--lg` — a contact list (3.24). A first `<option value="" disabled hidden>` in a `.glass-select` shows in the placeholder colour (3.16). `.glass-input-group__counter` counts characters at the end of the label row, `.is-over` past `maxlength` (3.14).
 
@@ -499,6 +501,7 @@ Fixed bottom navigation with glass background. Requires `glass-bg--has-tab-bar` 
 | `.glass-tab-bar__item.is-active` | Active tab: icon and label in `--gl-tab-bar-active-color` where set, else `--gl-color-primary-text` (since 1.26.0; both default to the primary); glow and dot in the primary. Give it `aria-current="page"` too, so a screen reader tells which view is open |
 | `.glass-tab-bar__icon` | Icon wrapper; carries the state colour (since 1.28.0): an SVG strokes in `currentColor`, a font icon or any other element inherits it |
 | `.glass-tab-bar__badge` | Numeric badge inside icon |
+| `.glass-tab-bar__badge--dot` | A dot without a count (since 1.38.0): 10px, plain error red, a 2px ring in `--gl-color-bg-mid`; at the icon's corner, in the sidebar at the row's end. Put the reason into the item's `aria-label` — the dot says nothing to a screen reader |
 | `.glass-tab-bar__label` | Text label below icon |
 
 #### Icons and tokens (since 1.28.0)
@@ -1131,6 +1134,13 @@ Date and time fields (`type="date"`, `time`, `datetime-local`, `month`) take the
   <input class="glass-input" id="password" type="password">
   <a class="glass-input-group__label-end" href="/reset">Forgot password?</a>
 </div>
+```
+
+**Labels hidden from a container query (since 1.38.0).** `--gl-label-hidden: 1` on a group or a container around fields keeps each `.glass-label` as its field's name and takes it out of sight — a container or media query sets it, where an attribute cannot follow: fields in a table under one shared head only while the table is wide enough. Through style queries, in Chromium, WebKit and Firefox; it reaches into the fields of GlassKit Elements.
+
+```css
+.week { container: week / inline-size; }
+@container week (min-width: 560px) { .day { --gl-label-hidden: 1; } }
 ```
 
 **A character counter (since 1.37.0).** `.glass-input-group__counter` in that place counts the value's characters, "48/145" with `maxlength`, in the muted colour, and with `.is-over` past the limit in the error colour — a value set by script may be longer, `maxlength` only stops typing. Update it on `input`, and tie it to the field with `aria-describedby` so a screen reader reads it with the field. After a link in the same place it keeps its distance. In GlassKit Elements: `counter` on `<glk-input>` and `<glk-textarea>`.

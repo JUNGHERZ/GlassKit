@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.37.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.38.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-38-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.37.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.38.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -74,22 +74,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.37/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.38/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.37/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.38/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.37/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.38/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.37` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.38` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.37/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.38/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -590,6 +590,8 @@ All visual values are controlled via CSS Custom Properties:
 --gl-list-item-selected-inset / -radius / -shadow / -color / -weight   /* the chosen row's pill and title; 0, 0, none: a flat tint */
 --gl-list-leading-width         /* 28px, 40px with --lg: the leading box, for a time and a chip */
 --gl-avatar-size / --gl-avatar-font-size   /* an avatar's size and its initials; in a list's leading box 28px, 40px with --lg */
+--gl-tab-bar-badge-size / -top / -end / -ring-width / -ring-color   /* the tab bar's count and its dot (--dot): 16px/10px, place, ring */
+--gl-label-hidden               /* 1: labels stay the fields' names, out of sight; set it from a container query */
 --gl-list-title-size / --gl-list-title-weight / --gl-list-subtitle-size   /* a row's type */
 --gl-sheet-bg / --gl-modal-bg   /* replace the surface of sheet and modal */
 --gl-sheet-side-width / --gl-sheet-side-inset / --gl-sheet-z-index   /* 440px, 16px, 1000: a sheet at a side */

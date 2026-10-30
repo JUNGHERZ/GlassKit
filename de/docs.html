@@ -390,7 +390,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.37.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.38.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -475,7 +475,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.37.0</span>
+      <span class="docs-hero__badge">v1.38.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">38 Komponenten</span>
@@ -877,6 +877,40 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 }</div>
     </div>
     <p>Seit 1.33.0 bewegen die Einträge nur, was ein Zustand ändert: Farbe, Fläche, Schatten, Deckkraft und das Drücken (<code>transition-property: color, background-color, box-shadow, opacity, transform</code>). Mit <code>all</code> glitten bei einer Leiste, die ihr Layout wechselte &mdash; aufrecht, schwebend, eine Rail &mdash;, Padding, Breite und Höhe 250&nbsp;ms lang, und ein Eintrag, der in dieser Zeit gemessen wurde, hatte noch nicht seine Größe.</p>
+
+    <h3 id="tab-bar-dot" style="margin-top:var(--gl-space-lg);">Ein Punkt ohne Zahl</h3>
+    <p>Seit 1.38.0 sagt <code>.glass-tab-bar__badge--dot</code> &bdquo;hier braucht es dich&ldquo; ohne Zahl &mdash; eine offene Zahlung am Konto-Tab: ein Punkt von 10&nbsp;px an der Ecke des Icons im einfachen Fehlerrot, mit einem 2&nbsp;px breiten Ring in der Farbe hinter der Leiste, der ihn vom Icon absetzt. In der Seitenleiste steht er am Ende der Zeile, wie die Zahl. Einem Screenreader sagt der Punkt nichts: Schreib den Grund in den Namen des Eintrags. Tokens setzen Zahl und Punkt gleichermaßen; die Seitenleiste behält ihren Platz am Ende der Zeile und nimmt Größe und Ring.</p>
+    <div class="docs-preview" style="position:relative;height:82px;overflow:hidden;">
+      <nav class="glass-tab-bar" style="position:absolute;bottom:0;left:0;right:0;">
+        <button class="glass-tab-bar__item">
+          <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22 6 12 13 2 6"/></svg><span class="glass-tab-bar__badge">3</span></span>
+          <span class="glass-tab-bar__label">Nachrichten</span>
+        </button>
+        <button class="glass-tab-bar__item" aria-label="Konto, eine Zahlung ist offen">
+          <span class="glass-tab-bar__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg><span class="glass-tab-bar__badge glass-tab-bar__badge--dot"></span></span>
+          <span class="glass-tab-bar__label">Konto</span>
+        </button>
+      </nav>
+    </div>
+    <div class="docs-table-wrap"><table class="docs-table">
+      <thead><tr><th>Token</th><th>Ohne Wert</th><th>Wirkung</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gl-tab-bar-badge-size</code></td><td><code>16px</code></td><td>Höhe und Mindestbreite der Zahl; der Punkt ist 10&nbsp;px, solange nichts gesetzt ist</td></tr>
+        <tr><td><code>--gl-tab-bar-badge-top</code></td><td><code>-4px</code></td><td>Abstand zur Oberkante des Icons; der Punkt -2&nbsp;px</td></tr>
+        <tr><td><code>--gl-tab-bar-badge-end</code></td><td><code>-8px</code></td><td>Abstand zum Ende des Icons; der Punkt -3&nbsp;px</td></tr>
+        <tr><td><code>--gl-tab-bar-badge-ring-width</code></td><td><code>0px</code></td><td>Ein Ring darum; der Punkt 2&nbsp;px</td></tr>
+        <tr><td><code>--gl-tab-bar-badge-ring-color</code></td><td><code>--gl-color-bg-mid</code></td><td>Die Farbe des Rings, der mittlere Seitenhintergrund</td></tr>
+      </tbody>
+    </table></div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__item"</span> <span class="attr">aria-label=</span><span class="val">"Konto, eine Zahlung ist offen"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__icon"</span><span class="tag">&gt;</span>
+    <span class="cmt">&lt;!-- SVG --&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__badge glass-tab-bar__badge--dot"</span><span class="tag">&gt;&lt;/span&gt;</span>   <span class="cmt">&lt;!-- kein Text --&gt;</span>
+  <span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tab-bar__label"</span><span class="tag">&gt;</span>Konto<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/button&gt;</span></div>
+    </div>
 
     <h3 id="tab-bar-layouts" style="margin-top:var(--gl-space-lg);">Seitenleiste, Rail und obere Leiste</h3>
     <p>Seit 1.32.0 geht dieselbe Navigation dorthin, wo das Layout sie braucht, nicht nur an die untere Kante. Die Einträge bleiben, wie sie sind &mdash; Icon, Label, Badge, der aktive Zustand, der <a href="#droplet">Tropfen</a> &mdash;, nur das Layout der Leiste ändert sich. <code>--vertical</code> macht sie zur Spalte für eine Seitenleiste: platziert vom Layout der Seite, etwa einer Grid-Spalte, und so hoch wie ihr Container, ein Eintrag pro Zeile mit dem Icon vor dem Label in Fließtextgröße und dem Badge am Zeilenende. Die aktive Zeile steht auf einer eigenen Fläche, <code>--gl-tab-bar-active-bg</code>, wo das gesetzt ist, sonst <code>--gl-surface-3</code>. Mit <code>--rail</code> dazu zeigt die Spalte nur die Icons, <code>--gl-tab-bar-rail-width</code> (72&nbsp;px) breit: Das Label bleibt der Name des Eintrags für assistive Technik, nur unsichtbar, also zeig es in einem <a href="#tooltip">Tooltip</a>.</p>
@@ -1287,7 +1321,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.37/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.38/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// jede --droplet-Zeile der Seite; attachDroplet(row) für eine</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -2477,6 +2511,13 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-input-group__label-end glass-input-group__counter"</span> <span class="attr">id=</span><span class="val">"meta-count"</span><span class="tag">&gt;</span>0/145<span class="tag">&lt;/span&gt;</span>   <span class="cmt">&lt;!-- bei input aktuell gehalten --&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
+    <p>Seit 1.38.0 hält <code>--gl-label-hidden: 1</code> an einer Gruppe oder einem Container um Felder jedes <code>.glass-label</code> als Namen seines Feldes und nimmt es aus dem Blick &mdash; gesetzt aus einer Container- oder Media-Query, der ein Attribut nicht folgen kann: Felder in einer Tabelle unter einem gemeinsamen Kopf nur, solange die Tabelle breit genug ist, mit ihren Labels darüber, wenn sie zur Liste wird. Es wirkt in Chromium, WebKit und Firefox, über deren Style Queries. In GlassKit Elements reicht es in <code>&lt;glk-input&gt;</code>, <code>&lt;glk-select&gt;</code> und <code>&lt;glk-textarea&gt;</code>, deren <code>label-hidden</code> dasselbe für ein Feld tut.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">.week</span> { <span class="attr">container</span>: <span class="val">week / inline-size</span>; }
+<span class="tag">@container</span> week (min-width: 560px) {
+  <span class="cls">.day</span> { <span class="attr">--gl-label-hidden</span>: <span class="val">1</span>; }   <span class="cmt">/* Labels unsichtbar, weiter die Namen */</span>
+}</div>
+    </div>
   </section>
 
   <!-- TEXTAREA -->
@@ -3556,7 +3597,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td>Progress</td><td><code>.glass-progress</code></td><td><code>--sm</code>, <code>--lg</code>, <code>--success</code>, <code>--error</code></td></tr>
         <tr><td>Modal</td><td><code>.glass-modal-overlay</code></td><td><code>.is-active</code></td></tr>
         <tr><td>Toast</td><td><code>.glass-toast</code></td><td><code>--success</code>, <code>--error</code>, <code>--warning</code>, <code>.is-visible</code>, <code>__action</code>, <code>__close</code></td></tr>
-        <tr><td>Tab-Bar</td><td><code>.glass-tab-bar</code></td><td><code>__item</code> mit <code>.is-active</code>, <code>__icon</code>, <code>__label</code>, <code>__badge</code>, <code>__leading</code>, <code>__trailing</code>, <code>--droplet</code>, <code>--vertical</code>, <code>--rail</code>, <code>--labels</code>, <code>--start</code>, <code>--end</code>, <code>--top</code></td></tr>
+        <tr><td>Tab-Bar</td><td><code>.glass-tab-bar</code></td><td><code>__item</code> mit <code>.is-active</code>, <code>__icon</code>, <code>__label</code>, <code>__badge</code> (<code>--dot</code> seit 1.38.0), <code>__leading</code>, <code>__trailing</code>, <code>--droplet</code>, <code>--vertical</code>, <code>--rail</code>, <code>--labels</code>, <code>--start</code>, <code>--end</code>, <code>--top</code></td></tr>
         <tr><td>Tab-Bar Floating</td><td><code>.glass-tab-bar-dock</code> + <code>.glass-tab-bar--floating</code></td><td><code>__accessory</code>, <code>__accessory--accent</code>/<code>--success</code>/<code>--error</code>, <code>__accessory-item</code>, <code>__accessory-label</code>, <code>--accessory-left</code>, <code>-dock--vertical</code>, <code>-dock--start</code></td></tr>
         <tr><td>Breadcrumbs</td><td><code>.glass-<wbr>breadcrumbs</code></td><td><code>__list</code>, <code>__item</code>, <code>__crumb</code>, <code>__current</code>, <code>__overflow</code>, <code>__item--overflow</code>, <code>.is-drop-target</code>, <code>.is-drop-refused</code></td></tr>
         <tr><td>Accordion</td><td><code>.glass-accordion</code></td><td><code>.is-open</code> auf Items</td></tr>

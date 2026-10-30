@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.37.0
+   Jungherz GmbH – v1.38.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -956,6 +956,17 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 /* Without text a label takes no room: an empty one kept the group's gap
    above its field (until 1.24.0). */
 .glass-label:empty { display: none; }
+/* A label kept as the field's name, out of sight (since 1.38.0):
+   --gl-label-hidden: 1 on the group or a container around it. A container
+   or media query sets it — fields in a table under one shared head only
+   while the table is wide enough. GlassKit Elements' label-hidden does the
+   same for one field. */
+@container style(--gl-label-hidden: 1) {
+  .glass-label {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+  }
+}
 
 /* A place at the end of the label row (since 1.33.0): "Forgot password?"
    on the line of the label "Password". The __label-end element comes
@@ -1875,9 +1886,15 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
 .glass-tab-bar__item:not(.is-active):hover .glass-tab-bar__icon,
 .glass-tab-bar__item:not(.is-active):hover .glass-tab-bar__label { color: var(--gl-tab-bar-hover-color, var(--gl-icon-default)); }
 
+/* The count at the icon's corner. Since 1.38.0 tokens set its size
+   (--gl-tab-bar-badge-size, 16px), its place (--gl-tab-bar-badge-top, -4px,
+   and --gl-tab-bar-badge-end, -8px) and a ring around it in the colour
+   behind the bar (--gl-tab-bar-badge-ring-width, none, and
+   --gl-tab-bar-badge-ring-color, --gl-color-bg-mid). The sidebar keeps its
+   badge at the row's end and takes size and ring alone. */
 .glass-tab-bar__badge {
-  position: absolute; top: -4px; inset-inline-end: -8px;
-  min-width: 16px; height: 16px; padding: 0 4px;
+  position: absolute; top: var(--gl-tab-bar-badge-top, -4px); inset-inline-end: var(--gl-tab-bar-badge-end, -8px);
+  min-width: var(--gl-tab-bar-badge-size, 16px); height: var(--gl-tab-bar-badge-size, 16px); padding: 0 4px;
   border-radius: var(--gl-radius-full);
   /* 10px text needs 4.5:1 – white on the plain error red only reaches 3.55:1
      in dark mode, so the pill uses the darker state color as its fill. */
@@ -1885,6 +1902,22 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   font-size: 10px; font-weight: var(--gl-font-weight-semibold);
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 2px 6px color-mix(in srgb, var(--gl-color-error) 40%, transparent);
+  /* The ring as an outline: none drawn at 0px, where a shadow layer of
+     0px still tinted the anti-aliased edge in WebKit and Firefox. */
+  outline: var(--gl-tab-bar-badge-ring-width, 0px) solid var(--gl-tab-bar-badge-ring-color, var(--gl-color-bg-mid));
+}
+/* A dot without a count (since 1.38.0): "something needs you here", an open
+   payment at the account tab. 10px at the icon's corner, in the plain error
+   red — it carries no text, and stands out more than the darker fill of the
+   pill — with a 2px ring that sets it off the icon. The same tokens set its
+   size, place and ring. Say why in the item's name; the dot says nothing
+   to a screen reader. */
+.glass-tab-bar__badge--dot {
+  top: var(--gl-tab-bar-badge-top, -2px); inset-inline-end: var(--gl-tab-bar-badge-end, -3px);
+  width: var(--gl-tab-bar-badge-size, 10px); min-width: 0; height: var(--gl-tab-bar-badge-size, 10px); padding: 0;
+  background: var(--gl-color-error, #ff3b30);
+  font-size: 0; overflow: hidden;
+  outline-width: var(--gl-tab-bar-badge-ring-width, 2px);
 }
 
 
