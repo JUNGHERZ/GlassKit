@@ -7,6 +7,52 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.39.0] – 2026-11-01
+
+### Added
+
+- **The switch at the row's end: `--label-start` and `--full` on `.glass-toggle`, `.glass-checkbox` and `.glass-radio`.**
+  - `--label-start` puts the text before the control.
+  - `--full` spreads the control over its row. With both, the text stands at the row's start and the switch at its end, as in the settings of iOS, mirrored right to left. The whole row is the label.
+  - The switch stood before its text, and nothing put it at the row's end outside a list row's `__trailing`.
+- **A summary in the accordion's head: `.glass-accordion__summary`.** The fields of an entry stand in an accordion above its text, and closed, the head should show their values beside the title.
+  - After the title, inside the trigger, the summary takes the room up to the chevron, on one line with an ellipsis, small and muted.
+  - A click on it, Enter and Space open the item, as on the title.
+  - It takes only the room the title leaves.
+
+  ([GlassKit Elements #67](https://github.com/JUNGHERZ/GlassKit-Elements/issues/67))
+- **A toast in the top layer: `.glass-toast[popover]`.** A modal or a sheet lies in the top layer, where no `z-index` reaches, so a toast in the page stood under its blurred overlay and could not be read. That hit the common case of a form in a sheet that fails to save.
+  - A toast with `popover="manual"`, shown again with `showPopover()` on every show, lies above a dialog opened since.
+  - The rule undoes the popover's own box.
+
+  ([GlassKit Elements #64](https://github.com/JUNGHERZ/GlassKit-Elements/issues/64))
+- **A second line in the tooltip: `.glass-tooltip__hint`.** It says what a choice does, in the normal weight and `--gl-tooltip-hint-color` (the muted text). ([GlassKit Elements #66](https://github.com/JUNGHERZ/GlassKit-Elements/issues/66))
+
+### Fixed
+
+- **The accordion's trigger showed no focus ring.** `outline: none` and no `:focus-visible` rule left a keyboard user without a mark (WCAG 2.4.7). It now shows `inset 0 0 0 2px var(--gl-border-focus)` inside the trigger, as list and tree rows do, rounded with the item. ([#31](https://github.com/JUNGHERZ/GlassKit/issues/31))
+- **A sheet showed up at its place at once, or swung past it.** `overflow: hidden` keeps `dialog.glass-sheet-overlay` a scroll container. The panel, still moved out by its transform while it slid in, gave it room to scroll, and a focus inside it scrolled the overlay: `showModal()`'s, or a page's on a field. The overlay now clips with `overflow: clip`, which is no scroll container (Chrome 90, Safari 16, Firefox 81). ([GlassKit Elements #68](https://github.com/JUNGHERZ/GlassKit-Elements/issues/68))
+- **The browser table did not name what `--gl-label-hidden` needs.** It works through style queries on custom properties, which came with Chrome 111, Safari 18 and Firefox 151, above GlassKit's floor of Safari 16.4 and Firefox 113. Without them the token does nothing: the labels stay above their fields, and every field grows by the label's line.
+  - The README names this as the one refinement that does not fall back quietly, with the fallback: the rules of a hidden label on `.glass-label`, or on `::part(label)` in GlassKit Elements, in the same query.
+  - The docs and SKILL.md give the versions where they said "Chromium, WebKit and Firefox". The docs' example carries the fallback.
+
+  ([#30](https://github.com/JUNGHERZ/GlassKit/issues/30))
+
+### Compatibility
+
+- No theme token is new, so the no-JS light mirror of GlassKit Web needs nothing.
+
+Measured in Chromium 153, WebKit 26.6 and Firefox 151, 1.38.0 against 1.39.0, through GlassKit Elements 1.39.0:
+- **Switch:** with `--label-start` and `--full` in a 420px row, the text starts at the row's start and the switch ends at the row's end, 0px from it. Right to left it is the other way round.
+- **Accordion:** with the focus from Tab, the trigger shows the inset ring. A summary of 283 × 17px stands beside the title in a 50px head, as high as without it.
+- **Sheet:**
+  - A side sheet that a page focuses a field in right after opening slides from x 1440 to 984, and the overlay's scroll stays 0.
+  - Before, it stood at x 1000 from the first frame in Chromium, the overlay scrolled by 440px. In WebKit it swung to x 529 and back.
+  - A bottom sheet slides from y 900 to 698. Before, in Chromium it stood at its place at once.
+- **Pages:** docs, showcase and landing pages render as in 1.38.0.
+
+---
+
 ## [1.38.0] – 2026-10-30
 
 ### Added
@@ -1571,6 +1617,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.39.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.39.0
 [1.38.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.38.0
 [1.37.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.37.0
 [1.36.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.36.0

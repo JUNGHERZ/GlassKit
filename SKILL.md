@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.38.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.39.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -13,6 +13,8 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.38.0) wi
 > **New in 1.28.0 — icons of any kind, and tokens instead of overrides.** Tab bar, accessory and segmented control colour their icon box, not the SVG: put a font icon (Material Icons), an `<img>` mask or a custom element straight into `.glass-tab-bar__icon` or `.glass-segmented__icon`, and it follows every state, the lens of the drop and the drag. `--icons` makes an icon-only segmented row (light / dark / auto). The inactive tab colour, the hover colour, the label size and the z-index of the tab bar are tokens, and so are the surface, shadow and text colour of the chosen segmented option. **Where a project restyles tab icons per state, or overrides the tab bar's literals, replace that with the tokens** (3.4, 3.29).
 
 > **New in 1.32.0 — one navigation for every edge, four components, and AA on the accent fills.** The tab bar leaves the bottom edge: `--vertical` makes it a sidebar, `--start` or `--end` fixes it to that side of the viewport — where the thumb rests on a phone held open, or a foldable that moved its system controls to a side — `--rail` shrinks it to icons, `--top` lays it out for the top of a page, and the floating bar stands upright in `.glass-tab-bar-dock--vertical`. In a column the drop runs along y, and its timing is tokens (`--gl-droplet-*`). New: the tooltip, the menu, the tree and the breadcrumbs (3.36–3.39), the states of a drag that reorders a list or a tree (3.40), and for the table a sort button, a sticky header, a row action column, an empty row and a card layout (3.27). Popover, tooltip and menu open in the top layer with the `popover` attribute. `--gl-btn-primary-bg` and `--gl-color-primary-fill` darken the accent fills for white text without touching the brand colour, and the radio's dot follows `--gl-color-on-primary`. **Where a project builds its own sidebar, tooltip, menu, tree or breadcrumbs, overrides the drop's transitions, or darkens `--gl-color-primary` for white button text, replace that** (3.4, 3.7, 3.25, section 2).
+
+> **New in 1.39.0 — the switch at the row's end, a summary in the accordion's head, toasts above dialogs, a second line in the tooltip.** `.glass-toggle--label-start` and `--full` (also on checkbox and radio) put the text at the row's start and the switch at its end, as in the settings of iOS (3.18). `.glass-accordion__summary` holds the values of a closed item beside its title, and the trigger shows a focus ring (3.23). `.glass-toast[popover]` lets a toast go into the top layer, above a modal or a sheet (3.13). `.glass-tooltip__hint` is a tooltip's second line (3.36). `dialog.glass-sheet-overlay` clips with `overflow: clip`, so a focus while it slides in no longer scrolls it (3.31). `--gl-label-hidden` needs style queries: Chrome 111, Safari 18, Firefox 151 (3.14).
 
 > **New in 1.38.0 — a dot without a count in the tab bar, labels hidden from a container query.** `.glass-tab-bar__badge--dot` marks a tab without a number — an open payment at the account tab — 10px with a 2px ring, at the icon's corner or the sidebar row's end; `--gl-tab-bar-badge-size`, `-top`, `-end`, `-ring-width` and `-ring-color` set the count and the dot (3.4). `--gl-label-hidden: 1` on a group or a container keeps `.glass-label` as the name out of sight, set from a container or media query (3.14).
 
@@ -1061,6 +1063,14 @@ Temporary notification. Visible via `is-visible`. Three variants.
 
 The toast stays at the top also with an action — one place for every toast. Set `--gl-toast-top` to put it below your own header; with `viewport-fit=cover` include `env(safe-area-inset-top)`.
 
+**In the top layer (since 1.39.0).** A modal or a sheet lies in the top layer, where no `z-index` reaches: a toast in the page stood under its blurred overlay, unreadable. Give the toast `popover="manual"`, keep it open while it is in the document — hidden it stays invisible and lets the pointer through, and as a live region it keeps being read — and before every show call `hidePopover()` and `showPopover()`, so it lies above a dialog opened since. `.glass-toast[popover]` undoes the popover's own box. Beside a modal it can be seen but not used or announced. `<glk-toast>` does all of it.
+
+```js
+if (toast.matches(':popover-open')) toast.hidePopover();
+toast.showPopover();
+toast.classList.add('is-visible');
+```
+
 ---
 
 ### 3.14 Input
@@ -1136,7 +1146,7 @@ Date and time fields (`type="date"`, `time`, `datetime-local`, `month`) take the
 </div>
 ```
 
-**Labels hidden from a container query (since 1.38.0).** `--gl-label-hidden: 1` on a group or a container around fields keeps each `.glass-label` as its field's name and takes it out of sight — a container or media query sets it, where an attribute cannot follow: fields in a table under one shared head only while the table is wide enough. Through style queries, in Chromium, WebKit and Firefox; it reaches into the fields of GlassKit Elements.
+**Labels hidden from a container query (since 1.38.0).** `--gl-label-hidden: 1` on a group or a container around fields keeps each `.glass-label` as its field's name and takes it out of sight — a container or media query sets it, where an attribute cannot follow: fields in a table under one shared head only while the table is wide enough. It reaches into the fields of GlassKit Elements. **It needs style queries on custom properties — Chrome 111, Safari 18, Firefox 151.** Without them the labels stay above their fields; for older browsers put the visually hidden rules on `.glass-label` (or `::part(label)` in GlassKit Elements) into the same query.
 
 ```css
 .week { container: week / inline-size; }
@@ -1250,6 +1260,16 @@ iOS-style switch.
 The input is invisible but lies **on top of** the track and takes the click itself (since 1.20.0) — a test tool clicking the switch by role (`getByRole('switch')` with `role="switch"` on the input) reaches it. It covers only the track; label text, links in it included, stays the label's. An empty `__label` takes no room (no 12px gap). Both apply to checkbox and radio as well.
 
 **Track tokens (since 1.25.0).** `--gl-toggle-track-bg` (off; unset `--gl-surface-2`) and `--gl-toggle-track-bg-checked` (on; unset the primary gradient) — a stronger track for a page without glass, e.g. `color-mix(in srgb, var(--gl-color-text) 35%, transparent)`.
+
+**The switch at the row's end (since 1.39.0).** `.glass-toggle--label-start` puts the text before the switch, `.glass-toggle--full` spreads the control over its row: with both, the text stands at the row's start and the switch at its end, as in the settings of iOS — mirrored right to left. The whole row is the label. `.glass-checkbox--label-start`/`--full` and `.glass-radio--label-start`/`--full` do the same. In a list row put the switch into `__trailing` instead.
+
+```html
+<label class="glass-toggle glass-toggle--label-start glass-toggle--full">
+  <input class="glass-toggle__input" type="checkbox">
+  <span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span>
+  <span class="glass-toggle__label">Notifications</span>
+</label>
+```
 
 ---
 
@@ -1419,6 +1439,16 @@ Collapsible content sections. Controlled via `is-open` on items.
 | `.glass-accordion__trigger-icon` | Chevron icon (rotates on open) |
 | `.glass-accordion__content` | Wrapper for the animated height: a one-row grid from `0fr` to `1fr`, so an open item takes its content's height however long (since 1.30.0; before, it ended at 500px). Never add a `max-height` of your own |
 | `.glass-accordion__body` | Actual content |
+
+**A summary in the head, and the focus ring (since 1.39.0).** `.glass-accordion__summary` after the title, inside the trigger, holds the values of a closed item — a headline, a date: in the room up to the chevron, one muted line with an ellipsis; a click on it, Enter and Space open the item. It takes only the room the title leaves. The trigger shows a focus ring for the keyboard, `inset 0 0 0 2px var(--gl-border-focus)`, rounded with the item (before 1.39.0 it had none).
+
+```html
+<button class="glass-accordion__trigger">
+  <span>Details of the news</span>
+  <span class="glass-accordion__summary">Summer party · 31.10.2026</span>
+  <span class="glass-accordion__trigger-icon">…</span>
+</button>
+```
 
 ---
 
@@ -1877,6 +1907,8 @@ Show: remove `hidden`, force a reflow (`void overlay.offsetHeight`), add `.is-ac
 | `.glass-sheet-overlay--modeless` | No scrim, no blur, only the panel takes the pointer — open the dialog with `show()`; the page stays usable and later modals lie above it. `--gl-sheet-z-index` (1000) |
 | `--gl-sheet-bg` | Replaces the panel's surface (since 1.35.0). In dark mode the glow starts at `--gl-dialog-glow-top`, and controls on it take the dialog values (see the tokens in section 2) |
 
+**The overlay clips without scrolling (since 1.39.0).** `dialog.glass-sheet-overlay` has `overflow: clip`, not `hidden`: `hidden` kept it a scroll container, and a focus inside the panel while it slid in — `showModal()`'s, or a page's on a field — scrolled the overlay, so the panel stood at its place at once or swung past it and back. Focus a field with `{ preventScroll: true }` all the same.
+
 ---
 
 ### 3.32 Empty state
@@ -2005,6 +2037,8 @@ A short name or hint for a control on hover and focus (since 1.32.0): an icon-on
 - Text only: a tooltip never holds a link or a button — that is a popover.
 - Never the native `title` attribute instead: it shows neither on keyboard focus nor on touch.
 - `--gl-tooltip-offset` (8px) is the distance GlassKit Elements keeps from the control.
+
+- A second line (since 1.39.0): `.glass-tooltip__hint` after the name says what a choice does, in the normal weight and the muted colour (`--gl-tooltip-hint-color`): `<div class="glass-tooltip" popover="hint">Instead of the preview<span class="glass-tooltip__hint">A wider editor</span></div>`.
 
 ---
 

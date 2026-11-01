@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.38.0
+   Jungherz GmbH – v1.39.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -1224,6 +1224,12 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
   gap: var(--gl-space-sm); cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
+/* Where the switch stands (since 1.39.0): --label-start puts the text
+   before it, and --full spreads the control over its row, so the switch
+   stands at the row's end, as in the settings of iOS — mirrored right to
+   left. The same modifiers for checkbox and radio. */
+:is(.glass-toggle, .glass-checkbox, .glass-radio):is(.glass-toggle--label-start, .glass-checkbox--label-start, .glass-radio--label-start) { flex-direction: row-reverse; }
+:is(.glass-toggle, .glass-checkbox, .glass-radio):is(.glass-toggle--full, .glass-checkbox--full, .glass-radio--full) { display: flex; width: 100%; justify-content: space-between; }
 
 /* Visually hidden, but it keeps the control's area and lies on top of it.
    Zero-size inputs make the browser suppress the native validation bubble
@@ -1679,6 +1685,11 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   -webkit-font-smoothing: antialiased;
 }
 .glass-toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+/* In the top layer (since 1.39.0): a toast with popover="manual", shown
+   with showPopover() — again on every show, so it lies above a modal or
+   sheet opened since, which a z-index cannot reach. These rules undo the
+   popover's own box; place and look stay the toast's. */
+.glass-toast[popover] { right: auto; bottom: auto; margin: 0; overflow: visible; color: inherit; }
 
 .glass-toast__icon {
   width: 22px; height: 22px; flex-shrink: 0;
@@ -2570,6 +2581,22 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 }
 
 .glass-accordion__trigger:hover { color: var(--gl-ctx-primary-text, var(--gl-color-primary-text)); }
+/* A ring for the keyboard (since 1.39.0), inside the trigger as on list and
+   tree rows — the item clips what lies outside it — and rounded with the
+   item. outline: none above left the focus without a mark. */
+.glass-accordion__trigger:focus-visible { box-shadow: inset 0 0 0 2px var(--gl-border-focus); border-radius: inherit; }
+/* A summary of the item in its head (since 1.39.0): the values of a closed
+   entry beside its title — a headline, a date — in the room up to the
+   chevron, on one line with an ellipsis, small and muted. Inside the
+   trigger, so a click on it, Enter and Space do what they do on the title.
+   It takes only the room the title leaves. */
+.glass-accordion__summary {
+  flex: 1 1 0; min-width: 0;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  font-size: var(--gl-font-size-sm); font-weight: var(--gl-font-weight-normal);
+  color: var(--gl-color-text-muted);
+}
+.glass-accordion__summary[hidden] { display: none; }
 
 .glass-accordion__trigger-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
@@ -2950,6 +2977,13 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   transition-behavior: allow-discrete;
 }
 .glass-tooltip[popover]:popover-open { opacity: 1; animation: glass-fade-in .12s ease; }
+/* A second line under the name (since 1.39.0): what a choice does,
+   "A wider editor, the fields stay in the middle". */
+.glass-tooltip__hint {
+  display: block; margin-top: 2px;
+  font-weight: var(--gl-font-weight-normal);
+  color: var(--gl-tooltip-hint-color, var(--gl-color-text-muted));
+}
 @keyframes glass-fade-in { from { opacity: 0; } }
 
 
@@ -4204,7 +4238,12 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 dialog.glass-sheet-overlay {
   width: auto; height: auto; max-width: none; max-height: none;
   margin: 0; padding: 0; border: 0; color: inherit; outline: none;
-  overflow: hidden;
+  /* clip, not hidden (since 1.39.0): hidden still makes the dialog a scroll
+     container, and the panel, still moved out by its transform, made room
+     to scroll. A focus inside it while it slid in — showModal()'s, or a
+     page's on a field — scrolled the overlay: the panel stood at its place
+     at once, or swung past it and back. */
+  overflow: clip;
 }
 dialog.glass-sheet-overlay:not([open]) { display: none; }
 dialog.glass-sheet-overlay::backdrop { background: transparent; }

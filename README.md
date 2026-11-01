@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.38.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.39.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-38-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.38.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.39.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -74,22 +74,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.38/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.39/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.38/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.39/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.38/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.39/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.38` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.39` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.38/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.39/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -582,6 +582,7 @@ All visual values are controlled via CSS Custom Properties:
 --gl-tooltip-max-width          /* 240px */
 --gl-tooltip-bg, --gl-tooltip-color   /* unset: the theme's dark background, the text colour */
 --gl-tooltip-offset             /* 8px; the distance GlassKit Elements keeps from the control */
+--gl-tooltip-hint-color         /* the second line, .glass-tooltip__hint; unset muted text */
 --gl-tree-indent                /* 20px per level */
 --gl-tree-row-height            /* 36px */
 --gl-tree-icon-size             /* 18px; the icon field and its SVG — 28px for a tinted chip */
@@ -591,7 +592,7 @@ All visual values are controlled via CSS Custom Properties:
 --gl-list-leading-width         /* 28px, 40px with --lg: the leading box, for a time and a chip */
 --gl-avatar-size / --gl-avatar-font-size   /* an avatar's size and its initials; in a list's leading box 28px, 40px with --lg */
 --gl-tab-bar-badge-size / -top / -end / -ring-width / -ring-color   /* the tab bar's count and its dot (--dot): 16px/10px, place, ring */
---gl-label-hidden               /* 1: labels stay the fields' names, out of sight; set it from a container query */
+--gl-label-hidden               /* 1: labels stay the fields' names, out of sight; set it from a container query (needs style queries) */
 --gl-list-title-size / --gl-list-title-weight / --gl-list-subtitle-size   /* a row's type */
 --gl-sheet-bg / --gl-modal-bg   /* replace the surface of sheet and modal */
 --gl-sheet-side-width / --gl-sheet-side-inset / --gl-sheet-z-index   /* 440px, 16px, 1000: a sheet at a side */
@@ -841,7 +842,11 @@ A few refinements arrive later and fall back quietly where they are missing:
 - The first-line alignment of toggle, checkbox and radio uses the `lh` unit (Firefox 120); without it the control sits at the top of its label.
 - List rows without a leading icon move their divider in with `:has()` (Firefox 121); without it the divider keeps the icon inset.
 - Right to left, the pairs that must move together — select chevron and padding, toggle thumb and travel, progress gradient — sit under `:dir(rtl)` (Chrome 120); without it they stay left to right. A side bar and the upright dock (since 1.32.0) find their edge by the writing direction everywhere; only the padding for the safe area of the physical side waits for `:dir()`.
-- The top-layer variants of popover, tooltip and menu (`[popover]`, since 1.32.0) need the Popover API (Chrome 114, Safari 17, Firefox 125); the anchored `.glass-popover` with `.is-open` works everywhere. `contrast-color()` for the ink is an opt-in behind `@supports`.
+- The top-layer variants of popover, tooltip, menu and toast (`[popover]`, since 1.32.0, the toast since 1.39.0) need the Popover API (Chrome 114, Safari 17, Firefox 125); the anchored `.glass-popover` with `.is-open` and the toast in the page work everywhere. `contrast-color()` for the ink is an opt-in behind `@supports`.
+
+One refinement does not fall back quietly:
+
+- Labels hidden with `--gl-label-hidden` (since 1.38.0) need style queries on custom properties (Chrome 111, Safari 18, Firefox 151). Without them the labels stay above their fields, and every field grows by the label's line. For older browsers put the rules of a visually hidden label on `.glass-label` (GlassKit markup) or on `::part(label)` (GlassKit Elements) into the same query.
 
 > **Note:** In browsers without `backdrop-filter` support, elements will be rendered with the defined background colors – the UI remains usable, just without the blur effect.
 

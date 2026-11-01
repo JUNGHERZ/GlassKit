@@ -390,7 +390,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.38.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.39.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -475,7 +475,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.38.0</span>
+      <span class="docs-hero__badge">v1.39.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">38 Components</span>
@@ -1321,7 +1321,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.38/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.39/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -2236,6 +2236,15 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>--gl-toast-top</code></td><td>Distance from the top, default <code>var(--gl-space-4xl)</code> (since 1.19.0)</td></tr>
       </tbody>
     </table></div>
+    <p>In the top layer (since 1.39.0): a toast lies below a modal or a sheet, which the browser puts into the top layer, whatever its <code>z-index</code> &mdash; under the blurred overlay, unreadable. Give it <code>popover="manual"</code> and call <code>showPopover()</code> &mdash; again on every show, after <code>hidePopover()</code>, so it lies above a dialog opened since. <code>.glass-toast[popover]</code> undoes the popover&rsquo;s own box; place and look stay the toast&rsquo;s. Keep it open while it is hidden: it stays invisible and lets the pointer through, and as a live region it keeps being read. Beside a modal it can be seen, but, as everything outside the dialog, not used or announced. GlassKit Elements&rsquo; <code>&lt;glk-toast&gt;</code> does this.</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-toast glass-toast--error"</span> <span class="attr">role=</span><span class="val">"status"</span> <span class="attr">popover=</span><span class="val">"manual"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">// before every show: in again, on top</span>
+if (toast.matches(':popover-open')) toast.hidePopover();
+toast.showPopover();
+toast.classList.add('is-visible');</div>
+    </div>
   </section>
 
   <!-- POPOVER -->
@@ -2357,6 +2366,13 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td><code>--gl-tooltip-color</code></td><td><code>--gl-color-text</code></td><td>Its text</td></tr>
       </tbody>
     </table></div>
+    <p>A second line (since 1.39.0): <code>.glass-tooltip__hint</code> after the name says what a choice does, in the normal weight and the muted colour (<code>--gl-tooltip-hint-color</code>).</p>
+    <div class="docs-preview docs-preview--compact">
+      <div class="glass-tooltip" style="position:static;display:inline-block">Instead of the preview<span class="glass-tooltip__hint">A wider editor, the fields stay in the middle</span></div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"glass-tooltip"</span> <span class="attr">popover=</span><span class="val">"hint"</span><span class="tag">&gt;</span>Instead of the preview<span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-tooltip__hint"</span><span class="tag">&gt;</span>A wider editor, the fields stay in the middle<span class="tag">&lt;/span&gt;&lt;/div&gt;</span></div>
+    </div>
   </section>
 
   <!-- MENU -->
@@ -2511,11 +2527,14 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-input-group__label-end glass-input-group__counter"</span> <span class="attr">id=</span><span class="val">"meta-count"</span><span class="tag">&gt;</span>0/145<span class="tag">&lt;/span&gt;</span>   <span class="cmt">&lt;!-- kept up to date on input --&gt;</span>
 <span class="tag">&lt;/div&gt;</span></div>
     </div>
-    <p>Since 1.38.0 <code>--gl-label-hidden: 1</code> on a group, or a container around fields, keeps each <code>.glass-label</code> as its field&rsquo;s name and takes it out of sight &mdash; set from a container or media query, where an attribute cannot follow: fields in a table under one shared head only while the table is wide enough, with their labels above them when it turns into a list. It works in Chromium, WebKit and Firefox, through their style queries. In GlassKit Elements it reaches into <code>&lt;glk-input&gt;</code>, <code>&lt;glk-select&gt;</code> and <code>&lt;glk-textarea&gt;</code>, whose <code>label-hidden</code> does the same for one field.</p>
+    <p>Since 1.38.0 <code>--gl-label-hidden: 1</code> on a group, or a container around fields, keeps each <code>.glass-label</code> as its field&rsquo;s name and takes it out of sight &mdash; set from a container or media query, where an attribute cannot follow: fields in a table under one shared head only while the table is wide enough, with their labels above them when it turns into a list. It needs style queries on custom properties: Chrome 111, Safari 18 and Firefox 151. Without them the labels stay above their fields, every field 24&nbsp;px higher &mdash; for older browsers put the rules of a visually hidden label on <code>.glass-label</code>, or on <code>::part(label)</code> in GlassKit Elements, into the same query, as below. In GlassKit Elements it reaches into <code>&lt;glk-input&gt;</code>, <code>&lt;glk-select&gt;</code> and <code>&lt;glk-textarea&gt;</code>, whose <code>label-hidden</code> does the same for one field.</p>
     <div class="docs-code-wrapper">
       <div class="docs-code"><span class="cls">.week</span> { <span class="attr">container</span>: <span class="val">week / inline-size</span>; }
 <span class="tag">@container</span> week (min-width: 560px) {
   <span class="cls">.day</span> { <span class="attr">--gl-label-hidden</span>: <span class="val">1</span>; }   <span class="cmt">/* labels out of sight, still the names */</span>
+
+  <span class="cmt">/* older browsers: the same rules on the label */</span>
+  <span class="cls">.day .glass-label</span> { <span class="attr">position</span>: <span class="val">absolute</span>; <span class="attr">width</span>: <span class="val">1px</span>; <span class="attr">height</span>: <span class="val">1px</span>; <span class="attr">margin</span>: <span class="val">-1px</span>; <span class="attr">overflow</span>: <span class="val">hidden</span>; <span class="attr">clip-path</span>: <span class="val">inset(50%)</span>; <span class="attr">white-space</span>: <span class="val">nowrap</span>; }
 }</div>
     </div>
   </section>
@@ -2596,6 +2615,20 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
     </div>
     <p>The input is invisible, but it lies on top of the track and takes the click itself (since 1.20.0): a test tool that clicks the switch by its role reaches it, where the track used to draw over it and take the click. It covers the track only &mdash; the label text, which may hold a link, stays the label&rsquo;s. A <code>__label</code> left empty takes no room, so a switch without text keeps no 12&nbsp;px gap for one. Both hold for the checkbox and the radio button too. Right to left, the thumb starts on the right.</p>
     <p>The track is <code>--gl-toggle-track-bg</code> when off and <code>--gl-toggle-track-bg-checked</code> when on (since 1.25.0; unset, <code>--gl-surface-2</code> and the primary gradient): a stronger track for a page without glass, where the surface can be hard to see.</p>
+    <p id="toggle-placement">Where the switch stands (since 1.39.0): <code>.glass-toggle--label-start</code> puts the text before it, and <code>.glass-toggle--full</code> spreads the control over its row, so with both the text stands at the row&rsquo;s start and the switch at its end, as in the settings of iOS &mdash; mirrored right to left. The whole row is the label, so a click anywhere on it switches. <code>.glass-checkbox--label-start</code>, <code>--full</code> and the same for <code>.glass-radio</code> do it for checkbox and radio. In a <a href="#list">list</a> row the switch goes into <code>__trailing</code> instead, with the row&rsquo;s title as its name.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <div class="gl-stack gl-stack--md">
+        <label class="glass-toggle glass-toggle--label-start glass-toggle--full"><input class="glass-toggle__input" type="checkbox" checked><span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span><span class="glass-toggle__label">Notifications</span></label>
+        <label class="glass-toggle glass-toggle--label-start glass-toggle--full"><input class="glass-toggle__input" type="checkbox"><span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span><span class="glass-toggle__label">Sounds</span></label>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;label</span> <span class="attr">class=</span><span class="val">"glass-toggle glass-toggle--label-start glass-toggle--full"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">class=</span><span class="val">"glass-toggle__input"</span> <span class="attr">type=</span><span class="val">"checkbox"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-toggle__track"</span><span class="tag">&gt;&lt;span</span> <span class="attr">class=</span><span class="val">"glass-toggle__thumb"</span><span class="tag">&gt;&lt;/span&gt;&lt;/span&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-toggle__label"</span><span class="tag">&gt;</span>Notifications<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/label&gt;</span></div>
+    </div>
   </section>
 
   <!-- CHECKBOX -->
@@ -2688,6 +2721,22 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
       </div>
     </div>
     <p>An open item takes the height of its content, however long, and slides to it: <code>__content</code> is a grid of one row that goes from <code>0fr</code> to <code>1fr</code> (since 1.30.0). Until then it ended at 500&nbsp;px and cut off the rest, and the slide ran at the speed of that cap rather than of the content. Content that grows while the item is open grows with it. Under <code>prefers-reduced-motion</code> it opens without the slide.</p>
+    <p>Since 1.39.0 the trigger shows a ring for the keyboard, <code>inset 0 0 0 2px var(--gl-border-focus)</code> inside it, rounded with the item, as list and tree rows have; before, it had none. <code>.glass-accordion__summary</code> after the title holds a summary of the item, the values of a closed entry: in the room up to the chevron, on one line with an ellipsis, small and muted, inside the button, so a click on it, Enter and Space open the item as on the title. It takes only the room the title leaves. Hide it while the item is open where the fields show the values themselves.</p>
+    <div class="docs-preview docs-preview--constrained">
+      <div class="glass-accordion">
+        <div class="glass-accordion__item">
+          <button class="glass-accordion__trigger" onclick="this.parentElement.classList.toggle('is-open')"><span>Details of the news</span><span class="glass-accordion__summary">Summer party · 31.10.2026 · Lena Hoffmann</span><span class="glass-accordion__trigger-icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+          <div class="glass-accordion__content"><div class="glass-accordion__body">The fields of the entry.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="tag">&lt;button</span> <span class="attr">class=</span><span class="val">"glass-accordion__trigger"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;span&gt;</span>Details of the news<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-accordion__summary"</span><span class="tag">&gt;</span>Summer party · 31.10.2026 · Lena Hoffmann<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="val">"glass-accordion__trigger-icon"</span><span class="tag">&gt;</span>…<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/button&gt;</span></div>
+    </div>
   </section>
 
   <!-- SKELETON -->
@@ -3146,7 +3195,7 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
   <!-- SHEET -->
   <section class="docs-section" id="sheet">
     <h2>Sheet</h2>
-    <p>The bottom sheet is the mobile sibling of the modal: an overlay that fades and a panel that rises from the bottom edge, only the top corners rounded, a grip, safe-area padding. Its own block, not a modal modifier, because layout, entry motion and gesture differ. <code>--inline</code> embeds the panel in the flow without an overlay; the overlay form needs a little JavaScript, shown below and mirrored by <code>&lt;glk-sheet&gt;</code> in GlassKit Elements. Since 1.30.0 the overlay may be a native <code>&lt;dialog&gt;</code>, as the modal&rsquo;s: opened with <code>showModal()</code> it lies in the top layer, above every fixed or transformed element of the page whatever its <code>z-index</code>, and the page behind it is inert. <code>dialog.glass-sheet-overlay</code> undoes the dialog&rsquo;s own box and backdrop; show with <code>showModal()</code> and then <code>.is-active</code>, hide by removing <code>.is-active</code> and calling <code>close()</code> after <code>transitionend</code>. <code>&lt;glk-sheet&gt;</code> does this.</p>
+    <p>The bottom sheet is the mobile sibling of the modal: an overlay that fades and a panel that rises from the bottom edge, only the top corners rounded, a grip, safe-area padding. Its own block, not a modal modifier, because layout, entry motion and gesture differ. <code>--inline</code> embeds the panel in the flow without an overlay; the overlay form needs a little JavaScript, shown below and mirrored by <code>&lt;glk-sheet&gt;</code> in GlassKit Elements. Since 1.30.0 the overlay may be a native <code>&lt;dialog&gt;</code>, as the modal&rsquo;s: opened with <code>showModal()</code> it lies in the top layer, above every fixed or transformed element of the page whatever its <code>z-index</code>, and the page behind it is inert. <code>dialog.glass-sheet-overlay</code> undoes the dialog&rsquo;s own box and backdrop, and clips without being a scroll container (since 1.39.0: <code>overflow: clip</code> &mdash; with <code>hidden</code> a focus inside the panel while it slid in scrolled the overlay, and the panel stood at its place at once or swung past it and back); show with <code>showModal()</code> and then <code>.is-active</code>, hide by removing <code>.is-active</code> and calling <code>close()</code> after <code>transitionend</code>. <code>&lt;glk-sheet&gt;</code> does this.</p>
     <div class="docs-preview">
       <div class="glass-sheet glass-sheet--inline">
         <div class="glass-sheet__grip" aria-hidden="true"></div>
@@ -3584,23 +3633,23 @@ row.addEventListener(<span class="val">'animationend'</span>, () =&gt; row.class
         <tr><td>Calendar</td><td><code>.glass-calendar</code></td><td><code>__head</code>, <code>__title</code>, <code>__nav</code>, <code>__grid</code>, <code>__wd</code>, <code>__day</code>, <code>__day--today</code>, <code>__day--other</code>, <code>__marks</code>, <code>__mark--primary</code>/<code>--success</code>/<code>--warning</code>/<code>--error</code>, <code>[aria-pressed]</code>, <code>[aria-disabled]</code></td></tr>
         <tr><td>Image picker</td><td><code>.glass-image-picker</code></td><td><code>__preview</code>, <code>__preview--round</code>, <code>__meta</code>, <code>__label</code>, <code>__hint</code>, <code>__actions</code></td></tr>
         <tr><td>Popover</td><td><code>.glass-popover</code></td><td><code>--top</code>, <code>--start</code>, <code>--end</code>, <code>.is-open</code>, <code>[popover]</code>, <code>[data-side="top"]</code></td></tr>
-        <tr><td>Tooltip</td><td><code>.glass-tooltip</code></td><td><code>[popover]</code></td></tr>
+        <tr><td>Tooltip</td><td><code>.glass-tooltip</code></td><td><code>[popover]</code>; <code>__hint</code>, a second line (since 1.39.0)</td></tr>
         <tr><td>Menu</td><td><code>.glass-menu</code></td><td><code>__item</code>, <code>__item--danger</code>, <code>__check</code>, <code>__icon</code>, <code>__label</code>, <code>__trailing</code>, <code>__separator</code>, <code>__group-label</code>, <code>[aria-checked]</code>, <code>[aria-disabled]</code>, <code>.is-checked</code>, <code>.is-focused</code>, <code>.is-focus-visible</code>, <code>[popover]</code></td></tr>
         <tr><td>Input</td><td><code>.glass-input</code></td><td><code>--error</code>, <code>:disabled</code>; <code>.glass-input-wrap</code> with <code>__prefix</code> / <code>__suffix</code>; <code>.glass-input-group--label-end</code> with <code>__label-end</code> and <code>__counter</code> (since 1.37.0)</td></tr>
         <tr><td>Textarea</td><td><code>.glass-textarea</code></td><td><code>:disabled</code></td></tr>
         <tr><td>Select</td><td><code>.glass-select</code></td><td><code>:disabled</code>; a placeholder option in the placeholder colour (since 1.37.0)</td></tr>
         <tr><td>Search</td><td><code>.glass-search</code></td><td>–</td></tr>
-        <tr><td>Toggle</td><td><code>.glass-toggle</code></td><td><code>:checked</code>, <code>:disabled</code></td></tr>
+        <tr><td>Toggle</td><td><code>.glass-toggle</code></td><td><code>:checked</code>, <code>:disabled</code>; <code>--label-start</code>, <code>--full</code> (since 1.39.0)</td></tr>
         <tr><td>Checkbox</td><td><code>.glass-checkbox</code></td><td><code>:checked</code>, <code>:disabled</code></td></tr>
         <tr><td>Radio</td><td><code>.glass-radio</code></td><td><code>:checked</code>, <code>:disabled</code></td></tr>
         <tr><td>Range</td><td><code>.glass-range</code></td><td><code>:disabled</code></td></tr>
         <tr><td>Progress</td><td><code>.glass-progress</code></td><td><code>--sm</code>, <code>--lg</code>, <code>--success</code>, <code>--error</code></td></tr>
         <tr><td>Modal</td><td><code>.glass-modal-overlay</code></td><td><code>.is-active</code></td></tr>
-        <tr><td>Toast</td><td><code>.glass-toast</code></td><td><code>--success</code>, <code>--error</code>, <code>--warning</code>, <code>.is-visible</code>, <code>__action</code>, <code>__close</code></td></tr>
+        <tr><td>Toast</td><td><code>.glass-toast</code></td><td><code>--success</code>, <code>--error</code>, <code>--warning</code>, <code>.is-visible</code>, <code>__action</code>, <code>__close</code>; <code>[popover]</code> in the top layer (since 1.39.0)</td></tr>
         <tr><td>Tab-Bar</td><td><code>.glass-tab-bar</code></td><td><code>__item</code> with <code>.is-active</code>, <code>__icon</code>, <code>__label</code>, <code>__badge</code> (<code>--dot</code> since 1.38.0), <code>__leading</code>, <code>__trailing</code>, <code>--droplet</code>, <code>--vertical</code>, <code>--rail</code>, <code>--labels</code>, <code>--start</code>, <code>--end</code>, <code>--top</code></td></tr>
         <tr><td>Tab-Bar Floating</td><td><code>.glass-tab-bar-dock</code> + <code>.glass-tab-bar--floating</code></td><td><code>__accessory</code>, <code>__accessory--accent</code>/<code>--success</code>/<code>--error</code>, <code>__accessory-item</code>, <code>__accessory-label</code>, <code>--accessory-left</code>, <code>-dock--vertical</code>, <code>-dock--start</code></td></tr>
         <tr><td>Breadcrumbs</td><td><code>.glass-<wbr>breadcrumbs</code></td><td><code>__list</code>, <code>__item</code>, <code>__crumb</code>, <code>__current</code>, <code>__overflow</code>, <code>__item--overflow</code>, <code>.is-drop-target</code>, <code>.is-drop-refused</code></td></tr>
-        <tr><td>Accordion</td><td><code>.glass-accordion</code></td><td><code>.is-open</code> auf Items</td></tr>
+        <tr><td>Accordion</td><td><code>.glass-accordion</code></td><td><code>.is-open</code> on items; <code>__summary</code> beside the title (since 1.39.0)</td></tr>
       </tbody>
     </table></div>
   </section>
