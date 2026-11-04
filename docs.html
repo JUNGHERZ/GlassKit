@@ -369,6 +369,9 @@
     .docs-quickref { grid-template-columns: 1fr; }
     .docs-hero h1 { font-size: 28px; }
   }
+  /* The plain close button of the sheet head example: its ring stays. */
+  .docs-sheet-close-plain { color: var(--gl-color-text); }
+  .docs-sheet-close-plain:not(:focus-visible) { background: transparent; border-color: transparent; box-shadow: none; }
 </style>
 </head>
 <body>
@@ -390,7 +393,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.39.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.40.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -475,7 +478,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.39.0</span>
+      <span class="docs-hero__badge">v1.40.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">38 Components</span>
@@ -514,6 +517,7 @@
         <tr><td><code>--gl-color-primary-dark</code></td><td>#d4692a</td><td>Gradient end value</td></tr>
         <tr><td><code>--gl-color-primary-text</code></td><td>var(--gl-color-primary)</td><td>Text and line icons in the primary colour: prose links, the active tab, the primary modal action, accent list rows, the range value, the accordion &mdash; since 1.26.0, see <a href="#primary-text">Primary as text</a></td></tr>
         <tr><td><code>--gl-color-primary-on-glass</code></td><td>color-mix(in srgb, var(--gl-color-primary-text) 60%, #ffffff)</td><td>The primary as text on the glass of a card, a modal or a sheet: links, the range value, accent rows, the primary modal action (since 1.35.0); in light mode the primary text</td></tr>
+        <tr><td><code>--gl-focus-ring</code></td><td>color-mix(in srgb, var(--gl-color-primary) 15%, #ffffff)</td><td>The keyboard&rsquo;s mark, one solid colour; <code>--gl-border-focus</code> and <code>--gl-shadow-focus</code> take it. In the light theme <code>var(--gl-color-primary-on-surface)</code> &mdash; since 1.40.0, see <a href="#focus-marks">Focus marks</a></td></tr>
         <tr><td><code>--gl-color-text</code></td><td>#ffffff</td><td>Default text color</td></tr>
         <tr><td><code>--gl-color-text-muted</code></td><td>rgba(255,255,255,0.65)</td><td>Secondary text</td></tr>
         <tr><td><code>--gl-color-success</code></td><td>#34c759</td><td>Success status</td></tr>
@@ -647,6 +651,28 @@ function <span class="cls">toggleTheme</span>() {
 }</div>
     </div>
     <p><code>contrast-color()</code> looks at the primary alone. With a fill of your own, or a gradient that ends much darker, measure the other end as well.</p>
+    <h3 id="focus-marks">Focus marks</h3>
+    <p>Since 1.40.0 every control shows where the keyboard is, in one solid colour: <code>--gl-focus-ring</code>. Press Tab through these:</p>
+    <div class="docs-preview docs-preview--row docs-preview--compact">
+      <button class="glass-btn glass-btn--primary glass-btn--auto" type="button">Primary</button>
+      <button class="glass-btn glass-btn--secondary glass-btn--auto" type="button">Secondary</button>
+      <button class="glass-pill" type="button" aria-label="More"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg></button>
+      <label class="glass-checkbox"><input class="glass-checkbox__input" type="checkbox"><span class="glass-checkbox__box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="glass-checkbox__label">Checkbox</span></label>
+      <label class="glass-toggle"><input class="glass-toggle__input" type="checkbox" checked><span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span><span class="glass-toggle__label">Toggle</span></label>
+      <input class="glass-input" style="max-width:220px" type="text" aria-label="A field" placeholder="A field">
+    </div>
+    <p>Buttons, pills and the theme toggle draw it as a 2&nbsp;px outline that stands 2&nbsp;px clear of them, and the actions of a modal inside the action, where the modal would cut it off. Until 1.39.0 these had no mark at all. Every other part takes the ring of <code>--gl-shadow-focus</code> or <code>--gl-border-focus</code>, now 2&nbsp;px wide. Both were tints of the primary and read below 3:1, which a focus mark needs against what lies beside it (WCAG 1.4.11). Both take the solid colour now, and it follows the brand:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cmt">/* The defaults */</span>
+<span class="cls">:root</span>, [data-theme=<span class="val">"dark"</span>] {
+  <span class="attr">--gl-focus-ring</span>: <span class="val">color-mix(in srgb, var(--gl-color-primary) 15%, #ffffff)</span>;
+}
+[data-theme=<span class="val">"light"</span>] {
+  <span class="attr">--gl-focus-ring</span>: <span class="val">var(--gl-color-primary-on-surface)</span>;
+}</div>
+    </div>
+    <p>GlassKit&rsquo;s orange reads 3:1 or more on the page and on glass. What lies behind the glass decides how bright it gets, and a darker brand can fall short on the brightest spot, a glow card in the middle of the page in dark mode, with glass on it. A colour of your own goes into <code>--gl-focus-ring</code>: keep it solid and measure it there. A project that set <code>--gl-border-focus</code> or <code>--gl-shadow-focus</code> itself keeps its own ring until it drops them, and an outline of its own on <code>:focus-visible</code> is no longer needed.</p>
+    <p>In forced colors, Windows&rsquo; high contrast mode, the browser drops <code>box-shadow</code> and with it every ring. There each part shows an outline in the text colour, inside the rows of lists, accordions and menus, which clip what lies outside them.</p>
     <h3>Right to left</h3>
     <p>Since 1.20.0 the components follow the writing direction. Set <code>dir="rtl"</code> on <code>&lt;html&gt;</code> or on any container: paddings, insets and borders are logical properties, so labels and hints, the search icon, list dividers, popover anchors, tab badges, modal actions, the toast&rsquo;s close button and the alignment of accordion, list, table and prose all mirror. Where two values have to move together &mdash; the select&rsquo;s chevron and the room kept for it, the toggle&rsquo;s thumb and its travel, the progress fill&rsquo;s gradient &mdash; the rule sits under <code>:dir(rtl)</code>: Chrome and Edge from 120, Safari from 16.4, Firefox from 49. An older browser keeps those parts left to right instead of tearing them apart.</p>
     <h3>Printing</h3>
@@ -1321,7 +1347,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.39/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.40/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -3273,7 +3299,7 @@ toast.classList.add('is-visible');</div>
         <div class="glass-sheet__head">
           <span class="glass-sheet__leading"><span style="display:inline-flex;width:56px;height:56px;border-radius:14px;align-items:center;justify-content:center;background:color-mix(in srgb, var(--gl-color-primary) 28%, transparent)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span></span>
           <div class="glass-sheet__heading"><h2 class="glass-sheet__title">Picture gallery</h2><span class="glass-sheet__subtitle"><span class="glass-badge glass-badge--success">1&times; in your app</span></span></div>
-          <button class="glass-sheet__close" type="button" aria-label="Close" style="background:transparent;border-color:transparent;box-shadow:none;color:var(--gl-color-text)"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+          <button class="glass-sheet__close docs-sheet-close-plain" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
         </div>
         <div class="glass-sheet__body">The badge stands below the title, which keeps its width. The close button is plain, 44&nbsp;px with a 20&nbsp;px glyph.</div>
       </div>
@@ -3289,7 +3315,7 @@ toast.classList.add('is-visible');</div>
   <span class="attr">--gl-sheet-close-icon-size</span>: <span class="val">20px</span>;
   <span class="attr">--gl-sheet-close-icon-stroke</span>: <span class="val">1.8</span>;
 }
-<span class="cls">.my-sheet .glass-sheet__close</span> { <span class="attr">background</span>: <span class="val">transparent</span>; <span class="attr">border-color</span>: <span class="val">transparent</span>; <span class="attr">box-shadow</span>: <span class="val">none</span>; }</div>
+<span class="cls">.my-sheet .glass-sheet__close:not(:focus-visible)</span> { <span class="attr">background</span>: <span class="val">transparent</span>; <span class="attr">border-color</span>: <span class="val">transparent</span>; <span class="attr">box-shadow</span>: <span class="val">none</span>; }</div>
     </div>
 
     <h3 id="sheet-side">At a side, modeless</h3>

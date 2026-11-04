@@ -7,6 +7,58 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.40.0] – 2026-11-04
+
+### Added
+
+- **One colour for the keyboard's mark: `--gl-focus-ring`.** It is solid and follows the brand: in dark mode the primary with 85 % white, in the light theme `--gl-color-primary-on-surface`. `--gl-border-focus` and `--gl-shadow-focus` take it, so the rules that draw the rings stay as they were. ([#32](https://github.com/JUNGHERZ/GlassKit/issues/32))
+
+### Changed
+
+- **Every focus ring is solid and 2px wide.** The two tokens were tints of the primary, the ring 3px wide, and they read 1.2 to 2.9:1. A focus mark needs 3:1 against what lies beside it (WCAG 1.4.11).
+  - The issue proposed 65 % white in dark mode. That fell short on the brightest glass: the scene is lightest in the middle of the page, where a card usually stands, and Chromium draws glass on glass lighter still. There an accordion on a glow card read 2.75:1 with GlassKit's orange and 1.90:1 with `#6d28d9`. With 85 % white it reads 3.17:1 and 2.74:1.
+  - Fields keep `:focus`, so they show the stronger ring on a click too.
+  - A project that set `--gl-border-focus` or `--gl-shadow-focus` itself keeps its own ring until it drops them. A colour of its own goes into `--gl-focus-ring`, solid.
+
+  ([#32](https://github.com/JUNGHERZ/GlassKit/issues/32))
+- **The rim of a drop target takes the primary.** `.is-sort-inside` and a crumb with `.is-drop-target` drew it in `--gl-border-focus`, which would have turned them almost white in dark mode. They take `--gl-color-primary` now, as the line of a sort does, and so read a little stronger than the tint did.
+
+### Fixed
+
+- **Buttons, pills, the theme toggle and the modal's actions showed no focus at all.** They set `outline: none` and had no `:focus-visible` rule, so a screenshot with the focus and one without differed in 0 pixels (WCAG 2.4.7).
+  - `.glass-btn`, `.glass-pill` and `.glass-theme-toggle` show a 2px outline, 2px clear of the control: the gap keeps it apart from a filled button.
+  - `.glass-modal__action` shows it inside the action, 4px from its edge and rounded along the modal's corners. The issue proposed it outside, where the modal's `overflow: hidden` cuts it off.
+  - An outline of a page's own on `:focus-visible` is no longer needed. It never reached the shadow roots of GlassKit Elements.
+
+  ([#32](https://github.com/JUNGHERZ/GlassKit/issues/32))
+- **Forced colors took the rings away.** In Windows' high contrast mode the browser drops `box-shadow`, and most parts had no mark left. `@media (forced-colors: active)` now gives every part an outline in the text colour, inside the rows of accordions, lists, menus and trees, which clip what lies outside them. The issue proposed a transparent outline on each rule. One block leaves the normal view alone and reaches those rows too. ([#32](https://github.com/JUNGHERZ/GlassKit/issues/32))
+- **The ring of a field in error stayed a tint.** `.glass-input--error:focus` had a ring of its own at 1.7 to 2.9:1, and its border took the focus colour. Both are a solid error colour now: `--gl-color-error-on-surface` with 30 % of the text colour, since on its own it read only 3:1 on a card.
+- **A day of the neighbouring month dimmed its ring with it.** `.glass-calendar__day--other` has `opacity: 0.35`, and the ring read 2.5:1. With the focus the day keeps its dim text and the ring shows in full. A day with `aria-disabled` stays dimmed: an inactive control is exempt from WCAG 1.4.11.
+- **The list cut the ring of its first and last row.** The rows are square and the list rounds them by clipping, which a solid ring shows as a gap at the corner. `.glass-list__item--interactive:focus-visible` is rounded as the list is.
+- **The docs' plain close button of a sheet lost its focus ring.** The example set `box-shadow: none`. It now reads `.glass-sheet__close:not(:focus-visible)`.
+
+### Compatibility
+
+- **The no-JS light mirror of GlassKit Web** needs `--gl-focus-ring` and the new values of `--gl-border-focus` and `--gl-shadow-focus`. Its `check:tokens` names them.
+
+Measured in Chromium 153, WebKit 26.6 and Firefox 151, 1.39.0 against 1.40.0, by the issue's measure: the strongest contrast of any pixel the focus changes, against the same pixel without focus. Each theme has 85 cases, every control in its states on the page, on a card and on its own panel, and 42 more on the brightest spot of the scene.
+- **Before:** 17 of the 85 cases showed no mark, the others read 1.21 to 2.94:1.
+- **GlassKit's orange:**
+
+  | | Dark | Light |
+  |---|---|---|
+  | Page | 6.37–10.57 | 5.26–7.90 |
+  | Card | 3.50–9.46 | 5.70–8.23 |
+  | Panels: modal, toast, menu, sheet, tab bar | 7.38–13.22 | 5.22–6.33 |
+  | The brightest spot, bare, on a card, on a glow card | 4.79, 3.39, 3.17 or more | 5.18, 5.76, 5.96 or more |
+
+- **Other brands:** `#c25028`, `#0082BB` and `#6d28d9` read 3.12:1 or more in dark mode and 7.26:1 or more in the light theme. On the brightest spot the accordion and the list row fall short in Chromium: on a glow card 2.87, 2.88 and 2.74:1, with `#6d28d9` on a plain card 2.93:1. Such a brand sets `--gl-focus-ring`.
+- **Surface presets:** `solid` reads 5.22:1 or more, `tint` 3.95:1 or more.
+- **Forced colors:** in Chromium 72 and in Firefox 81 of the 85 cases showed no mark, now none, at 9:1 or more. WebKit does not emulate forced colors.
+- **Pages:** docs, showcase and landing pages render as in 1.39.0, except the rims of the drop targets in the docs' examples.
+
+---
+
 ## [1.39.0] – 2026-11-01
 
 ### Added
@@ -1617,6 +1669,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.40.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.40.0
 [1.39.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.39.0
 [1.38.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.38.0
 [1.37.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.37.0

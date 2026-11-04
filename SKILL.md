@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.39.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.40.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -13,6 +13,8 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.39.0) wi
 > **New in 1.28.0 — icons of any kind, and tokens instead of overrides.** Tab bar, accessory and segmented control colour their icon box, not the SVG: put a font icon (Material Icons), an `<img>` mask or a custom element straight into `.glass-tab-bar__icon` or `.glass-segmented__icon`, and it follows every state, the lens of the drop and the drag. `--icons` makes an icon-only segmented row (light / dark / auto). The inactive tab colour, the hover colour, the label size and the z-index of the tab bar are tokens, and so are the surface, shadow and text colour of the chosen segmented option. **Where a project restyles tab icons per state, or overrides the tab bar's literals, replace that with the tokens** (3.4, 3.29).
 
 > **New in 1.32.0 — one navigation for every edge, four components, and AA on the accent fills.** The tab bar leaves the bottom edge: `--vertical` makes it a sidebar, `--start` or `--end` fixes it to that side of the viewport — where the thumb rests on a phone held open, or a foldable that moved its system controls to a side — `--rail` shrinks it to icons, `--top` lays it out for the top of a page, and the floating bar stands upright in `.glass-tab-bar-dock--vertical`. In a column the drop runs along y, and its timing is tokens (`--gl-droplet-*`). New: the tooltip, the menu, the tree and the breadcrumbs (3.36–3.39), the states of a drag that reorders a list or a tree (3.40), and for the table a sort button, a sticky header, a row action column, an empty row and a card layout (3.27). Popover, tooltip and menu open in the top layer with the `popover` attribute. `--gl-btn-primary-bg` and `--gl-color-primary-fill` darken the accent fills for white text without touching the brand colour, and the radio's dot follows `--gl-color-on-primary`. **Where a project builds its own sidebar, tooltip, menu, tree or breadcrumbs, overrides the drop's transitions, or darkens `--gl-color-primary` for white button text, replace that** (3.4, 3.7, 3.25, section 2).
+
+> **New in 1.40.0 — a focus mark on every control, and one that can be seen.** `--gl-focus-ring` is one solid colour that follows the brand, and `--gl-border-focus` and `--gl-shadow-focus` take it: with GlassKit's orange each ring reads 3:1 or more in both themes, on the page and on glass, and it is 2px wide (section 2, Shadows). `.glass-btn`, `.glass-pill`, `.glass-theme-toggle` and `.glass-modal__action` show it as an outline; they had no mark at all. In forced colors every part shows an outline, where the browser drops the rings. **Where a project draws its own outline on `:focus-visible` for these parts, or keeps a tint in `--gl-border-focus` or `--gl-shadow-focus`, drop that.**
 
 > **New in 1.39.0 — the switch at the row's end, a summary in the accordion's head, toasts above dialogs, a second line in the tooltip.** `.glass-toggle--label-start` and `--full` (also on checkbox and radio) put the text at the row's start and the switch at its end, as in the settings of iOS (3.18). `.glass-accordion__summary` holds the values of a closed item beside its title, and the trigger shows a focus ring (3.23). `.glass-toast[popover]` lets a toast go into the top layer, above a modal or a sheet (3.13). `.glass-tooltip__hint` is a tooltip's second line (3.36). `dialog.glass-sheet-overlay` clips with `overflow: clip`, so a focus while it slides in no longer scrolls it (3.31). `--gl-label-hidden` needs style queries: Chrome 111, Safari 18, Firefox 151 (3.14).
 
@@ -279,7 +281,8 @@ fully-translucent pre-1.7.0 chip.
 | `--gl-border-strong` | `rgba(255,255,255, 0.40)` |
 | `--gl-border-milk` | `rgba(255,255,255, 0.60)` |
 | `--gl-border-warm` | derived from primary → `rgba(255,200,100, 0.35)` |
-| `--gl-border-focus` | derived from primary → `rgba(245,166,35, 0.60)` |
+| `--gl-focus-ring` | The keyboard's mark, one solid colour (since 1.40.0): `color-mix(in srgb, var(--gl-color-primary) 15%, #ffffff)`, in the light theme `var(--gl-color-primary-on-surface)` |
+| `--gl-border-focus` | `var(--gl-focus-ring)` (until 1.39.0 a tint of the primary) |
 
 ### Blur
 
@@ -362,7 +365,9 @@ The rules read each size with its default as fallback, like `--gl-modal-max-widt
 | `--gl-shadow-glow` | Glow effect |
 | `--gl-shadow-modal` | Modal dialog |
 | `--gl-shadow-toast` | Toast notifications |
-| `--gl-shadow-focus` | Focus ring |
+| `--gl-shadow-focus` | Focus ring: `0 0 0 2px var(--gl-focus-ring)` (until 1.39.0 3px and a tint of the primary) |
+
+**Focus marks (since 1.40.0).** Every control shows where the keyboard is, in `--gl-focus-ring`; GlassKit's orange reads 3:1 or more on the page and on glass (WCAG 1.4.11). `.glass-btn`, `.glass-pill` and `.glass-theme-toggle` draw a 2px outline 2px clear of the control, `.glass-modal__action` inside the action, since the modal clips; the other parts take the ring of `--gl-shadow-focus` or `--gl-border-focus`. A colour of your own goes into `--gl-focus-ring`: keep it solid. What lies behind the glass decides how bright it gets, and a darker brand can fall short on the brightest spot, glass on a glow card in the middle of the page in dark mode, so measure it there. A tint set in `--gl-border-focus` or `--gl-shadow-focus` stays what it is and falls below 3:1. In forced colors the browser drops `box-shadow`, and every part shows an outline in the text colour instead.
 
 ### Typography
 
@@ -2285,7 +2290,8 @@ Flexbox row with gap.
 | `.is-visible` | `.glass-toast` | Toast is visible |
 | `.is-under-droplet` | `.glass-tab-bar__item`, `.glass-segmented__item` | The item below the drop of a `--droplet` row; set by `glasskit-droplet.js` only (since 1.27.0) |
 | `:checked` | Toggle, Checkbox, Radio (on the input) | Native checked state |
-| `:focus` | Input, Textarea, Select, Range | Focus ring |
+| `:focus` | Input, Textarea, Select | Focus ring |
+| `:focus-visible` | Every other control | Focus mark: a ring, an outline on Button, Pill, Theme Toggle and Modal action (since 1.40.0) |
 | `:disabled` | Input, Select, Textarea, Range (0.4); Button, Pill, Tab Bar Accessory, Modal action, list row, calendar arrow, Toggle, Checkbox, Radio (0.45) | Dimmed, not-allowed cursor, no hover (most since 1.21.2) |
 | `[aria-disabled="true"]` | `a.glass-btn` and the other buttons; date strip and calendar days; `.glass-menu__item` | As `:disabled`, for elements that cannot be disabled — a link still navigates; a menu item stays reachable with the arrow keys |
 | `:popover-open` | `.glass-popover[popover]`, `.glass-tooltip[popover]`, `.glass-menu[popover]`, `.glass-sort__ghost` | Shown in the top layer, by `showPopover()` or a `popovertarget` button (since 1.32.0) |
@@ -2755,6 +2761,7 @@ Key points:
 | A count in a segmented label, "Tickets (1)" | `.glass-segmented__badge` after the label, the count in the option's `aria-label` (since 1.29.0) |
 | A tone on the option only to colour its count, or `--gl-segmented-badge-bg` / `-color` set to a state colour | `.glass-segmented__badge--error` (or `--primary`, `--success`, `--warning`) — no dot (since 1.31.0) |
 | `--gl-radius-btn` set for pill-shaped buttons | `--gl-btn-radius: 9999px` — lists, toasts and the segmented control keep theirs (since 1.31.0) |
+| An outline of your own on `:focus-visible` for buttons and pills, or a tint in `--gl-shadow-focus` | Nothing to do on buttons, pills, the theme toggle and modal actions; `--gl-focus-ring` sets the colour of every mark, solid (since 1.40.0) |
 | `--gl-color-primary` darkened until white text on the primary button passes | `--gl-btn-primary-bg` and `--gl-color-primary-fill` darken the fills alone, or switch the ink with `--gl-color-on-primary` (since 1.32.0, section 2) |
 | A rule on `.glass-radio__dot` to turn it dark with a dark ink | Nothing to do: the dot follows `--gl-color-on-primary` (since 1.32.0) |
 | A sidebar from `.glass-tab-bar` with its own `flex-direction`, `position` and `height` | `.glass-tab-bar--vertical`, with `--start` / `--end` for a fixed side, `--rail` for icons alone; `--top` for a top bar (since 1.32.0) |
@@ -2902,7 +2909,7 @@ Load custom brand colors via `theme-override.css` after the base library:
 ```
 
 Since 1.11.0 those two declarations are the whole job. The gradient midpoint, the warm
-rim (`--gl-border-warm`), the focus ring (`--gl-border-focus`, `--gl-shadow-focus`), the
+rim (`--gl-border-warm`), the focus ring (`--gl-focus-ring`, which `--gl-border-focus` and `--gl-shadow-focus` take), the
 glow under the primary button and the range slider thumb are all mixed from them. Before
 1.11.0 they held fixed amber values, so a re-branded button came with an orange halo and
 an amber focus ring.

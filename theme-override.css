@@ -58,8 +58,10 @@
 /*
 :root {
   --gl-color-primary-mid:    #0066E0;
-  --gl-shadow-focus:         0 0 0 3px rgba(0, 122, 255, 0.4);
 }
+/* Fokusring und Outline: deckend, mindestens 3:1 gegen die Umgebung. */
+:root, [data-theme="dark"] { --gl-focus-ring: #66AFFF; }
+[data-theme="light"]       { --gl-focus-ring: #0055CC; }
 */
 
 

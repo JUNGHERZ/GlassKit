@@ -369,6 +369,9 @@
     .docs-quickref { grid-template-columns: 1fr; }
     .docs-hero h1 { font-size: 28px; }
   }
+  /* The plain close button of the sheet head example: its ring stays. */
+  .docs-sheet-close-plain { color: var(--gl-color-text); }
+  .docs-sheet-close-plain:not(:focus-visible) { background: transparent; border-color: transparent; box-shadow: none; }
 </style>
 </head>
 <body>
@@ -390,7 +393,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Glassmorphismus pur.</div>
-  <div class="docs-sidebar__version">v1.39.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.40.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Grundlagen</div>
@@ -475,7 +478,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>Vollständige CSS-Komponentenbibliothek im Glasmorphism-Stil – entwickelt von der Jungherz GmbH. Reines CSS, keine Abhängigkeiten, Dark & Light Mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.39.0</span>
+      <span class="docs-hero__badge">v1.40.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">38 Komponenten</span>
@@ -514,6 +517,7 @@
         <tr><td><code>--gl-color-primary-dark</code></td><td>#d4692a</td><td>Gradient-Endwert</td></tr>
         <tr><td><code>--gl-color-primary-text</code></td><td>var(--gl-color-primary)</td><td>Text und Linien-Icons in der Primärfarbe: Links in Prose, der aktive Tab, die primäre Modal-Aktion, Akzent-Listenzeilen, der Wert eines Reglers, das Akkordeon &mdash; seit 1.26.0, siehe <a href="#primary-text">Primärfarbe als Text</a></td></tr>
         <tr><td><code>--gl-color-primary-on-glass</code></td><td>color-mix(in srgb, var(--gl-color-primary-text) 60%, #ffffff)</td><td>Die Primärfarbe als Text auf dem Glas einer Karte, eines Modals oder eines Sheets: Links, der Range-Wert, Akzentzeilen, die primäre Modal-Aktion (seit 1.35.0); im hellen Modus der Primärtext</td></tr>
+        <tr><td><code>--gl-focus-ring</code></td><td>color-mix(in srgb, var(--gl-color-primary) 15%, #ffffff)</td><td>Die Markierung der Tastatur, eine deckende Farbe; <code>--gl-border-focus</code> und <code>--gl-shadow-focus</code> nehmen sie. Im hellen Theme <code>var(--gl-color-primary-on-surface)</code> &mdash; seit 1.40.0, siehe <a href="#focus-marks">Fokusmarkierungen</a></td></tr>
         <tr><td><code>--gl-color-text</code></td><td>#ffffff</td><td>Standard-Textfarbe</td></tr>
         <tr><td><code>--gl-color-text-muted</code></td><td>rgba(255,255,255,0.65)</td><td>Sekundärer Text</td></tr>
         <tr><td><code>--gl-color-success</code></td><td>#34c759</td><td>Erfolg-Status</td></tr>
@@ -647,6 +651,28 @@ function <span class="cls">toggleTheme</span>() {
 }</div>
     </div>
     <p><code>contrast-color()</code> sieht nur die Primärfarbe an. Mit einer eigenen Fläche oder einem Verlauf, der deutlich dunkler endet, auch das andere Ende messen.</p>
+    <h3 id="focus-marks">Fokusmarkierungen</h3>
+    <p>Seit 1.40.0 zeigt jedes Bedienelement, wo die Tastatur steht, in einer deckenden Farbe: <code>--gl-focus-ring</code>. Drücke hier die Tab-Taste:</p>
+    <div class="docs-preview docs-preview--row docs-preview--compact">
+      <button class="glass-btn glass-btn--primary glass-btn--auto" type="button">Primär</button>
+      <button class="glass-btn glass-btn--secondary glass-btn--auto" type="button">Sekundär</button>
+      <button class="glass-pill" type="button" aria-label="Mehr"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg></button>
+      <label class="glass-checkbox"><input class="glass-checkbox__input" type="checkbox"><span class="glass-checkbox__box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="glass-checkbox__label">Checkbox</span></label>
+      <label class="glass-toggle"><input class="glass-toggle__input" type="checkbox" checked><span class="glass-toggle__track"><span class="glass-toggle__thumb"></span></span><span class="glass-toggle__label">Schalter</span></label>
+      <input class="glass-input" style="max-width:220px" type="text" aria-label="Ein Feld" placeholder="Ein Feld">
+    </div>
+    <p>Buttons, Pills und der Theme-Schalter zeichnen sie als 2&nbsp;px breite Outline mit 2&nbsp;px Abstand, die Aktionen eines Modals innerhalb der Aktion, weil das Modal sie sonst abschneiden würde. Bis 1.39.0 hatten diese Teile gar keine Markierung. Alle anderen Teile nehmen den Ring aus <code>--gl-shadow-focus</code> oder <code>--gl-border-focus</code>, jetzt 2&nbsp;px breit. Beide waren Tönungen der Primärfarbe und lagen unter den 3:1, die eine Fokusmarkierung gegen ihre Umgebung braucht (WCAG 1.4.11). Beide nehmen jetzt die deckende Farbe, und sie folgt der Marke:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cmt">/* Die Vorgaben */</span>
+<span class="cls">:root</span>, [data-theme=<span class="val">"dark"</span>] {
+  <span class="attr">--gl-focus-ring</span>: <span class="val">color-mix(in srgb, var(--gl-color-primary) 15%, #ffffff)</span>;
+}
+[data-theme=<span class="val">"light"</span>] {
+  <span class="attr">--gl-focus-ring</span>: <span class="val">var(--gl-color-primary-on-surface)</span>;
+}</div>
+    </div>
+    <p>GlassKits Orange erreicht 3:1 oder mehr auf der Seite und auf Glas. Wie hell Glas wird, entscheidet aber, was dahinter liegt, und eine dunklere Marke kann an der hellsten Stelle darunter bleiben: Glas auf einer Glow-Karte in der Seitenmitte, im Dark Mode. Eine eigene Farbe gehört in <code>--gl-focus-ring</code>: Halte sie deckend und miss sie dort. Ein Projekt, das <code>--gl-border-focus</code> oder <code>--gl-shadow-focus</code> selbst gesetzt hat, behält seinen Ring, bis es sie entfernt, und eine eigene Outline auf <code>:focus-visible</code> ist nicht mehr nötig.</p>
+    <p>In Forced Colors, dem Hochkontrastmodus von Windows, verwirft der Browser <code>box-shadow</code> und damit jeden Ring. Dort zeigt jedes Teil eine Outline in der Textfarbe, innerhalb der Zeilen von Listen, Akkordeons und Menüs, die abschneiden, was außerhalb liegt.</p>
     <h3>Rechts nach links</h3>
     <p>Seit 1.20.0 folgen die Komponenten der Schreibrichtung. <code>dir="rtl"</code> auf <code>&lt;html&gt;</code> oder einem beliebigen Container genügt: Abstände, Positionen und Rahmen sind logische Eigenschaften, also spiegeln sich Labels und Hinweise, das Such-Icon, die Trennlinien der Liste, die Popover-Anker, die Tab-Badges, die Modal-Aktionen, das &times; des Toasts und die Ausrichtung von Akkordeon, Liste, Tabelle und Prose. Wo zwei Werte gemeinsam wandern müssen &mdash; der Chevron des Selects und der Platz für ihn, der Knopf des Schalters und sein Weg, der Verlauf der Fortschrittsfüllung &mdash; steht die Regel unter <code>:dir(rtl)</code>: Chrome und Edge ab 120, Safari ab 16.4, Firefox ab 49. Ein älterer Browser lässt diese Teile links nach rechts, statt sie auseinanderzureißen.</p>
     <h3>Drucken</h3>
@@ -1321,7 +1347,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.39/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.40/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// jede --droplet-Zeile der Seite; attachDroplet(row) für eine</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -3273,7 +3299,7 @@ toast.classList.add('is-visible');</div>
         <div class="glass-sheet__head">
           <span class="glass-sheet__leading"><span style="display:inline-flex;width:56px;height:56px;border-radius:14px;align-items:center;justify-content:center;background:color-mix(in srgb, var(--gl-color-primary) 28%, transparent)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span></span>
           <div class="glass-sheet__heading"><h2 class="glass-sheet__title">Bildergalerie</h2><span class="glass-sheet__subtitle"><span class="glass-badge glass-badge--success">1&times; in deiner App</span></span></div>
-          <button class="glass-sheet__close" type="button" aria-label="Schließen" style="background:transparent;border-color:transparent;box-shadow:none;color:var(--gl-color-text)"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+          <button class="glass-sheet__close docs-sheet-close-plain" type="button" aria-label="Schließen"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
         </div>
         <div class="glass-sheet__body">Das Badge steht unter dem Titel, der seine Breite behält. Der Schließen-Button ist schlicht, 44&nbsp;px mit einem Zeichen von 20&nbsp;px.</div>
       </div>
@@ -3289,7 +3315,7 @@ toast.classList.add('is-visible');</div>
   <span class="attr">--gl-sheet-close-icon-size</span>: <span class="val">20px</span>;
   <span class="attr">--gl-sheet-close-icon-stroke</span>: <span class="val">1.8</span>;
 }
-<span class="cls">.my-sheet .glass-sheet__close</span> { <span class="attr">background</span>: <span class="val">transparent</span>; <span class="attr">border-color</span>: <span class="val">transparent</span>; <span class="attr">box-shadow</span>: <span class="val">none</span>; }</div>
+<span class="cls">.my-sheet .glass-sheet__close:not(:focus-visible)</span> { <span class="attr">background</span>: <span class="val">transparent</span>; <span class="attr">border-color</span>: <span class="val">transparent</span>; <span class="attr">box-shadow</span>: <span class="val">none</span>; }</div>
     </div>
 
     <h3 id="sheet-side">An einer Seite, nicht-modal</h3>

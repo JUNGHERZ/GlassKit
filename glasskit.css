@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.39.0
+   Jungherz GmbH – v1.40.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -162,7 +162,16 @@
      Both are roles, so both follow --gl-color-primary. Kept as-is by name for
      compatibility; pre-1.11.0 they were rgba(255,200,100,.35) / rgba(245,166,35,.6). */
   --gl-border-warm:          color-mix(in srgb, color-mix(in srgb, var(--gl-color-primary) 68%, #ffffff) 35%, transparent);
-  --gl-border-focus:         color-mix(in srgb, var(--gl-color-primary) 60%, transparent);
+  /* The keyboard's mark (since 1.40.0): one solid colour, which the two
+     tokens of the ring take. As tints of the primary they read 1.2 to
+     2.9:1, where a focus mark needs 3:1 (WCAG 1.4.11). A fixed share of
+     white, not --gl-color-primary-on-surface: that fell to 2.36:1 on a
+     card with a darker brand. 85 %: the brightest glass is a glow card in
+     the middle of the page, where the scene is lightest, and in Chromium
+     glass on glass comes out lighter still. GlassKit's orange keeps 3:1
+     there; a darker brand may not, and sets this token. */
+  --gl-focus-ring:           color-mix(in srgb, var(--gl-color-primary) 15%, #ffffff);
+  --gl-border-focus:         var(--gl-focus-ring);
 
   /* ---- Icon Colors ---- */
   --gl-icon-default:         rgba(255, 255, 255, 0.6);
@@ -197,7 +206,7 @@
   --gl-shadow-modal:         0 24px 80px rgba(0, 0, 0, 0.4),
                              0 8px 32px rgba(0, 0, 0, 0.2);
   --gl-shadow-toast:         0 8px 32px rgba(0, 0, 0, 0.25);
-  --gl-shadow-focus:         0 0 0 3px color-mix(in srgb, var(--gl-color-primary) 30%, transparent);
+  --gl-shadow-focus:         0 0 0 2px var(--gl-focus-ring);
 
   /* ---- Inset Highlights ---- */
   --gl-inset-subtle:         inset 0 1px 1px rgba(255, 255, 255, 0.10);
@@ -389,7 +398,8 @@
   --gl-border-strong:        rgba(0, 0, 0, 0.15);
   --gl-border-milk:          rgba(0, 0, 0, 0.10);
   --gl-border-warm:          color-mix(in srgb, var(--gl-color-primary) 30%, transparent);
-  --gl-border-focus:         color-mix(in srgb, var(--gl-color-primary) 50%, transparent);
+  --gl-focus-ring:           var(--gl-color-primary-on-surface);
+  --gl-border-focus:         var(--gl-focus-ring);
 
   --gl-icon-default:         rgba(26, 42, 54, 0.65);
   --gl-icon-muted:           rgba(26, 42, 54, 0.55);
@@ -407,7 +417,7 @@
   --gl-shadow-modal:         0 16px 48px rgba(0, 0, 0, 0.12),
                              0 4px 16px rgba(0, 0, 0, 0.08);
   --gl-shadow-toast:         0 4px 20px rgba(0, 0, 0, 0.10);
-  --gl-shadow-focus:         0 0 0 3px color-mix(in srgb, var(--gl-color-primary) 25%, transparent);
+  --gl-shadow-focus:         0 0 0 2px var(--gl-focus-ring);
 
   --gl-inset-subtle:         inset 0 1px 1px rgba(255, 255, 255, 0.60);
   --gl-inset-medium:         inset 0 1px 1px rgba(255, 255, 255, 0.70);
@@ -703,6 +713,8 @@
 
 .glass-pill:hover { background: var(--gl-surface-5); transform: scale(1.05); }
 .glass-pill:active { transform: scale(0.95); }
+/* A mark for the keyboard (since 1.40.0), as on .glass-btn. */
+.glass-pill:focus-visible { outline: 2px solid var(--gl-focus-ring); outline-offset: 2px; }
 /* Disabled: dimmed, not-allowed cursor, no hover — see .glass-btn:disabled. */
 .glass-pill:disabled,
 .glass-pill[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
@@ -806,6 +818,12 @@
   cursor: pointer; transition: var(--gl-transition);
   outline: none; -webkit-tap-highlight-color: transparent;
 }
+
+/* A mark for the keyboard (since 1.40.0); outline: none above left none. An
+   outline, not the ring of the other controls: each variant has its own
+   shadow list, and with a gap it stands clear of a filled button, which
+   the primary tones of a ring would melt into. */
+.glass-btn:focus-visible { outline: 2px solid var(--gl-focus-ring); outline-offset: 2px; }
 
 /* Anchors as buttons: shrink-to-fit like real <button> elements
    (block-level flex would fill the line despite --auto) */
@@ -1046,8 +1064,13 @@ a.glass-btn { display: inline-flex; text-decoration: none; }
 
 .glass-input:disabled { opacity: 0.4; cursor: not-allowed; }
 .glass-input--error { border-color: var(--gl-color-error); }
+/* Solid, as the ring of a field without an error (since 1.40.0). Mixed with
+   the text colour, which takes it further from the surface in both themes:
+   --gl-color-error-on-surface alone read 3:1 at the top of a card. */
 .glass-input--error:focus {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gl-color-error) 25%, transparent), var(--gl-inset-medium);
+  --gl-focus-ring: color-mix(in srgb, var(--gl-color-error-on-surface) 70%, var(--gl-color-text));
+  border-color: var(--gl-focus-ring);
+  box-shadow: 0 0 0 2px var(--gl-focus-ring), var(--gl-inset-medium);
 }
 
 /* Input with a prefix and a suffix inside its box: an icon, a currency, a
@@ -1648,6 +1671,12 @@ dialog.glass-modal-overlay::backdrop { background: transparent; }
   cursor: pointer; transition: var(--gl-transition-fast); outline: none;
 }
 .glass-modal__action:hover { background: var(--gl-surface-1); }
+/* A mark for the keyboard (since 1.40.0), inside the action: the modal clips
+   what lies outside it. Rounded so that it runs along the modal's corners. */
+.glass-modal__action:focus-visible {
+  outline: 2px solid var(--gl-focus-ring); outline-offset: -4px;
+  border-radius: calc(var(--gl-radius-card) - 1.5px);
+}
 .glass-modal__action:disabled { opacity: 0.45; cursor: not-allowed; }
 .glass-modal__action:disabled:hover { background: transparent; }
 .glass-modal__action + .glass-modal__action { border-inline-start: 1px solid var(--gl-border-subtle); }
@@ -2838,6 +2867,8 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 }
 .glass-theme-toggle:hover { background: var(--gl-surface-5); transform: scale(1.05); }
 .glass-theme-toggle:active { transform: scale(0.95); }
+/* A mark for the keyboard (since 1.40.0), as on .glass-btn. */
+.glass-theme-toggle:focus-visible { outline: 2px solid var(--gl-focus-ring); outline-offset: 2px; }
 
 .glass-theme-toggle svg {
   width: 20px; height: 20px;
@@ -3215,8 +3246,13 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
   outline: none;
 }
 /* A ring for the keyboard (since 1.32.0), inside the row: the list clips
-   what lies outside it. The tint alone was too faint to find the focus. */
-.glass-list__item--interactive:focus-visible { box-shadow: inset 0 0 0 2px var(--gl-border-focus); }
+   what lies outside it. The tint alone was too faint to find the focus.
+   Rounded as the list is (since 1.40.0): at its corners the list cut the
+   ring of a square row, on the first row and the last. */
+.glass-list__item--interactive:focus-visible {
+  border-radius: var(--gl-radius-btn);
+  box-shadow: inset 0 0 0 2px var(--gl-border-focus);
+}
 .glass-list__item--interactive:active {
   background: var(--gl-surface-3);
 }
@@ -3636,7 +3672,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 .glass-breadcrumbs__current.is-drop-target {
   color: var(--gl-color-text);
   background: color-mix(in srgb, var(--gl-color-primary) 18%, transparent);
-  box-shadow: inset 0 0 0 1.5px var(--gl-border-focus);
+  box-shadow: inset 0 0 0 1.5px var(--gl-color-primary);
 }
 .glass-breadcrumbs__crumb.is-drop-refused { box-shadow: inset 0 0 0 1.5px var(--gl-color-error-border); background: var(--gl-color-error-surface); }
 
@@ -3681,7 +3717,7 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 .glass-list__item.is-sort-inside,
 .glass-tree__row.is-sort-inside {
   background: color-mix(in srgb, var(--gl-color-primary) 16%, transparent);
-  box-shadow: inset 0 0 0 1.5px var(--gl-border-focus);
+  box-shadow: inset 0 0 0 1.5px var(--gl-color-primary);
 }
 .is-sort-refused,
 .glass-list__item.is-sort-refused,
@@ -4580,6 +4616,10 @@ dialog.glass-sheet-overlay::backdrop { background: transparent; }
 }
 .glass-calendar__day:hover { background: var(--gl-surface-2); }
 .glass-calendar__day--other { opacity: 0.35; }
+/* Its dimming took the focus ring down with it, to 2.5:1 (since 1.40.0 the
+   ring shows in full, and the day keeps its dim text). */
+.glass-calendar__day--other:not([aria-disabled="true"]):focus-visible { opacity: 1; }
+.glass-calendar__day--other:not([aria-disabled="true"]):focus-visible > * { opacity: 0.35; }
 .glass-calendar__day--today { border-color: var(--gl-border-warm); }
 .glass-calendar__day[aria-pressed="true"] {
   --gl-calendar-ink: var(--gl-color-on-primary);
@@ -4714,4 +4754,42 @@ svg.glass-icon--fill { fill: currentColor; stroke: none; }
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+}
+
+
+/* ============================================================
+   38. FORCED COLORS
+   ============================================================ */
+/* In forced colors (Windows high contrast) the browser drops box-shadow, and
+   with it every ring drawn that way: the focus on these parts changed not
+   one pixel (since 1.40.0). An outline stays; it takes the text colour there.
+   The rows go inside, where the accordion, the list and the menu clip what
+   lies outside them. What marks its focus with an outline needs nothing. */
+@media (forced-colors: active) {
+  .glass-input:focus,
+  .glass-textarea:focus,
+  .glass-select:focus,
+  .glass-toggle__input:focus-visible + .glass-toggle__track,
+  .glass-checkbox__input:focus-visible + .glass-checkbox__box,
+  .glass-radio__input:focus-visible + .glass-radio__circle,
+  .glass-range:focus-visible,
+  .glass-toast__action:focus-visible,
+  .glass-toast__close:focus-visible,
+  .glass-tab-bar__item:focus-visible,
+  .glass-tab-bar__accessory:focus-visible,
+  .glass-badge--interactive:focus-visible,
+  .glass-breadcrumbs__crumb:focus-visible,
+  .glass-table__sort:focus-visible,
+  .glass-segmented__item:focus-visible,
+  .glass-sheet__close:focus-visible,
+  .glass-date-strip__day:focus-visible,
+  .glass-calendar__nav:focus-visible,
+  .glass-calendar__day:focus-visible { outline: 2px solid; outline-offset: 2px; }
+  .glass-accordion__trigger:focus-visible,
+  .glass-menu__item:focus-visible,
+  .glass-menu__item.is-focus-visible,
+  .glass-list__item--interactive:focus-visible,
+  .glass-tree__row:focus-visible,
+  .glass-tree__row.is-focus-visible,
+  .glass-tree [role="treeitem"]:focus-visible > .glass-tree__row { outline: 2px solid; outline-offset: -2px; }
 }

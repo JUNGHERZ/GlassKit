@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.39.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.40.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-38-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.39.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.40.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -74,22 +74,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.39/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.40/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.39/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.40/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.39/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.40/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.39` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.40` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.39/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.40/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -384,6 +384,8 @@ a later declaration if you want to bend one.
 `--gl-tab-bar-active-color` colours the icon and label of the active tab alone, for a spotlight that needs a lighter tone still; unset, they take `--gl-color-primary-text`.
 
 **Contrast (since 1.31.0).** Muted text, card text and icons reach WCAG AA by default in both themes — text 4.5:1, icons with a meaning 3:1, on the page and on glass. The primary as text keeps the primary: GlassKit's light orange reads 2.43:1 as text, but a fixed mix would darken every brand alike, so a light theme that keeps the orange sets `[data-theme="light"] { --gl-color-primary-text: var(--gl-color-primary-on-surface); }` (5.8:1). White on the primary button stays part of the look; `--gl-color-on-primary: color-mix(in srgb, var(--gl-color-primary) 17%, #000)` switches it to a dark ink with 4.6:1 or more.
+
+**Focus marks (since 1.40.0).** Every control shows where the keyboard is, in one solid colour, `--gl-focus-ring`: in dark mode the primary with 85 % white, in the light theme `--gl-color-primary-on-surface`. It follows the brand, and GlassKit's orange reads 3:1 or more on the page and on glass. `--gl-border-focus` and `--gl-shadow-focus` take it, and the ring is 2px wide. `.glass-btn`, `.glass-pill` and `.glass-theme-toggle` show it as an outline 2px clear of the control, `.glass-modal__action` inside the action. In forced colors, where the browser drops `box-shadow`, every part shows an outline in the text colour. A project that set `--gl-border-focus` or `--gl-shadow-focus` itself keeps its own ring until it drops them; a colour of your own goes into `--gl-focus-ring`, solid. What lies behind the glass decides how bright it gets: a darker brand can fall short on the brightest spot, glass on a glow card in the middle of the page in dark mode, so measure it there.
 
 **Accent fills with white text (since 1.32.0).** To keep white on the primary button, the chosen day and the current step, darken the fills alone — not `--gl-color-primary`, which also draws focus rings, borders and the accent as text. `--gl-btn-primary-bg` replaces the button's background, `--gl-color-primary-fill` colours the flat fills; both are unset. On GlassKit's orange white reaches 4.5:1 from 75 % of the primary mixed with black in the light theme and from 65 % in the dark one:
 
@@ -865,7 +867,9 @@ Interactive States:
   :popover-open       → Popover, Tooltip, Menu with [popover] (top layer)
   .is-visible         → Toast
   :checked            → Toggle, Checkbox, Radio
-  :focus              → Input, Textarea, Select, Range
+  :focus              → Input, Textarea, Select
+  :focus-visible      → every other control: a ring, an outline on Button, Pill,
+                        Theme Toggle and Modal action (since 1.40.0)
   :disabled           → Input, Select, Textarea, Range, Toggle, Checkbox, Radio,
                         Button, Pill, Tab Bar Accessory, Modal action, list row
   [aria-disabled]     → a.glass-btn and the other buttons (link still navigates), menu items
