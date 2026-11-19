@@ -245,7 +245,7 @@
         </button>
 
         <!-- Theme Toggle -->
-        <button class="glass-theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">
+        <button class="glass-theme-toggle" aria-label="Toggle theme" type="button" onclick="cycleThemeMode()">
           <svg class="icon-moon" viewBox="0 0 24 24">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
@@ -256,6 +256,7 @@
             <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
           </svg>
+          <svg class="icon-auto" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 1.5v1.5M12 21v1.5M4.57 4.57l1.06 1.06M18.37 18.37l1.06 1.06M1.5 12H3M21 12h1.5M4.57 19.43l1.06-1.06M18.37 5.63l1.06-1.06"/><path d="M9.5 15.4 12 8.8l2.5 6.6M10.4 13.1h3.2" stroke-width="1.8"/></svg>
         </button>
 
         <!-- Background Switcher (uses glass-popover) -->
@@ -288,7 +289,7 @@
         </button>
       </nav>
 
-      <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.40.0</h1>
+      <h1 class="glass-title gl-mb-xl">Component<br>Showcase v1.41.0</h1>
 
       <!-- DENSITY -->
       <p class="section-label">Density</p>
@@ -1160,11 +1161,26 @@
 
 <script>
   // Theme Toggle
-  function toggleTheme() {
+
+  // Light, dark and auto (GlassKit 1.41.0): auto follows the system, also
+  // when it changes while the page is open.
+  const systemScheme = matchMedia('(prefers-color-scheme: light)');
+  function setThemeMode(mode) {
     const html = document.documentElement;
-    const current = html.getAttribute('data-theme');
-    html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    html.dataset.themeMode = mode;
+    html.dataset.theme = mode === 'auto' ? (systemScheme.matches ? 'light' : 'dark') : mode;
   }
+  // From auto to the theme the system does not show, then the other, back to auto.
+  function cycleThemeMode() {
+    const html = document.documentElement;
+    const mode = html.dataset.themeMode || html.dataset.theme || 'dark';
+    const other = systemScheme.matches ? 'dark' : 'light';
+    const order = ['auto', other, other === 'dark' ? 'light' : 'dark'];
+    setThemeMode(order[(order.indexOf(mode) + 1) % order.length]);
+  }
+  systemScheme.addEventListener('change', () => {
+    if (document.documentElement.dataset.themeMode === 'auto') setThemeMode('auto');
+  });
 
   // Density: data-density="compact" on <html>, or none
   function setDensity(button, density) {

@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.40.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.41.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/CSS-only-blue?style=flat-square" alt="CSS only">
   <img src="https://img.shields.io/badge/components-38-green?style=flat-square" alt="Components">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.40.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.41.0-f5a623?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/glasskit"><img src="https://img.shields.io/npm/v/@jungherz-de/glasskit?style=flat-square&color=cb3837&label=npm" alt="npm"></a>
   <a href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit/"><img src="https://img.shields.io/badge/CDN-jsDelivr-blue?style=flat-square" alt="jsDelivr"></a>
 </p>
@@ -74,22 +74,22 @@ No download, no build tool – just include and go:
 
 ```html
 <!-- jsDelivr – Minified -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.40/glasskit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.41/glasskit.min.css">
 
 <!-- jsDelivr – Unminified (for reading/debugging) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.40/glasskit.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.41/glasskit.css">
 
 <!-- unpkg – Alternative -->
-<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.40/glasskit.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jungherz-de/glasskit@1.41/glasskit.min.css">
 ```
 
-> **Tip:** Replace `@1.40` with `@latest` for the newest version – or pin to a specific version for maximum stability.
+> **Tip:** Replace `@1.41` with `@latest` for the newest version – or pin to a specific version for maximum stability.
 
 The [droplet](#-droplet-a-fluid-selection) takes one optional module next to the stylesheet:
 
 ```html
 <script type="module">
-  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.40/glasskit-droplet.js';
+  import { attachDroplets } from 'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.41/glasskit-droplet.js';
   attachDroplets();
 </script>
 ```
@@ -335,10 +335,10 @@ function toggleTheme() {
 }
 ```
 
-There's also a ready-made **Theme Toggle component**:
+There's also a ready-made **Theme Toggle component**, a round button that shows the moon in the dark theme and the sun in the light one:
 
 ```html
-<button class="glass-theme-toggle" onclick="toggleTheme()">
+<button class="glass-theme-toggle" type="button" aria-label="Theme" onclick="cycleThemeMode()">
   <svg class="icon-moon" viewBox="0 0 24 24">
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
   </svg>
@@ -346,8 +346,38 @@ There's also a ready-made **Theme Toggle component**:
     <circle cx="12" cy="12" r="5"/>
     <!-- ... rays ... -->
   </svg>
+  <svg class="icon-auto" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="7"/>
+    <path d="M12 1.5v1.5M12 21v1.5M4.57 4.57l1.06 1.06M18.37 18.37l1.06 1.06M1.5 12H3M21 12h1.5M4.57 19.43l1.06-1.06M18.37 5.63l1.06-1.06"/>
+    <path d="M9.5 15.4 12 8.8l2.5 6.6M10.4 13.1h3.2" stroke-width="1.8"/>
+  </svg>
 </button>
 ```
+
+**Light, dark and auto (since 1.41.0).** Auto follows the system's colour scheme. With `data-theme-mode="auto"` on `<html>` the button shows `.icon-auto`, the sun with an A, and so does every toggle of the page; `data-theme` still names the theme that is on. The script decides the theme and follows the system while the page is open. Each press moves on from auto to the theme the system does not show, then to the other one, and back to auto, so the first press always changes what one sees:
+
+```js
+// Light, dark and auto (since 1.41.0): auto follows the system, live
+const system = matchMedia('(prefers-color-scheme: light)');
+function setThemeMode(mode) {
+  const html = document.documentElement;
+  html.dataset.themeMode = mode;
+  html.dataset.theme = mode === 'auto' ? (system.matches ? 'light' : 'dark') : mode;
+}
+// From auto to the theme the system does not show, then the other, back to auto
+function cycleThemeMode() {
+  const html = document.documentElement;
+  const mode = html.dataset.themeMode || html.dataset.theme || 'dark';
+  const other = system.matches ? 'dark' : 'light';
+  const order = ['auto', other, other === 'dark' ? 'light' : 'dark'];
+  setThemeMode(order[(order.indexOf(mode) + 1) % order.length]);
+}
+system.addEventListener('change', () => {
+  if (document.documentElement.dataset.themeMode === 'auto') setThemeMode('auto');
+});
+```
+
+Keep the choice in `localStorage` and set it again from a script in `<head>`, before the page is drawn. `<glk-theme-toggle>` in GlassKit Elements does all of this.
 
 ### Custom Brand Colors
 
@@ -859,6 +889,7 @@ One refinement does not fall back quietly:
 ```
 Page Attributes (on <html>):
   data-theme="dark" / "light"
+  data-theme-mode="auto"          (the theme follows the system; .glass-theme-toggle shows .icon-auto)
   data-density="compact"          (denser controls)
 
 Interactive States:

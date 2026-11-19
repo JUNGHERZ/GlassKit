@@ -1,6 +1,6 @@
 ---
 name: glasskit-css
-description: GlassKit is a pure CSS glassmorphism component library (v1.40.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
+description: GlassKit is a pure CSS glassmorphism component library (v1.41.0) with 38 components, Dark & Light mode, design tokens, and BEM-like naming. Use this reference whenever generating HTML that uses GlassKit classes to ensure correct structure, nesting, modifiers, and token usage.
 ---
 
 # GlassKit CSS – AI Component Reference
@@ -13,6 +13,8 @@ description: GlassKit is a pure CSS glassmorphism component library (v1.40.0) wi
 > **New in 1.28.0 — icons of any kind, and tokens instead of overrides.** Tab bar, accessory and segmented control colour their icon box, not the SVG: put a font icon (Material Icons), an `<img>` mask or a custom element straight into `.glass-tab-bar__icon` or `.glass-segmented__icon`, and it follows every state, the lens of the drop and the drag. `--icons` makes an icon-only segmented row (light / dark / auto). The inactive tab colour, the hover colour, the label size and the z-index of the tab bar are tokens, and so are the surface, shadow and text colour of the chosen segmented option. **Where a project restyles tab icons per state, or overrides the tab bar's literals, replace that with the tokens** (3.4, 3.29).
 
 > **New in 1.32.0 — one navigation for every edge, four components, and AA on the accent fills.** The tab bar leaves the bottom edge: `--vertical` makes it a sidebar, `--start` or `--end` fixes it to that side of the viewport — where the thumb rests on a phone held open, or a foldable that moved its system controls to a side — `--rail` shrinks it to icons, `--top` lays it out for the top of a page, and the floating bar stands upright in `.glass-tab-bar-dock--vertical`. In a column the drop runs along y, and its timing is tokens (`--gl-droplet-*`). New: the tooltip, the menu, the tree and the breadcrumbs (3.36–3.39), the states of a drag that reorders a list or a tree (3.40), and for the table a sort button, a sticky header, a row action column, an empty row and a card layout (3.27). Popover, tooltip and menu open in the top layer with the `popover` attribute. `--gl-btn-primary-bg` and `--gl-color-primary-fill` darken the accent fills for white text without touching the brand colour, and the radio's dot follows `--gl-color-on-primary`. **Where a project builds its own sidebar, tooltip, menu, tree or breadcrumbs, overrides the drop's transitions, or darkens `--gl-color-primary` for white button text, replace that** (3.4, 3.7, 3.25, section 2).
+
+> **New in 1.41.0 — light, dark and auto on the theme toggle.** `.glass-theme-toggle` takes a third icon, `.icon-auto`, the sun with an A, and shows it while `<html>` carries `data-theme-mode="auto"`: the page follows the system's colour scheme, and `data-theme` still names the theme that is on (3.3). In GlassKit Elements `<glk-theme-toggle>` does the switching.
 
 > **New in 1.40.0 — a focus mark on every control, and one that can be seen.** `--gl-focus-ring` is one solid colour that follows the brand, and `--gl-border-focus` and `--gl-shadow-focus` take it: with GlassKit's orange each ring reads 3:1 or more in both themes, on the page and on glass, and it is 2px wide (section 2, Shadows). `.glass-btn`, `.glass-pill`, `.glass-theme-toggle` and `.glass-modal__action` show it as an outline; they had no mark at all. In forced colors every part shows an outline, where the browser drops the rings. **Where a project draws its own outline on `:focus-visible` for these parts, or keeps a tint in `--gl-border-focus` or `--gl-shadow-focus`, drop that.**
 
@@ -448,7 +450,7 @@ Round glass icon buttons (46×46px). Used in nav bars and as standalone action b
 | Class | Description |
 |---|---|
 | `.glass-pill` | Round glass button (46×46px) |
-| `.glass-theme-toggle` | Specialized pill with automatic moon/sun switch |
+| `.glass-theme-toggle` | Specialized pill with automatic moon/sun switch; since 1.41.0 a third icon, `.icon-auto`, for auto |
 
 Theme Toggle (specialized pill):
 
@@ -468,8 +470,36 @@ Theme Toggle (specialized pill):
     <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
   </svg>
+  <svg class="icon-auto" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="7"/>
+    <path d="M12 1.5v1.5M12 21v1.5M4.57 4.57l1.06 1.06M18.37 18.37l1.06 1.06M1.5 12H3M21 12h1.5M4.57 19.43l1.06-1.06M18.37 5.63l1.06-1.06"/>
+    <path d="M9.5 15.4 12 8.8l2.5 6.6M10.4 13.1h3.2" stroke-width="1.8"/>
+  </svg>
 </button>
 ```
+
+**Light, dark and auto (since 1.41.0).** Auto follows the system's colour scheme. With `data-theme-mode="auto"` on `<html>` the toggle shows `.icon-auto`, the sun with an A, instead of the moon or the sun, and so does every toggle of the page; `data-theme` still names the theme that is on, and the page's script sets both. Each press moves on from auto to the theme the system does not show, then to the other one, and back to auto, so the first press always changes what one sees:
+
+```js
+const system = matchMedia('(prefers-color-scheme: light)');
+function setThemeMode(mode) {
+  const html = document.documentElement;
+  html.dataset.themeMode = mode;
+  html.dataset.theme = mode === 'auto' ? (system.matches ? 'light' : 'dark') : mode;
+}
+function cycleThemeMode() {
+  const html = document.documentElement;
+  const mode = html.dataset.themeMode || html.dataset.theme || 'dark';
+  const other = system.matches ? 'dark' : 'light';
+  const order = ['auto', other, other === 'dark' ? 'light' : 'dark'];
+  setThemeMode(order[(order.indexOf(mode) + 1) % order.length]);
+}
+system.addEventListener('change', () => {
+  if (document.documentElement.dataset.themeMode === 'auto') setThemeMode('auto');
+});
+```
+
+Keep the choice in `localStorage` and set it again from a script in `<head>`, before the page is drawn, so it does not show the other theme first. A script that switches only `data-theme` removes `data-theme-mode`, or the toggle keeps showing auto. In GlassKit Elements `<glk-theme-toggle>` does all of this.
 
 ---
 
@@ -2787,7 +2817,7 @@ Key points:
 | Background | `.glass-bg` | `--has-tab-bar` |
 | Navigation | `.glass-nav` | – |
 | Pill Button | `.glass-pill` | `:disabled` |
-| Theme Toggle | `.glass-theme-toggle` | – |
+| Theme Toggle | `.glass-theme-toggle` | `.icon-moon`, `.icon-sun`, `.icon-auto` (since 1.41.0) with `data-theme-mode="auto"` on `<html>` |
 | Title | `.glass-title` | – |
 | Card | `.glass-card` | `--glow` |
 | Button | `.glass-btn` | `--primary`, `--secondary`, `--tertiary`, `--sm`, `--lg`, `--auto`, `:disabled` |

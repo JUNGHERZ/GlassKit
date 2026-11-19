@@ -7,6 +7,22 @@ GlassKit uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.41.0] – 2026-11-19
+
+### Added
+
+- **Light, dark and auto on the theme toggle: `.icon-auto` and `data-theme-mode="auto"`.** `.glass-theme-toggle` knew two states, the moon in the dark theme and the sun in the light one, and a page that follows the system's colour scheme had no way to show it.
+  - With `data-theme-mode="auto"` on `<html>` the toggle shows `.icon-auto`, the sun with an A, instead of the moon or the sun. `data-theme` still names the theme that is on.
+  - The attribute sits on `<html>`, so every toggle of the page shows the same state, and a script sets it once for all of them.
+  - The docs, the README and SKILL.md carry the icon and a script for the three states. It follows the system while the page is open. Each press moves on from auto to the theme the system does not show, then to the other one, and back to auto, so the first press always changes what one sees.
+  - The toggles of the docs and of the showcase work this way now. GlassKit Elements 1.41.0 brings it as `<glk-theme-toggle>`.
+
+Measured in Chromium 153, WebKit 26.6 and Firefox 151, 1.40.0 against 1.41.0:
+- **Toggle:** without `data-theme-mode` the moon shows in the dark theme and the sun in the light one, as before. With `data-theme-mode="auto"` the sun with the A shows alone, in both themes.
+- **Pages:** docs, showcase and landing pages render as in 1.40.0.
+
+---
+
 ## [1.40.0] – 2026-11-04
 
 ### Added
@@ -1669,6 +1685,7 @@ during development. Version 1.3 is the first public open-source release.
 
 ---
 
+[1.41.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.41.0
 [1.40.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.40.0
 [1.39.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.39.0
 [1.38.0]: https://github.com/JUNGHERZ/GlassKit/releases/tag/v1.38.0

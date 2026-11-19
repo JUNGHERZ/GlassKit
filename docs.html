@@ -393,7 +393,7 @@
 <aside class="docs-sidebar">
   <div class="docs-sidebar__title">🧊 GlassKit</div>
   <div class="docs-sidebar__subtitle">Pure glassmorphism.</div>
-  <div class="docs-sidebar__version">v1.40.0 &ndash; Jungherz GmbH</div>
+  <div class="docs-sidebar__version">v1.41.0 &ndash; Jungherz GmbH</div>
 
   <div class="docs-sidebar__group">
     <div class="docs-sidebar__group-title">Basics</div>
@@ -478,7 +478,7 @@
     <h1>Glassmorphism UI Library</h1>
     <p>A complete CSS component library with glassmorphism aesthetics – built by Jungherz GmbH. Pure CSS, no dependencies, Dark & Light mode.</p>
     <div class="docs-hero__meta">
-      <span class="docs-hero__badge">v1.40.0</span>
+      <span class="docs-hero__badge">v1.41.0</span>
       <span class="docs-hero__badge">CSS only</span>
       <span class="docs-hero__badge">Dark + Light</span>
       <span class="docs-hero__badge">38 Components</span>
@@ -601,6 +601,28 @@ function <span class="cls">toggleTheme</span>() {
   );
 }</div>
     </div>
+    <h3 id="theme-auto">Light, dark and auto</h3>
+    <p>Since 1.41.0 <code>.glass-theme-toggle</code> has a third state, auto: the page follows the system&rsquo;s colour scheme. Put <code>data-theme-mode="auto"</code> on <code>&lt;html&gt;</code>; <code>data-theme</code> still names the theme that is on. The button then shows <code>.icon-auto</code>, the sun with an A, instead of the moon or the sun, and so does every toggle of the page. The script decides the theme and follows the system while the page is open. Each press moves on from auto to the theme the system does not show, then to the other one, and back to auto, so the first press always changes what one sees. The toggle under <a href="#pill">Pill</a> works this way:</p>
+    <div class="docs-code-wrapper">
+      <div class="docs-code"><span class="cls">const</span> system = matchMedia(<span class="val">'(prefers-color-scheme: light)'</span>);
+function <span class="cls">setThemeMode</span>(mode) {
+  const html = <span class="cls">document.documentElement</span>;
+  html.dataset.themeMode = mode;
+  html.dataset.theme = mode === <span class="val">'auto'</span> ? (system.matches ? <span class="val">'light'</span> : <span class="val">'dark'</span>) : mode;
+}
+<span class="cmt">// From auto to the theme the system does not show, then the other, back to auto</span>
+function <span class="cls">cycleThemeMode</span>() {
+  const html = <span class="cls">document.documentElement</span>;
+  const mode = html.dataset.themeMode || html.dataset.theme || <span class="val">'dark'</span>;
+  const other = system.matches ? <span class="val">'dark'</span> : <span class="val">'light'</span>;
+  const order = [<span class="val">'auto'</span>, other, other === <span class="val">'dark'</span> ? <span class="val">'light'</span> : <span class="val">'dark'</span>];
+  setThemeMode(order[(order.indexOf(mode) + 1) % order.length]);
+}
+system.addEventListener(<span class="val">'change'</span>, () =&gt; {
+  if (<span class="cls">document.documentElement</span>.dataset.themeMode === <span class="val">'auto'</span>) setThemeMode(<span class="val">'auto'</span>);
+});</div>
+    </div>
+    <p>Keep the choice in <code>localStorage</code> and set it again from a script in <code>&lt;head&gt;</code>, before the page is drawn, so it does not show the other theme first. <code>&lt;glk-theme-toggle&gt;</code> in GlassKit Elements does all of this.</p>
     <h3 id="primary-text">Primary as text</h3>
     <p>The primary does two jobs. As a fill it carries white text: buttons, the checked toggle, the current step, the chosen day. As text it stands on the page or the glass itself: links in <code>.glass-prose</code>, the icon and label of the active tab, the primary modal action, accent list rows, the value of a range, the accordion trigger under the pointer and the chevron of an open section. Since 1.26.0 the second job has a token of its own, <code>--gl-color-primary-text</code>. Unset by a project, it is the primary, so nothing changes.</p>
     <p>A brand that darkens its primary so that white button text passes 4.5:1 gets a tone too dark for text on a dark background. Lighten the text in the dark theme, and the buttons keep their colour:</p>
@@ -816,13 +838,13 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
     <div class="docs-preview docs-preview--row docs-preview--compact">
       <button class="glass-pill"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
       <button class="glass-pill"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg></button>
-      <button class="glass-theme-toggle" onclick="toggleTheme()"><svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+      <button class="glass-theme-toggle" type="button" aria-label="Theme" onclick="cycleThemeMode()"><svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-auto" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 1.5v1.5M12 21v1.5M4.57 4.57l1.06 1.06M18.37 18.37l1.06 1.06M1.5 12H3M21 12h1.5M4.57 19.43l1.06-1.06M18.37 5.63l1.06-1.06"/><path d="M9.5 15.4 12 8.8l2.5 6.6M10.4 13.1h3.2" stroke-width="1.8"/></svg></button>
     </div>
     <div class="docs-table-wrap"><table class="docs-table">
       <thead><tr><th>Class</th><th>Description</th></tr></thead>
       <tbody>
         <tr><td><code>.glass-pill</code></td><td>Standard glass circle (46×46px)</td></tr>
-        <tr><td><code>.glass-theme-toggle</code></td><td>Pill with moon/sun icon switch</td></tr>
+        <tr><td><code>.glass-theme-toggle</code></td><td>Round button: the moon, the sun and, since 1.41.0, the sun with an A for auto, with <code>data-theme-mode="auto"</code> on <code>&lt;html&gt;</code> (see <a href="#theme-auto">Theming</a>)</td></tr>
       </tbody>
     </table></div>
   </section>
@@ -1347,7 +1369,7 @@ addEventListener(<span class="val">'afterprint'</span>, () =&gt; {
 <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;script</span> <span class="attr">type=</span><span class="val">"module"</span><span class="tag">&gt;</span>
-  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.40/glasskit-droplet.js'</span>;
+  import { attachDroplets } from <span class="val">'https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1.41/glasskit-droplet.js'</span>;
   attachDroplets();   <span class="cmt">// every --droplet row in the page; attachDroplet(row) for one</span>
 <span class="tag">&lt;/script&gt;</span></div>
     </div>
@@ -3727,7 +3749,28 @@ node_modules/@jungherz-de/glasskit/SKILL.md</div>
     const html = document.documentElement;
     const current = html.getAttribute('data-theme');
     html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    html.removeAttribute('data-theme-mode');
   }
+
+  // Light, dark and auto (GlassKit 1.41.0): auto follows the system, also
+  // when it changes while the page is open.
+  const systemScheme = matchMedia('(prefers-color-scheme: light)');
+  function setThemeMode(mode) {
+    const html = document.documentElement;
+    html.dataset.themeMode = mode;
+    html.dataset.theme = mode === 'auto' ? (systemScheme.matches ? 'light' : 'dark') : mode;
+  }
+  // From auto to the theme the system does not show, then the other, back to auto.
+  function cycleThemeMode() {
+    const html = document.documentElement;
+    const mode = html.dataset.themeMode || html.dataset.theme || 'dark';
+    const other = systemScheme.matches ? 'dark' : 'light';
+    const order = ['auto', other, other === 'dark' ? 'light' : 'dark'];
+    setThemeMode(order[(order.indexOf(mode) + 1) % order.length]);
+  }
+  systemScheme.addEventListener('change', () => {
+    if (document.documentElement.dataset.themeMode === 'auto') setThemeMode('auto');
+  });
 
   // Popover demo toggle (named to avoid clash with native HTMLElement.togglePopover)
   function docsTogglePopover(btn, e) {

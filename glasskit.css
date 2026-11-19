@@ -1,6 +1,6 @@
 /* ============================================================
    GLASSKIT COMPONENT LIBRARY
-   Jungherz GmbH – v1.40.0
+   Jungherz GmbH – v1.41.0
 
    Features:
    - Scoped Reset (box-sizing fix)
@@ -2880,6 +2880,13 @@ a.glass-tab-bar__item { text-decoration: none; color: inherit; }
 .glass-theme-toggle .icon-moon { display: block; }
 [data-theme="light"] .glass-theme-toggle .icon-sun  { display: block; }
 [data-theme="light"] .glass-theme-toggle .icon-moon { display: none; }
+/* A third state, auto (since 1.41.0): the page follows the system, and the
+   button shows .icon-auto, the sun with an A, while <html> carries
+   data-theme-mode="auto". data-theme still names the theme that is on. On
+   <html>, so every toggle of the page shows the same state. */
+.glass-theme-toggle .icon-auto { display: none; }
+[data-theme-mode="auto"] .glass-theme-toggle :is(.icon-sun, .icon-moon) { display: none; }
+[data-theme-mode="auto"] .glass-theme-toggle .icon-auto { display: block; }
 
 
 /* ============================================================
